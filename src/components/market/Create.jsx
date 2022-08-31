@@ -48,6 +48,10 @@ function Create() {
     reset();
   };
 
+  const URI = {
+    KAKAO_REST_API: process.env.REACT_APP_KAKAO_REST_API,
+  };
+
   //현재 위치 api
   function getLocation() {
     if (navigator.geolocation) {
@@ -63,7 +67,7 @@ function Create() {
               `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lon}&y=${lat}&input_coord=WGS84`,
               {
                 headers: {
-                  Authorization: `KakaoAK ${"91547d16c147d3035a5b8ea1bf701e74"}`,
+                  Authorization: `KakaoAK ${URI.KAKAO_REST_API}`,
                 },
               }
             )
