@@ -35,4 +35,7 @@ export const lightTheme = {
 
   // transition
   transition: "all 0.3s",
+
+  //width
+  mobile: "767px",
 };
