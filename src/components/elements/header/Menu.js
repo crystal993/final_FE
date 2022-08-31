@@ -53,6 +53,10 @@ const Menu = ({ open, ...props }) => {
         <span aria-hidden="true"></span>
         장난감
       </StyledLink>
+      <StyledLink href="/" tabIndex={tabIndex}>
+        <span aria-hidden="true"></span>
+        기타용품
+      </StyledLink>
     </StyledMenu>
   );
 };
@@ -75,14 +79,15 @@ const StyledMenu = styled.nav`
   top: 0;
   left: 0;
   transition: transform 0.3s ease-in-out;
+  z-index: 100;
   @media screen and (min-width: 1024px) {
     /* Desktop */
-    width: 25%;
+    width: 28%;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     /* Tablet */
-    width: 30%;
+    width: 35%;
   }
 
   @media (max-width: 767px) {
@@ -92,7 +97,6 @@ const StyledMenu = styled.nav`
 `;
 
 const StyledLink = styled.a`
-  font-size: 1rem;
   text-transform: uppercase;
   padding: 1rem 0;
   font-weight: bold;
@@ -108,12 +112,12 @@ const StyledLink = styled.a`
 
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     /* Tablet */
-    font-size: 1.8rem;
+    font-size: 1.5rem;
   }
 
   @media (max-width: 767px) {
     /* Mobile */
-    font-size: 2rem;
+    font-size: 1.5rem;
     text-align: center;
   }
 

@@ -1,10 +1,13 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import thunk from "redux-thunk";
+import marketPost from "./modules/market/postSlice";
 
 const middlewares = [thunk];
 
 // 리듀서 통합
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+  marketPost,
+});
 
 // 스토어 연결
 const store = configureStore({
