@@ -48,6 +48,24 @@ function Create() {
     reset();
   };
 
+  //다중 이미지 preview
+  const [isLoading, setIsLoading] = useState(true);
+  const [itemImgs, setItemImgs] = useState([]);
+
+  const changeImg = async (e) => {
+    setIsLoading(true);
+
+    const files = e.target.files;
+    const fileList = Array.from(files);
+    const urlList = fileList.map((file) => URL.createObjectURL(file));
+
+    setItemImgs([...urlList]);
+
+    if (files.length !== 0) {
+      setIsLoading(false);
+    }
+  };
+
   const URI = {
     KAKAO_REST_API: process.env.REACT_APP_KAKAO_REST_API,
   };
