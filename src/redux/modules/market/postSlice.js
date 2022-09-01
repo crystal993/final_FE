@@ -64,7 +64,8 @@ export const __getSinglePost = createAsyncThunk(
       //     },
       //   });
       const { data } = RESP.GET_POST_SUCCESS;
-      return thunkAPI.fulfillWithValue(data);
+      const datas = { ...data, imgLength: data.itemImgs.length };
+      return thunkAPI.fulfillWithValue(datas);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
