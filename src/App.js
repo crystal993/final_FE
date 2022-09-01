@@ -1,15 +1,7 @@
-import Routers from "./routers/Routers";
-import Hi from "./components/hi";
-import GlobalLayout from "./components/elements/GlobalLayout";
+import Routers from './routers/Routers';
 
 function App() {
-  // return <Routers />;
-  return (
-    <GlobalLayout>
-      {/* <Hi /> */}
-      <Routers />
-    </GlobalLayout>
-  );
+  return <Routers />;
 }
 
 export default App;
