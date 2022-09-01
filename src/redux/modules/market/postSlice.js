@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import RES from "../../../server/response";
+import RESP from "../../../server/response";
 import { apis } from "../../../shared/axios";
 
 const initialState = {
@@ -27,18 +27,21 @@ export const __getPost = createAsyncThunk(
   "post/__getPost",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await axios({
-        method: "get",
-        url: `http://54.180.143.106/api/post?page=0&pageSize=100`,
-        headers: {
-          Authorization: localStorage.getItem("Authorization"),
-          RefreshToken: localStorage.getItem("RefreshToken"),
-          "Content-Type": "application/json",
-        },
-      });
+      // const { data } = await apis.get_market_posts();
+
+      //   const { data } = await axios({
+      //     method: "get",
+      //     url: `http://54.180.143.106/api/post?page=0&pageSize=100`,
+      //     headers: {
+      //       Authorization: localStorage.getItem("Authorization"),
+      //       RefreshToken: localStorage.getItem("RefreshToken"),
+      //       "Content-Type": "application/json",
+      //     },
+      //   });
       // console.log(data);
-      // const { data } = RES.GET_POSTS_SUCCESS;
-      return thunkAPI.fulfillWithValue(data.data);
+      const { data } = RESP.GET_POSTS_SUCCESS;
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
     }
@@ -74,6 +77,7 @@ export const __addPost = createAsyncThunk(
       console.log(arg.data, arg.files);
       // TODO arg로 formdata랑 filelist 따로 넘겨주는지 확인하기
       // const { data } = await apis.create_market_post(arg.data, arg.files);
+
       //   const { data } = await axios({
       //     method: "post",
       //     url: `http://54.180.143.106/api/post`,
@@ -84,7 +88,7 @@ export const __addPost = createAsyncThunk(
       //       RefreshToken: localStorage.getItem("RefreshToken"),
       //     },
       //   });
-      const { data } = RES.ADD_POST_SUCCESS;
+      const { data } = RESP.ADD_POST_SUCCESS;
       console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
