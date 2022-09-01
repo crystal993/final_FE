@@ -14,6 +14,7 @@ import Search from '../page/Search';
 import Chatting from '../page/chatting/Chatting';
 import NotFound from '../page/NotFound';
 import MyPage from '../page/MyPage';
+import Kakao from '../components/register/socialLogin/Kakao';
 
 const Routers = () => {
   return (
@@ -31,6 +32,7 @@ const Routers = () => {
           path='/community/post/:id'
           element={<CommunityPostingUpdate />}
         />
+        <Route path='/kakao' element={<Kakao />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/search' element={<Search />} />

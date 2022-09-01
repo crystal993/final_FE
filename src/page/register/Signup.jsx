@@ -1,7 +1,13 @@
 import React from 'react';
+import SignupForm from '../../components/register/SignupForm';
+import GlobalLayout from './../../components/elements/GlobalLayout';
 
 const Signup = () => {
-  return <div>Signup</div>;
+  return (
+    <GlobalLayout>
+      <SignupForm />
+    </GlobalLayout>
+  );
 };
 
 export default Signup;

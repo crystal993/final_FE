@@ -6,7 +6,7 @@ const base = {
 };
 
 const api = axios.create({
-  baseURL: server_http,
+  baseURL: base.server_http,
   headers: {
     "content-type": "application/json; charset=UTF-8",
     accept: "application/json,",
@@ -46,7 +46,7 @@ export const apis = {
   // pageNum, pageLimit
   get_market_posts: () => api.get(`/home/main`),
   get_market_post: (id) => api.get(`/items/detail/${id}`),
-  edit_market_post: (form, files) => {
+  edit_market_post: (id, form, files) => {
     const formData = new FormData();
     formData.append("title", form.title);
     formData.append("content", form.content);
@@ -59,7 +59,7 @@ export const apis = {
       formData.append("postImgs", files[i]);
     }
 
-    api.put(`/items/detail/${id}`, { content, hashtags });
+    api.put(`/items/detail/${id}`, formData);
   },
   delete_market_post: (id) => api.delete(`/items/detail/${id}`),
 
