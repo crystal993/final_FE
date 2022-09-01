@@ -1,14 +1,13 @@
-import React from "react";
-import { bool, func } from "prop-types";
-import styled from "styled-components";
-import { IoIosMenu } from "react-icons/io";
+import React from 'react';
+import { bool, func } from 'prop-types';
+import styled from 'styled-components';
 
 const Burger = ({ open, setOpen, ...props }) => {
   const isExpanded = open ? true : false;
 
   return (
     <StyledBurger
-      aria-label="Toggle menu"
+      aria-label='Toggle menu'
       aria-expanded={isExpanded}
       onClick={() => setOpen(!open)}
       {...props}
@@ -53,15 +52,15 @@ const Bar = styled.span`
   transform-origin: 1px;
 
   :first-child {
-    transform: ${({ open }) => (open ? "rotate(45deg)" : "rotate(0)")};
+    transform: ${({ open }) => (open ? 'rotate(45deg)' : 'rotate(0)')};
   }
 
   :nth-child(2) {
-    opacity: ${({ open }) => (open ? "0" : "1")};
-    transform: ${({ open }) => (open ? "translateX(20px)" : "translateX(0)")};
+    opacity: ${({ open }) => (open ? '0' : '1')};
+    transform: ${({ open }) => (open ? 'translateX(20px)' : 'translateX(0)')};
   }
 
   :nth-child(3) {
-    transform: ${({ open }) => (open ? "rotate(-45deg)" : "rotate(0)")};
+    transform: ${({ open }) => (open ? 'rotate(-45deg)' : 'rotate(0)')};
   }
 `;

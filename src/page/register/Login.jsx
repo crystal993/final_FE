@@ -1,7 +1,13 @@
 import React from 'react';
+import GlobalLayout from './../../components/elements/GlobalLayout';
+import LoginForm from '../../components/register/LoginForm';
 
 const Login = () => {
-  return <div>Login</div>;
+  return (
+    <GlobalLayout>
+      <LoginForm />
+    </GlobalLayout>
+  );
 };
 
 export default Login;
