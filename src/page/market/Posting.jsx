@@ -1,7 +1,19 @@
-import React from 'react';
+import React from "react";
+import Footer from "../../components/elements/GlobalFooter";
+import Header from "../../components/elements/GlobalHeader";
+import Layout from "../../components/elements/GlobalLayout";
+import Create from "../../components/market/Create";
 
 const Posting = () => {
-  return <div>Posting</div>;
+  return (
+    <>
+      <Layout>
+        <Header />
+        <Create />
+        <Footer />
+      </Layout>
+    </>
+  );
 };
 
 export default Posting;

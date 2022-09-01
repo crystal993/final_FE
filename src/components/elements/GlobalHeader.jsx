@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { IoIosMenu, IoIosSearch } from "react-icons/io";
+import { IoIosSearch } from "react-icons/io";
 import styled from "styled-components";
 import Burger from "./header/Burger";
 import Menu from "./header/Menu";
@@ -63,7 +63,7 @@ const Navbar = styled.nav`
   justify-content: space-between;
   padding: 20px;
   align-items: center;
-  height: 50px;
+  height: 4.8rem;
   background-color: ${({ theme }) => theme.mainColor};
   color: white;
 `;
@@ -73,4 +73,5 @@ const NavItem = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  font-size: 1.8rem;
 `;

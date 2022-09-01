@@ -45,6 +45,8 @@ code {
   html {
     position: relative;
     overflow-x: hidden;
+  }
+  body {
     font-size: 62.5%;
   }
 
