@@ -13,7 +13,6 @@ const Main = () => {
       <Layout>
         <Header />
         <MainContainer />
-
         <AddPostButton
           onClick={() => {
             navigate("/market/post");
