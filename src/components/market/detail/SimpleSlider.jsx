@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { v4 as uuidv4 } from "uuid";
-import styled from "styled-components";
+import React from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import { v4 as uuidv4 } from 'uuid';
+import styled from 'styled-components';
 
 const SimpleSlider = ({ itemImgs }) => {
   const settings = {
