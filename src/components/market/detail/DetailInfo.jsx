@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react';
-import { __getSinglePost } from '../../../redux/modules/market/postSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import LikeButton from '../../elements/buttons/LikeButton';
-import Comment from '../comment/Comment';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useEffect, useState } from "react";
+import {
+  __getSinglePost,
+  __deletePost,
+} from "../../../redux/modules/market/postSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import styled from "styled-components";
+import LikeButton from "../../elements/buttons/LikeButton";
+import SimpleSlider from "./SimpleSlider";
+import Button from "../../elements/GlobalButton";
 
 const DetailInfo = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const item = useSelector((state) => state.marketPost.singlePost);
   const itemImgs = item.itemImgs;
@@ -17,20 +21,22 @@ const DetailInfo = () => {
     dispatch(__getSinglePost({ itemId: id }));
   }, [dispatch]);
 
+  const deleteHandler = (id) => {
+    dispatch(__deletePost({ itemId: id }));
+    navigate("/");
+  };
+
+
   return (
     <>
+      <SimpleSlider itemImgs={itemImgs} />
       <DetailWrapper>
-        <ImgWrapper>
-          {itemImgs &&
-            itemImgs.map((url) => <Img src={url} key={uuidv4()}></Img>)}
-        </ImgWrapper>
-        {/* <Slider imgs={item.itemImgs} imgLength={item.imgLength} /> */}
-        <ImgWrapper></ImgWrapper>
         <InfoWrapper>
           <p>
             {item.itemCategory} {item.createdAt}
           </p>
         </InfoWrapper>
+
         <Title>{item.title}</Title>
         <InfoWrapper>
           <Price>{item.sellingPrice}</Price>
@@ -45,6 +51,27 @@ const DetailInfo = () => {
         <h1>조회수 {item.viewCnt}</h1>
         <h1>찜갯수 {item.zzimCnt}</h1>
         <LikeButton />
+        <Button
+          content={"게시글 수정"}
+          onClick={() => {
+            navigate(`/market/post/${id}`, { state: item });
+          }}
+        ></Button>
+        <Button
+          content={"게시글 삭제"}
+          onClick={(event) => {
+            event.stopPropagation();
+            // TODO:  추후에 모달로 바꿀 예정
+            const result = window.confirm("게시글을 삭제할래?");
+            if (result) {
+              return deleteHandler(id);
+            } else {
+              return;
+            }
+          }}
+        >
+          게시글 삭제
+        </Button>
         <Comment id={id} />
       </DetailWrapper>
     </>
@@ -56,20 +83,6 @@ const DetailWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-`;
-
-const ImgWrapper = styled.div`
-  width: 100vw;
-  height: 30rem;
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: row;
-  margin-bottom: 1.9rem;
-  /* overflow: hidden; */
-`;
-
-const Img = styled.img`
-  width: 100%;
 `;
 
 const InfoWrapper = styled.div`
