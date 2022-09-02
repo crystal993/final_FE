@@ -20,7 +20,7 @@ const LoginForm = () => {
 
   const onSubmit = () => {
     const body = {
-      userId: watch().userId,
+      email: watch().userId,
       password: watch().password,
     };
 
@@ -163,10 +163,20 @@ const STwrap = styled.div`
 
   .input {
     border: 2px solid #cbcbcb;
-    border-radius: 6px;
     width: 30rem;
     height: 4rem;
     font-size: 1.8rem;
+    border-right: 0px;
+    border-top: 0px;
+    border-left: 0px;
+
+    &:active {
+      border-color: ${({ theme }) => theme.mainColor};
+    }
+    &:focus {
+      outline: none;
+      border-color: ${({ theme }) => theme.mainColor};
+    }
   }
 
   .error {
@@ -194,6 +204,18 @@ const STwrap = styled.div`
       line-height: 2.3rem;
       text-decoration-line: underline;
       color: #6b6b6b;
+    }
+    @media screen and (max-width: 767px) {
+      /* Mobile */
+      display: block;
+      .isnot-member {
+        margin: 0 auto;
+        text-align: center;
+      }
+      .go-signup {
+        margin: 0 auto;
+        margin-top: 1rem;
+      }
     }
     .go-signup:hover {
       cursor: pointer;

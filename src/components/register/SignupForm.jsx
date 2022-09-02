@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   existMemberId,
   registerUser,
+  existMemberNickname,
 } from './../../redux/modules/user/userActions';
 import GlobalModal from './../elements/GlobalModal';
 
@@ -33,17 +34,23 @@ const SignupForm = () => {
     }
 
     const body = {
-      userId: watch().userId,
+      email: watch().userId,
+      nickname: watch().nickname,
       password: watch().password,
       passwordConfirm: watch().passwordConfirm,
-      nickname: watch().nickname,
     };
 
     dispatch(registerUser(body));
   };
 
   const onDuplicateUserId = (event) => {
-    dispatch(existMemberId(watch().userId));
+    dispatch(existMemberId({ email: watch().userId }));
+    onDuplicate(!duplicate);
+    event.preventDefault();
+  };
+
+  const onDuplicateUserNickname = (event) => {
+    dispatch(existMemberNickname({ nickname: watch().nickname }));
     onDuplicate(!duplicate);
     event.preventDefault();
   };
@@ -58,7 +65,7 @@ const SignupForm = () => {
 
   return (
     <>
-      {duplicate ? <GlobalModal content={`중복확인 하라우`} /> : null}
+      {/* {duplicate ? <GlobalModal content={`중복확인 하라우`} /> : null} */}
       <STwrap className='wrap'>
         <STsection>
           <p className='go-back' onClick={goBack}>
@@ -102,7 +109,7 @@ const SignupForm = () => {
             </Label>
           </div>
           <div className='field'>
-            <label className='label'>
+            <Label className='label'>
               비밀번호
               <div>
                 <input
@@ -122,13 +129,14 @@ const SignupForm = () => {
                   name='password'
                 />
               </div>
+              <span className='material-icons eye'>visibility</span>
               {errors.password && (
                 <p className='error'>{errors?.password?.message}</p>
               )}
-            </label>
+            </Label>
           </div>
           <div className='field'>
-            <label className='label'>
+            <Label className='label'>
               비밀번호 확인
               <div>
                 <input
@@ -152,13 +160,14 @@ const SignupForm = () => {
                   name='passwordConfirm'
                 />
               </div>
+              <span className='material-icons eye'>visibility</span>
               {errors.passwordConfirm && (
                 <p className='error'>{errors?.passwordConfirm?.message}</p>
               )}
-            </label>
+            </Label>
           </div>
           <div className='field'>
-            <label className='label'>
+            <Label className='label'>
               닉네임
               <div>
                 <input
@@ -177,7 +186,13 @@ const SignupForm = () => {
               {errors.nickname && (
                 <p className='error'>{errors?.nickname?.message}</p>
               )}
-            </label>
+              <button
+                className='nickcheck-btn'
+                onClick={onDuplicateUserNickname}
+              >
+                중복체크
+              </button>
+            </Label>
           </div>
           <button className='signup-btn'>가입하기</button>
         </form>
@@ -251,11 +266,20 @@ const STwrap = styled.div`
   }
 
   .input {
-    border: 2px solid #cbcbcb;
-    border-radius: 6px;
     width: 30rem;
     height: 4rem;
     font-size: 1.8rem;
+    border-right: 0px;
+    border-top: 0px;
+    border-left: 0px;
+
+    &:active {
+      border-color: ${({ theme }) => theme.mainColor};
+    }
+    &:focus {
+      outline: none;
+      border-color: ${({ theme }) => theme.mainColor};
+    }
   }
 
   .error {
@@ -272,10 +296,34 @@ const Label = styled.label`
     right: 0;
     border: 2px solid #cbcbcb;
     border-radius: 6px;
-    height: 4rem;
+    height: 3rem;
   }
 
   button:hover {
     cursor: pointer;
+  }
+
+  .nickcheck-btn {
+    position: absolute;
+    top: 0;
+    transform: translateY(55%);
+    right: 0;
+    border: 2px solid #cbcbcb;
+    border-radius: 6px;
+    height: 3rem;
+  }
+
+  .eye {
+    position: absolute;
+    top: 0;
+    transform: translate(-15%, 55%);
+    right: 0;
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+    height: 4rem;
+  }
+  &:hover {
+    border-color: ${({ theme }) => theme.mainColor};
   }
 `;
