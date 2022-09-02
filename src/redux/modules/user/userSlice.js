@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   registerUser,
   userLogin,
+  logoutUser,
   existMemberId,
   kakaoLogin,
 } from './userActions';
@@ -29,18 +30,7 @@ const initialState = {
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {
-    logout: (state) => {
-      localStorage.removeItem('access-token');
-      localStorage.removeItem('kakao-token');
-      localStorage.removeItem('user-info');
-      localStorage.removeItem('user-profile');
-      state.loading = false;
-      state.userInfo = null;
-      state.userToken = null;
-      state.error = null;
-    },
-  },
+  reducers: {},
   extraReducers: {
     // 유저 로그인
     [userLogin.pending]: (state) => {
@@ -72,6 +62,25 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = payload;
     },
+    // 유저 로그아웃
+    [logoutUser.pending]: (state) => {
+      state.loading = false;
+      state.error = null;
+    },
+    [logoutUser.fulfilled]: (state, { payload }) => {
+      localStorage.removeItem('access-token');
+      localStorage.removeItem('refresh-token');
+      localStorage.removeItem('kakao-token');
+      localStorage.removeItem('user-info');
+      state.loading = false;
+      state.userInfo = payload;
+      state.userToken = null;
+      state.error = null;
+    },
+    [logoutUser.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
+    },
     // 아이디 중복 체크
     [existMemberId.pending]: (state) => {
       state.loading = true;
@@ -90,6 +99,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = payload;
     },
+    // 카카오 로그인
     [kakaoLogin.pending]: (state) => {
       state.loading = true;
       state.error = null;
