@@ -14,16 +14,16 @@ export const userLogin = createAsyncThunk(
       const config = {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: user.userToken,
         },
       };
 
       const response = await axios.post(
-        `${URL.BASE}api/login`,
+        `http://43.200.1.214/members/login`,
         payload,
         config
       );
       localStorage.setItem('access-token', response.headers.authorization);
+      localStorage.setItem('refresh-token', response.headers.refreshtoken);
       console.log(response);
       return response;
     } catch (error) {
@@ -47,7 +47,12 @@ export const registerUser = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       };
-      await axios.post(`${URL.BASE}api/register`, payload, config);
+      const response = await axios.post(
+        `http://43.200.1.214/members/signup`,
+        payload,
+        config
+      );
+      console.log(response);
     } catch (error) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
@@ -65,8 +70,8 @@ export const logoutUser = createAsyncThunk(
     const { user } = getState();
     console.log(user);
     try {
-      await axios.post(
-        `/api/member/logout`,
+      const response = await axios.post(
+        `http://43.200.1.214/members/logout`,
         {},
         {
           headers: {
@@ -76,6 +81,7 @@ export const logoutUser = createAsyncThunk(
           },
         }
       );
+      console.log(response);
     } catch (error) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
@@ -110,6 +116,7 @@ export const existMemberId = createAsyncThunk(
   'user/existMemberId',
   async (payload, { rejectWithValue }) => {
     console.log(payload);
+    console.log(typeof payload);
     try {
       const config = {
         headers: {
@@ -117,7 +124,34 @@ export const existMemberId = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        `${URL.BASE}api/idcheck`,
+        `http://43.200.1.214/members/email-check`,
+        payload,
+        config
+      );
+      console.log(response);
+      return response;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
+export const existMemberNickname = createAsyncThunk(
+  'user/existMemberId',
+  async (payload, { rejectWithValue }) => {
+    console.log(payload);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const response = await axios.post(
+        `http://43.200.1.214/members/nickname-check`,
         payload,
         config
       );
