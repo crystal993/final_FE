@@ -1,19 +1,36 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux/es/exports";
-import { __addPost } from "../../../redux/modules/market/postSlice";
+import { useDispatch, useSelector } from "react-redux/es/exports";
+import {
+  __updatePost,
+  __getSinglePost,
+} from "../../../redux/modules/market/postSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Button from "../../elements/GlobalButton";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import ImgView from "../../elements/ImgView";
 import RESP from "../../../server/response";
 import axios from "axios";
 import { IoIosLocate } from "react-icons/io";
 
-function Create() {
+function Update() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const { state } = useLocation();
+  console.log(state);
+
+  useEffect(() => {
+    setValue("itemCategory", state.itemCategory);
+    setValue("petCategory", state.petCategory);
+    setValue("title", state.title);
+    setValue("content", state.content);
+    setValue("location", state.location);
+    setValue("purchasePrice", state.purchasePrice);
+    setValue("sellingPrice", state.sellingPrice);
+  }, []);
 
   const {
     register,
@@ -32,7 +49,7 @@ function Create() {
     myInput.click();
   };
 
-  const onSubmitHandler = (formData, e) => {
+  const onUpdateHandler = (formData, e) => {
     console.log(formData);
     const files = formData.files;
     const data = {
@@ -44,7 +61,7 @@ function Create() {
       purchasePrice: formData.purchasePrice,
       sellingPrice: formData.sellingPrice,
     };
-    dispatch(__addPost({ data, files }));
+    dispatch(__updatePost({ data, files }));
     reset();
   };
 
@@ -114,13 +131,17 @@ function Create() {
   }
   getLocation(); //호출
 
+  useEffect(() => {
+    dispatch(__getSinglePost({ itemId: id }));
+  }, [dispatch]);
+
   return (
     <>
       <FormWrapper>
         <TitleWrapper>
-          <Title>게시글 작성</Title>
+          <Title>게시글 수정</Title>
         </TitleWrapper>
-        <Form onSubmit={handleSubmit(onSubmitHandler)}>
+        <Form onSubmit={handleSubmit(onUpdateHandler)}>
           <Container>
             <SelectWrapper>
               <Select name="petCategory" {...register("petCategory")}>
@@ -482,4 +503,4 @@ const LocationWrapper = styled.div`
   background-color: ${({ theme }) => theme.darkgray};
 `;
 
-export default Create;
+export default Update;
