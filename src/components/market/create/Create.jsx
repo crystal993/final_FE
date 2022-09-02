@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux/es/exports";
-import { __addPost } from "../../redux/modules/market/postSlice";
+import { __addPost } from "../../../redux/modules/market/postSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "../../components/elements/GlobalButton";
+import Button from "../../elements/GlobalButton";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import ImgView from "./ImgView";
-import RESP from "../../server/response";
+import RESP from "../../../server/response";
 import axios from "axios";
 import { IoIosLocate } from "react-icons/io";
 
@@ -85,7 +85,7 @@ function Create() {
               `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lon}&y=${lat}&input_coord=WGS84`,
               {
                 headers: {
-                  Authorization: `KakaoAK ${URI.KAKAO_REST_API}`,
+                  Authorization: `KakaoAK ${"91547d16c147d3035a5b8ea1bf701e74"}`,
                 },
               }
             )

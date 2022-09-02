@@ -26,11 +26,11 @@ const ImgView = ({ imgUrls }) => {
           <IoIosArrowForward />
         </Button>
       </ImgWrapper>
-      <RoundButtonWrapper>
+      {/* <RoundButtonWrapper>
         {imgUrls.map((_, i) => (
           <RoundButton key={i} onClick={() => setCurrImg(i)}></RoundButton>
         ))}
-      </RoundButtonWrapper>
+      </RoundButtonWrapper> */}
     </>
   );
 };
