@@ -5,9 +5,9 @@ import Layout from "../../components/elements/GlobalLayout";
 import MainContainer from "../../components/market/main/MainContainer";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-
 const Main = () => {
   const navigate = useNavigate();
+
   return (
     <>
       <Layout>

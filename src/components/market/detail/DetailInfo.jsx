@@ -4,15 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import LikeButton from "../../elements/buttons/LikeButton";
-import { v4 as uuidv4 } from "uuid";
+import SimpleSlider from "./SimpleSlider";
+import Button from "../../elements/GlobalButton";
 
 const DetailInfo = () => {
-  console.log(uuidv4());
   const dispatch = useDispatch();
   const { id } = useParams();
   const item = useSelector((state) => state.marketPost.singlePost);
   const itemImgs = item.itemImgs;
-  // console.log(itemImgs);
+
   useEffect(() => {
     dispatch(__getSinglePost({ itemId: id }));
   }, [dispatch]);
@@ -20,16 +20,14 @@ const DetailInfo = () => {
 
   return (
     <>
+      <SimpleSlider itemImgs={itemImgs} />
       <DetailWrapper>
-        <ImgWrapper>
-          {itemImgs &&
-            itemImgs.map((url) => <Img src={url} key={uuidv4()}></Img>)}
-        </ImgWrapper>
         <InfoWrapper>
           <p>
             {item.itemCategory} {item.createdAt}
           </p>
         </InfoWrapper>
+
         <Title>{item.title}</Title>
         <InfoWrapper>
           <Price>{item.sellingPrice}</Price>
@@ -45,6 +43,8 @@ const DetailInfo = () => {
         <h1>조회수 {item.viewCnt}</h1>
         <h1>찜갯수 {item.zzimCnt}</h1>
         <LikeButton />
+        <Button content={"게시글 수정"}></Button>
+        <Button>게시글 삭제</Button>
       </DetailWrapper>
     </>
   );
@@ -55,20 +55,6 @@ const DetailWrapper = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-`;
-
-const ImgWrapper = styled.div`
-  width: 100vw;
-  height: 30rem;
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: row;
-  margin-bottom: 1.9rem;
-  /* overflow: hidden; */
-`;
-
-const Img = styled.img`
-  width: 100%;
 `;
 
 const InfoWrapper = styled.div`
