@@ -1,8 +1,8 @@
 import React from "react";
 import Header from "../../components/elements/GlobalHeader";
 import Footer from "../../components/elements/GlobalFooter";
-import ItemList from "../../components/market/ItemList";
 import Layout from "../../components/elements/GlobalLayout";
+import MainContainer from "../../components/market/main/MainContainer";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
@@ -12,7 +12,7 @@ const Main = () => {
     <>
       <Layout>
         <Header />
-        <ItemList />
+        <MainContainer />
         <AddPostButton
           onClick={() => {
             navigate("/market/post");

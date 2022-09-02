@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import GlobalModal from './../elements/GlobalModal';
+import { useDispatch } from 'react-redux';
 import { userLogin } from '../../redux/modules/user/userActions';
 import KakaoLogin from './socialLogin/KakaoLogin';
 

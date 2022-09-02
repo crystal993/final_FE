@@ -58,6 +58,34 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+// 유저 로그아웃
+export const logoutUser = createAsyncThunk(
+  'user/logout',
+  async (arg, { getState, rejectWithValue }) => {
+    const { user } = getState();
+    console.log(user);
+    try {
+      await axios.post(
+        `/api/member/logout`,
+        {},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: user.userToken,
+            RefreshToken: user.refreshToken,
+          },
+        }
+      );
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
 // 백엔드로 인가코드 보내기
 export const kakaoLogin = createAsyncThunk(
   'user/kakaoLogin',

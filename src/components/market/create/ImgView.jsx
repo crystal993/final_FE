@@ -70,7 +70,7 @@ const Button = styled.button`
   }
 `;
 
-const RoundButton = styled.button`
+const RoundButton = styled.a`
   width: 1rem;
   height: 0.2rem;
   border: none;
