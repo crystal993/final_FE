@@ -18,7 +18,7 @@ export const Item = ({ item }) => {
 
   return (
     <>
-      <TwitBox onClick={() => navigate(`/market/detail/${item.itemId}`)}>
+      <TwitBox onClick={() => navigate(`/market/detail/${item.id}`)}>
         <StTwitTitle>
           {isLogin && isMine && (
             <StTitleButton
