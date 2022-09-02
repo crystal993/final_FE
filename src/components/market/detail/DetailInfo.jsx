@@ -51,6 +51,7 @@ const DetailInfo = () => {
     }
   };
 
+  // 사용할 컴포넌트에서만 script를 호출하기 위해서
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
