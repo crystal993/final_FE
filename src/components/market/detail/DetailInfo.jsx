@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import LikeButton from "../../elements/buttons/LikeButton";
-import Slider from "./Slider";
 import { v4 as uuidv4 } from "uuid";
 
 const DetailInfo = () => {
@@ -12,7 +11,7 @@ const DetailInfo = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const item = useSelector((state) => state.marketPost.singlePost);
-  // const itemImgs = item.itemImgs[0];
+  const itemImgs = item.itemImgs;
   // console.log(itemImgs);
   useEffect(() => {
     dispatch(__getSinglePost({ itemId: id }));
@@ -22,14 +21,10 @@ const DetailInfo = () => {
   return (
     <>
       <DetailWrapper>
-        {/* <Img src={item.itemImgs[0]}></Img> */}
-        {/* <ImgWrapper>
-          {itemImgs.map((url) => (
-            <Img src={url} key={uuidv4()}></Img>
-          ))}
-        </ImgWrapper> */}
-        {/* <Slider imgs={item.itemImgs} imgLength={item.imgLength} /> */}
-        <ImgWrapper></ImgWrapper>
+        <ImgWrapper>
+          {itemImgs &&
+            itemImgs.map((url) => <Img src={url} key={uuidv4()}></Img>)}
+        </ImgWrapper>
         <InfoWrapper>
           <p>
             {item.itemCategory} {item.createdAt}
