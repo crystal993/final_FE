@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   existMemberId,
   registerUser,
+  existMemberNickname,
 } from './../../redux/modules/user/userActions';
 import GlobalModal from './../elements/GlobalModal';
 
@@ -33,17 +34,23 @@ const SignupForm = () => {
     }
 
     const body = {
-      userId: watch().userId,
+      email: watch().userId,
+      nickname: watch().nickname,
       password: watch().password,
       passwordConfirm: watch().passwordConfirm,
-      nickname: watch().nickname,
     };
 
     dispatch(registerUser(body));
   };
 
   const onDuplicateUserId = (event) => {
-    dispatch(existMemberId(watch().userId));
+    dispatch(existMemberId({ email: watch().userId }));
+    onDuplicate(!duplicate);
+    event.preventDefault();
+  };
+
+  const onDuplicateUserNickname = (event) => {
+    dispatch(existMemberNickname({ nickname: watch().nickname }));
     onDuplicate(!duplicate);
     event.preventDefault();
   };
@@ -58,7 +65,7 @@ const SignupForm = () => {
 
   return (
     <>
-      {duplicate ? <GlobalModal content={`중복확인 하라우`} /> : null}
+      {/* {duplicate ? <GlobalModal content={`중복확인 하라우`} /> : null} */}
       <STwrap className='wrap'>
         <STsection>
           <p className='go-back' onClick={goBack}>
@@ -158,7 +165,7 @@ const SignupForm = () => {
             </label>
           </div>
           <div className='field'>
-            <label className='label'>
+            <Label className='label'>
               닉네임
               <div>
                 <input
@@ -177,7 +184,13 @@ const SignupForm = () => {
               {errors.nickname && (
                 <p className='error'>{errors?.nickname?.message}</p>
               )}
-            </label>
+              <button
+                className='nickcheck-btn'
+                onClick={onDuplicateUserNickname}
+              >
+                중복체크
+              </button>
+            </Label>
           </div>
           <button className='signup-btn'>가입하기</button>
         </form>
@@ -277,5 +290,15 @@ const Label = styled.label`
 
   button:hover {
     cursor: pointer;
+  }
+
+  .nickcheck-btn {
+    position: absolute;
+    top: 0;
+    transform: translateY(55%);
+    right: 0;
+    border: 2px solid #cbcbcb;
+    border-radius: 6px;
+    height: 4rem;
   }
 `;

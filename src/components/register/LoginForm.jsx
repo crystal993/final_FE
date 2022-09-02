@@ -20,7 +20,7 @@ const LoginForm = () => {
 
   const onSubmit = () => {
     const body = {
-      userId: watch().userId,
+      email: watch().userId,
       password: watch().password,
     };
 
