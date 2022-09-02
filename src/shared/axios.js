@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const base = {
-  server_http: process.env.REACT_APP_HTTP_URI,
+  server_http: "http://43.200.1.214",
   server_https: process.env.REACT_APP_HTTPS_URI,
 };
 
@@ -15,8 +15,10 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(function (config) {
-  const auth = localStorage.getItem("AccessToken");
-  config.headers.common["Authorization"] = auth;
+  const auth = localStorage.getItem("access-token");
+  const auth2 = localStorage.getItem("refresh-token");
+  config.headers.common["access-token"] = auth;
+  config.headers.common["refresh-token"] = auth2;
 
   return config;
 });
@@ -34,7 +36,7 @@ export const apis = {
     formData.append("purchasePrice", form.purchasePrice);
     formData.append("sellingPrice", form.sellingPrice);
     for (let i = 0; i < files.length; i++) {
-      formData.append("postImgs", files[i]);
+      formData.append("itemImgs", files[i]);
     }
 
     return api.post("/items", formData, {
@@ -53,10 +55,11 @@ export const apis = {
     formData.append("nickname", form.nickname);
     formData.append("petCategory", form.petCategory);
     formData.append("itemCategory", form.itemCategory);
+    formData.append("location", form.location);
     formData.append("purchasePrice", form.purchasePrice);
     formData.append("sellingPrice", form.sellingPrice);
     for (let i = 0; i < files.length; i++) {
-      formData.append("postImgs", files[i]);
+      formData.append("itemImgs", files[i]);
     }
 
     api.put(`/items/detail/${id}`, formData);

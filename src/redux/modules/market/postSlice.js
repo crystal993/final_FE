@@ -27,7 +27,7 @@ export const __getPost = createAsyncThunk(
   "post/__getPost",
   async (arg, thunkAPI) => {
     try {
-      // const { data } = await apis.get_market_posts();
+      const { data } = await apis.get_market_posts();
 
       //   const { data } = await axios({
       //     method: "get",
@@ -39,7 +39,7 @@ export const __getPost = createAsyncThunk(
       //     },
       //   });
       // console.log(data);
-      const { data } = RESP.GET_POSTS_SUCCESS;
+      // const { data } = RESP.GET_POSTS_SUCCESS;
       console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
