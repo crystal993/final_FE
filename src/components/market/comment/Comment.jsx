@@ -7,6 +7,7 @@ import {
   deleteCommentData,
   putCommentData,
 } from '../../../redux/modules/market/commentSlice';
+import DetailButton from '../../elements/buttons/DetailButton';
 
 const Comment = ({ id }) => {
   const dispatch = useDispatch();
@@ -81,9 +82,7 @@ const Comment = ({ id }) => {
         ))
       )}
       {/* 조건부 렌더링 */}
-      <button className='btn'>
-        <span>채팅으로 거래하기</span>
-      </button>
+      <DetailButton />
       {/* <button className='btn'>거래 완료</button>
       <button className='btn'>삭제하기</button>
       <button className='btn'>수정하기</button> */}
@@ -112,9 +111,24 @@ const Wrapper = styled.div`
   }
 
   .btn {
-    margin-top: 5.9rem;
-    width: 100%;
-    height: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    @media screen and (min-width: 1024px) {
+      /* Desktop */
+      width: 90%;
+    }
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+      /* Tablet */
+      width: 95%;
+    }
+
+    @media screen and (max-width: 767px) {
+      /* Mobile */
+      width: 98%;
+    }
+    margin: 0 auto;
     background: #b63eff;
     padding: 1rem;
     span {
