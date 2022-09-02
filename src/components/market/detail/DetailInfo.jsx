@@ -1,7 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
-import { __getSinglePost } from "../../../redux/modules/market/postSlice";
+import {
+  __getSinglePost,
+  __deletePost,
+} from "../../../redux/modules/market/postSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import LikeButton from "../../elements/buttons/LikeButton";
 import SimpleSlider from "./SimpleSlider";
@@ -9,6 +12,7 @@ import Button from "../../elements/GlobalButton";
 
 const DetailInfo = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const item = useSelector((state) => state.marketPost.singlePost);
   const itemImgs = item.itemImgs;
@@ -16,7 +20,11 @@ const DetailInfo = () => {
   useEffect(() => {
     dispatch(__getSinglePost({ itemId: id }));
   }, [dispatch]);
-  console.log(item);
+
+  const deleteHandler = (id) => {
+    dispatch(__deletePost({ itemId: id }));
+    navigate("/");
+  };
 
   return (
     <>
@@ -43,8 +51,27 @@ const DetailInfo = () => {
         <h1>조회수 {item.viewCnt}</h1>
         <h1>찜갯수 {item.zzimCnt}</h1>
         <LikeButton />
-        <Button content={"게시글 수정"}></Button>
-        <Button>게시글 삭제</Button>
+        <Button
+          content={"게시글 수정"}
+          onClick={() => {
+            navigate(`/market/post/${id}`, { state: item });
+          }}
+        ></Button>
+        <Button
+          content={"게시글 삭제"}
+          onClick={(event) => {
+            event.stopPropagation();
+            // TODO:  추후에 모달로 바꿀 예정
+            const result = window.confirm("게시글을 삭제할래?");
+            if (result) {
+              return deleteHandler(id);
+            } else {
+              return;
+            }
+          }}
+        >
+          게시글 삭제
+        </Button>
       </DetailWrapper>
     </>
   );

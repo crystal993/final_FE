@@ -10,7 +10,6 @@ const Detail = () => {
       <Layout>
         <Header />
         <DetailInfo />
-        <Footer />
       </Layout>
     </>
   );

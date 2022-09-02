@@ -103,12 +103,13 @@ export const __deletePost = createAsyncThunk(
   "post/__deletePost",
   async (arg, thunkAPI) => {
     try {
-      await axios({
-        method: "delete",
-        url: `http://54.180.143.106/api/post/${arg}`,
-        headers: config,
-      });
-      // const { data } = RES.DELETE_POST_SUCCESS;
+      // const { data } = await apis.delete_market_post(arg.itemId);
+      // await axios({
+      //   method: "delete",
+      //   url: `http://54.180.143.106/api/post/${arg}`,
+      //   headers: config,
+      // });
+      // const { data } = RESP.DELETE_POST_SUCCESS;
       return thunkAPI.fulfillWithValue(arg);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -121,15 +122,16 @@ export const __updatePost = createAsyncThunk(
   async (arg, thunkAPI) => {
     console.log(arg);
     try {
-      const { data } = await axios({
-        method: "put",
-        url: `http://54.180.143.106/api/post/${arg.id}`,
-        data: arg.data,
-        headers: config,
-      });
-      console.log(data);
-      // const { data } = RES.UPDATE_POST_SUCCESS;
-      return thunkAPI.fulfillWithValue(data.data);
+      // const { data } = await apis.edit_market_post(arg.data, arg.files);
+      // const { data } = await axios({
+      //   method: "put",
+      //   url: `http://54.180.143.106/api/post/${arg.id}`,
+      //   data: arg.data,
+      //   headers: config,
+      // });
+      // console.log(data);
+      const { data } = RESP.UPDATE_POST_SUCCESS;
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
     }
@@ -183,7 +185,9 @@ export const postSlice = createSlice({
     },
     [__deletePost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      const target = state.list.findIndex((post) => post.id === action.payload);
+      const target = state.list.findIndex(
+        (post) => post.itemId === action.payload
+      );
       state.list.splice(target, 1);
     },
     [__deletePost.rejected]: (state, action) => {
