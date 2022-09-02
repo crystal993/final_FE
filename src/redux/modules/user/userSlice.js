@@ -5,6 +5,7 @@ import {
   logoutUser,
   existMemberId,
   kakaoLogin,
+  existMemberNickname,
 } from './userActions';
 
 // initialize userToken from local storage
@@ -15,11 +16,17 @@ const initialState = {
   userToken: localStorage.getItem('access-token')
     ? localStorage.getItem('access-token')
     : null,
+  refreshToken: localStorage.getItem('refresh-token')
+    ? localStorage.getItem('refresh-token')
+    : null,
   error: null,
   success: false,
   idMsg: null, // 중복체크 메시지
   idErrorMsg: null, // 중복체크 아이디 메시지
   duplicateSuccess: false, // 중복 감지 체크 (감지이면 true 아니면 false)
+  nickMsg: null, // 닉네임 중복체크 메시지
+  nickErrorMsg: null, // 닉네임 중복체크 에러 메시지
+  duplicateNickSuccess: false, // 닉네임 중복 감지 체크
   loginSuccess: false,
   profileImg: '',
   kakaoToken: localStorage.getItem('kakao-token')
@@ -117,9 +124,26 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = payload;
     },
+    [existMemberNickname.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [existMemberNickname.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      console.log(payload);
+      state.nickMsg = payload.data.data;
+      if (payload.data.data === null) {
+        state.nickErrorMsg = payload.data.error.message;
+      }
+      state.duplicateSuccess = payload.data.success;
+    },
+    [existMemberNickname.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
+    },
   },
 });
 
-export const { logout } = userSlice.actions;
+export const {} = userSlice.actions;
 
 export default userSlice.reducer;
