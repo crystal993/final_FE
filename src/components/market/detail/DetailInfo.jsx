@@ -11,6 +11,7 @@ import SimpleSlider from './SimpleSlider';
 import Button from '../../elements/GlobalButton';
 import Comment from '../comment/Comment';
 
+
 const DetailInfo = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const DetailInfo = () => {
     dispatch(__deletePost({ itemId: id }));
     navigate('/');
   };
+
 
   const sharekakao = (event) => {
     event.preventDefault();
