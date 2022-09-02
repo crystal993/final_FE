@@ -109,7 +109,7 @@ const SignupForm = () => {
             </Label>
           </div>
           <div className='field'>
-            <label className='label'>
+            <Label className='label'>
               비밀번호
               <div>
                 <input
@@ -129,13 +129,14 @@ const SignupForm = () => {
                   name='password'
                 />
               </div>
+              <span className='material-icons eye'>visibility</span>
               {errors.password && (
                 <p className='error'>{errors?.password?.message}</p>
               )}
-            </label>
+            </Label>
           </div>
           <div className='field'>
-            <label className='label'>
+            <Label className='label'>
               비밀번호 확인
               <div>
                 <input
@@ -159,10 +160,11 @@ const SignupForm = () => {
                   name='passwordConfirm'
                 />
               </div>
+              <span className='material-icons eye'>visibility</span>
               {errors.passwordConfirm && (
                 <p className='error'>{errors?.passwordConfirm?.message}</p>
               )}
-            </label>
+            </Label>
           </div>
           <div className='field'>
             <Label className='label'>
@@ -264,11 +266,20 @@ const STwrap = styled.div`
   }
 
   .input {
-    border: 2px solid #cbcbcb;
-    border-radius: 6px;
     width: 30rem;
     height: 4rem;
     font-size: 1.8rem;
+    border-right: 0px;
+    border-top: 0px;
+    border-left: 0px;
+
+    &:active {
+      border-color: ${({ theme }) => theme.mainColor};
+    }
+    &:focus {
+      outline: none;
+      border-color: ${({ theme }) => theme.mainColor};
+    }
   }
 
   .error {
@@ -285,7 +296,7 @@ const Label = styled.label`
     right: 0;
     border: 2px solid #cbcbcb;
     border-radius: 6px;
-    height: 4rem;
+    height: 3rem;
   }
 
   button:hover {
@@ -299,6 +310,20 @@ const Label = styled.label`
     right: 0;
     border: 2px solid #cbcbcb;
     border-radius: 6px;
+    height: 3rem;
+  }
+
+  .eye {
+    position: absolute;
+    top: 0;
+    transform: translate(-15%, 55%);
+    right: 0;
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
     height: 4rem;
+  }
+  &:hover {
+    border-color: ${({ theme }) => theme.mainColor};
   }
 `;
