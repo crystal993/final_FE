@@ -17,8 +17,8 @@ const api = axios.create({
 api.interceptors.request.use(function (config) {
   const auth = localStorage.getItem("access-token");
   const auth2 = localStorage.getItem("refresh-token");
-  config.headers.common["access-token"] = auth;
-  config.headers.common["refresh-token"] = auth2;
+  config.headers.common["Authorization"] = auth;
+  config.headers.common["RefreshToken"] = auth2;
 
   return config;
 });
@@ -36,7 +36,7 @@ export const apis = {
     formData.append("purchasePrice", form.purchasePrice);
     formData.append("sellingPrice", form.sellingPrice);
     for (let i = 0; i < files.length; i++) {
-      formData.append("itemImgs", files[i]);
+      formData.append("multipartFileList", files[i]);
     }
 
     return api.post("/items", formData, {
@@ -46,7 +46,10 @@ export const apis = {
     });
   },
   // pageNum, pageLimit
-  get_market_posts: () => api.get(`/home/main`),
+  get_market_posts: () =>
+    api.get(
+      `/items/twocategory?petCategory=${"강아지"}&itemCategory=${"사료"}`
+    ),
   get_market_post: (id) => api.get(`/items/detail/${id}`),
   edit_market_post: (id, form, files) => {
     const formData = new FormData();
@@ -59,7 +62,7 @@ export const apis = {
     formData.append("purchasePrice", form.purchasePrice);
     formData.append("sellingPrice", form.sellingPrice);
     for (let i = 0; i < files.length; i++) {
-      formData.append("itemImgs", files[i]);
+      formData.append("multipartFileList", files[i]);
     }
 
     api.put(`/items/detail/${id}`, formData);

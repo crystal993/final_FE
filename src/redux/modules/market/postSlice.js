@@ -12,16 +12,6 @@ const initialState = {
   //   err: null,
 };
 
-// ${URI.BASE}
-const URI = {
-  BASE: process.env.REACT_APP_BASE_URI,
-};
-
-const config = {
-  Authorization: localStorage.getItem("Authorization"),
-  RefreshToken: localStorage.getItem("RefreshToken"),
-};
-
 // ${URI.BASE}/api/post?page=${arg.page}&pageSize=${arg.pageSize}
 export const __getPost = createAsyncThunk(
   "post/__getPost",
@@ -52,8 +42,8 @@ export const __getSinglePost = createAsyncThunk(
   "post/__getSinglePost",
   async (arg, thunkAPI) => {
     try {
-      console.log(arg.itemId);
-      // const { data } = await apis.get_market_post(arg.itemId);
+      console.log(arg.id);
+      const { data } = await apis.get_market_post(arg.id);
       //   const { data } = await axios({
       //     method: "get",
       //     url: `http://54.180.143.106/api/post/${arg.postId}`,
@@ -63,8 +53,9 @@ export const __getSinglePost = createAsyncThunk(
       //       "Content-Type": "application/json",
       //     },
       //   });
-      const { data } = RESP.GET_POST_SUCCESS;
+      // const { data } = RESP.GET_POST_SUCCESS;
       const datas = { ...data, imgLength: data.itemImgs.length };
+      console.log(data);
       return thunkAPI.fulfillWithValue(datas);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -78,7 +69,7 @@ export const __addPost = createAsyncThunk(
     try {
       console.log(arg.data, arg.files);
       // TODO arg로 formdata랑 filelist 따로 넘겨주는지 확인하기
-      // const { data } = await apis.create_market_post(arg.data, arg.files);
+      const { data } = await apis.create_market_post(arg.data, arg.files);
 
       //   const { data } = await axios({
       //     method: "post",
@@ -90,7 +81,7 @@ export const __addPost = createAsyncThunk(
       //       RefreshToken: localStorage.getItem("RefreshToken"),
       //     },
       //   });
-      const { data } = RESP.ADD_POST_SUCCESS;
+      // const { data } = RESP.ADD_POST_SUCCESS;
       console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
@@ -103,7 +94,7 @@ export const __deletePost = createAsyncThunk(
   "post/__deletePost",
   async (arg, thunkAPI) => {
     try {
-      // const { data } = await apis.delete_market_post(arg.itemId);
+      const { data } = await apis.delete_market_post(arg.id);
       // await axios({
       //   method: "delete",
       //   url: `http://54.180.143.106/api/post/${arg}`,
