@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 // import { __deletePost } from "../../redux/modules/postSlice";
 
 export const Item = ({ item }) => {
-  console.log("item:", item);
   // TODO 아마 다른 걸로 연결될 듯,,,
   //   const isLogin = useSelector((state) => state.user.isLogin);
   const isLogin = true;
@@ -50,12 +49,14 @@ export const Item = ({ item }) => {
           <h3>닉네임 {item.nickname}</h3>
         </StUserBox>
 
-        <div>{item.title}</div>
+        <h3>{item.title}</h3>
         <div>{item.content}</div>
+
         <div>판매가격 {item.sellingPrice}</div>
         <Img src={item.itemImgs[0]} />
 
-        <h3>{item.createdAt}</h3>
+        <div>{item.createdAt}</div>
+        <div>지역 : {item.location}</div>
         <div>찜갯수 {item.zzimCNT}</div>
         <div>조회수 {item.viewCnt}</div>
       </TwitBox>

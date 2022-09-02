@@ -4,13 +4,10 @@ export const lightTheme = {
   whiteColor: "#FFFFFF",
 
   // main
-  mainColor: "#5D5FEF",
+  mainColor: "#B63EFF",
 
   // sub
   subColor: "#7EA2FF",
-
-  //header
-  headerColor: "#5D5FEF",
 
   // text
   textColor: "#181B2E",

@@ -52,18 +52,20 @@ export const __getSinglePost = createAsyncThunk(
   "post/__getSinglePost",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await axios({
-        method: "get",
-        url: `http://54.180.143.106/api/post/${arg.postId}`,
-        headers: {
-          Authorization: localStorage.getItem("Authorization"),
-          RefreshToken: localStorage.getItem("RefreshToken"),
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(data);
-      // const { data } = RES.GET_POST_SUCCESS;
-      return thunkAPI.fulfillWithValue(data.data);
+      console.log(arg.itemId);
+      // const { data } = await apis.get_market_post(arg.itemId);
+      //   const { data } = await axios({
+      //     method: "get",
+      //     url: `http://54.180.143.106/api/post/${arg.postId}`,
+      //     headers: {
+      //       Authorization: localStorage.getItem("Authorization"),
+      //       RefreshToken: localStorage.getItem("RefreshToken"),
+      //       "Content-Type": "application/json",
+      //     },
+      //   });
+      const { data } = RESP.GET_POST_SUCCESS;
+      const datas = { ...data, imgLength: data.itemImgs.length };
+      return thunkAPI.fulfillWithValue(datas);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -139,20 +141,30 @@ export const postSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    // get
+    // get post list
     [__getPost.pending]: (state, action) => {
       state.isLoading = true;
     },
     [__getPost.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.list = action.payload;
-      state.hasMoreTwits = action.payload.length === 5;
     },
     [__getPost.rejected]: (state, action) => {
       state.isLoading = false;
       state.err = action.payload;
     },
-
+    // get single post
+    [__getSinglePost.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__getSinglePost.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.singlePost = action.payload;
+    },
+    [__getSinglePost.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.err = action.payload;
+    },
     // post
     [__addPost.pending]: (state, action) => {
       state.isLoading = true;
@@ -165,7 +177,7 @@ export const postSlice = createSlice({
       state.err = action.payload;
     },
 
-    // deletePost
+    // delete post
     [__deletePost.pending]: (state, action) => {
       state.isLoading = true;
     },
@@ -186,17 +198,6 @@ export const postSlice = createSlice({
       state.singlePost = action.payload;
     },
     [__updatePost.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.err = action.payload;
-    },
-    [__getSinglePost.pending]: (state, action) => {
-      state.isLoading = true;
-    },
-    [__getSinglePost.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      state.singlePost = action.payload;
-    },
-    [__getSinglePost.rejected]: (state, action) => {
       state.isLoading = false;
       state.err = action.payload;
     },

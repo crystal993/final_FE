@@ -60,7 +60,7 @@ function Create() {
     const urlList = fileList.map((file) => URL.createObjectURL(file));
 
     setItemImgs([...urlList]);
-
+    console.log(itemImgs);
     if (files.length !== 0) {
       setIsLoading(false);
     }

@@ -26,11 +26,11 @@ const ImgView = ({ imgUrls }) => {
           <IoIosArrowForward />
         </Button>
       </ImgWrapper>
-      {/* <RoundButtonWrapper>
+      <RoundButtonWrapper>
         {imgUrls.map((_, i) => (
           <RoundButton key={i} onClick={() => setCurrImg(i)}></RoundButton>
         ))}
-      </RoundButtonWrapper> */}
+      </RoundButtonWrapper>
     </>
   );
 };
@@ -70,7 +70,7 @@ const Button = styled.button`
   }
 `;
 
-const RoundButton = styled.button`
+const RoundButton = styled.a`
   width: 1rem;
   height: 0.2rem;
   border: none;
