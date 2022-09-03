@@ -15,10 +15,10 @@ const LikeButton = ({ isLike, isLogin, postId, heart }) => {
   const [heartCount, setHeartCount] = useState(heart);
 
   const toggleLike = async () => {
-    // if (!isLogin) {
-    //   alert("로그인을 해주세요!");
-    //   return;
-    // }
+    if (!isLogin) {
+      alert("로그인을 해주세요!");
+      return;
+    }
 
     if (!liked) {
       const { data } = await apis.like_post(postId);

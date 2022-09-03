@@ -18,8 +18,8 @@ const DetailInfo = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const item = useSelector((state) => state.marketPost.singlePost);
+  const isLogin = useSelector((state) => state.user.userToken);
   const itemImgs = item.itemImgs;
-  console.log(item);
 
   useEffect(() => {
     dispatch(__getSinglePost({ id: id }));
@@ -66,8 +66,6 @@ const DetailInfo = () => {
       document.body.removeChild(script);
     };
   }, []);
-
-  console.log(item);
 
   const onEditHandler = () => {
     navigate(`/market/post/${id}`, { state: item });
@@ -121,7 +119,7 @@ const DetailInfo = () => {
             관심 {item.zzimCnt} 조회수 {item.viewCnt}
           </P>
         </InfoCntWrapper>
-        <LikeButton postId={id} />
+        <LikeButton postId={id} isLogin={isLogin} />
         <Comment id={id} />
         {!item.isMine && <DetailButton></DetailButton>}
         {item.isMine && (
