@@ -7,11 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons"; // ♡
 
 export const Item = ({ item }) => {
-  //   const isLogin = useSelector((state) => state.user.isLogin);
-  const isLogin = useSelector((state) => state.user.userToken);
-  console.log(isLogin);
-  console.log(item);
-  // const isLogin = true;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isMine = item.isMine;
