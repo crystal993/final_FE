@@ -24,6 +24,8 @@ const SignupForm = () => {
     register,
     handleSubmit,
     watch,
+    reset,
+    setValue,
     formState: { isDirty, errors },
   } = useForm({ mode: 'onChange' });
 
@@ -41,6 +43,10 @@ const SignupForm = () => {
     };
 
     dispatch(registerUser(body));
+  };
+
+  const onReset = () => {
+    setValue('userId', '');
   };
 
   const onDuplicateUserId = (event) => {
@@ -99,6 +105,9 @@ const SignupForm = () => {
                   }
                   name='userId'
                 />
+                <span className='material-icons cancel' onClick={onReset}>
+                  cancel
+                </span>
                 <button className='idcheck-btn' onClick={onDuplicateUserId}>
                   중복체크
                 </button>
@@ -194,7 +203,9 @@ const SignupForm = () => {
               </button>
             </Label>
           </div>
-          <button className='signup-btn'>가입하기</button>
+          <button className='signup-btn'>
+            <span>가입하기</span>
+          </button>
         </form>
       </STwrap>
     </>
@@ -250,7 +261,16 @@ const STwrap = styled.div`
     width: 30rem;
     border: 2px solid #cbcbcb;
     border-radius: 6px;
-    height: 2.9rem;
+    height: 5.6rem;
+    background-color: ${({ theme }) => theme.mainColor};
+    border: none;
+    span {
+      color: white;
+      font-weight: 500;
+      font-size: 1.8rem;
+      line-height: 2.9rem;
+      text-align: center;
+    }
   }
 
   .signup-btn:hover {
@@ -322,6 +342,21 @@ const Label = styled.label`
     align-items: center;
     border-radius: 6px;
     height: 4rem;
+  }
+
+  .cancel {
+    position: absolute;
+    top: 0;
+    transform: translate(-255%, 45%);
+    right: 0;
+    display: flex;
+    align-items: center;
+    border-radius: 6px;
+    height: 4rem;
+  }
+
+  .cancel:hover {
+    cursor: pointer;
   }
   &:hover {
     border-color: ${({ theme }) => theme.mainColor};

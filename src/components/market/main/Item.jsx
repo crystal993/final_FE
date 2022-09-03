@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import { __deletePost } from "../../redux/modules/postSlice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons"; // ♡
 
 export const Item = ({ item }) => {
   // TODO 아마 다른 걸로 연결될 듯,,,
@@ -12,54 +13,34 @@ export const Item = ({ item }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isMine = item.isMine;
-  const deleteHandler = () => {
-    // dispatch(__deletePost(item.id));
-  };
 
   return (
     <>
-      <TwitBox onClick={() => navigate(`/market/detail/${item.id}`)}>
-        <StTwitTitle>
-          {isLogin && isMine && (
-            <StTitleButton
-              onClick={(event) => {
-                event.stopPropagation();
-                const result = window.confirm("진짜로 삭제하시겠습니까?");
-                if (result) {
-                  return deleteHandler(item.id);
-                } else {
-                  return;
-                }
-              }}
-            >
-              ✖
-            </StTitleButton>
-          )}
-        </StTwitTitle>
-
-        <StUserBox>
-          {/* TODO Item Image list로 어떻게 보여줄지 */}
-          <UserImgBox>
-            <UserImage
-              src={
-                "https://image.shutterstock.com/image-vector/dog-paw-vector-icon-logo-260nw-1147990112.jpg"
-              }
-            ></UserImage>
-          </UserImgBox>
-          <h3>닉네임 {item.nickname}</h3>
-        </StUserBox>
-
-        <h3>{item.title}</h3>
-        <div>{item.content}</div>
-
-        <div>판매가격 {item.sellingPrice}</div>
-        <Img src={item.itemImgs[0]} />
-
-        <div>{item.createdAt}</div>
-        <div>지역 : {item.location}</div>
-        <div>찜갯수 {item.zzimCNT}</div>
-        <div>조회수 {item.viewCnt}</div>
-      </TwitBox>
+      <ItemWrapper onClick={() => navigate(`/market/detail/${item.id}`)}>
+        <ImgWrapper>
+          <Img src={item.itemImgs[0]} />
+        </ImgWrapper>
+        <TextWrapper>
+          <TextsWrapper>
+            <Title>{item.title}</Title>
+            <ItemInfoWrapper>
+              <div>
+                {item.location} {item.createdAt}
+              </div>
+            </ItemInfoWrapper>
+            <Price>{item.sellingPrice}원</Price>
+          </TextsWrapper>
+          <IconsWrapper>
+            <IconWrapper>
+              <HeartIcon icon={regularHeart} />
+              <div>{item.zzimCnt}</div>
+            </IconWrapper>
+            <IconWrapper>
+              <div>조회수 {item.viewCnt}</div>
+            </IconWrapper>
+          </IconsWrapper>
+        </TextWrapper>
+      </ItemWrapper>
       <ButtonsWrapper>{/* TODO 좋아요 갯수만! */}</ButtonsWrapper>
     </>
   );
@@ -67,13 +48,13 @@ export const Item = ({ item }) => {
 
 export default Item;
 
-const TwitBox = styled.div`
+const ItemWrapper = styled.div`
   width: 100%;
   /* border-radius: 10px; */
   border: 1px solid #eee;
   margin: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-content: center;
   align-items: center;
   border-collapse: collapse;
@@ -87,9 +68,67 @@ const TwitBox = styled.div`
   }
 `;
 
+const ImgWrapper = styled.div`
+  width: 50%;
+  margin: 2rem 1.5rem;
+`;
+
 const Img = styled.img`
-  width: 90%;
+  width: 20rem;
+  height: 16rem;
   margin: 20px 10px;
+`;
+
+const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 50%;
+  height: 16rem;
+  padding: 1rem;
+`;
+
+const TextsWrapper = styled.div`
+  margin-bottom: 2.4rem;
+`;
+
+const Title = styled.h1`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.6rem;
+`;
+
+const ItemInfoWrapper = styled.div`
+  display: flex;
+  font-size: 12px;
+  color: ${({ theme }) => theme.darkgray};
+`;
+
+const Price = styled.h1`
+  font-size: 1.6rem;
+  color: #6b6b6b;
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  color: #cbcbcb;
+  align-items: center;
+  margin: 0 0.5rem;
+`;
+
+const HeartIcon = styled(FontAwesomeIcon)`
+  font-size: 18px;
+  cursor: pointer;
+  color: #cbcbcb;
+  margin: 0.3rem;
+`;
+const IconsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
 `;
 
 const ButtonsWrapper = styled.div`
