@@ -106,16 +106,16 @@ const LikeWrapper = styled.div`
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
 
   @media (min-width: 1024px) {
-    right: 10%;
-    bottom: 5%;
+    right: 6%;
+    bottom: 11%;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
-    right: 7%;
-    bottom: 5%;
+    right: 5%;
+    bottom: 11%;
   }
   @media (max-width: 767px) {
-    right: 5%;
-    bottom: 5%;
+    right: 4%;
+    bottom: 11%;
   }
 `;
 

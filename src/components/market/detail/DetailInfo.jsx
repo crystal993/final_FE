@@ -10,7 +10,8 @@ import LikeButton from "../../elements/buttons/LikeButton";
 import SimpleSlider from "./SimpleSlider";
 import Button from "../../elements/GlobalButton";
 import Comment from "../comment/Comment";
-import FixButton from "../../elements/buttons/FixTwoButton";
+import DetailButton from "../../elements/buttons/DetailButton";
+import FixTwoButton from "../../elements/buttons/FixTwoButton";
 
 const DetailInfo = () => {
   const dispatch = useDispatch();
@@ -67,6 +68,23 @@ const DetailInfo = () => {
     };
   }, []);
 
+  console.log(item);
+
+  const onEditHandler = () => {
+    navigate(`/market/post/${id}`, { state: item });
+  };
+
+  const onDeleteHandler = (event) => {
+    event.stopPropagation();
+    // TODO:  추후에 모달로 바꿀 예정
+    const result = window.confirm("게시글을 삭제할래?");
+    if (result) {
+      return deleteHandler(id);
+    } else {
+      return;
+    }
+  };
+
   return (
     <>
       <SimpleSlider itemImgs={itemImgs} />
@@ -92,38 +110,29 @@ const DetailInfo = () => {
               </UserInfoTxt>
             </StUserBox>
           </div>
-          <button className="share" onClick={sharekakao}>
-            공유하기
-          </button>
+          <StIcon>
+            <span class="material-icons" onClick={sharekakao}>
+              share
+            </span>
+          </StIcon>
         </LinkWrapper>
-        <h1>{item.content}</h1>
-        <P>조회수 {item.viewCnt}</P>
-        <P>찜갯수 {item.zzimCnt}</P>
+        <Content>{item.content}</Content>
+        <InfoCntWrapper>
+          <P>
+            관심 {item.zzimCnt} 조회수 {item.viewCnt}
+          </P>
+        </InfoCntWrapper>
         <LikeButton />
-        <FixButton content={"게시글 수정"} size={50}></FixButton>
-        <FixButton content={"게시글 삭제"} size={50}></FixButton>
-        <Button
-          content={"게시글 수정"}
-          onClick={() => {
-            navigate(`/market/post/${id}`, { state: item });
-          }}
-        ></Button>
-        <Button
-          content={"게시글 삭제"}
-          onClick={(event) => {
-            event.stopPropagation();
-            // TODO:  추후에 모달로 바꿀 예정
-            const result = window.confirm("게시글을 삭제할래?");
-            if (result) {
-              return deleteHandler(id);
-            } else {
-              return;
-            }
-          }}
-        >
-          게시글 삭제
-        </Button>
         <Comment id={id} />
+        {!item.isMine && <DetailButton></DetailButton>}
+        {item.isMine && (
+          <FixTwoButton
+            content1={"수정하기"}
+            content2={"삭제하기"}
+            onClick1={onEditHandler}
+            onClick2={onDeleteHandler}
+          />
+        )}
       </DetailWrapper>
     </>
   );
@@ -154,7 +163,25 @@ const H3 = styled.p`
 const LinkWrapper = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  span {
+    color: ${({ theme }) => theme.darkgray};
+  }
+`;
+
+const StIcon = styled.div`
+  @media (min-width: 1024px) {
+    margin: 0 1.3rem;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    margin: 0 1.3rem;
+  }
+  @media (max-width: 767px) {
+    margin: 0 1.3rem;
+  }
 `;
 
 const Title = styled.p`
@@ -171,8 +198,8 @@ const StUserBox = styled.div`
   flex-direction: row;
   align-content: center;
   justify-content: flex-start;
-  gap: 15px;
-  margin: 20px 0px;
+  gap: 1.5rem;
+  margin: 3rem 0;
   .user-info {
     justify-content: flex-start;
     background-color: green;
@@ -234,5 +261,17 @@ const UserImage = styled.img`
 `;
 
 const UserInfoTxt = styled.div``;
+
+const Content = styled.h1`
+  font-weight: 400;
+  font-size: 1.4rem;
+`;
+
+const InfoCntWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  color: ${({ theme }) => theme.darkgray};
+  margin: 3.2rem 0;
+`;
 
 export default DetailInfo;

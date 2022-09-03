@@ -13,6 +13,9 @@ export const lightTheme = {
   textColor: "#181B2E",
   helperTextColor: "#bcbdc3",
   errorTextColor: "#FD2053",
+
+  // gray-black
+  gray: "#cbcbcb",
   darkgray: "#6B6B6B",
 
   // button
