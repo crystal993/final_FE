@@ -9,10 +9,6 @@ import { apis } from "../../../shared/axios";
 import GlobalModal from "../GlobalModal";
 
 const LikeButton = ({ isLike, isLogin, postId, heart }) => {
-  // ${URI.BASE}
-  const URI = {
-    BASE: process.env.REACT_APP_BASE_URI,
-  };
   // 좋아요
   //   const [liked, setLiked] = useState(isLike);
   const [liked, setLiked] = useState(false);
@@ -30,39 +26,13 @@ const LikeButton = ({ isLike, isLogin, postId, heart }) => {
         <GlobalModal content={data.msg} />;
       }
 
-      //   const { result, data, message } = await axios({
-      //     method: "post",
-      //     url: `http://54.180.143.106/api/postLike/${postId}`,
-      //     headers: {
-      //       Authorization: localStorage.getItem("Authorization"),
-      //       RefreshToken: localStorage.getItem("RefreshToken"),
-      //     },
-      //   });
-      // const { result, data, message } = RESP.LIKE_SUCCESS;
-
-      // if (result) {
-      //   alert(message);
-      //   return;
-      // }
       setLiked((liked) => !liked);
-      console.log(liked);
       setHeartCount((prev) => prev + 1);
     } else {
       const { data } = await apis.unlike_post(postId);
       if (!data.isHeart) {
         <GlobalModal content={data.msg} />;
       }
-      //   const { result, data, message } = await axios({
-      //     method: "delete",
-      //     url: `http://54.180.143.106/api/postLike/${postId}`,
-      //     headers: {
-      //       Authorization: localStorage.getItem("accessToken"),
-      //       RefreshToken: localStorage.getItem("refreshToken"),
-      //     },
-      //   });
-
-      // success
-      // const { result, data, message } = RESP.UNLIKE_SUCCESS;
 
       setLiked((liked) => !liked);
       setHeartCount((prev) => prev - 1);
