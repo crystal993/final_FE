@@ -123,7 +123,7 @@ const DetailInfo = () => {
         >
           게시글 삭제
         </Button>
-        {/* <Comment id={id} /> */}
+        <Comment id={id} />
       </DetailWrapper>
     </>
   );
