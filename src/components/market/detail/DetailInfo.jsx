@@ -17,7 +17,6 @@ const DetailInfo = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log(id);
   const item = useSelector((state) => state.marketPost.singlePost);
   const itemImgs = item.itemImgs;
   console.log(item);
@@ -122,7 +121,7 @@ const DetailInfo = () => {
             관심 {item.zzimCnt} 조회수 {item.viewCnt}
           </P>
         </InfoCntWrapper>
-        <LikeButton />
+        <LikeButton postId={id} />
         <Comment id={id} />
         {!item.isMine && <DetailButton></DetailButton>}
         {item.isMine && (

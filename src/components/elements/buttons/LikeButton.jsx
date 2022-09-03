@@ -3,9 +3,10 @@ import RESP from "../../../server/response";
 import Button from "../GlobalButton";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons"; // ♡
-import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons"; // ♥︎import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
+import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import { apis } from "../../../shared/axios";
+import GlobalModal from "../GlobalModal";
 
 const LikeButton = ({ isLike, isLogin, postId, heart }) => {
   // ${URI.BASE}
@@ -24,6 +25,11 @@ const LikeButton = ({ isLike, isLogin, postId, heart }) => {
     // }
 
     if (!liked) {
+      const { data } = await apis.like_post(postId);
+      if (data.isHeart) {
+        <GlobalModal content={data.msg} />;
+      }
+
       //   const { result, data, message } = await axios({
       //     method: "post",
       //     url: `http://54.180.143.106/api/postLike/${postId}`,
@@ -42,6 +48,10 @@ const LikeButton = ({ isLike, isLogin, postId, heart }) => {
       console.log(liked);
       setHeartCount((prev) => prev + 1);
     } else {
+      const { data } = await apis.unlike_post(postId);
+      if (!data.isHeart) {
+        <GlobalModal content={data.msg} />;
+      }
       //   const { result, data, message } = await axios({
       //     method: "delete",
       //     url: `http://54.180.143.106/api/postLike/${postId}`,
