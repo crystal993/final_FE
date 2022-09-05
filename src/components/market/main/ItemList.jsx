@@ -1,8 +1,8 @@
-import React, { useEffect, Fragment, useState } from "react";
-import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
-import Item from "./Item";
-import { __getPost } from "../../../redux/modules/market/postSlice";
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
+import Item from './Item';
+import { __getPost } from '../../../redux/modules/market/postSlice';
 
 const ItemList = () => {
   const dispatch = useDispatch();
