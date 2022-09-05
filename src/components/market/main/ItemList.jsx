@@ -20,19 +20,19 @@ const ItemList = () => {
 
   return (
     <>
-      <TwitListBox>
+      <ItemListBox>
         {items &&
           items?.map((item) => {
             return <Item item={item} key={item.id} />;
           })}
-      </TwitListBox>
+      </ItemListBox>
     </>
   );
 };
 
 export default ItemList;
 
-const TwitListBox = styled.div`
+const ItemListBox = styled.div`
   width: 100%;
   /* border-radius: 10px; */
   border: 1px solid #eee;

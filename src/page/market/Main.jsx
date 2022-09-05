@@ -5,21 +5,28 @@ import Layout from "../../components/elements/GlobalLayout";
 import MainContainer from "../../components/market/main/MainContainer";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 const Main = () => {
   const navigate = useNavigate();
-
+  const isLogin = useSelector((state) => state.user.userToken);
+  console.log(isLogin);
   return (
     <>
       <Layout>
         <Header />
         <MainContainer />
-        <AddPostButton
-          onClick={() => {
-            navigate("/market/post");
-          }}
-        >
-          +
-        </AddPostButton>
+        {isLogin && (
+          <>
+            <AddPostButton
+              onClick={() => {
+                navigate("/market/post");
+              }}
+            >
+              +
+            </AddPostButton>
+          </>
+        )}
+
         <Footer />
       </Layout>
     </>

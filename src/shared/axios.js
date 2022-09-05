@@ -70,6 +70,6 @@ export const apis = {
   delete_market_post: (id) => api.delete(`/items/detail/${id}`),
 
   // like, unlike
-  like_post: (id) => api.post(`/api/like/${id}`),
-  unlike_post: (id) => api.post(`/api/unlike/${id}`),
+  like_post: (id) => api.post(`/items/detail/zzim/${id}`),
+  unlike_post: (id) => api.delete(`/items/detail/zzim/${id}`),
 };

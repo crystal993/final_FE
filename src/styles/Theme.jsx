@@ -1,24 +1,22 @@
 export const lightTheme = {
-  // background
-  backgroundColor: "#FFFFFF",
-  whiteColor: "#FFFFFF",
-
+  // brand color
   // main
   mainColor: "#B63EFF",
 
   // sub
-  subColor: "#7EA2FF",
+  subColor: "#FFE47A",
 
-  // text
-  textColor: "#181B2E",
-  helperTextColor: "#bcbdc3",
-  errorTextColor: "#FD2053",
+  // achromatic color
+  white: "#ffffff",
+  lightgray: "#F0F0F0",
+  gray: "#cbcbcb",
   darkgray: "#6B6B6B",
+  black: "#000000",
 
   // button
   buttonColor: "#D9D9D9",
   buttonTextColor: "#17192C",
-  buttonRadius: "10px",
+  buttonRadius: "1rem",
   iconColor: "#D9D9D9",
 
   // accent color for hover effect
@@ -29,11 +27,8 @@ export const lightTheme = {
 
   // box-shadow
   boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-  boxRadius: "5px",
+  boxRadius: "1rem",
 
   // transition
   transition: "all 0.3s",
-
-  //width
-  mobile: "767px",
 };
