@@ -4,26 +4,26 @@ import { useSelector, useDispatch } from 'react-redux';
 import Item from './Item';
 import { __getPost } from '../../../redux/modules/market/postSlice';
 
-const ItemList = () => {
-  const dispatch = useDispatch();
-  const items = useSelector((state) => state.marketPost.list);
-  // const items = useSelector((state) => state.category.data);
-  console.log(items);
+const ItemList = ({ list }) => {
+  // const dispatch = useDispatch();
+  // const items = useSelector((state) => state.marketPost.list);
+  // console.log(items);
 
   // 무한스크롤시
   //   const [page, setPage] = useState(0);
   //   const pageSize = 5;
 
-  useEffect(() => {
-    dispatch(__getPost());
-    return;
-  }, []);
+  // useEffect(() => {
+  //   dispatch(__getPost());
+  //   return;
+  // }, []);
 
+  // console.log(list);
   return (
     <>
       <ItemListBox>
-        {items &&
-          items?.map((item) => {
+        {list &&
+          list?.map((item) => {
             return <Item item={item} key={item.id} />;
           })}
       </ItemListBox>

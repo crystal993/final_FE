@@ -1,57 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import ItemList from '../../market/main/ItemList';
-import Button from '../../elements/GlobalButton';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getData, __getPost } from '../../../redux/modules/market/postSlice';
+import option from './Option';
 
 const MainContainer = () => {
   const dispatch = useDispatch();
-  const [isDogClicked, setDogIsClicked] = useState(false);
-  const [isCatClicked, setCatIsClicked] = useState(false);
-  const [catState, setCatState] = useState('고양이 ');
-  const [dogState, setDogState] = useState('강아지');
 
-  const onCatData = () => {
-    setCatIsClicked(!isDogClicked);
-    if (isCatClicked) dispatch(getData({ state: '고양이 ' }));
+  const list = useSelector((state) => state.marketPost.list);
+
+  const [state, setState] = useState('');
+
+  const handleChange = (event) => {
+    setState(event.target.value);
   };
 
-  const onDogData = () => {
-    setDogIsClicked(!isDogClicked);
-    if (isDogClicked) dispatch(getData({ state: '강아지' }));
-  };
+  useEffect(() => {
+    dispatch(__getPost());
+  }, [dispatch]);
 
-  const onPetData = () => {
-    console.log('모두');
-    if (isDogClicked && isCatClicked) dispatch(__getPost());
-  };
+  useEffect(() => {
+    if (state === 'dog') {
+      dispatch(getData({ state: '강아지' }));
+    }
+    if (state === 'cat') {
+      dispatch(getData({ state: '고양이' }));
+    }
+    if (state === 'all') {
+      dispatch(__getPost());
+    }
+  }, [dispatch, state]);
 
   return (
     <>
-      {isDogClicked && isCatClicked ? { onPetData } : null}
       <STsection>
         <STh1>멍냥마켓</STh1>
         <div className='button'>
-          <Button
-            content={'강아지'}
-            height={'3.2rem'}
-            fontSize={'1.4rem'}
-            fontWeight={500}
-            className='dog-btn'
-            onClick={onDogData}
-          />
-          <Button
-            content={'고양이'}
-            height={'3.2rem'}
-            fontSize={'1.4rem'}
-            fontWeight={500}
-            className='cat-btn'
-            onClick={onCatData}
-          />
+          <select
+            name='choice'
+            onChange={handleChange}
+            defaultValue={option[2].value}
+          >
+            {option.map((option) => (
+              <option
+                key={option.value}
+                value={option.value}
+                name={option.name}
+              >
+                {option.name}
+              </option>
+            ))}
+          </select>
         </div>
       </STsection>
-      <ItemList />
+      <ItemList list={list} />
     </>
   );
 };
