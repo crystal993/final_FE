@@ -8,29 +8,13 @@ const initialState = {
   singlePost: {},
   hasMoreTwits: null,
   isLoading: null,
-  //   isLoading: false,
-  //   err: null,
 };
 
-// ${URI.BASE}/api/post?page=${arg.page}&pageSize=${arg.pageSize}
 export const __getPost = createAsyncThunk(
   "post/__getPost",
   async (arg, thunkAPI) => {
     try {
       const { data } = await apis.get_market_posts();
-
-      //   const { data } = await axios({
-      //     method: "get",
-      //     url: `http://54.180.143.106/api/post?page=0&pageSize=100`,
-      //     headers: {
-      //       Authorization: localStorage.getItem("Authorization"),
-      //       RefreshToken: localStorage.getItem("RefreshToken"),
-      //       "Content-Type": "application/json",
-      //     },
-      //   });
-      // console.log(data);
-      // const { data } = RESP.GET_POSTS_SUCCESS;
-      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -44,18 +28,7 @@ export const __getSinglePost = createAsyncThunk(
     try {
       console.log(arg.id);
       const { data } = await apis.get_market_post(arg.id);
-      //   const { data } = await axios({
-      //     method: "get",
-      //     url: `http://54.180.143.106/api/post/${arg.postId}`,
-      //     headers: {
-      //       Authorization: localStorage.getItem("Authorization"),
-      //       RefreshToken: localStorage.getItem("RefreshToken"),
-      //       "Content-Type": "application/json",
-      //     },
-      //   });
-      // const { data } = RESP.GET_POST_SUCCESS;
       const datas = { ...data, imgLength: data.itemImgs.length };
-      console.log(data);
       return thunkAPI.fulfillWithValue(datas);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -67,22 +40,7 @@ export const __addPost = createAsyncThunk(
   "post/__addPost",
   async (arg, thunkAPI) => {
     try {
-      console.log(arg.data, arg.files);
-      // TODO arg로 formdata랑 filelist 따로 넘겨주는지 확인하기
       const { data } = await apis.create_market_post(arg.data, arg.files);
-
-      //   const { data } = await axios({
-      //     method: "post",
-      //     url: `http://54.180.143.106/api/post`,
-      //     data: arg,
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //       Authorization: localStorage.getItem("Authorization"),
-      //       RefreshToken: localStorage.getItem("RefreshToken"),
-      //     },
-      //   });
-      // const { data } = RESP.ADD_POST_SUCCESS;
-      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -95,12 +53,6 @@ export const __deletePost = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await apis.delete_market_post(arg.id);
-      // await axios({
-      //   method: "delete",
-      //   url: `http://54.180.143.106/api/post/${arg}`,
-      //   headers: config,
-      // });
-      // const { data } = RESP.DELETE_POST_SUCCESS;
       return thunkAPI.fulfillWithValue(arg);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -158,7 +110,7 @@ export const postSlice = createSlice({
       state.isLoading = false;
       state.err = action.payload;
     },
-    // post
+    // add post
     [__addPost.pending]: (state, action) => {
       state.isLoading = true;
     },
@@ -169,7 +121,6 @@ export const postSlice = createSlice({
       state.isLoading = false;
       state.err = action.payload;
     },
-
     // delete post
     [__deletePost.pending]: (state, action) => {
       state.isLoading = true;
@@ -185,6 +136,7 @@ export const postSlice = createSlice({
       state.isLoading = false;
       state.err = action.payload;
     },
+    // update post
     [__updatePost.pending]: (state, action) => {
       state.isLoading = true;
     },
