@@ -12,7 +12,13 @@ const Menu = ({ open, ...props }) => {
     <StyledMenu open={open} aria-hidden={!isHidden} {...props}>
       {!isLogin && (
         <>
-          <StyledLink href="/login" tabIndex={tabIndex}>
+          <GlobalButton
+            content={"로그인"}
+            fontSize={"1.4rem"}
+            fontWeight={900}
+            width={"22rem"}
+            height={"5rem"}
+          />
             <span aria-hidden="true"></span>
             로그인
           </StyledLink>
