@@ -11,7 +11,7 @@ import GlobalModal from "../GlobalModal";
 const LikeButton = ({ isLike, isLogin, postId, heart }) => {
   // 좋아요
   //   const [liked, setLiked] = useState(isLike);
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(isLike);
   const [heartCount, setHeartCount] = useState(heart);
 
   const toggleLike = async () => {

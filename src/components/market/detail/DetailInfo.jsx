@@ -119,7 +119,7 @@ const DetailInfo = () => {
             관심 {item.zzimCnt} 조회수 {item.viewCnt}
           </P>
         </InfoCntWrapper>
-        <LikeButton postId={id} isLogin={isLogin} />
+        <LikeButton postId={id} isLogin={isLogin} isLike={item.isZzimed} />
         <Comment id={id} />
         {!item.isMine && <DetailButton></DetailButton>}
         {item.isMine && (
