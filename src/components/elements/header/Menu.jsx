@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import GlobalButton from "../GlobalButton";
 import { useNavigate } from "react-router-dom";
-import { __getItemCategories } from "../../../redux/modules/filter/categorySlice";
+import { __getItemCategories } from "../../../redux/modules/market/postSlice";
 
 const Menu = ({ open, ...props }) => {
   const isHidden = open ? true : false;
