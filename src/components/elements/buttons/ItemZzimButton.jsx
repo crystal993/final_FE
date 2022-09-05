@@ -14,12 +14,16 @@ const ItemZzimButton = ({ isZzim, isLogin, postId }) => {
   const [isMessage, setMessage] = useState(null);
 
   useEffect(() => {
+    setModal(false);
+  }, []);
+  useEffect(() => {
     setZzimed(isZzim);
   }, [setZzimed, isZzim]);
 
   const toggleLike = async () => {
     if (!isLogin) {
-      alert("로그인을 해주세요!");
+      setModal(true);
+      setMessage("로그인을 해주세요!");
       return;
     }
 
