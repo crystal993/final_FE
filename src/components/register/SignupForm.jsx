@@ -71,7 +71,7 @@ const SignupForm = () => {
 
   return (
     <>
-      {/* {duplicate ? <GlobalModal content={`중복확인 하라우`} /> : null} */}
+      {duplicate ? <GlobalModal content={`중복확인 하라우`} /> : null}
       <STwrap className='wrap'>
         <STsection>
           <p className='go-back' onClick={goBack}>
