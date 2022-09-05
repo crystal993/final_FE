@@ -13,7 +13,6 @@ const ItemZzimButton = ({ isZzim, isLogin, postId }) => {
   const [isModal, setModal] = useState(false);
   const [isMessage, setMessage] = useState(null);
 
-  // setZzimed, isZzimed가 바뀔 때마다 값을 넣어줌
   useEffect(() => {
     setZzimed(isZzim);
   }, [setZzimed, isZzim]);
@@ -27,7 +26,6 @@ const ItemZzimButton = ({ isZzim, isLogin, postId }) => {
     if (!isZzimed) {
       setModal(false);
       const { data } = await apis.like_post(postId);
-      console.log(data);
       if (data.isZzimed) {
         setModal(true);
         setMessage(data.msg);
@@ -37,7 +35,6 @@ const ItemZzimButton = ({ isZzim, isLogin, postId }) => {
     } else if (isZzimed) {
       setModal(false);
       const { data } = await apis.unlike_post(postId);
-      console.log(data);
       if (!data.isZzimed) {
         setModal(true);
         setMessage(data.msg);
@@ -46,10 +43,6 @@ const ItemZzimButton = ({ isZzim, isLogin, postId }) => {
       setZzimed(data.isZzimed);
     }
   };
-
-  // useEffect(() => {
-  //   setZzimed(isZzim);
-  // }, []);
 
   return (
     <>
