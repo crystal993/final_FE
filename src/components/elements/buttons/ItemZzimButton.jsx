@@ -8,11 +8,8 @@ import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { apis } from "../../../shared/axios";
 import GlobalModal from "../GlobalModal";
 
-const LikeButton = ({ isLike, isLogin, postId, heart }) => {
-  // 좋아요
-  //   const [liked, setLiked] = useState(isLike);
-  const [liked, setLiked] = useState(isLike);
-  const [heartCount, setHeartCount] = useState(heart);
+const ItemZzimButton = ({ isZzim, isLogin, postId }) => {
+  const [isZzimed, setZzimed] = useState(isZzim);
 
   const toggleLike = async () => {
     if (!isLogin) {
@@ -20,28 +17,26 @@ const LikeButton = ({ isLike, isLogin, postId, heart }) => {
       return;
     }
 
-    if (!liked) {
+    if (!isZzimed) {
       const { data } = await apis.like_post(postId);
       if (data.isHeart) {
         <GlobalModal content={data.msg} />;
       }
 
-      setLiked((liked) => !liked);
-      setHeartCount((prev) => prev + 1);
+      setZzimed((isZzimed) => !isZzimed);
     } else {
       const { data } = await apis.unlike_post(postId);
       if (!data.isHeart) {
         <GlobalModal content={data.msg} />;
       }
 
-      setLiked((liked) => !liked);
-      setHeartCount((prev) => prev - 1);
+      setZzimed((isZzimed) => !isZzimed);
     }
   };
 
   return (
     <>
-      {!liked ? (
+      {!isZzimed ? (
         <LikeWrapper>
           <HeartIconFalse icon={regularHeart} onClick={toggleLike} />
         </LikeWrapper>
@@ -99,4 +94,4 @@ const LikeWrapper = styled.div`
   }
 `;
 
-export default LikeButton;
+export default ItemZzimButton;

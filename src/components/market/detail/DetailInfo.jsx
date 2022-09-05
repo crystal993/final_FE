@@ -6,7 +6,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import LikeButton from "../../elements/buttons/LikeButton";
+import ItemZzimButton from "../../elements/buttons/ItemZzimButton";
 import SimpleSlider from "./SimpleSlider";
 import Button from "../../elements/GlobalButton";
 import Comment from "../comment/Comment";
@@ -119,7 +119,7 @@ const DetailInfo = () => {
             관심 {item.zzimCnt} 조회수 {item.viewCnt}
           </P>
         </InfoCntWrapper>
-        <LikeButton postId={id} isLogin={isLogin} isLike={item.isZzimed} />
+        <ItemZzimButton postId={id} isLogin={isLogin} isZzim={item.isZzimed} />
         <Comment id={id} />
         {!item.isMine && <DetailButton></DetailButton>}
         {item.isMine && (

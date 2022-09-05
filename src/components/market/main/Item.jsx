@@ -8,8 +8,7 @@ import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons"; /
 
 export const Item = ({ item }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const isMine = item.isMine;
+  const items = useSelector((state) => state.marketPost.singlePost);
 
   return (
     <>
