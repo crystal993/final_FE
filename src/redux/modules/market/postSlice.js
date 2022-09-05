@@ -40,6 +40,18 @@ export const __getPost = createAsyncThunk(
   }
 );
 
+export const __getItemCategories = createAsyncThunk(
+  "category/__getItemCategories",
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await apis.get_market_category_posts(arg.itemCategory);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.code);
+    }
+  }
+);
+
 export const __getSinglePost = createAsyncThunk(
   'post/__getSinglePost',
   async (arg, thunkAPI) => {
@@ -175,6 +187,18 @@ export const postSlice = createSlice({
       state.singlePost = action.payload;
     },
     [__updatePost.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.err = action.payload;
+    },
+    // item category filter
+    [__getItemCategories.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__getItemCategories.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.list = action.payload;
+    },
+    [__getItemCategories.rejected]: (state, action) => {
       state.isLoading = false;
       state.err = action.payload;
     },
