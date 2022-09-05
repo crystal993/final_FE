@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../redux/modules/user/userActions";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Profile = () => {
   const dispatch = useDispatch();
+  const [location, setLocation] = useState("");
   const logoutInfo = useSelector((state) => state.user.logoutInfo);
   const navigate = useNavigate();
 
@@ -15,6 +17,53 @@ const Profile = () => {
       dispatch(logoutUser());
       navigate("/");
     }
+  };
+
+  //현재 위치 api
+  function getLocation() {
+    if (navigator.geolocation) {
+      // GPS를 지원하면
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          const lat = position.coords.latitude; //위도
+          const lon = position.coords.longitude; //경도
+          //kakao REST API에 get 요청을 보낸다.
+          //파라미터 x,y에 lon,lat을 넣어주고 API_KEY를 Authorization헤더에 넣어준다.
+          axios
+            .get(
+              `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lon}&y=${lat}&input_coord=WGS84`,
+              {
+                headers: {
+                  Authorization: `KakaoAK ${"91547d16c147d3035a5b8ea1bf701e74"}`,
+                },
+              }
+            )
+            .then((res) => {
+              setLocation(
+                res.data.documents[0].address.region_1depth_name +
+                  " " +
+                  res.data.documents[0].address.region_2depth_name
+              );
+            })
+            .catch((e) => console.log(e));
+        },
+        function (error) {
+          console.error(error);
+        },
+        {
+          enableHighAccuracy: false,
+          maximumAge: 0,
+          timeout: Infinity,
+        }
+      );
+    } else {
+      alert("GPS를 지원하지 않습니다");
+    }
+  }
+  getLocation(); //호출
+
+  const onPathHandler = (path) => {
+    navigate(path);
   };
 
   return (
