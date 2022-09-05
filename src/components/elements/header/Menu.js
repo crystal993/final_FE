@@ -1,13 +1,12 @@
 import React from "react";
 import { bool } from "prop-types";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 const Menu = ({ open, ...props }) => {
   const isHidden = open ? true : false;
   const tabIndex = isHidden ? 0 : -1;
-
-  //TODO isLogin useSelector로 리덕스에서 가져오기
-  const isLogin = true;
+  const isLogin = useSelector((state) => state.user.userToken);
 
   return (
     <StyledMenu open={open} aria-hidden={!isHidden} {...props}>

@@ -1,22 +1,17 @@
 export const lightTheme = {
-  // background
-  backgroundColor: "#FFFFFF",
-  whiteColor: "#FFFFFF",
-
+  // brand color
   // main
   mainColor: "#B63EFF",
 
   // sub
-  subColor: "#7EA2FF",
+  subColor: "#FFE47A",
 
-  // text
-  textColor: "#181B2E",
-  helperTextColor: "#bcbdc3",
-  errorTextColor: "#FD2053",
-
-  // gray-black
+  // achromatic color
+  white: "#ffffff",
+  lightgray: "#F0F0F0",
   gray: "#cbcbcb",
   darkgray: "#6B6B6B",
+  black: "#000000",
 
   // button
   buttonColor: "#D9D9D9",
@@ -36,7 +31,4 @@ export const lightTheme = {
 
   // transition
   transition: "all 0.3s",
-
-  //width
-  mobile: "767px",
 };
