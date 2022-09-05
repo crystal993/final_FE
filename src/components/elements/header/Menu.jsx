@@ -48,10 +48,10 @@ const Menu = ({ open, ...props }) => {
             </UserImgBox>
             <h3>닉네임</h3>
           </StUserBox>
-          <StCategoryBtn href="/mypage" tabIndex={tabIndex}>
+          <StLink href="/mypage" tabIndex={tabIndex}>
             <span aria-hidden="true"></span>
             <StText>마이페이지</StText>
-          </StCategoryBtn>
+          </StLink>
         </>
       )}
       <StText>카테고리</StText>
