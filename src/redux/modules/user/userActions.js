@@ -1,19 +1,20 @@
-import axios from 'axios';
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { apis } from "../../../shared/axios";
 
 const URL = {
   BASE: process.env.REACT_APP_BASE_URL,
 };
 
 export const userLogin = createAsyncThunk(
-  'user/login',
+  "user/login",
   async (payload, { getState, rejectWithValue }) => {
     console.log(payload);
     const { user } = getState();
     try {
       const config = {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       };
 
@@ -22,8 +23,8 @@ export const userLogin = createAsyncThunk(
         payload,
         config
       );
-      localStorage.setItem('access-token', response.headers.authorization);
-      localStorage.setItem('refresh-token', response.headers.refreshtoken);
+      localStorage.setItem("access-token", response.headers.authorization);
+      localStorage.setItem("refresh-token", response.headers.refreshtoken);
       console.log(response);
       return response;
     } catch (error) {
@@ -38,13 +39,13 @@ export const userLogin = createAsyncThunk(
 );
 
 export const registerUser = createAsyncThunk(
-  'user/register',
+  "user/register",
   async (payload, { rejectWithValue }) => {
     console.log(payload);
     try {
       const config = {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       };
       const response = await axios.post(
@@ -65,23 +66,12 @@ export const registerUser = createAsyncThunk(
 
 // 유저 로그아웃
 export const logoutUser = createAsyncThunk(
-  'user/logout',
-  async (arg, { getState, rejectWithValue }) => {
+  "user/logout",
+  async (arg, { getState, rejectWithValue, fulfillWithValue }) => {
     const { user } = getState();
-    console.log(user);
     try {
-      const response = await axios.post(
-        `http://43.200.1.214/members/logout`,
-        {},
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: user.userToken,
-            RefreshToken: user.refreshToken,
-          },
-        }
-      );
-      console.log(response);
+      const response = await apis.logout();
+      return fulfillWithValue(response.data);
     } catch (error) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
@@ -94,14 +84,14 @@ export const logoutUser = createAsyncThunk(
 
 // 백엔드로 인가코드 보내기
 export const kakaoLogin = createAsyncThunk(
-  'user/kakaoLogin',
+  "user/kakaoLogin",
   async (payload, { rejectWithValue }) => {
     console.log(payload);
     try {
       const response = await axios.get(`http://{서버주소}?code=${payload}`);
       console.log(response); // 토큰을 넘겨받음
       const ACCESS_TOKEN = response.data.accessToken;
-      localStorage.setItem('kakao-token', ACCESS_TOKEN);
+      localStorage.setItem("kakao-token", ACCESS_TOKEN);
     } catch (error) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
@@ -113,14 +103,14 @@ export const kakaoLogin = createAsyncThunk(
 );
 
 export const existMemberId = createAsyncThunk(
-  'user/existMemberId',
+  "user/existMemberId",
   async (payload, { rejectWithValue }) => {
     console.log(payload);
     console.log(typeof payload);
     try {
       const config = {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       };
       const response = await axios.post(
@@ -141,13 +131,13 @@ export const existMemberId = createAsyncThunk(
 );
 
 export const existMemberNickname = createAsyncThunk(
-  'user/existMemberId',
+  "user/existMemberId",
   async (payload, { rejectWithValue }) => {
     console.log(payload);
     try {
       const config = {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       };
       const response = await axios.post(

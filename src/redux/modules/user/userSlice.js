@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 import {
   registerUser,
   userLogin,
@@ -6,18 +6,18 @@ import {
   existMemberId,
   kakaoLogin,
   existMemberNickname,
-} from './userActions';
+} from "./userActions";
 
 // initialize userToken from local storage
 
 const initialState = {
   loading: false,
   userInfo: null,
-  userToken: localStorage.getItem('access-token')
-    ? localStorage.getItem('access-token')
+  userToken: localStorage.getItem("access-token")
+    ? localStorage.getItem("access-token")
     : null,
-  refreshToken: localStorage.getItem('refresh-token')
-    ? localStorage.getItem('refresh-token')
+  refreshToken: localStorage.getItem("refresh-token")
+    ? localStorage.getItem("refresh-token")
     : null,
   error: null,
   success: false,
@@ -28,14 +28,15 @@ const initialState = {
   nickErrorMsg: null, // 닉네임 중복체크 에러 메시지
   duplicateNickSuccess: false, // 닉네임 중복 감지 체크
   loginSuccess: false,
-  profileImg: '',
-  kakaoToken: localStorage.getItem('kakao-token')
-    ? localStorage.getItem('kakao-token')
+  profileImg: "",
+  kakaoToken: localStorage.getItem("kakao-token")
+    ? localStorage.getItem("kakao-token")
     : null,
+  logoutInfo: {},
 };
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {},
   extraReducers: {
@@ -48,8 +49,11 @@ const userSlice = createSlice({
       state.loading = false;
       state.userInfo = payload.data;
       state.profileImg = payload.data.profileImg;
-      localStorage.setItem('user-profile', payload.data.profileImg);
-      localStorage.setItem('user-info', payload.data);
+      localStorage.setItem(
+        "user-profile",
+        JSON.stringify(payload.data.profileImg)
+      );
+      localStorage.setItem("user-info", JSON.stringify(payload.data));
       state.userToken = payload.headers.authorization;
     },
     [userLogin.rejected]: (state, { payload }) => {
@@ -75,12 +79,12 @@ const userSlice = createSlice({
       state.error = null;
     },
     [logoutUser.fulfilled]: (state, { payload }) => {
-      localStorage.removeItem('access-token');
-      localStorage.removeItem('refresh-token');
-      localStorage.removeItem('kakao-token');
-      localStorage.removeItem('user-info');
+      localStorage.removeItem("access-token");
+      localStorage.removeItem("refresh-token");
+      localStorage.removeItem("kakao-token");
+      localStorage.removeItem("user-info");
       state.loading = false;
-      state.userInfo = payload;
+      state.logoutInfo = payload;
       state.userToken = null;
       state.error = null;
     },
@@ -116,8 +120,8 @@ const userSlice = createSlice({
       state.loading = false;
       state.userInfo = payload.data;
       state.profileImg = payload.data.profileImg;
-      localStorage.setItem('user-profile', payload.data.profileImg);
-      localStorage.setItem('user-info', payload.data);
+      localStorage.setItem("user-profile", payload.data.profileImg);
+      localStorage.setItem("user-info", payload.data);
       state.userToken = payload.headers.authorization;
     },
     [kakaoLogin.rejected]: (state, { payload }) => {
