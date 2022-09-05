@@ -2,30 +2,37 @@ import React from "react";
 import { bool } from "prop-types";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import GlobalButton from "../GlobalButton";
+import { useNavigate } from "react-router-dom";
 
 const Menu = ({ open, ...props }) => {
   const isHidden = open ? true : false;
   const tabIndex = isHidden ? 0 : -1;
   const isLogin = useSelector((state) => state.user.userToken);
+  const navigate = useNavigate();
+
+  const onPathHandler = () => {
+    navigate(`/login`);
+  };
 
   return (
-    <StyledMenu open={open} aria-hidden={!isHidden} {...props}>
+    <StMenu open={open} aria-hidden={!isHidden} {...props}>
       {!isLogin && (
         <>
-          <GlobalButton
-            content={"로그인"}
-            fontSize={"1.4rem"}
-            fontWeight={900}
-            width={"22rem"}
-            height={"5rem"}
-          />
+          <StBtnWrapper>
+            <GlobalButton
+              content={"로그인"}
+              fontSize={"1.4rem"}
+              fontWeight={900}
+              width={"22rem"}
+              height={"5rem"}
+              onClick={onPathHandler}
+            />
+          </StBtnWrapper>
+          <StLink href="/signup" tabIndex={tabIndex}>
             <span aria-hidden="true"></span>
-            로그인
-          </StyledLink>
-          <StyledLink href="/signup" tabIndex={tabIndex}>
-            <span aria-hidden="true"></span>
-            회원가입
-          </StyledLink>
+            <StText>회원가입</StText>
+          </StLink>
         </>
       )}
       {isLogin && (
@@ -36,33 +43,40 @@ const Menu = ({ open, ...props }) => {
             </UserImgBox>
             <h3>닉네임</h3>
           </StUserBox>
+          <StCategoryBtn href="/mypage" tabIndex={tabIndex}>
+            <span aria-hidden="true"></span>
+            <StText>마이페이지</StText>
+          </StCategoryBtn>
         </>
       )}
-      <StyledLink href="/" tabIndex={tabIndex}>
-        <span aria-hidden="true"></span>
-        사료
-      </StyledLink>
-      <StyledLink href="/" tabIndex={tabIndex}>
-        <span aria-hidden="true"></span>
-        간식
-      </StyledLink>
-      <StyledLink href="/" tabIndex={tabIndex}>
-        <span aria-hidden="true"></span>
-        의류
-      </StyledLink>
-      <StyledLink href="/" tabIndex={tabIndex}>
-        <span aria-hidden="true"></span>
-        미용
-      </StyledLink>
-      <StyledLink href="/" tabIndex={tabIndex}>
-        <span aria-hidden="true"></span>
-        장난감
-      </StyledLink>
-      <StyledLink href="/" tabIndex={tabIndex}>
-        <span aria-hidden="true"></span>
-        기타용품
-      </StyledLink>
-    </StyledMenu>
+      <StText>카테고리</StText>
+      <StCategoryBtnWrapper>
+        <StCategoryBtn tabIndex={tabIndex}>
+          <span aria-hidden="true"></span>
+          사료
+        </StCategoryBtn>
+        <StCategoryBtn tabIndex={tabIndex}>
+          <span aria-hidden="true"></span>
+          간식
+        </StCategoryBtn>
+        <StCategoryBtn tabIndex={tabIndex}>
+          <span aria-hidden="true"></span>
+          의류
+        </StCategoryBtn>
+        <StCategoryBtn tabIndex={tabIndex}>
+          <span aria-hidden="true"></span>
+          미용
+        </StCategoryBtn>
+        <StCategoryBtn tabIndex={tabIndex}>
+          <span aria-hidden="true"></span>
+          장난감
+        </StCategoryBtn>
+        <StCategoryBtn tabIndex={tabIndex}>
+          <span aria-hidden="true"></span>
+          기타용품
+        </StCategoryBtn>
+      </StCategoryBtnWrapper>
+    </StMenu>
   );
 };
 
@@ -70,61 +84,107 @@ Menu.propTypes = {
   open: bool.isRequired,
 };
 
-const StyledMenu = styled.nav`
+const StMenu = styled.nav`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   background: ${({ theme }) => theme.mainColor};
   transform: ${({ open }) => (open ? "translateX(17%)" : "translateX(100%)")};
-  @media screen and (min-width: 1024px) {
-    /* Desktop */
-    transform: ${({ open }) =>
-      open ? "translateX(24.5%)" : "translateX(-100%)"};
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Tablet */
-    transform: ${({ open }) => (open ? "translateX(9%)" : "translateX(-100%)")};
-  }
-
-  @media screen and (max-width: 767px) {
-    /* Mobile */
-    transform: ${({ open }) => (open ? "translateX(0%)" : "translateX(-100%)")};
-  }
   height: 100%;
   text-align: left;
-  padding: 5rem;
+  padding: 4rem 0rem;
   position: absolute;
-  align-items: center;
   top: 0;
   left: 0;
   transition: transform 0.3s ease-in-out;
   z-index: 100;
   @media screen and (min-width: 1024px) {
     /* Desktop */
-    width: 20%;
+    transform: ${({ open }) =>
+      open ? "translateX(21%)" : "translateX(-100%)"};
+    width: 25rem;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     /* Tablet */
-    width: 25%;
-    font-size: 0.7rem;
+    transform: ${({ open }) => (open ? "translateX(5%)" : "translateX(-100%)")};
+    width: 25rem;
   }
 
   @media (max-width: 767px) {
     /* Mobile */
+    transform: ${({ open }) => (open ? "translateX(0%)" : "translateX(-100%)")};
     width: 100%;
+    display: flex;
+    align-items: center;
   }
 `;
 
-const StyledLink = styled.a`
+const StText = styled.h3`
+  font-size: 1.5rem;
+  padding: 2.4rem 0 0 1.6rem;
+`;
+
+const StLink = styled.a`
   text-transform: uppercase;
-  padding: 1rem 0;
-  font-weight: bold;
-  letter-spacing: 0.5rem;
+  font-weight: 900;
   color: ${({ theme }) => theme.white};
+  border-radius: 1rem;
   text-decoration: none;
   transition: color 0.3s linear;
+
+  @media screen and (min-width: 1024px) {
+    /* Desktop */
+    font-size: 1.5rem;
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Tablet */
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  &:hover {
+    /* color: ${({ theme }) => theme.hoverButtonTextColor}; */
+  }
+`;
+
+const StBtnWrapper = styled.div`
+  padding: 2.4rem 0 0 1.6rem;
+`;
+
+const StCategoryBtnWrapper = styled.div`
+  margin: 2.4rem 0 0 1.6rem;
+  width: 17.2rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+`;
+
+const StCategoryBtn = styled.button`
+  text-transform: uppercase;
+  width: 8rem;
+  height: 8rem;
+  font-weight: 100;
+  color: ${({ theme }) => theme.white};
+  background-color: ${({ theme }) => theme.gray};
+  border-radius: 1rem;
+  text-decoration: none;
+  transition: color 0.3s linear;
+  border: none;
+  cursor: pointer;
+
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   @media screen and (min-width: 1024px) {
     /* Desktop */
@@ -150,30 +210,19 @@ const StyledLink = styled.a`
 const StUserBox = styled.div`
   display: flex;
   width: 100%;
+  padding: 2.4rem 0 0 1.6rem;
   flex-direction: row;
-  align-content: center;
+  align-content: flex-start;
   justify-content: flex-start;
   align-items: center;
   gap: 15px;
   margin: 20px 0px;
-  @media screen and (min-width: 1024px) {
-    /* Desktop */
-    display: flex;
-    align-content: center;
-    justify-content: center;
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Tablet */
-    display: flex;
-    align-content: center;
-    justify-content: center;
-  }
   @media (max-width: 767px) {
     /* Mobile */
     display: flex;
     align-content: center;
     justify-content: center;
+    align-items: center;
   }
 `;
 
