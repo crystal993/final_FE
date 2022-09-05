@@ -42,6 +42,7 @@ const Btn = styled.button`
   text-align: center;
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 1rem;
   width: ${(props) => props.width};
   height: ${(props) => props.height};
