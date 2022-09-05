@@ -6,7 +6,8 @@ import { __getPost } from "../../../redux/modules/market/postSlice";
 
 const ItemList = () => {
   const dispatch = useDispatch();
-  const items = useSelector((state) => state.marketPost.list);
+  // const items = useSelector((state) => state.marketPost.list);
+  const items = useSelector((state) => state.category.data);
   console.log(items);
 
   // 무한스크롤시

@@ -1,8 +1,9 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
-import marketPost from './modules/market/postSlice';
-import user from './modules/user/userSlice';
-import comment from './modules/market/commentSlice';
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import thunk from "redux-thunk";
+import marketPost from "./modules/market/postSlice";
+import user from "./modules/user/userSlice";
+import comment from "./modules/market/commentSlice";
+import category from "./modules/filter/categorySlice";
 
 const middlewares = [thunk];
 
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   marketPost,
   user,
   comment,
+  category,
 });
 
 // 스토어 연결

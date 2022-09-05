@@ -72,4 +72,8 @@ export const apis = {
   // like, unlike
   like_post: (id) => api.post(`/items/detail/zzim/${id}`),
   unlike_post: (id) => api.delete(`/items/detail/zzim/${id}`),
+
+  //category filter
+  get_market_category_posts: (itemCategory) =>
+    api.get(`/items/itemcategory?itemCategory=${itemCategory}`),
 };

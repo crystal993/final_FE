@@ -1,18 +1,23 @@
 import React from "react";
 import { bool } from "prop-types";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GlobalButton from "../GlobalButton";
 import { useNavigate } from "react-router-dom";
+import { __getItemCategories } from "../../../redux/modules/filter/categorySlice";
 
 const Menu = ({ open, ...props }) => {
   const isHidden = open ? true : false;
   const tabIndex = isHidden ? 0 : -1;
   const isLogin = useSelector((state) => state.user.userToken);
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const onPathHandler = () => {
     navigate(`/login`);
+  };
+
+  const onRequestHandler = (itemCategory) => {
+    dispatch(__getItemCategories({ itemCategory }));
   };
 
   return (
@@ -52,27 +57,51 @@ const Menu = ({ open, ...props }) => {
       <StText>카테고리</StText>
       <StCategoryWrapper>
         <StCategoryBtnWrapper>
-          <StCategoryBtn tabIndex={tabIndex}>
+          <StCategoryBtn
+            tabIndex={tabIndex}
+            onClick={() => {
+              onRequestHandler("사료");
+            }}
+          >
             <span aria-hidden="true"></span>
             사료
           </StCategoryBtn>
-          <StCategoryBtn tabIndex={tabIndex}>
+          <StCategoryBtn
+            tabIndex={tabIndex}
+            onClick={() => {
+              onRequestHandler("간식");
+            }}
+          >
             <span aria-hidden="true"></span>
             간식
           </StCategoryBtn>
-          <StCategoryBtn tabIndex={tabIndex}>
+          <StCategoryBtn
+            tabIndex={tabIndex}
+            onClick={() => {
+              onRequestHandler("의류");
+            }}
+          >
             <span aria-hidden="true"></span>
             의류
           </StCategoryBtn>
-          <StCategoryBtn tabIndex={tabIndex}>
+          <StCategoryBtn
+            tabIndex={tabIndex}
+            onClick={() => onRequestHandler("미용")}
+          >
             <span aria-hidden="true"></span>
             미용
           </StCategoryBtn>
-          <StCategoryBtn tabIndex={tabIndex}>
+          <StCategoryBtn
+            tabIndex={tabIndex}
+            onClick={() => onRequestHandler("장난감")}
+          >
             <span aria-hidden="true"></span>
             장난감
           </StCategoryBtn>
-          <StCategoryBtn tabIndex={tabIndex}>
+          <StCategoryBtn
+            tabIndex={tabIndex}
+            onClick={() => onRequestHandler("기타용품")}
+          >
             <span aria-hidden="true"></span>
             기타용품
           </StCategoryBtn>
