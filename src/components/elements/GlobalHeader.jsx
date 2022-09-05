@@ -7,6 +7,10 @@ import Menu from "./header/Menu";
 
 const GlobalHeader = () => {
   const navigate = useNavigate();
+
+  const menuBackground = {
+    boxShadow: "rgba(0,0,0,0.5) 0 0 0 9999px",
+  };
   // menu 외부를 눌렀을 때 꺼지도록
   const useOnClickOutside = (ref, handler) => {
     useEffect(() => {

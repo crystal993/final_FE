@@ -45,7 +45,7 @@ const Bar = styled.span`
   display: block;
   width: 2rem;
   height: 0.25rem;
-  background: ${({ theme }) => theme.white};
+  background: ${({ open, theme }) => (open ? theme.mainColor : theme.white)};
   border-radius: 10px;
   transition: all 0.3s linear;
   position: relative;

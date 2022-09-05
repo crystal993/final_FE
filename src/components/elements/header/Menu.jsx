@@ -50,32 +50,34 @@ const Menu = ({ open, ...props }) => {
         </>
       )}
       <StText>카테고리</StText>
-      <StCategoryBtnWrapper>
-        <StCategoryBtn tabIndex={tabIndex}>
-          <span aria-hidden="true"></span>
-          사료
-        </StCategoryBtn>
-        <StCategoryBtn tabIndex={tabIndex}>
-          <span aria-hidden="true"></span>
-          간식
-        </StCategoryBtn>
-        <StCategoryBtn tabIndex={tabIndex}>
-          <span aria-hidden="true"></span>
-          의류
-        </StCategoryBtn>
-        <StCategoryBtn tabIndex={tabIndex}>
-          <span aria-hidden="true"></span>
-          미용
-        </StCategoryBtn>
-        <StCategoryBtn tabIndex={tabIndex}>
-          <span aria-hidden="true"></span>
-          장난감
-        </StCategoryBtn>
-        <StCategoryBtn tabIndex={tabIndex}>
-          <span aria-hidden="true"></span>
-          기타용품
-        </StCategoryBtn>
-      </StCategoryBtnWrapper>
+      <StCategoryWrapper>
+        <StCategoryBtnWrapper>
+          <StCategoryBtn tabIndex={tabIndex}>
+            <span aria-hidden="true"></span>
+            사료
+          </StCategoryBtn>
+          <StCategoryBtn tabIndex={tabIndex}>
+            <span aria-hidden="true"></span>
+            간식
+          </StCategoryBtn>
+          <StCategoryBtn tabIndex={tabIndex}>
+            <span aria-hidden="true"></span>
+            의류
+          </StCategoryBtn>
+          <StCategoryBtn tabIndex={tabIndex}>
+            <span aria-hidden="true"></span>
+            미용
+          </StCategoryBtn>
+          <StCategoryBtn tabIndex={tabIndex}>
+            <span aria-hidden="true"></span>
+            장난감
+          </StCategoryBtn>
+          <StCategoryBtn tabIndex={tabIndex}>
+            <span aria-hidden="true"></span>
+            기타용품
+          </StCategoryBtn>
+        </StCategoryBtnWrapper>
+      </StCategoryWrapper>
     </StMenu>
   );
 };
@@ -89,7 +91,7 @@ const StMenu = styled.nav`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  background: ${({ theme }) => theme.mainColor};
+  background: ${({ theme }) => theme.white};
   transform: ${({ open }) => (open ? "translateX(17%)" : "translateX(100%)")};
   height: 100%;
   text-align: left;
@@ -97,18 +99,19 @@ const StMenu = styled.nav`
   position: absolute;
   top: 0;
   left: 0;
+  color: ${({ theme }) => theme.black};
   transition: transform 0.3s ease-in-out;
   z-index: 100;
   @media screen and (min-width: 1024px) {
     /* Desktop */
     transform: ${({ open }) =>
-      open ? "translateX(21%)" : "translateX(-100%)"};
+      open ? "translateX(13%)" : "translateX(-100%)"};
     width: 25rem;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     /* Tablet */
-    transform: ${({ open }) => (open ? "translateX(5%)" : "translateX(-100%)")};
+    transform: ${({ open }) => (open ? "translateX(3%)" : "translateX(-100%)")};
     width: 25rem;
   }
 
@@ -124,6 +127,7 @@ const StMenu = styled.nav`
 const StText = styled.h3`
   font-size: 1.5rem;
   padding: 2.4rem 0 0 1.6rem;
+  color: ${({ theme }) => theme.black};
 `;
 
 const StLink = styled.a`
@@ -157,6 +161,22 @@ const StLink = styled.a`
 
 const StBtnWrapper = styled.div`
   padding: 2.4rem 0 0 1.6rem;
+`;
+
+const StCategoryWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background-color: ${({ theme }) => theme.white};
+
+  @media (max-width: 767px) {
+    /* Mobile */
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const StCategoryBtnWrapper = styled.div`
