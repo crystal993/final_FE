@@ -40,6 +40,8 @@ const Icon = styled(FontAwesomeIcon)`
 
 const Btn = styled.button`
   text-align: center;
+  display: flex;
+  align-items: center;
   padding: 1rem;
   width: ${(props) => props.width};
   height: ${(props) => props.height};
