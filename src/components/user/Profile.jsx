@@ -93,25 +93,25 @@ const Profile = () => {
         </ProfileUserWrapper>
         <ProfileIconWrapper>
           <IconWrapper onClick={onPathHandler}>
-            <span class="material-icons">edit_document</span>
+            <span className="material-icons">edit_document</span>
             <StTxt fontSize={"1rem"} fontWeight={100}>
               내가 쓴 글
             </StTxt>
           </IconWrapper>
           <IconWrapper>
-            <span class="material-icons">favorite_border</span>
+            <span className="material-icons">favorite_border</span>
             <StTxt fontSize={"1rem"} fontWeight={100}>
               찜목록
             </StTxt>
           </IconWrapper>
           <IconWrapper>
-            <span class="material-icons">message</span>
+            <span className="material-icons">message</span>
             <StTxt fontSize={"1rem"} fontWeight={100}>
               채팅목록
             </StTxt>
           </IconWrapper>
           <IconWrapper>
-            <span class="material-icons">visibility</span>
+            <span className="material-icons">visibility</span>
             <StTxt fontSize={"1rem"} fontWeight={100}>
               최근 본 상품
             </StTxt>
