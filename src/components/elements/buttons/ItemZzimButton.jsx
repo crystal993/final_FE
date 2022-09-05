@@ -36,7 +36,7 @@ const ItemZzimButton = ({ isZzim, isLogin, postId }) => {
 
   return (
     <>
-      {!isZzimed ? (
+      {isZzimed && !isZzimed ? (
         <LikeWrapper>
           <HeartIconFalse icon={regularHeart} onClick={toggleLike} />
         </LikeWrapper>
