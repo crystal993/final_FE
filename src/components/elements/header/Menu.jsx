@@ -116,7 +116,7 @@ const StyledLink = styled.a`
   padding: 1rem 0;
   font-weight: bold;
   letter-spacing: 0.5rem;
-  color: ${({ theme }) => theme.backgroundColor};
+  color: ${({ theme }) => theme.white};
   text-decoration: none;
   transition: color 0.3s linear;
 
@@ -137,7 +137,7 @@ const StyledLink = styled.a`
   }
 
   &:hover {
-    color: ${({ theme }) => theme.hoverButtonTextColor};
+    /* color: ${({ theme }) => theme.hoverButtonTextColor}; */
   }
 `;
 
