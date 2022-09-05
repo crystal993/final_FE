@@ -1,7 +1,7 @@
 export const lightTheme = {
   // brand color
   // main
-  mainColor: "#B63EFF",
+  mainColor: "#B192F3",
 
   // sub
   subColor: "#FFE47A",
