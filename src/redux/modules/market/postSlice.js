@@ -33,6 +33,7 @@ export const __getPost = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await apis.get_market_posts();
+      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -41,7 +42,7 @@ export const __getPost = createAsyncThunk(
 );
 
 export const __getItemCategories = createAsyncThunk(
-  "category/__getItemCategories",
+  'category/__getItemCategories',
   async (arg, thunkAPI) => {
     try {
       const { data } = await apis.get_market_category_posts(arg.itemCategory);
