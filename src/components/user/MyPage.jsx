@@ -5,7 +5,6 @@ import styled from "styled-components";
 
 const MyPage = () => {
   const userInfo = localStorage.getItem("user-info");
-  console.log(JSON.parse(userInfo));
   return (
     <>
       <MyPageWrapper>
