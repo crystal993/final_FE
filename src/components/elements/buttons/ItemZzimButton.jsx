@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import RESP from "../../../server/response";
 import Button from "../GlobalButton";
 import styled from "styled-components";
@@ -10,33 +10,48 @@ import GlobalModal from "../GlobalModal";
 
 const ItemZzimButton = ({ isZzim, isLogin, postId }) => {
   const [isZzimed, setZzimed] = useState(isZzim);
+  const [isModal, setModal] = useState(false);
+  const [isMessage, setMessage] = useState(null);
+
+  useEffect(() => {
+    setModal(false);
+  }, []);
+  useEffect(() => {
+    setZzimed(isZzim);
+  }, [setZzimed, isZzim]);
 
   const toggleLike = async () => {
     if (!isLogin) {
-      alert("로그인을 해주세요!");
+      setModal(true);
+      setMessage("로그인을 해주세요!");
       return;
     }
 
     if (!isZzimed) {
+      setModal(false);
       const { data } = await apis.like_post(postId);
-      if (data.isHeart) {
-        <GlobalModal content={data.msg} />;
+      if (data.isZzimed) {
+        setModal(true);
+        setMessage(data.msg);
       }
 
-      setZzimed((isZzimed) => !isZzimed);
-    } else {
+      setZzimed(data.isZzimed);
+    } else if (isZzimed) {
+      setModal(false);
       const { data } = await apis.unlike_post(postId);
-      if (!data.isHeart) {
-        <GlobalModal content={data.msg} />;
+      if (!data.isZzimed) {
+        setModal(true);
+        setMessage(data.msg);
       }
 
-      setZzimed((isZzimed) => !isZzimed);
+      setZzimed(data.isZzimed);
     }
   };
 
   return (
     <>
-      {isZzimed && !isZzimed ? (
+      {isModal ? <GlobalModal content={isMessage} /> : null}
+      {!isZzimed ? (
         <LikeWrapper>
           <HeartIconFalse icon={regularHeart} onClick={toggleLike} />
         </LikeWrapper>
