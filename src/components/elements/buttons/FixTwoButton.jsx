@@ -34,6 +34,7 @@ const STbutton1 = styled.button`
   z-index: 20;
   border: none;
   margin: 0 auto;
+  cursor: pointer;
   span {
     font-weight: 700;
     font-size: 1.6rem;
@@ -72,6 +73,7 @@ const STbutton2 = styled.button`
   background: ${(props) => props.theme.darkgray};
   padding: 1rem;
   z-index: 20;
+  cursor: pointer;
   span {
     font-weight: 700;
     font-size: 1.6rem;
