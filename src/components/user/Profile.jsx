@@ -89,6 +89,7 @@ const Profile = () => {
             height={"2.8"}
             content={"로그아웃"}
             onClick={onLogoutHandler}
+            color={"subColor"}
           />
         </ProfileUserWrapper>
         <ProfileIconWrapper>
