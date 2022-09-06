@@ -16,6 +16,7 @@ const ItemZzimButton = ({ isZzim, isLogin, postId }) => {
   useEffect(() => {
     setModal(false);
   }, []);
+
   useEffect(() => {
     setZzimed(isZzim);
   }, [setZzimed, isZzim]);
@@ -28,22 +29,10 @@ const ItemZzimButton = ({ isZzim, isLogin, postId }) => {
     }
 
     if (!isZzimed) {
-      setModal(false);
       const { data } = await apis.like_post(postId);
-      if (data.isZzimed) {
-        setModal(true);
-        setMessage(data.msg);
-      }
-
       setZzimed(data.isZzimed);
     } else if (isZzimed) {
-      setModal(false);
       const { data } = await apis.unlike_post(postId);
-      if (!data.isZzimed) {
-        setModal(true);
-        setMessage(data.msg);
-      }
-
       setZzimed(data.isZzimed);
     }
   };
