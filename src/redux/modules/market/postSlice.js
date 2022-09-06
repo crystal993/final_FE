@@ -92,19 +92,12 @@ export const __deletePost = createAsyncThunk(
 );
 
 export const __updatePost = createAsyncThunk(
-  'post/__updatePost',
+  "post/__updatePost",
   async (arg, thunkAPI) => {
     console.log(arg);
     try {
-      // const { data } = await apis.edit_market_post(arg.data, arg.files);
-      // const { data } = await axios({
-      //   method: "put",
-      //   url: `http://54.180.143.106/api/post/${arg.id}`,
-      //   data: arg.data,
-      //   headers: config,
-      // });
-      // console.log(data);
-      const { data } = RESP.UPDATE_POST_SUCCESS;
+      const { data } = await apis.edit_market_post(arg.id, arg.data, arg.files);
+      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);

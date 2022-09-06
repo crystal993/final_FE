@@ -61,8 +61,7 @@ function Update() {
       purchasePrice: formData.purchasePrice,
       sellingPrice: formData.sellingPrice,
     };
-    dispatch(__updatePost({ data, files }));
-    reset();
+    dispatch(__updatePost({ id, data, files }));
   };
 
   //다중 이미지 preview
