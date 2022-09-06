@@ -21,7 +21,7 @@ export const Item = ({ item }) => {
             <Title>{item.title}</Title>
             <ItemInfoWrapper>
               <div>
-                {item.location} {item.createdAt}
+                {item.location} {item.time}
               </div>
             </ItemInfoWrapper>
             <Price>{item.sellingPrice}원</Price>

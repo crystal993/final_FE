@@ -90,7 +90,7 @@ const DetailInfo = () => {
       <DetailWrapper>
         <InfoWrapper>
           <P>
-            {item.itemCategory} {item.createdAt}
+            {item.itemCategory} {item.time}
           </P>
         </InfoWrapper>
         <Title>{item.title}</Title>
