@@ -73,6 +73,10 @@ const Img = styled.img`
   width: 20rem;
   height: 16rem;
   margin: 20px 10px;
+  border: none;
+  width: 100%;
+  object-fit: cover;
+  background-color: ${({ theme }) => theme.lightgray};
 `;
 
 const TextWrapper = styled.div`

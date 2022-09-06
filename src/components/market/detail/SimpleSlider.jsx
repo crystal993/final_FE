@@ -1,9 +1,9 @@
-import React from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import { v4 as uuidv4 } from 'uuid';
-import styled from 'styled-components';
+import React from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { v4 as uuidv4 } from "uuid";
+import styled from "styled-components";
 
 const SimpleSlider = ({ itemImgs }) => {
   const settings = {
@@ -29,20 +29,21 @@ const StyledSlider = styled(Slider)`
 
 const Img = styled.img`
   width: 100%;
-  height: 22.2rem;
+  object-fit: contain;
+  background-color: ${({ theme }) => theme.lightgray};
   @media screen and (min-width: 1024px) {
     /* Desktop */
-    height: 32.2rem;
+    height: 35.2rem;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     /* Tablet */
-    height: 25.2rem;
+    height: 28.2rem;
   }
 
   @media (max-width: 767px) {
     /* Mobile */
-    height: 22.2rem;
+    height: 25.2rem;
   }
 `;
 
