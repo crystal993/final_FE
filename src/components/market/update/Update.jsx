@@ -62,6 +62,7 @@ function Update() {
       sellingPrice: formData.sellingPrice,
     };
     dispatch(__updatePost({ id, data, files }));
+    navigate(`/market/detail/${id}`);
   };
 
   //다중 이미지 preview
