@@ -46,6 +46,7 @@ function Create() {
     };
     dispatch(__addPost({ data, files }));
     reset();
+    navigate(`/`);
   };
 
   //다중 이미지 preview
