@@ -12,6 +12,7 @@ import Button from "../../elements/GlobalButton";
 import Comment from "../comment/Comment";
 import DetailButton from "../../elements/buttons/DetailButton";
 import FixTwoButton from "../../elements/buttons/FixTwoButton";
+import PriceChart from "../../elements/chart/PriceChart";
 
 const DetailInfo = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const DetailInfo = () => {
   const item = useSelector((state) => state.marketPost.singlePost);
   const isLogin = useSelector((state) => state.user.userToken);
   const itemImgs = item.itemImgs;
+  console.log(item);
 
   useEffect(() => {
     dispatch(__getSinglePost({ id: id }));
@@ -119,6 +121,10 @@ const DetailInfo = () => {
             관심 {item.zzimCnt} 조회수 {item.viewCnt}
           </P>
         </InfoCntWrapper>
+        <PriceChart
+          purchasePrice={item.purchasePrice}
+          sellingPrice={item.sellingPrice}
+        />
         <ItemZzimButton postId={id} isLogin={isLogin} isZzim={item.isZzimed} />
         <Comment id={id} />
         {!item.isMine && <DetailButton></DetailButton>}
