@@ -29,7 +29,7 @@ const Menu = ({ open, ...props }) => {
               content={"로그인"}
               fontSize={"1.4rem"}
               fontWeight={900}
-              width={"22rem"}
+              width={"18rem"}
               height={"5rem"}
               onClick={onPathHandler}
             />
