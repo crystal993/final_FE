@@ -202,6 +202,7 @@ function Update() {
             />
 
             {/* location */}
+            <Label>위치</Label>
             <LocationWrapper>
               <IoIosLocate />
               <LocationInput {...register("location")} readOnly></LocationInput>
@@ -452,6 +453,7 @@ const TextArea = styled.textarea`
   font-size: 1.4rem;
   padding: 10px;
   text-indent: 5px;
+  margin-bottom: 4.7rem;
   &:focus {
     outline: none;
   }
@@ -497,9 +499,10 @@ const ImgWrapper = styled.div``;
 const LocationWrapper = styled.div`
   font-size: 1.4rem;
   height: 2.8rem;
-  margin: 2rem 0 4rem 0;
+  margin: 0.8rem 0 4rem 0;
   color: white;
   padding: 0.1rem 0.5rem;
+  margin-bottom: 4.7rem;
   background-color: ${({ theme }) => theme.darkgray};
 `;
 
