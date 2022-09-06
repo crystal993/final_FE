@@ -1,5 +1,5 @@
 import React from "react";
-import MyPageContainer from "./MyPageContainer";
+import MyPageChart from "./MyPageChart";
 import Profile from "./Profile";
 import styled from "styled-components";
 
@@ -9,7 +9,7 @@ const MyPage = () => {
     <>
       <MyPageWrapper>
         <Profile></Profile>
-        <MyPageContainer></MyPageContainer>
+        <MyPageChart></MyPageChart>
       </MyPageWrapper>
     </>
   );
