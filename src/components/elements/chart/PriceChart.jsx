@@ -1,7 +1,11 @@
 import styled from "styled-components";
-import React, { FunctionComponent } from "react";
+import React, { useEffect, useState } from "react";
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from "recharts";
 
+// A B C
+// A : 자기 등록 상품 가격 총합
+// B : 판매 완료된 자기 등록 상품 가격 총합
+// C : 내가 찜한 상품 가격 총합
 const mainColors = ["#B192F3", "#FFE47A"];
 
 const getPath = (x, y, width, height) => {
@@ -21,14 +25,22 @@ const TriangleBar = (props) => {
 };
 
 export default function PriceChart({ sellingPrice, purchasePrice }) {
+  const [pPrice, setPprice] = useState();
+  const [sPrice, setSprice] = useState();
+
+  useEffect(() => {
+    setSprice(sellingPrice);
+    setPprice(purchasePrice);
+  }, [setPprice, setSprice, purchasePrice, sellingPrice]);
+
   const data = [
     {
-      name: "현재가격",
-      price: purchasePrice,
+      name: "구매 당시 가격",
+      price: pPrice,
     },
     {
-      name: "판매가격",
-      price: sellingPrice,
+      name: "판매 희망가",
+      price: sPrice,
     },
   ];
 
