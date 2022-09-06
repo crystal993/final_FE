@@ -13,6 +13,7 @@ import Comment from "../comment/Comment";
 import DetailButton from "../../elements/buttons/DetailButton";
 import FixTwoButton from "../../elements/buttons/FixTwoButton";
 import PriceChart from "../../elements/chart/PriceChart";
+import GlobalModal from "../../elements/GlobalModal";
 
 const DetailInfo = () => {
   const dispatch = useDispatch();
@@ -73,10 +74,14 @@ const DetailInfo = () => {
     navigate(`/market/post/${id}`, { state: item });
   };
 
+  const [isModal, setModal] = useState(false);
+  const [isMessage, setMessage] = useState(null);
+
   const onDeleteHandler = (event) => {
     event.stopPropagation();
     // TODO:  추후에 모달로 바꿀 예정
-    const result = window.confirm("게시글을 삭제할래?");
+    // 모달 중에 예 아니요 선택하는 모달도 필요할 듯
+    const result = window.confirm("게시글을 삭제하겠습니까?");
     if (result) {
       return deleteHandler(id);
     } else {
@@ -86,6 +91,7 @@ const DetailInfo = () => {
 
   return (
     <>
+      {isModal ? <GlobalModal content={isMessage} /> : null}
       <SimpleSlider itemImgs={itemImgs} />
       <DetailWrapper>
         <InfoWrapper>
@@ -94,9 +100,18 @@ const DetailInfo = () => {
           </P>
         </InfoWrapper>
         <Title>{item.title}</Title>
-        <InfoWrapper>
+        <LinkWrapper>
           <Price>{item.sellingPrice}</Price>
-        </InfoWrapper>
+          <StIcon>
+            <span class="material-icons" onClick={sharekakao}>
+              share
+            </span>
+          </StIcon>
+        </LinkWrapper>
+        <PriceChart
+          purchasePrice={item.purchasePrice}
+          sellingPrice={item.sellingPrice}
+        />
         <LinkWrapper>
           <div>
             <StUserBox>
@@ -109,11 +124,6 @@ const DetailInfo = () => {
               </UserInfoTxt>
             </StUserBox>
           </div>
-          <StIcon>
-            <span class="material-icons" onClick={sharekakao}>
-              share
-            </span>
-          </StIcon>
         </LinkWrapper>
         <Content>{item.content}</Content>
         <InfoCntWrapper>
@@ -121,10 +131,6 @@ const DetailInfo = () => {
             관심 {item.zzimCnt} 조회수 {item.viewCnt}
           </P>
         </InfoCntWrapper>
-        <PriceChart
-          purchasePrice={item.purchasePrice}
-          sellingPrice={item.sellingPrice}
-        />
         <ItemZzimButton postId={id} isLogin={isLogin} isZzim={item.isZzimed} />
         <Comment id={id} />
         {!item.isMine && <DetailButton></DetailButton>}
@@ -193,6 +199,7 @@ const Title = styled.p`
 
 const Price = styled.p`
   font-size: 2.4rem;
+  color: ${({ theme }) => theme.mainColor};
   font-weight: bold;
 `;
 
