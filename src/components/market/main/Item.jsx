@@ -20,9 +20,7 @@ export const Item = ({ item }) => {
           <TextsWrapper>
             <Title>{item.title}</Title>
             <ItemInfoWrapper>
-              <div>
-                {item.location} {item.time}
-              </div>
+              {item.location} {item.time}
             </ItemInfoWrapper>
             <Price>{item.sellingPrice.toLocaleString("ko-KR")}원</Price>
           </TextsWrapper>
@@ -47,7 +45,7 @@ export default Item;
 const ItemWrapper = styled.div`
   width: 100%;
   /* border-radius: 10px; */
-  border-bottom: 1px solid #eee;
+  border-bottom: 2px solid ${({ theme }) => theme.lightgray};
   margin: auto;
   display: flex;
   flex-direction: row;
@@ -99,13 +97,15 @@ const Title = styled.div`
   white-space: nowrap;
   font-style: normal;
   font-weight: 500;
+  line-height: 2.3rem;
   font-size: 1.6rem;
 `;
 
 const ItemInfoWrapper = styled.div`
   display: flex;
-  font-size: 12px;
-  color: ${({ theme }) => theme.darkgray};
+  font-size: 1.2rem;
+  font-weight: medium;
+  color: ${({ theme }) => theme.gray};
 `;
 
 const Price = styled.h1`
