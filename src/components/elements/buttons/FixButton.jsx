@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-const FixButton = ({ content, onClick }) => {
+const FixButton = ({ content, onClick, version }) => {
   return (
-    <STbutton className="btn" onClick={onClick}>
+    <STbutton className="btn" onClick={onClick} version={version}>
       <span>{content}</span>
     </STbutton>
   );
@@ -17,8 +17,11 @@ const STbutton = styled.button`
   left: 0;
   right: 0;
   margin: 0 auto;
-  background: ${({ theme }) => theme.mainColor};
+  background: ${(props) =>
+    props.version === 2 ? props.theme.gray : props.theme.mainColor};
   padding: 1rem;
+  border: none;
+  cursor: pointer;
   span {
     font-weight: 700;
     font-size: 1.6rem;
@@ -26,10 +29,9 @@ const STbutton = styled.button`
     text-align: center;
     color: #ffffff;
   }
-  border: 1px solid gray;
-
-  .btn:hover {
-    cursor: pointer;
+  &:hover {
+    background: ${(props) =>
+      props.version === 2 ? props.theme.mainColor : props.theme.gray};
   }
 
   @media screen and (min-width: 1024px) {
