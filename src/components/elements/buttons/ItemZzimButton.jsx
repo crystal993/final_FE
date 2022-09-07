@@ -69,6 +69,7 @@ const HeartIconTrue = styled(FontAwesomeIcon)`
 `;
 
 const LikeWrapper = styled.div`
+  z-index: 100;
   display: flex;
   flex-direction: row;
   gap: 10px;
