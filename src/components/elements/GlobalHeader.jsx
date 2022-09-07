@@ -33,6 +33,10 @@ const GlobalHeader = () => {
   const node = useRef();
   const menuId = "main-menu";
 
+  const onPathHandler = (path) => {
+    navigate(path);
+  };
+
   useOnClickOutside(node, () => setOpen(false));
   return (
     <NavbarWrapper>
@@ -41,6 +45,7 @@ const GlobalHeader = () => {
           <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
           <Menu open={open} setOpen={setOpen} id={menuId} />
         </NavItem>
+        <NavItem onClick={() => onPathHandler("/")}>logo</NavItem>
         <NavItem>
           <SearchIcon onClick={() => onPathHandler("/search")} />
           {/* TODO 추후에 채팅 리스트 페이지 생기면 path 적용 */}
