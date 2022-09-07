@@ -10,6 +10,7 @@ import ImgView from "../../elements/ImgView";
 import RESP from "../../../server/response";
 import axios from "axios";
 import { IoIosLocate } from "react-icons/io";
+import InputResetButton from "../../elements/buttons/InputResetButton";
 
 function Create() {
   const dispatch = useDispatch();
@@ -115,6 +116,10 @@ function Create() {
   }
   getLocation(); //호출
 
+  const inputResetHandler = (inputId) => {
+    setValue(inputId, " ");
+  };
+
   return (
     <>
       <FormWrapper>
@@ -145,6 +150,7 @@ function Create() {
 
             <InputWrapper>
               <Input type="text" name="title" required {...register("title")} />
+              <InputResetButton onClick={() => inputResetHandler("title")} />
             </InputWrapper>
 
             <Label>구매 가격</Label>
@@ -155,6 +161,9 @@ function Create() {
                 name="purchasePrice"
                 required
                 {...register("purchasePrice")}
+              />
+              <InputResetButton
+                onClick={() => inputResetHandler("purchasePrice")}
               />
               <HelperText>
                 구매했을 당시 해당 물품의 가격을 적어주세요.
@@ -168,6 +177,9 @@ function Create() {
                 name="sellingPrice"
                 required
                 {...register("sellingPrice")}
+              />
+              <InputResetButton
+                onClick={() => inputResetHandler("sellingPrice")}
               />
               <HelperText>물품을 판매할 가격을 적어주세요.</HelperText>
             </InputWrapper>
@@ -196,7 +208,6 @@ function Create() {
               type="file"
               multiple
               onChange={changeImg}
-              // style={{ display: "none" }}
             />
             <ImgWrapper>
               {!isLoading && <ImgView imgUrls={itemImgs} />}
@@ -282,6 +293,7 @@ const Label = styled.label`
 
 const InputWrapper = styled.div`
   margin-bottom: 4.7rem;
+  position: relative;
 `;
 
 const Input = styled.input`
