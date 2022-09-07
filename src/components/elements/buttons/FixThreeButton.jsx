@@ -17,15 +17,15 @@ const FixThreeButton = ({
       <ButtonsWrapper>
         <STbutton1 onClick={onClick1}>
           <StIcon src={icon1} alt={content1}></StIcon>
-          <span>{content1}</span>
+          <StSpan>{content1}</StSpan>
         </STbutton1>
         <STbutton2 onClick={onClick2}>
           <StIcon src={icon2} alt={content2}></StIcon>
-          <span>{content2}</span>
+          <StSpan>{content2}</StSpan>
         </STbutton2>
         <STbutton3 onClick={onClick3}>
-          <StIcon src={icon2} alt={content2}></StIcon>
-          <span>{content3}</span>
+          <StIcon src={icon3} alt={content3}></StIcon>
+          <StSpan>{content3}</StSpan>
         </STbutton3>
       </ButtonsWrapper>
     </>
@@ -176,4 +176,7 @@ const STbutton3 = styled.button`
 
 const StIcon = styled.img`
   fill: #ffffff;
+  width: 1.6rem;
 `;
+
+const StSpan = styled.span``;
