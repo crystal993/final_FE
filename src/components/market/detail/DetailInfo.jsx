@@ -8,13 +8,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import ItemZzimButton from "../../elements/buttons/ItemZzimButton";
 import SimpleSlider from "./SimpleSlider";
-import Button from "../../elements/GlobalButton";
 import Comment from "../comment/Comment";
 import FixButton from "../../elements/buttons/FixButton";
-import FixTwoButton from "../../elements/buttons/FixTwoButton";
+import FixThreeButton from "../../elements/buttons/FixThreeButton";
 import PriceChart from "../../elements/chart/PriceChart";
 import GlobalModal from "../../elements/GlobalModal";
 import { ReactComponent as ProfileIcon } from "../../../assets/icons/profile_img_sm.svg";
+import EditIcon from "../../../assets/icons/edit_document2.svg";
+import DeleteIcon from "../../../assets/icons/delete.svg";
+import CheckIcon from "../../../assets/icons/check_circle.svg";
 
 const DetailInfo = () => {
   const dispatch = useDispatch();
@@ -132,11 +134,15 @@ const DetailInfo = () => {
         <Comment id={id} />
         {!item.isMine && <FixButton content={"채팅으로 거래하기"}></FixButton>}
         {item.isMine && (
-          <FixTwoButton
-            content1={"수정하기"}
-            content2={"삭제하기"}
-            onClick1={onEditHandler}
-            onClick2={onDeleteHandler}
+          <FixThreeButton
+            content1={"삭제하기"}
+            content2={"거래완료"}
+            content3={"수정하기"}
+            onClick1={onDeleteHandler}
+            onClick3={onEditHandler}
+            icon1={DeleteIcon}
+            icon2={CheckIcon}
+            icon3={EditIcon}
           />
         )}
       </DetailWrapper>
