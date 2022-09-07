@@ -24,7 +24,7 @@ export const Item = ({ item }) => {
                 {item.location} {item.time}
               </div>
             </ItemInfoWrapper>
-            <Price>{item.sellingPrice}원</Price>
+            <Price>{item.sellingPrice.toLocaleString("ko-KR")}원</Price>
           </TextsWrapper>
           <IconsWrapper>
             <IconWrapper>
@@ -47,8 +47,8 @@ export default Item;
 const ItemWrapper = styled.div`
   width: 100%;
   /* border-radius: 10px; */
-  border: 1px solid #eee;
-  margin: 0.2rem auto;
+  border-bottom: 1px solid #eee;
+  margin: auto;
   display: flex;
   flex-direction: row;
   align-content: center;
@@ -72,7 +72,7 @@ const ImgWrapper = styled.div`
 const Img = styled.img`
   width: 20rem;
   height: 16rem;
-  margin: 20px 10px;
+  margin: 2rem 1rem;
   border: none;
   width: 100%;
   object-fit: cover;
@@ -82,17 +82,21 @@ const Img = styled.img`
 const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 50%;
   height: 16rem;
-  padding: 1rem;
 `;
 
 const TextsWrapper = styled.div`
-  margin-bottom: 2.4rem;
+  margin: 0.2rem 1rem;
 `;
 
-const Title = styled.h1`
+const Title = styled.div`
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-style: normal;
   font-weight: 500;
   font-size: 1.6rem;

@@ -13,6 +13,7 @@ import ImgView from "../../elements/ImgView";
 import RESP from "../../../server/response";
 import axios from "axios";
 import { IoIosLocate } from "react-icons/io";
+import InputResetButton from "../../elements/buttons/InputResetButton";
 
 function Update() {
   const dispatch = useDispatch();
@@ -135,6 +136,10 @@ function Update() {
     dispatch(__getSinglePost({ itemId: id }));
   }, [dispatch]);
 
+  const inputResetHandler = (inputId) => {
+    setValue(inputId, " ");
+  };
+
   return (
     <>
       <FormWrapper>
@@ -165,6 +170,7 @@ function Update() {
 
             <InputWrapper>
               <Input type="text" name="title" required {...register("title")} />
+              <InputResetButton onClick={() => inputResetHandler("title")} />
             </InputWrapper>
 
             <Label>구매 가격</Label>
@@ -175,6 +181,9 @@ function Update() {
                 name="purchasePrice"
                 required
                 {...register("purchasePrice")}
+              />
+              <InputResetButton
+                onClick={() => inputResetHandler("purchasePrice")}
               />
               <HelperText>
                 구매했을 당시 해당 물품의 가격을 적어주세요.
@@ -188,6 +197,9 @@ function Update() {
                 name="sellingPrice"
                 required
                 {...register("sellingPrice")}
+              />
+              <InputResetButton
+                onClick={() => inputResetHandler("sellingPrice")}
               />
               <HelperText>물품을 판매할 가격을 적어주세요.</HelperText>
             </InputWrapper>
@@ -302,6 +314,7 @@ const Label = styled.label`
 
 const InputWrapper = styled.div`
   margin-bottom: 4.7rem;
+  position: relative;
 `;
 
 const Input = styled.input`
@@ -325,6 +338,7 @@ const Input = styled.input`
     border-color: ${({ theme }) => theme.mainColor};
   }
   &:focus {
+    border-color: ${({ theme }) => theme.mainColor};
     outline: none;
   }
   &[type="file"] {
@@ -454,7 +468,11 @@ const TextArea = styled.textarea`
   padding: 10px;
   text-indent: 5px;
   margin-bottom: 4.7rem;
+  &:hover {
+    border-color: ${({ theme }) => theme.mainColor};
+  }
   &:focus {
+    border-color: ${({ theme }) => theme.mainColor};
     outline: none;
   }
   &::placeholder {
