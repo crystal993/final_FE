@@ -122,7 +122,7 @@ function Create() {
 
   const inputOnlyNumHandler = (value, inputId) => {
     const onlyNumber = value.replace(/[^0-9]/g, "");
-    return setValue("purchasePrice", onlyNumber);
+    return setValue(inputId, onlyNumber);
   };
 
   return (
