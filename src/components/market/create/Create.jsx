@@ -120,6 +120,11 @@ function Create() {
     setValue(inputId, " ");
   };
 
+  const inputOnlyNumHandler = (value, inputId) => {
+    const onlyNumber = value.replace(/[^0-9]/g, "");
+    return setValue("purchasePrice", onlyNumber);
+  };
+
   return (
     <>
       <FormWrapper>
@@ -157,10 +162,14 @@ function Create() {
 
             <InputWrapper>
               <Input
-                type="text"
+                type="number"
                 name="purchasePrice"
                 required
-                {...register("purchasePrice")}
+                {...register("purchasePrice", {
+                  validate: (value) => {
+                    inputOnlyNumHandler(value, "purchasePrice");
+                  },
+                })}
               />
               <InputResetButton
                 onClick={() => inputResetHandler("purchasePrice")}
@@ -173,10 +182,14 @@ function Create() {
 
             <InputWrapper>
               <Input
-                type="text"
+                type="number"
                 name="sellingPrice"
                 required
-                {...register("sellingPrice")}
+                {...register("sellingPrice", {
+                  validate: (value) => {
+                    inputOnlyNumHandler(value, "sellingPrice");
+                  },
+                })}
               />
               <InputResetButton
                 onClick={() => inputResetHandler("sellingPrice")}
