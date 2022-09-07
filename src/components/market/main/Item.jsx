@@ -24,7 +24,7 @@ export const Item = ({ item }) => {
                 {item.location} {item.time}
               </div>
             </ItemInfoWrapper>
-            <Price>{item.sellingPrice}원</Price>
+            <Price>{item.sellingPrice.toLocaleString("ko-KR")}원</Price>
           </TextsWrapper>
           <IconsWrapper>
             <IconWrapper>
