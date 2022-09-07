@@ -10,7 +10,7 @@ import ItemZzimButton from "../../elements/buttons/ItemZzimButton";
 import SimpleSlider from "./SimpleSlider";
 import Button from "../../elements/GlobalButton";
 import Comment from "../comment/Comment";
-import DetailButton from "../../elements/buttons/DetailButton";
+import FixButton from "../../elements/buttons/FixButton";
 import FixTwoButton from "../../elements/buttons/FixTwoButton";
 import PriceChart from "../../elements/chart/PriceChart";
 import GlobalModal from "../../elements/GlobalModal";
@@ -130,7 +130,7 @@ const DetailInfo = () => {
         </InfoCntWrapper>
         <ItemZzimButton postId={id} isLogin={isLogin} isZzim={item.isZzimed} />
         <Comment id={id} />
-        {!item.isMine && <DetailButton></DetailButton>}
+        {!item.isMine && <FixButton content={"채팅으로 거래하기"}></FixButton>}
         {item.isMine && (
           <FixTwoButton
             content1={"수정하기"}
