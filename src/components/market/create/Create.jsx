@@ -46,6 +46,7 @@ function Create() {
     };
     dispatch(__addPost({ data, files }));
     reset();
+    navigate(`/`);
   };
 
   //다중 이미지 preview
@@ -181,6 +182,7 @@ function Create() {
             />
 
             {/* location */}
+            <Label>위치</Label>
             <LocationWrapper>
               <IoIosLocate />
               <LocationInput {...register("location")} readOnly></LocationInput>
@@ -297,7 +299,7 @@ const Input = styled.input`
   border-left-width: 0;
   border-right-width: 0;
   border-top-width: 0;
-  border-bottom-width: 3;
+  border-bottom-width: 2px;
   transition: all 0.3s;
   &:hover {
     border-color: ${({ theme }) => theme.mainColor};
@@ -383,7 +385,7 @@ const Select = styled.select`
   transition: all 0.3s;
   font-size: 1.4rem;
   &:hover {
-    border-color: #40a9ff;
+    border-color: ${({ theme }) => theme.mainColor};
     border-right-width: 1px;
   }
   &:focus {
@@ -431,6 +433,7 @@ const TextArea = styled.textarea`
   font-size: 1.4rem;
   padding: 10px;
   text-indent: 5px;
+  margin-bottom: 4.7rem;
   &:focus {
     outline: none;
   }
@@ -476,9 +479,10 @@ const ImgWrapper = styled.div``;
 const LocationWrapper = styled.div`
   font-size: 1.4rem;
   height: 2.8rem;
-  margin: 2rem 0 4rem 0;
+  margin: 0.8rem 0 4rem 0;
   color: white;
   padding: 0.1rem 0.5rem;
+  margin-bottom: 4.7rem;
   background-color: ${({ theme }) => theme.darkgray};
 `;
 

@@ -4,8 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../redux/modules/user/userActions";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { ReactComponent as EditDocumentIcon } from "../../assets/icons/edit_document.svg";
+import { ReactComponent as FavoriteIcon } from "../../assets/icons/favorite.svg";
+import { ReactComponent as ChatBubbleIcon } from "../../assets/icons/chat_bubble.svg";
+import { ReactComponent as VisibilityIcon } from "../../assets/icons/visibility.svg";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -89,29 +92,30 @@ const Profile = () => {
             height={"2.8"}
             content={"로그아웃"}
             onClick={onLogoutHandler}
+            color={"subColor"}
           />
         </ProfileUserWrapper>
         <ProfileIconWrapper>
           <IconWrapper onClick={onPathHandler}>
-            <span class="material-icons">edit_document</span>
+            <StEditDocumentIcon />
             <StTxt fontSize={"1rem"} fontWeight={100}>
               내가 쓴 글
             </StTxt>
           </IconWrapper>
           <IconWrapper>
-            <span class="material-icons">favorite_border</span>
+            <StFavoriteIcon />
             <StTxt fontSize={"1rem"} fontWeight={100}>
               찜목록
             </StTxt>
           </IconWrapper>
           <IconWrapper>
-            <span class="material-icons">message</span>
+            <StChatBubbleIcon />
             <StTxt fontSize={"1rem"} fontWeight={100}>
               채팅목록
             </StTxt>
           </IconWrapper>
           <IconWrapper>
-            <span class="material-icons">visibility</span>
+            <StVisibilityIcon />
             <StTxt fontSize={"1rem"} fontWeight={100}>
               최근 본 상품
             </StTxt>
@@ -219,6 +223,29 @@ const IconWrapper = styled.div`
     height: 5rem;
     margin: 0 0.2rem;
   }
+  &:hover {
+    background-color: ${({ theme }) => theme.lightgray};
+  }
+`;
+
+const StEditDocumentIcon = styled(EditDocumentIcon)`
+  width: 2.2rem;
+  height: 2.2rem;
+`;
+
+const StFavoriteIcon = styled(FavoriteIcon)`
+  width: 2.2rem;
+  height: 2.2rem;
+`;
+
+const StChatBubbleIcon = styled(ChatBubbleIcon)`
+  width: 2.2rem;
+  height: 2.2rem;
+`;
+
+const StVisibilityIcon = styled(VisibilityIcon)`
+  width: 2.2rem;
+  height: 2.2rem;
 `;
 
 export default Profile;

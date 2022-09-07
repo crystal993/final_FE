@@ -1,16 +1,15 @@
 import React from "react";
-import MyPageContainer from "./MyPageContainer";
+import MyPageChart from "./MyPageChart";
 import Profile from "./Profile";
 import styled from "styled-components";
 
 const MyPage = () => {
   const userInfo = localStorage.getItem("user-info");
-  console.log(JSON.parse(userInfo));
   return (
     <>
       <MyPageWrapper>
         <Profile></Profile>
-        <MyPageContainer></MyPageContainer>
+        <MyPageChart></MyPageChart>
       </MyPageWrapper>
     </>
   );

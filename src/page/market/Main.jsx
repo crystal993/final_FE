@@ -6,10 +6,14 @@ import MainContainer from "../../components/market/main/MainContainer";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import AddPostButton from "../../components/elements/buttons/AddPostButton";
 const Main = () => {
   const navigate = useNavigate();
   const isLogin = useSelector((state) => state.user.userToken);
-  console.log(isLogin);
+
+  const onPathHandler = () => {
+    navigate("/market/post");
+  };
   return (
     <>
       <Layout>
@@ -17,41 +21,12 @@ const Main = () => {
         <MainContainer />
         {isLogin && (
           <>
-            <AddPostButton
-              onClick={() => {
-                navigate("/market/post");
-              }}
-            >
-              +
-            </AddPostButton>
+            <AddPostButton onClick={onPathHandler}></AddPostButton>
           </>
         )}
-
-        <Footer />
       </Layout>
     </>
   );
 };
-
-const AddPostButton = styled.button`
-  border-radius: 50px;
-  width: 50px;
-  height: 50px;
-  border: none;
-  position: fixed;
-
-  @media (min-width: 1024px) {
-    right: 10%;
-    bottom: 5%;
-  }
-  @media (min-width: 768px) and (max-width: 1023px) {
-    right: 7%;
-    bottom: 5%;
-  }
-  @media (max-width: 767px) {
-    right: 5%;
-    bottom: 5%;
-  }
-`;
 
 export default Main;

@@ -61,8 +61,7 @@ export const apis = {
     for (let i = 0; i < files.length; i++) {
       formData.append("multipartFileList", files[i]);
     }
-
-    api.put(`/items/detail/${id}`, formData);
+    return api.put(`/items/detail/${id}`, formData);
   },
   delete_market_post: (id) => api.delete(`/items/detail/${id}`),
 

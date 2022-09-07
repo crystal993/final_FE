@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
-import RESP from '../../../server/response';
-import { apis } from '../../../shared/axios';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import RESP from "../../../server/response";
+import { apis } from "../../../shared/axios";
 
 const initialState = {
   list: [],
@@ -12,7 +12,7 @@ const initialState = {
 
 // 고양이 , 강아지 필터링
 export const getData = createAsyncThunk(
-  'mainFilter/getData',
+  "mainFilter/getData",
   async (payload, thunkApi) => {
     console.log(payload);
     try {
@@ -29,7 +29,7 @@ export const getData = createAsyncThunk(
 );
 
 export const __getPost = createAsyncThunk(
-  'post/__getPost',
+  "post/__getPost",
   async (arg, thunkAPI) => {
     try {
       const { data } = await apis.get_market_posts();
@@ -42,7 +42,7 @@ export const __getPost = createAsyncThunk(
 );
 
 export const __getItemCategories = createAsyncThunk(
-  'category/__getItemCategories',
+  "category/__getItemCategories",
   async (arg, thunkAPI) => {
     try {
       const { data } = await apis.get_market_category_posts(arg.itemCategory);
@@ -54,7 +54,7 @@ export const __getItemCategories = createAsyncThunk(
 );
 
 export const __getSinglePost = createAsyncThunk(
-  'post/__getSinglePost',
+  "post/__getSinglePost",
   async (arg, thunkAPI) => {
     try {
       console.log(arg.id);
@@ -68,7 +68,7 @@ export const __getSinglePost = createAsyncThunk(
 );
 
 export const __addPost = createAsyncThunk(
-  'post/__addPost',
+  "post/__addPost",
   async (arg, thunkAPI) => {
     try {
       const { data } = await apis.create_market_post(arg.data, arg.files);
@@ -80,7 +80,7 @@ export const __addPost = createAsyncThunk(
 );
 
 export const __deletePost = createAsyncThunk(
-  'post/__deletePost',
+  "post/__deletePost",
   async (arg, thunkAPI) => {
     try {
       const { data } = await apis.delete_market_post(arg.id);
@@ -92,19 +92,12 @@ export const __deletePost = createAsyncThunk(
 );
 
 export const __updatePost = createAsyncThunk(
-  'post/__updatePost',
+  "post/__updatePost",
   async (arg, thunkAPI) => {
     console.log(arg);
     try {
-      // const { data } = await apis.edit_market_post(arg.data, arg.files);
-      // const { data } = await axios({
-      //   method: "put",
-      //   url: `http://54.180.143.106/api/post/${arg.id}`,
-      //   data: arg.data,
-      //   headers: config,
-      // });
-      // console.log(data);
-      const { data } = RESP.UPDATE_POST_SUCCESS;
+      const { data } = await apis.edit_market_post(arg.id, arg.data, arg.files);
+      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
@@ -113,7 +106,7 @@ export const __updatePost = createAsyncThunk(
 );
 
 export const postSlice = createSlice({
-  name: 'postSlice',
+  name: "postSlice",
   initialState,
   reducers: {},
   extraReducers: {
