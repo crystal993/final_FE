@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { IoIosSearch } from "react-icons/io";
 import styled from "styled-components";
 import Burger from "./header/Burger";
 import Menu from "./header/Menu";
+import { ReactComponent as ChatIcon } from "../../assets/icons/comment.svg";
+import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
 
 const GlobalHeader = () => {
   const navigate = useNavigate();
@@ -41,11 +42,9 @@ const GlobalHeader = () => {
           <Menu open={open} setOpen={setOpen} id={menuId} />
         </NavItem>
         <NavItem>
-          <IoIosSearch
-            onClick={() => {
-              navigate("/search");
-            }}
-          />
+          <SearchIcon onClick={() => onPathHandler("/search")} />
+          {/* TODO 추후에 채팅 리스트 페이지 생기면 path 적용 */}
+          <ChatIcon />
         </NavItem>
       </Navbar>
     </NavbarWrapper>
@@ -75,7 +74,10 @@ const Navbar = styled.nav`
 const NavItem = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   font-size: 1.8rem;
+  gap: 2rem;
+  cursor: pointer;
+  width: fit-content;
 `;
