@@ -14,6 +14,7 @@ import RESP from "../../../server/response";
 import axios from "axios";
 import { IoIosLocate } from "react-icons/io";
 import InputResetButton from "../../elements/buttons/InputResetButton";
+import FixButton from "../../elements/buttons/FixButton";
 
 function Update() {
   const dispatch = useDispatch();
@@ -246,9 +247,7 @@ function Update() {
             <ImgWrapper>
               {!isLoading && <ImgView imgUrls={itemImgs} />}
             </ImgWrapper>
-            <ButtonWrapper>
-              <Button content={"등록"} size={"small"} />
-            </ButtonWrapper>
+            <FixButton content={"게시글 수정하기"} version={2} />
           </Container>
         </Form>
       </FormWrapper>

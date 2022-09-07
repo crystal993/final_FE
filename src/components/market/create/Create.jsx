@@ -11,6 +11,7 @@ import RESP from "../../../server/response";
 import axios from "axios";
 import { IoIosLocate } from "react-icons/io";
 import InputResetButton from "../../elements/buttons/InputResetButton";
+import FixButton from "../../elements/buttons/FixButton";
 
 function Create() {
   const dispatch = useDispatch();
@@ -225,9 +226,7 @@ function Create() {
             <ImgWrapper>
               {!isLoading && <ImgView imgUrls={itemImgs} />}
             </ImgWrapper>
-            <ButtonWrapper>
-              <Button content={"등록"} size={"small"} />
-            </ButtonWrapper>
+            <FixButton content={"게시글 등록하기"} version={2} />
           </Container>
         </Form>
       </FormWrapper>
@@ -255,6 +254,7 @@ const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 20rem;
 `;
 
 const TitleWrapper = styled.div`
