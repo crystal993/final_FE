@@ -305,6 +305,7 @@ const Input = styled.input`
     border-color: ${({ theme }) => theme.mainColor};
   }
   &:focus {
+    border-color: ${({ theme }) => theme.mainColor};
     outline: none;
   }
   &[type="file"] {
@@ -434,7 +435,11 @@ const TextArea = styled.textarea`
   padding: 10px;
   text-indent: 5px;
   margin-bottom: 4.7rem;
+  &:hover {
+    border-color: ${({ theme }) => theme.mainColor};
+  }
   &:focus {
+    border-color: ${({ theme }) => theme.mainColor};
     outline: none;
   }
   &::placeholder {
