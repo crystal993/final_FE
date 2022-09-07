@@ -72,7 +72,7 @@ const ImgWrapper = styled.div`
 const Img = styled.img`
   width: 20rem;
   height: 16rem;
-  margin: 20px 10px;
+  margin: 2rem 1rem;
   border: none;
   width: 100%;
   object-fit: cover;
@@ -82,14 +82,13 @@ const Img = styled.img`
 const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
   width: 50%;
   height: 16rem;
-  padding: 1rem;
 `;
 
 const TextsWrapper = styled.div`
-  margin-bottom: 2.4rem;
+  margin: 0.2rem 1rem;
 `;
 
 const Title = styled.h1`
