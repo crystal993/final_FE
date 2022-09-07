@@ -45,7 +45,9 @@ const GlobalHeader = () => {
           <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
           <Menu open={open} setOpen={setOpen} id={menuId} />
         </NavItem>
-        <NavItem onClick={() => onPathHandler("/")}>logo</NavItem>
+        <NavItem onClick={() => onPathHandler("/")}>
+          <span style={{ marginRight: "-1.5rem" }}>LOGO</span>
+        </NavItem>
         <NavItem>
           <SearchIcon onClick={() => onPathHandler("/search")} />
           {/* TODO 추후에 채팅 리스트 페이지 생기면 path 적용 */}
