@@ -47,8 +47,8 @@ export default Item;
 const ItemWrapper = styled.div`
   width: 100%;
   /* border-radius: 10px; */
-  border: 1px solid #eee;
-  margin: 0.2rem auto;
+  border-bottom: 1px solid #eee;
+  margin: auto;
   display: flex;
   flex-direction: row;
   align-content: center;
