@@ -21,7 +21,7 @@ export const Item = ({ item }) => {
             <Title>{item.title}</Title>
             <ItemInfoWrapper>
               <div>
-                {item.location} {item.createdAt}
+                {item.location} {item.time}
               </div>
             </ItemInfoWrapper>
             <Price>{item.sellingPrice}원</Price>
@@ -73,6 +73,10 @@ const Img = styled.img`
   width: 20rem;
   height: 16rem;
   margin: 20px 10px;
+  border: none;
+  width: 100%;
+  object-fit: cover;
+  background-color: ${({ theme }) => theme.lightgray};
 `;
 
 const TextWrapper = styled.div`
