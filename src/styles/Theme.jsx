@@ -15,6 +15,7 @@ export const lightTheme = {
 
   // button
   InputResetButtonColor: "#D9D9D9",
+  buttonRadius: "1rem",
 
   // transition
   transition: "all 0.3s",
