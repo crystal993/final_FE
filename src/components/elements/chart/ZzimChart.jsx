@@ -11,6 +11,10 @@ import {
 } from "recharts";
 import styled from "styled-components";
 
+// // A B C
+// A : 자기 등록 상품 가격 총합
+// B : 판매 완료된 자기 등록 상품 가격 총합
+// C : 내가 찜한 상품 가격 총합
 const data = [
   {
     name: "사료",
