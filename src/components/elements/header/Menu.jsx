@@ -21,6 +21,8 @@ const Menu = ({ open, ...props }) => {
     dispatch(__getItemCategories({ itemCategory }));
   };
 
+  const user = JSON.parse(localStorage.getItem("user-info"));
+  const nickname = user?.nickname;
   return (
     <StMenu open={open} aria-hidden={!isHidden} {...props}>
       {!isLogin && (
@@ -48,7 +50,7 @@ const Menu = ({ open, ...props }) => {
               <UserImgBox>
                 <StProfileIcon />
               </UserImgBox>
-              <h3>닉네임</h3>
+              <h3>{nickname}</h3>
             </StUserBox>
             <StLink href="/mypage" tabIndex={tabIndex}>
               <span aria-hidden="true"></span>

@@ -71,6 +71,9 @@ const Profile = () => {
     navigate(path);
   };
 
+  const user = JSON.parse(localStorage.getItem("user-info"));
+  const nickname = user?.nickname;
+
   return (
     <>
       <ProfileWrapper>
@@ -81,7 +84,7 @@ const Profile = () => {
             </UserImgBox>
             <UserTxtWrapper>
               <StTxt fontSize={"1.3rem"} fontWeight={900}>
-                닉네임
+                {nickname}
               </StTxt>
               <StTxt fontSize={"1rem"} fontWeight={100}>
                 {location}
