@@ -91,7 +91,12 @@ const TextsWrapper = styled.div`
   margin: 0.2rem 1rem;
 `;
 
-const Title = styled.h1`
+const Title = styled.div`
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-style: normal;
   font-weight: 500;
   font-size: 1.6rem;
