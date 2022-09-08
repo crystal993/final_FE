@@ -1,13 +1,19 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { __deleteRecentKeyword } from "../../redux/modules/searchSlice";
 import { ReactComponent as DeleteIcon } from "../../assets/icons/close2.svg";
 
 const RecentSearchKeyword = ({ keyword }) => {
+  const dispatch = useDispatch();
+  const onDeleteKeywordHandler = (keyword) => {
+    dispatch(__deleteRecentKeyword({ searchWord: keyword }));
+  };
   return (
     <KeywordWrapper>
       <KeywordButtonWrapper>
         <Keyword>{keyword}</Keyword>
-        <StDeletIcon />
+        <StDeletIcon onClick={() => onDeleteKeywordHandler(keyword)} />
       </KeywordButtonWrapper>
     </KeywordWrapper>
   );

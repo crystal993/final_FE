@@ -80,4 +80,6 @@ export const apis = {
   get_popular_keywords: () => api.get(`/items/search/popularity`),
   get_recent_keywords: () => api.get(`/items/search`),
   delete_all_keywords: () => api.delete(`/items/search/all`),
+  delete_keyword: (searchWord) =>
+    api.delete(`/items/search/?searchWord=${searchWord}`),
 };

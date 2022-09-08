@@ -49,6 +49,20 @@ export const __deleteAllRecentKeywords = createAsyncThunk(
   }
 );
 
+// 최근 검색어 개별 삭제
+export const __deleteRecentKeyword = createAsyncThunk(
+  "post/__deleteRecentKeyword",
+  async (arg, thunkAPI) => {
+    try {
+      console.log(arg);
+      const { data } = await apis.delete_keyword(arg.searchWord);
+      return thunkAPI.fulfillWithValue(arg);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
+
 export const searchSlice = createSlice({
   name: "searchSlice",
   initialState,
@@ -88,6 +102,21 @@ export const searchSlice = createSlice({
       console.log(state.recentKeywordList);
     },
     [__deleteAllRecentKeywords.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.err = action.payload;
+    },
+    // 최근 검색어 개별 삭제
+    [__deleteRecentKeyword.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__deleteRecentKeyword.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      const target = state.recentKeywordList.findIndex(
+        (recentKeyword) => recentKeyword.searchWord === action.payload
+      );
+      state.recentKeywordList.splice(target, 1);
+    },
+    [__deleteRecentKeyword.rejected]: (state, action) => {
       state.isLoading = false;
       state.err = action.payload;
     },
