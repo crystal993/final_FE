@@ -79,4 +79,5 @@ export const apis = {
   //search
   get_popular_keywords: () => api.get(`/items/search/popularity`),
   get_recent_keywords: () => api.get(`/items/search`),
+  delete_all_keywords: () => api.delete(`/items/search/all`),
 };
