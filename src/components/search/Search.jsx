@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { __deleteAllRecentKeywords } from "../../redux/modules/searchSlice";
 import GlobalToggle from "../elements/GlobalToggle";
 import PopularSearchList from "./PopularSearchList";
 import RecentSearchList from "./RecentSearchList";
 
 const Search = () => {
+  const dispatch = useDispatch();
   const [isToggled, setIsToggled] = useState(false);
 
   // TODO 최근 검색어 자동 저장 켜기 끄기 기능
@@ -15,6 +18,11 @@ const Search = () => {
       //TODO dispatch
     }
     setIsToggled((prev) => !prev);
+  };
+
+  const onAllRecentDeleteHandler = () => {
+    alert("삭제할까요?");
+    dispatch(__deleteAllRecentKeywords("안녕"));
   };
 
   return (
@@ -31,7 +39,9 @@ const Search = () => {
               <p>자동 저장</p>
               <GlobalToggle isToggled={isToggled} onToggle={onToggleHandler} />
             </ToggleWrapper>
-            <AllDeleteButton>모두 지우기</AllDeleteButton>
+            <AllDeleteButton onClick={() => onAllRecentDeleteHandler()}>
+              모두 지우기
+            </AllDeleteButton>
           </ButtonsWrapper>
         </TitleWrapper>
         <RecentSearchList></RecentSearchList>
