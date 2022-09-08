@@ -7,6 +7,7 @@ import RecentSearchList from "./RecentSearchList";
 const Search = () => {
   const [isToggled, setIsToggled] = useState(false);
 
+  // TODO 최근 검색어 자동 저장 켜기 끄기 기능
   const onToggleHandler = () => {
     if (isToggled) {
       //TODO dispatch
