@@ -75,4 +75,7 @@ export const apis = {
 
   //logout
   logout: () => api.post(`/members/logout`),
+
+  //search
+  get_popular_keywords: () => api.get(`/items/search/popularity`),
 };

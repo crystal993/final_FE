@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Keyword from "./PopularSearchKeyword";
+import { v4 as uuidv4 } from "uuid";
+import { useDispatch, useSelector } from "react-redux";
+import { __getPopularKeywords } from "../../redux/modules/searchSlice";
 
 const PopularSearchList = () => {
-  const keywords = ["keyword1dasdasdadasdasd", "keyword2", "keyword3"];
+  const dispatch = useDispatch();
+  const keywords = useSelector((state) => state.search.popularKeywordList);
+
+  useEffect(() => {
+    dispatch(__getPopularKeywords());
+  }, []);
+
   return (
     <PopularSearchWrapper>
       {keywords?.map((keyword) => {
-        return <Keyword keyword={keyword} key={keyword.id} />;
+        return <Keyword keyword={keyword.searchWord} key={uuidv4()} />;
       })}
     </PopularSearchWrapper>
   );
