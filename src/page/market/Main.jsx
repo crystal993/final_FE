@@ -6,13 +6,14 @@ import MainContainer from '../../components/market/main/MainContainer';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import AddPostButton from '../../components/elements/buttons/AddPostButton';
 
 const Main = () => {
   const navigate = useNavigate();
   const isLogin = useSelector((state) => state.user.userToken);
 
   const onPathHandler = () => {
-    navigate("/market/post");
+    navigate('/market/post');
   };
 
   return (
