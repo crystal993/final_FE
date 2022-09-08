@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import GlobalToggle from "../elements/GlobalToggle";
 import PopularSearchList from "./PopularSearchList";
 import RecentSearchList from "./RecentSearchList";
 
 const Search = () => {
+  const [isToggled, setIsToggled] = useState(false);
+
+  const onToggleHandler = () => {
+    if (isToggled) {
+      //TODO dispatch
+    } else {
+      //TODO dispatch
+    }
+    setIsToggled((prev) => !prev);
+  };
+
   return (
     <SearchWrapper>
       <PopularSearchWrapper>
@@ -14,7 +26,10 @@ const Search = () => {
         <TitleWrapper>
           <Title>최근 검색어</Title>
           <ButtonsWrapper>
-            <p>토글</p>
+            <ToggleWrapper>
+              <p>자동 저장</p>
+              <GlobalToggle isToggled={isToggled} onToggle={onToggleHandler} />
+            </ToggleWrapper>
             <AllDeleteButton>모두 지우기</AllDeleteButton>
           </ButtonsWrapper>
         </TitleWrapper>
@@ -50,7 +65,7 @@ const Title = styled.h1`
 `;
 
 const ButtonsWrapper = styled.div`
-  width: 20%;
+  width: 33%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -64,6 +79,14 @@ const ButtonsWrapper = styled.div`
 
 const AllDeleteButton = styled.div`
   cursor: pointer;
+`;
+
+const ToggleWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 0.6rem;
 `;
 
 export default Search;
