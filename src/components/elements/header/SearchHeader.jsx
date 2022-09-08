@@ -38,6 +38,7 @@ const SearchHeader = () => {
         <NavItem>
           <StForm onSubmit={handleSubmit(onSearchResultHandler)}>
             <StInput
+              placeholder="검색어를 입력해주세요."
               type="text"
               name="keyword"
               required
@@ -92,12 +93,24 @@ const StInput = styled.input`
   color: rgba(0, 0, 0, 0.85);
   padding: 0.4rem 1.1rem;
   border: 1px solid #d9d9d9;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 2.3rem;
   &:hover {
     border-color: ${({ theme }) => theme.mainColor};
   }
   &:focus {
     border-color: ${({ theme }) => theme.mainColor};
     outline: none;
+  }
+  &::placeholder {
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 2.3rem;
+    color: ${({ theme }) => theme.gray};
   }
   @media (min-width: 1024px) {
     width: 40rem;
