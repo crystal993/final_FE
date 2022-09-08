@@ -21,8 +21,7 @@ const Search = () => {
   };
 
   const onAllRecentDeleteHandler = () => {
-    alert("삭제할까요?");
-    dispatch(__deleteAllRecentKeywords("안녕"));
+    dispatch(__deleteAllRecentKeywords());
   };
 
   return (

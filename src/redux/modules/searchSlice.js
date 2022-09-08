@@ -41,7 +41,6 @@ export const __deleteAllRecentKeywords = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await apis.delete_all_keywords(arg.searchWord);
-      console.log(data);
       return thunkAPI.fulfillWithValue(arg);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -99,7 +98,6 @@ export const searchSlice = createSlice({
     [__deleteAllRecentKeywords.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.recentKeywordList = [];
-      console.log(state.recentKeywordList);
     },
     [__deleteAllRecentKeywords.rejected]: (state, action) => {
       state.isLoading = false;
