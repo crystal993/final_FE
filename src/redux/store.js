@@ -4,6 +4,7 @@ import marketPost from "./modules/market/postSlice";
 import user from "./modules/user/userSlice";
 import mainFilter from "./modules/filter/mainFilterSlice";
 import comment from "./modules/market/commentSlice";
+import search from "./modules/searchSlice";
 
 const middlewares = [thunk];
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   user,
   comment,
   mainFilter,
+  search,
 });
 
 // 스토어 연결
