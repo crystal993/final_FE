@@ -22,6 +22,19 @@ export const __getPopularKeywords = createAsyncThunk(
   }
 );
 
+// 최근 검색어 조회
+export const __getRecentKeywords = createAsyncThunk(
+  "post/__getRecentKeywords",
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await apis.get_recent_keywords();
+      return thunkAPI.fulfillWithValue(data);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.code);
+    }
+  }
+);
+
 export const searchSlice = createSlice({
   name: "searchSlice",
   initialState,
@@ -38,6 +51,18 @@ export const searchSlice = createSlice({
     [__getPopularKeywords.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+    },
+    // 최근 검색어
+    [__getRecentKeywords.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__getRecentKeywords.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.recentKeywordList = action.payload;
+    },
+    [__getRecentKeywords.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.err = action.payload;
     },
   },
 });
