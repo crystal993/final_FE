@@ -1,0 +1,244 @@
+[33mcommit a5501cd34593d96752f651effe934912357b1a71[m[33m ([m[1;36mHEAD -> [m[1;32mdevelop[m[33m)[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 22:43:49 2022 +0900
+
+    Revert "<chore> brand color 변경"
+    
+    This reverts commit a4a7e34b0b0a49445a154b31a7330b147ef5c83a.
+
+[33mcommit a4a7e34b0b0a49445a154b31a7330b147ef5c83a[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 22:43:11 2022 +0900
+
+    <chore> brand color 변경
+
+[33mcommit 4a2d43f59283a34bb19dd957a18a74552df288f4[m[33m ([m[1;31morigin/feat/theme[m[33m, [m[1;31morigin/develop[m[33m, [m[1;32mfeat/theme[m[33m)[m
+Merge: f89695d a4273b7
+Author: Sujeong kim <72599761+crystal993@users.noreply.github.com>
+Date:   Mon Sep 5 22:10:19 2022 +0900
+
+    Merge pull request #57 from Hanhae99-final-3team/feat/crystal_filter
+    
+    Feat/crystal filter
+
+[33mcommit a4273b755a563b72a0542a4292a0f39ac15a1e0d[m[33m ([m[1;31morigin/feat/crystal_filter[m[33m)[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 22:08:54 2022 +0900
+
+    <chore> GlobalButton 텍스트 중앙 정렬
+
+[33mcommit 95b58c0624229d8cb76fd9dbf3431e4999698512[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 22:08:09 2022 +0900
+
+    <feat> 로그인 접근 권한 부여
+
+[33mcommit f89695d4e54594b33785ab5c8443e030f6db4bc8[m
+Merge: 4201953 e4fd8c5
+Author: KoreanCodingMachine <59787529+KoreanCodingMachine@users.noreply.github.com>
+Date:   Mon Sep 5 22:07:31 2022 +0900
+
+    Merge pull request #56 from Hanhae99-final-3team/feat/filter
+    
+    <feat> 메인페이지 필터링 구현
+
+[33mcommit e4fd8c58ff654be093d40121a29b1eda12d5d1d6[m[33m ([m[1;31morigin/feat/filter[m[33m)[m
+Author: KoreanCodingMachine <pon03078@naver.com>
+Date:   Mon Sep 5 22:06:12 2022 +0900
+
+    <feat> 메인페이지 필터링 구현
+
+[33mcommit 0e1185b56b942844afd7ee05ac29c2c2e0e0dc61[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 21:57:03 2022 +0900
+
+    <refactor> 불필요한 코드, 주석 제거
+
+[33mcommit 34f2f6e1b781a8e43bfc9fca6876a763a24ce226[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 21:54:42 2022 +0900
+
+    <fix> isZzim 상태 유지 에러2
+
+[33mcommit c7978d18fb09a667d352e60e79ebd577b4ccdef6[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 17:38:03 2022 +0900
+
+    <fix> GlobalButton 텍스트 중앙 정렬
+
+[33mcommit 420195341d6b55a92983b9aaac28d1b0d0ab767f[m[33m ([m[1;32mcheckout[m[33m)[m
+Merge: 7602a80 a53b866
+Author: Sujeong kim <72599761+crystal993@users.noreply.github.com>
+Date:   Mon Sep 5 16:51:55 2022 +0900
+
+    Merge pull request #54 from Hanhae99-final-3team/feat/category
+    
+    Feat/category
+
+[33mcommit a53b866480d1a4b86fd0ee0da67e2fd728f07f66[m[33m ([m[1;31morigin/feat/category[m[33m)[m
+Merge: 2d4ba17 7602a80
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 16:50:58 2022 +0900
+
+    <fix> git merge 에러
+
+[33mcommit 7602a803312dee1120330a1f38eb0c11974f2841[m
+Merge: 90f1d2d 8f886c4
+Author: KoreanCodingMachine <59787529+KoreanCodingMachine@users.noreply.github.com>
+Date:   Mon Sep 5 16:42:12 2022 +0900
+
+    Merge pull request #53 from Hanhae99-final-3team/feat/filter
+    
+    <feat> 필터링 기능 개발
+
+[33mcommit 8f886c4d2b9220187faa4fa9fceae882c3d0c657[m
+Author: KoreanCodingMachine <pon03078@naver.com>
+Date:   Mon Sep 5 16:41:11 2022 +0900
+
+    <feat> 필터링 기능 개발
+
+[33mcommit 2d4ba173e42bd5358054a8a80bc383e75c8b4c9f[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 16:14:56 2022 +0900
+
+    <fix> itemCategory slice 이동
+
+[33mcommit 6cef1d16b51c09197db78768a5f91d6cdd4ade6d[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 15:11:36 2022 +0900
+
+    <feat> itemCategory 단일 요청 기능
+
+[33mcommit 90f1d2d17519b5d3c8c21af0401edd2944bd4613[m
+Merge: 60d3e34 63ac074
+Author: Sujeong kim <72599761+crystal993@users.noreply.github.com>
+Date:   Mon Sep 5 14:14:01 2022 +0900
+
+    Merge pull request #52 from Hanhae99-final-3team/feat/main_detail
+    
+    Feat/main detail
+
+[33mcommit 63ac074c1c2b6febbb9a0dcd5ebf99381c5ccc78[m[33m ([m[1;31morigin/feat/main_detail[m[33m)[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 14:10:25 2022 +0900
+
+    <feat> GNB Menu css2
+
+[33mcommit 807bfe9f6965d07adbd5c5f8f9a78d1401dd0f24[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 11:38:09 2022 +0900
+
+    <feat> GNB Menu css
+
+[33mcommit eb7f5f0918a75139396397bf17fbefd6545c827a[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 11:00:53 2022 +0900
+
+    <refactor> 만능 버튼 기획에 따른 변경
+
+[33mcommit be8969fdb0dd41cf2c1c19ec13f71d0615b5148f[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 10:58:51 2022 +0900
+
+    <feat> Theme에 radius추가
+
+[33mcommit 3d7556c362c36f60fbddfa9994df2f73e582f0b8[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 09:57:37 2022 +0900
+
+    <fix> menu 브랜드 컬러로 변경
+
+[33mcommit 94ec99b280d30cf634c46a15d0b5a217d799e89f[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 09:54:36 2022 +0900
+
+    <feat> Theme 브랜드 컬러 추가
+
+[33mcommit 585657fa4ca8bd2cd117d9deddfabae398a9059d[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 09:43:51 2022 +0900
+
+    <refactor> 불필요한 코드 제거 및 주석 추가
+
+[33mcommit 59a3bf1a2383b6f7551df6c8e077aed9f30d881a[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 09:37:49 2022 +0900
+
+    <fix> 찜버튼 상태 유지 에러
+
+[33mcommit 8e0f053256e8d5da8405254eec1681bac6288c14[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 09:35:42 2022 +0900
+
+    <refactor> ItemZzimButton으로 컴포넌트명, 변수명 변경
+
+[33mcommit 085579954ff3026881a290a8f226058d6b561c8e[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Mon Sep 5 09:00:09 2022 +0900
+
+    <fix> isZzimed여부 추가
+
+[33mcommit adc06be35d9dedcf147998204e25c587a5108b08[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Sat Sep 3 22:11:39 2022 +0900
+
+    <fix> 비로그인시 찜기능 권한 제한
+
+[33mcommit 8e90f60a6064d6c4e2449c887461931d61f1964e[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Sat Sep 3 21:56:37 2022 +0900
+
+    <chore> LikeButton 불필요한 코드 제거
+
+[33mcommit eb1e1d71fe4f8ded059082d0e25ddd2c70172151[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Sat Sep 3 21:54:48 2022 +0900
+
+    <chore> 불필요한 코드 제거
+
+[33mcommit a579bb9a67551c57d893eb7922e1f449f5b29401[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Sat Sep 3 21:51:36 2022 +0900
+
+    <feat> 좋아요, 좋아요 취소 기능
+
+[33mcommit 2c9a7b2a0fac2a930cd192a5b7c69597a7aaed5f[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Sat Sep 3 17:59:13 2022 +0900
+
+    <fix> Market 상세, 메인 페이지 css
+
+[33mcommit 60d3e3455f7a4c41226c5fc86227bcc98a8e7797[m
+Merge: 103d224 3aecf8c
+Author: Sujeong kim <72599761+crystal993@users.noreply.github.com>
+Date:   Sat Sep 3 14:31:53 2022 +0900
+
+    Merge pull request #49 from Hanhae99-final-3team/feat/main_detail
+    
+    Feat/main detail
+
+[33mcommit 3aecf8cf20837640d9650705352cc4f35a3d0b29[m
+Merge: ffae072 103d224
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Sat Sep 3 14:30:27 2022 +0900
+
+    <merge> conflict 해결
+
+[33mcommit ffae072909c966bbb4d88f762b5a7dc2822c00d9[m
+Author: DESKTOP-HCK0909\ggg71 <ggg7152@gmail.com>
+Date:   Sat Sep 3 14:17:34 2022 +0900
+
+    <fix> Market 상세페이지 css
+
+[33mcommit 103d22405a2e7cbc6b89aa0266c67569ed95605a[m
+Merge: 4655fdc 8349806
+Author: KoreanCodingMachine <59787529+KoreanCodingMachine@users.noreply.github.com>
+Date:   Sat Sep 3 14:17:33 2022 +0900
+
+    Merge pull request #48 from Hanhae99-final-3team/feat/main_bar
+    
+    <feat> 회원가입 초기화 +  아이콘 수정
+
+[33mcommit 8349806c721cd9446de471d3c09544f4a0b9cfa6[m[33m ([m[1;31morigin/feat/main_bar[m[33m)[m
+Author: KoreanCodingMachine <pon03078@naver.com>
+D

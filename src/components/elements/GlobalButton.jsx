@@ -11,6 +11,7 @@ function GlobalButton({
   height,
   fontSize,
   fontWeight,
+  color,
 }) {
   return (
     <Wrapper onClick={onClick}>
@@ -22,6 +23,7 @@ function GlobalButton({
           fontWeight={fontWeight}
           width={width}
           height={height}
+          color={color}
         >
           {content}
         </Btn>
@@ -47,18 +49,27 @@ const Btn = styled.button`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   font-weight: ${(props) => props.fontWeight};
-  color: ${(props) => props.theme.white};
+  color: ${(props) =>
+    props.color === "subColor" ? props.theme.mainColor : props.theme.white};
   border-radius: ${(props) => props.theme.buttonRadius};
   transition: ${(props) => props.theme.transition};
-  border: none;
-  background-color: ${(props) => props.theme.mainColor};
+  border: ${(props) =>
+    props.color === "subColor" ? `1px solid ${props.theme.mainColor}` : "none"};
+  background-color: ${(props) =>
+    props.color === "subColor" ? props.theme.white : props.theme.mainColor};
   font-size: ${(props) => props.fontSize};
   &:hover {
     cursor: pointer;
-    background-color: ${(props) => props.theme.white};
-    box-shadow: inset 0px 0px 4px 0px #b6b7b9;
-    color: ${(props) => props.theme.mainColor};
-    border-color: ${(props) => props.theme.mainColor};
+    background-color: ${(props) =>
+      props.color === "subColor" ? props.theme.mainColor : props.theme.white};
+    box-shadow: ${(props) =>
+      props.color === "subColor" ? `none` : `inset 0px 0px 4px 0px #b6b7b9`};
+    color: ${(props) =>
+      props.color === "subColor" ? props.theme.white : props.theme.mainColor};
+    border: ${(props) =>
+      props.color === "subColor"
+        ? "none"
+        : `1px solid ${props.theme.mainColor}`};
   }
 `;
 

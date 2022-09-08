@@ -13,6 +13,8 @@ import ImgView from "../../elements/ImgView";
 import RESP from "../../../server/response";
 import axios from "axios";
 import { IoIosLocate } from "react-icons/io";
+import InputResetButton from "../../elements/buttons/InputResetButton";
+import FixButton from "../../elements/buttons/FixButton";
 
 function Update() {
   const dispatch = useDispatch();
@@ -61,8 +63,8 @@ function Update() {
       purchasePrice: formData.purchasePrice,
       sellingPrice: formData.sellingPrice,
     };
-    dispatch(__updatePost({ data, files }));
-    reset();
+    dispatch(__updatePost({ id, data, files }));
+    navigate(`/market/detail/${id}`);
   };
 
   //다중 이미지 preview
@@ -135,6 +137,15 @@ function Update() {
     dispatch(__getSinglePost({ itemId: id }));
   }, [dispatch]);
 
+  const inputResetHandler = (inputId) => {
+    setValue(inputId, " ");
+  };
+
+  const inputOnlyNumHandler = (value, inputId) => {
+    const onlyNumber = value.replace(/[^0-9]/g, "");
+    return setValue(inputId, onlyNumber);
+  };
+
   return (
     <>
       <FormWrapper>
@@ -165,16 +176,24 @@ function Update() {
 
             <InputWrapper>
               <Input type="text" name="title" required {...register("title")} />
+              <InputResetButton onClick={() => inputResetHandler("title")} />
             </InputWrapper>
 
             <Label>구매 가격</Label>
 
             <InputWrapper>
               <Input
-                type="text"
+                type="number"
                 name="purchasePrice"
                 required
-                {...register("purchasePrice")}
+                {...register("purchasePrice", {
+                  validate: (value) => {
+                    inputOnlyNumHandler(value, "purchasePrice");
+                  },
+                })}
+              />
+              <InputResetButton
+                onClick={() => inputResetHandler("purchasePrice")}
               />
               <HelperText>
                 구매했을 당시 해당 물품의 가격을 적어주세요.
@@ -184,10 +203,17 @@ function Update() {
 
             <InputWrapper>
               <Input
-                type="text"
+                type="number"
                 name="sellingPrice"
                 required
-                {...register("sellingPrice")}
+                {...register("sellingPrice", {
+                  validate: (value) => {
+                    inputOnlyNumHandler(value, "sellingPrice");
+                  },
+                })}
+              />
+              <InputResetButton
+                onClick={() => inputResetHandler("sellingPrice")}
               />
               <HelperText>물품을 판매할 가격을 적어주세요.</HelperText>
             </InputWrapper>
@@ -202,6 +228,7 @@ function Update() {
             />
 
             {/* location */}
+            <Label>위치</Label>
             <LocationWrapper>
               <IoIosLocate />
               <LocationInput {...register("location")} readOnly></LocationInput>
@@ -220,9 +247,7 @@ function Update() {
             <ImgWrapper>
               {!isLoading && <ImgView imgUrls={itemImgs} />}
             </ImgWrapper>
-            <ButtonWrapper>
-              <Button content={"등록"} size={"small"} />
-            </ButtonWrapper>
+            <FixButton content={"게시글 수정하기"} version={2} />
           </Container>
         </Form>
       </FormWrapper>
@@ -301,6 +326,7 @@ const Label = styled.label`
 
 const InputWrapper = styled.div`
   margin-bottom: 4.7rem;
+  position: relative;
 `;
 
 const Input = styled.input`
@@ -324,6 +350,7 @@ const Input = styled.input`
     border-color: ${({ theme }) => theme.mainColor};
   }
   &:focus {
+    border-color: ${({ theme }) => theme.mainColor};
     outline: none;
   }
   &[type="file"] {
@@ -452,7 +479,12 @@ const TextArea = styled.textarea`
   font-size: 1.4rem;
   padding: 10px;
   text-indent: 5px;
+  margin-bottom: 4.7rem;
+  &:hover {
+    border-color: ${({ theme }) => theme.mainColor};
+  }
   &:focus {
+    border-color: ${({ theme }) => theme.mainColor};
     outline: none;
   }
   &::placeholder {
@@ -497,9 +529,10 @@ const ImgWrapper = styled.div``;
 const LocationWrapper = styled.div`
   font-size: 1.4rem;
   height: 2.8rem;
-  margin: 2rem 0 4rem 0;
+  margin: 0.8rem 0 4rem 0;
   color: white;
   padding: 0.1rem 0.5rem;
+  margin-bottom: 4.7rem;
   background-color: ${({ theme }) => theme.darkgray};
 `;
 

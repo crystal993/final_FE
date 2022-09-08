@@ -200,6 +200,7 @@ const STsection = styled.section`
 `;
 
 const STh1 = styled.h1`
-  font-size: 1.2rem;
+  font-size: 2.4rem;
+  margin: 0 2.4rem;
   font-weight: 700;
 `;
