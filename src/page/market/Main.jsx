@@ -1,15 +1,15 @@
-import React from "react";
-import Header from "../../components/elements/GlobalHeader";
-import Footer from "../../components/elements/GlobalFooter";
-import Layout from "../../components/elements/GlobalLayout";
-import MainContainer from "../../components/market/main/MainContainer";
-import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React from 'react';
+import Header from '../../components/elements/GlobalHeader';
+import Footer from '../../components/elements/GlobalFooter';
+import Layout from '../../components/elements/GlobalLayout';
+import MainContainer from '../../components/market/main/MainContainer';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 const Main = () => {
   const navigate = useNavigate();
   const isLogin = useSelector((state) => state.user.userToken);
-  console.log(isLogin);
+
   return (
     <>
       <Layout>
@@ -19,7 +19,7 @@ const Main = () => {
           <>
             <AddPostButton
               onClick={() => {
-                navigate("/market/post");
+                navigate('/market/post');
               }}
             >
               +

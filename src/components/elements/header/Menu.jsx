@@ -1,10 +1,16 @@
-import React from "react";
-import { bool } from "prop-types";
-import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import GlobalButton from "../GlobalButton";
-import { useNavigate } from "react-router-dom";
-import { __getItemCategories } from "../../../redux/modules/market/postSlice";
+import React, { useState, useEffect } from 'react';
+import { bool } from 'prop-types';
+import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import GlobalButton from '../GlobalButton';
+import { useNavigate } from 'react-router-dom';
+import {
+  __getItemCategories,
+  getTwoCategory,
+  addPage,
+  pageToZero,
+  doubleListToZero,
+} from '../../../redux/modules/market/postSlice';
 
 const Menu = ({ open, ...props }) => {
   const isHidden = open ? true : false;
@@ -12,13 +18,42 @@ const Menu = ({ open, ...props }) => {
   const isLogin = useSelector((state) => state.user.userToken);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [state, setState] = useState('');
+  const categoryPage = useSelector((state) => state.marketPost.page);
+  // const [page, setPage] = useState(categoryPage);
   const onPathHandler = () => {
     navigate(`/login`);
   };
 
+  const item = localStorage.getItem('itemCategory');
+  const petCategory = localStorage.getItem('petCategory');
   const onRequestHandler = (itemCategory) => {
-    dispatch(__getItemCategories({ itemCategory }));
+    localStorage.setItem('itemCategory', itemCategory);
+    dispatch(pageToZero());
+    dispatch(doubleListToZero());
+    setState(itemCategory);
   };
+
+  useEffect(() => {
+    if (item === state && petCategory === null) {
+      console.log(petCategory);
+      console.log(item);
+      console.log('menu');
+      dispatch(__getItemCategories({ itemCategory: item, page: categoryPage }));
+    }
+    // if (item === state && petCategory !== null) {
+    //   console.log(item);
+    //   console.log(petCategory);
+    //   console.log('menu');
+    //   dispatch(
+    //     getTwoCategory({
+    //       itemCategory: state,
+    //       petCategory: petCategory,
+    //       page: categoryPage,
+    //     })
+    //   );
+    // }
+  }, [dispatch, item, state, petCategory, categoryPage]);
 
   return (
     <StMenu open={open} aria-hidden={!isHidden} {...props}>
@@ -26,16 +61,16 @@ const Menu = ({ open, ...props }) => {
         <>
           <StBtnWrapper>
             <GlobalButton
-              content={"로그인"}
-              fontSize={"1.4rem"}
+              content={'로그인'}
+              fontSize={'1.4rem'}
               fontWeight={900}
-              width={"22rem"}
-              height={"5rem"}
+              width={'22rem'}
+              height={'5rem'}
               onClick={onPathHandler}
             />
           </StBtnWrapper>
-          <StLink href="/signup" tabIndex={tabIndex}>
-            <span aria-hidden="true"></span>
+          <StLink href='/signup' tabIndex={tabIndex}>
+            <span aria-hidden='true'></span>
             <StText>회원가입</StText>
           </StLink>
         </>
@@ -44,12 +79,12 @@ const Menu = ({ open, ...props }) => {
         <>
           <StUserBox>
             <UserImgBox>
-              <UserImage src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxIHBg8SBw4PEhATDg0PFRAPEA8ODQ0RFREWFhURExYYKCggGBslHRUfITEhJSkrLi4uFx8zODMtNyg5OisBCgoKDg0OFw8QGjIlHSItNy0tKy4tKzctLy0tKzgtLS0tLSstLi0rNy0tLC0tKy0rOC0tKy03LS0rLTctKy0rN//AABEIAOAA4QMBIgACEQEDEQH/xAAaAAEAAgMBAAAAAAAAAAAAAAAABAUCAwYB/8QANhABAAECAgYIBAUFAQAAAAAAAAECAwQRBSExUWFxEhMiMkGRocEzcoGxNFJiotEUQoLh8SP/xAAZAQEBAQEBAQAAAAAAAAAAAAAAAwIBBAX/xAAdEQEBAQEAAgMBAAAAAAAAAAAAAQIRAzESIUET/9oADAMBAAIRAxEAPwDrAH0XzQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAe00zVPZiZ5a26nB3KtlE/XKHOu8aBInBXI/s8piWmuiaJ7cTHOMjsOViA64AAAAAAAAAAAAAAAAAAAAAAJ+F0f0ozv6v0+P1Z6OwuURXcjX4Ru4rBLW/yK5x+1jbtxbjKiIjkyBNQeVUxVGVURMcXoCBidHRMZ2NU/l8J5KyqOjOVW10SHj8L1tHSojtR+6FM7/KnrH7FSAqkAAAAAAAAAAAAAAAAAANuEtddfiPDbPKGpYaIo7VU8oZ1eRrM7VlGqNQCC4AAAAACm0hZ6rETlsnXHujLTS1Gdqmd1WXnCrXzexDU5QBpkAAAAAAAAAAAAAAAAWeiPhVfNH2VifomvK5VG+Iny/wCs79N49rMBBYAAAAABE0p+F/ypVCz0tX2KaeOfkrFsekd+wBtgAAAAAAAAAAAAAAAAZ2LnU3YqjwnzhgDroaKorpiadkxm9VOAxfUz0bnd3/l/0tonONSGpxfN7ABl0AAJnKNYrdIYzOJotTzn2h2TrlvEXGXuvvzMbNkcmkF4hQB1wAAAAAAAAAAAAAAAAAASMNjKrGqNdO6fZHHLOuy8XNrHUXNs5Tun+UiKoq2TDniJy2MXxtzyOimctrRdxdFrbVE8I1ypJnPaH8y+RLxOOqvRlR2afWUQG5OMW9AHXAAAAAAAAAAAAAAAAAAAZ2bNV6rK3H8Qs8Po+m3rudqf2s3UjUzarLdmq7P/AJ0zP2Srejaqu/MR6ytYjKNQnd1SYiDToymO9VVPLKGcaOo/V5pY58q18YiTo6jj5sKtGUz3aqo55SnB8qfGKq5oyqO5MT6Si3bNVr4lMx9l+TGca3Zus3Ec6Le/o+m58Pszw2eSsv2KrFWVyPr4SpNSp3NjWA0yAAAAAAAAAAAAAAJGDwk4ic51U79/CHmDw/8AUXOEbZ9l1RTFFMRTGUQxrXPpTOe/by3bi1RlbjKGQIqgAAAAAAADG5RFynKuM4ZAKfGYObE5066fWOaK6GqOlTlVsU2Nw39PX2e7OzhwVzrv1UtZ59xHAUTAAAAAAAAAACmOlVEU7Z1Cbou10rs1TsjZzly3kdk7eLDDWYsWoiPrO+W0HnegAAAAAAAAAAAAYX7UXrUxV4+k72YDnrlE265irbE5PFhpWzlMVRyn2V70S9iFnKAOsgAAAAAAAC60fb6GFp46/NS7XQ0R0aIiPCIhPyVTxx6AkqAAAAAAAAAAAAAA1Yu31uHqjhn9YULo3P3aehdqjdVMeqvjqfkjEBRIAAAAAAABlajO7T80fd0Cgs/Gp+an7r9LyK+MATUAAAAAAAAAAAAAAFHjIyxVfzLxR438XXz9lPH7Y8nppAVRAAAAf//Z"></UserImage>
+              <UserImage src='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxIHBg8SBw4PEhATDg0PFRAPEA8ODQ0RFREWFhURExYYKCggGBslHRUfITEhJSkrLi4uFx8zODMtNyg5OisBCgoKDg0OFw8QGjIlHSItNy0tKy4tKzctLy0tKzgtLS0tLSstLi0rNy0tLC0tKy0rOC0tKy03LS0rLTctKy0rN//AABEIAOAA4QMBIgACEQEDEQH/xAAaAAEAAgMBAAAAAAAAAAAAAAAABAUCAwYB/8QANhABAAECAgYIBAUFAQAAAAAAAAECAwQRBSExUWFxEhMiMkGRocEzcoGxNFJiotEUQoLh8SP/xAAZAQEBAQEBAQAAAAAAAAAAAAAAAwIBBAX/xAAdEQEBAQEAAgMBAAAAAAAAAAAAAQIRAzESIUET/9oADAMBAAIRAxEAPwDrAH0XzQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAe00zVPZiZ5a26nB3KtlE/XKHOu8aBInBXI/s8piWmuiaJ7cTHOMjsOViA64AAAAAAAAAAAAAAAAAAAAAAJ+F0f0ozv6v0+P1Z6OwuURXcjX4Ru4rBLW/yK5x+1jbtxbjKiIjkyBNQeVUxVGVURMcXoCBidHRMZ2NU/l8J5KyqOjOVW10SHj8L1tHSojtR+6FM7/KnrH7FSAqkAAAAAAAAAAAAAAAAAANuEtddfiPDbPKGpYaIo7VU8oZ1eRrM7VlGqNQCC4AAAAACm0hZ6rETlsnXHujLTS1Gdqmd1WXnCrXzexDU5QBpkAAAAAAAAAAAAAAAAWeiPhVfNH2VifomvK5VG+Iny/wCs79N49rMBBYAAAAABE0p+F/ypVCz0tX2KaeOfkrFsekd+wBtgAAAAAAAAAAAAAAAAZ2LnU3YqjwnzhgDroaKorpiadkxm9VOAxfUz0bnd3/l/0tonONSGpxfN7ABl0AAJnKNYrdIYzOJotTzn2h2TrlvEXGXuvvzMbNkcmkF4hQB1wAAAAAAAAAAAAAAAAAASMNjKrGqNdO6fZHHLOuy8XNrHUXNs5Tun+UiKoq2TDniJy2MXxtzyOimctrRdxdFrbVE8I1ypJnPaH8y+RLxOOqvRlR2afWUQG5OMW9AHXAAAAAAAAAAAAAAAAAAAZ2bNV6rK3H8Qs8Po+m3rudqf2s3UjUzarLdmq7P/AJ0zP2Srejaqu/MR6ytYjKNQnd1SYiDToymO9VVPLKGcaOo/V5pY58q18YiTo6jj5sKtGUz3aqo55SnB8qfGKq5oyqO5MT6Si3bNVr4lMx9l+TGca3Zus3Ec6Le/o+m58Pszw2eSsv2KrFWVyPr4SpNSp3NjWA0yAAAAAAAAAAAAAAJGDwk4ic51U79/CHmDw/8AUXOEbZ9l1RTFFMRTGUQxrXPpTOe/by3bi1RlbjKGQIqgAAAAAAADG5RFynKuM4ZAKfGYObE5066fWOaK6GqOlTlVsU2Nw39PX2e7OzhwVzrv1UtZ59xHAUTAAAAAAAAAACmOlVEU7Z1Cbou10rs1TsjZzly3kdk7eLDDWYsWoiPrO+W0HnegAAAAAAAAAAAAYX7UXrUxV4+k72YDnrlE265irbE5PFhpWzlMVRyn2V70S9iFnKAOsgAAAAAAAC60fb6GFp46/NS7XQ0R0aIiPCIhPyVTxx6AkqAAAAAAAAAAAAAA1Yu31uHqjhn9YULo3P3aehdqjdVMeqvjqfkjEBRIAAAAAAABlajO7T80fd0Cgs/Gp+an7r9LyK+MATUAAAAAAAAAAAAAAFHjIyxVfzLxR438XXz9lPH7Y8nppAVRAAAAf//Z'></UserImage>
             </UserImgBox>
             <h3>닉네임</h3>
           </StUserBox>
-          <StCategoryBtn href="/mypage" tabIndex={tabIndex}>
-            <span aria-hidden="true"></span>
+          <StCategoryBtn href='/mypage' tabIndex={tabIndex}>
+            <span aria-hidden='true'></span>
             <StText>마이페이지</StText>
           </StCategoryBtn>
         </>
@@ -60,49 +95,49 @@ const Menu = ({ open, ...props }) => {
           <StCategoryBtn
             tabIndex={tabIndex}
             onClick={() => {
-              onRequestHandler("사료");
+              onRequestHandler('사료');
             }}
           >
-            <span aria-hidden="true"></span>
+            <span aria-hidden='true'></span>
             사료
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
             onClick={() => {
-              onRequestHandler("간식");
+              onRequestHandler('간식');
             }}
           >
-            <span aria-hidden="true"></span>
+            <span aria-hidden='true'></span>
             간식
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
             onClick={() => {
-              onRequestHandler("의류");
+              onRequestHandler('의류');
             }}
           >
-            <span aria-hidden="true"></span>
+            <span aria-hidden='true'></span>
             의류
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
-            onClick={() => onRequestHandler("미용")}
+            onClick={() => onRequestHandler('미용')}
           >
-            <span aria-hidden="true"></span>
+            <span aria-hidden='true'></span>
             미용
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
-            onClick={() => onRequestHandler("장난감")}
+            onClick={() => onRequestHandler('장난감')}
           >
-            <span aria-hidden="true"></span>
+            <span aria-hidden='true'></span>
             장난감
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
-            onClick={() => onRequestHandler("기타용품")}
+            onClick={() => onRequestHandler('기타용품')}
           >
-            <span aria-hidden="true"></span>
+            <span aria-hidden='true'></span>
             기타용품
           </StCategoryBtn>
         </StCategoryBtnWrapper>
@@ -121,7 +156,7 @@ const StMenu = styled.nav`
   justify-content: flex-start;
   align-items: flex-start;
   background: ${({ theme }) => theme.white};
-  transform: ${({ open }) => (open ? "translateX(17%)" : "translateX(100%)")};
+  transform: ${({ open }) => (open ? 'translateX(17%)' : 'translateX(100%)')};
   height: 100%;
   text-align: left;
   padding: 4rem 0rem;
@@ -134,19 +169,19 @@ const StMenu = styled.nav`
   @media screen and (min-width: 1024px) {
     /* Desktop */
     transform: ${({ open }) =>
-      open ? "translateX(13%)" : "translateX(-100%)"};
+      open ? 'translateX(13%)' : 'translateX(-100%)'};
     width: 25rem;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     /* Tablet */
-    transform: ${({ open }) => (open ? "translateX(3%)" : "translateX(-100%)")};
+    transform: ${({ open }) => (open ? 'translateX(3%)' : 'translateX(-100%)')};
     width: 25rem;
   }
 
   @media (max-width: 767px) {
     /* Mobile */
-    transform: ${({ open }) => (open ? "translateX(0%)" : "translateX(-100%)")};
+    transform: ${({ open }) => (open ? 'translateX(0%)' : 'translateX(-100%)')};
     width: 100%;
     display: flex;
     align-items: center;

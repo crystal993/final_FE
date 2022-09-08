@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { IoIosSearch } from "react-icons/io";
-import styled from "styled-components";
-import Burger from "./header/Burger";
-import Menu from "./header/Menu";
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { IoIosSearch } from 'react-icons/io';
+import styled from 'styled-components';
+import Burger from './header/Burger';
+import Menu from './header/Menu';
 
 const GlobalHeader = () => {
   const navigate = useNavigate();
 
   const menuBackground = {
-    boxShadow: "rgba(0,0,0,0.5) 0 0 0 9999px",
+    boxShadow: 'rgba(0,0,0,0.5) 0 0 0 9999px',
   };
   // menu 외부를 눌렀을 때 꺼지도록
   const useOnClickOutside = (ref, handler) => {
@@ -20,17 +20,17 @@ const GlobalHeader = () => {
         }
         handler(event);
       };
-      document.addEventListener("mousedown", listener);
+      document.addEventListener('mousedown', listener);
 
       return () => {
-        document.removeEventListener("mousedown", listener);
+        document.removeEventListener('mousedown', listener);
       };
     }, [ref, handler]);
   };
 
   const [open, setOpen] = useState(false);
   const node = useRef();
-  const menuId = "main-menu";
+  const menuId = 'main-menu';
 
   useOnClickOutside(node, () => setOpen(false));
   return (
@@ -43,7 +43,7 @@ const GlobalHeader = () => {
         <NavItem>
           <IoIosSearch
             onClick={() => {
-              navigate("/search");
+              navigate('/search');
             }}
           />
         </NavItem>
