@@ -7,7 +7,7 @@ import { __getRecentKeywords } from "../../redux/modules/searchSlice";
 
 const RecentSearchList = () => {
   const dispatch = useDispatch();
-  const keywords = useSelector((state) => state.search.popularKeywordList);
+  const keywords = useSelector((state) => state.search.recentKeywordList);
 
   useEffect(() => {
     dispatch(__getRecentKeywords());
