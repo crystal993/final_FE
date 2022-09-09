@@ -111,6 +111,7 @@ const MainContainer = () => {
       //observer 생성 시 observe할 target 요소는 불러온 이미지의 마지막아이템(배열의 마지막 아이템)으로 지정
       observer.observe(lastIntersectingData.current);
       // 관찰 중지 시점 (lastData)
+
       // list의 length-1의 데이터가 마지막 데이터이면 관찰 중지시키기
       if (doubleList.length === 30) {
         observer.unobserve(lastIntersectingData.current);
