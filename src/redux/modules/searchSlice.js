@@ -4,9 +4,23 @@ import { apis } from "../../shared/axios";
 const initialState = {
   popularKeywordList: [],
   recentKeywordList: [],
+  searchResultList: [],
   isLoading: null,
   page: 0,
 };
+
+// 상품 검색(최신 순 정렬)
+export const __itemSearch = createAsyncThunk(
+  "search/__itemSearch",
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await apis.item_search(arg.keyword);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
 
 // 인기 검색어 조회
 export const __getPopularKeywords = createAsyncThunk(
@@ -67,6 +81,18 @@ export const searchSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    // 상품 검색(최신 순 정렬)
+    [__itemSearch.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__itemSearch.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.searchResultList = action.payload;
+    },
+    [__itemSearch.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
     // 인기 검색어
     [__getPopularKeywords.pending]: (state) => {
       state.isLoading = true;
