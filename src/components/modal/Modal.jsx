@@ -2,14 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from '../elements/GlobalButton';
 
-const Modal = ({ onClose, content }) => {
-  // true일때 로그인 , false이면 회원가입
+const Modal = ({ onClose, content, moveLogin, name }) => {
   return (
     <Wrapper className='modal'>
       {/* Modal content */}
       <div className='modal-content'>
-        {<p className='content'>{content}</p>}
-        <Button content={'닫기'} onClick={onClose}></Button>
+        <p className='content'>{content}</p>
+        <section className='modal-btn'>
+          <Button content={name} onClick={moveLogin}></Button>
+          <Button content={'닫기'} onClick={onClose}></Button>
+        </section>
       </div>
     </Wrapper>
   );
@@ -47,6 +49,13 @@ const Wrapper = styled.div`
     }
     Button {
       margin-top: 5rem;
+    }
+
+    .modal-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
     }
   }
 `;

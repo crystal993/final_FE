@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   __getSinglePost,
   __deletePost,
-} from "../../../redux/modules/market/postSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import styled from "styled-components";
-import ItemZzimButton from "../../elements/buttons/ItemZzimButton";
-import SimpleSlider from "./SimpleSlider";
-import Comment from "../comment/Comment";
-import FixButton from "../../elements/buttons/FixButton";
-import FixThreeButton from "../../elements/buttons/FixThreeButton";
-import PriceChart from "../../elements/chart/PriceChart";
-import GlobalModal from "../../elements/GlobalModal";
-import { ReactComponent as ProfileIcon } from "../../../assets/icons/profile_img_sm.svg";
-import EditIcon from "../../../assets/icons/edit_document2.svg";
-import DeleteIcon from "../../../assets/icons/delete.svg";
-import CheckIcon from "../../../assets/icons/check_circle.svg";
+} from '../../../redux/modules/market/postSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import ItemZzimButton from '../../elements/buttons/ItemZzimButton';
+import SimpleSlider from './SimpleSlider';
+import Comment from '../comment/Comment';
+import FixButton from '../../elements/buttons/FixButton';
+import FixThreeButton from '../../elements/buttons/FixThreeButton';
+import PriceChart from '../../elements/chart/PriceChart';
+import GlobalModal from '../../elements/GlobalModal';
+import { ReactComponent as ProfileIcon } from '../../../assets/icons/profile_img_sm.svg';
+import EditIcon from '../../../assets/icons/edit_document2.svg';
+import DeleteIcon from '../../../assets/icons/delete.svg';
+import CheckIcon from '../../../assets/icons/check_circle.svg';
 
 const DetailInfo = () => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const DetailInfo = () => {
 
   const deleteHandler = (id) => {
     dispatch(__deletePost({ id: id }));
-    navigate("/");
+    navigate('/');
   };
 
   const sharekakao = (event) => {
@@ -41,19 +41,19 @@ const DetailInfo = () => {
     if (window.Kakao) {
       const kakao = window.Kakao;
       if (!kakao.isInitialized()) {
-        kakao.init("a729d68f8474b39d110cdd9e7a162f5a");
+        kakao.init('a729d68f8474b39d110cdd9e7a162f5a');
       }
 
       kakao.Link.sendDefault({
-        objectType: "feed",
+        objectType: 'feed',
         content: {
           title: `${item.title}`,
           description: `${item.content}`,
           imageUrl: `${item.itemImgs[0]}`,
           link: {
             // 배포한 주소
-            mobileWebUrl: "공유할 url 주소",
-            webUrl: "공유할 url주소",
+            mobileWebUrl: '공유할 url 주소',
+            webUrl: '공유할 url주소',
           },
         },
       });
@@ -62,8 +62,8 @@ const DetailInfo = () => {
 
   // 사용할 컴포넌트에서만 script를 호출하기 위해서
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+    const script = document.createElement('script');
+    script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
     script.async = true;
 
     document.body.appendChild(script);
@@ -79,22 +79,22 @@ const DetailInfo = () => {
 
   const [isModal, setModal] = useState(false);
   const [isMessage, setMessage] = useState(null);
-
   const onDeleteHandler = (event) => {
     event.stopPropagation();
     // TODO:  추후에 모달로 바꿀 예정
     // 모달 중에 예 아니요 선택하는 모달도 필요할 듯
-    const result = window.confirm("게시글을 삭제하겠습니까?");
+    const result = window.confirm('게시글을 삭제하겠습니까?');
     if (result) {
       return deleteHandler(id);
     } else {
       return;
     }
   };
-
   return (
     <>
-      {isModal ? <GlobalModal content={isMessage} /> : null}
+      {isModal ? (
+        <GlobalModal content={'로그인 하세요'} name={'로그인'} />
+      ) : null}
       <SimpleSlider itemImgs={itemImgs} />
       <DetailWrapper>
         <InfoWrapper>
@@ -104,9 +104,9 @@ const DetailInfo = () => {
         </InfoWrapper>
         <Title>{item.title}</Title>
         <StWrapper>
-          <Price>{item.sellingPrice?.toLocaleString("ko-KR")}</Price>
+          <Price>{item.sellingPrice?.toLocaleString('ko-KR')}</Price>
           <StIcon>
-            <span class="material-icons" onClick={sharekakao}>
+            <span class='material-icons' onClick={sharekakao}>
               share
             </span>
           </StIcon>
@@ -132,12 +132,12 @@ const DetailInfo = () => {
         </InfoCntWrapper>
         <ItemZzimButton postId={id} isLogin={isLogin} isZzim={item.isZzimed} />
         <Comment id={id} />
-        {!item.isMine && <FixButton content={"채팅으로 거래하기"}></FixButton>}
+        {!item.isMine && <FixButton content={'채팅으로 거래하기'}></FixButton>}
         {item.isMine && (
           <FixThreeButton
-            content1={"삭제하기"}
-            content2={"거래완료"}
-            content3={"수정하기"}
+            content1={'삭제하기'}
+            content2={'거래완료'}
+            content3={'수정하기'}
             onClick1={onDeleteHandler}
             onClick3={onEditHandler}
             icon1={DeleteIcon}
