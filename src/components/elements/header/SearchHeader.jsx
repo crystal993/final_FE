@@ -30,6 +30,7 @@ const SearchHeader = () => {
   // 검색 기능
   const onSearchResultHandler = (formData) => {
     dispatch(__itemSearch({ keyword: formData.keyword }));
+    navigate(`/search/result/${formData.keyword}`);
   };
 
   return (

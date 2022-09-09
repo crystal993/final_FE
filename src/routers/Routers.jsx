@@ -6,11 +6,12 @@ import MarketPosting from "../page/market/Posting";
 import MarketPostingUpdate from "../page/market/PostingUpdate";
 import Login from "../page/register/Login";
 import Signup from "../page/register/Signup";
-import Search from "../page/Search";
+import Search from "../page/search/Search";
 import Chatting from "../page/chatting/Chatting";
 import NotFound from "../page/NotFound";
 import MyPage from "../page/MyPage";
 import Kakao from "../components/register/socialLogin/Kakao";
+import SearchResult from "../page/search/SearchResult";
 
 const Routers = () => {
   return (
@@ -25,6 +26,7 @@ const Routers = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/search/result/:keyword" element={<SearchResult />} />
         <Route path="/chatting" element={<Chatting />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="*" element={<NotFound />} />
