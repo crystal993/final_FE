@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Keyword from "./RecentSearchKeyword";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
-import { __getRecentKeywords } from "../../redux/modules/searchSlice";
+import { __getRecentKeywords } from "../../../redux/modules/searchSlice";
 
 const RecentSearchList = () => {
   const dispatch = useDispatch();

@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { __deleteRecentKeyword } from "../../redux/modules/searchSlice";
-import { ReactComponent as DeleteIcon } from "../../assets/icons/close2.svg";
+import { __deleteRecentKeyword } from "../../../redux/modules/searchSlice";
+import { ReactComponent as DeleteIcon } from "../../../assets/icons/close2.svg";
 
 const RecentSearchKeyword = ({ keyword }) => {
   const dispatch = useDispatch();

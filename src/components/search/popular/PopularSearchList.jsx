@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Keyword from "./PopularSearchKeyword";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
-import { __getPopularKeywords } from "../../redux/modules/searchSlice";
+import { __getPopularKeywords } from "../../../redux/modules/searchSlice";
 
 const PopularSearchList = () => {
   const dispatch = useDispatch();

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { __itemSearch } from "../../redux/modules/searchSlice";
+import { __itemSearch } from "../../../redux/modules/searchSlice";
 
 const PopularSearchKeyword = ({ keyword }) => {
   const dispatch = useDispatch();

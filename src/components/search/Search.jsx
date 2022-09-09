@@ -3,8 +3,8 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { __deleteAllRecentKeywords } from "../../redux/modules/searchSlice";
 import GlobalToggle from "../elements/GlobalToggle";
-import PopularSearchList from "./PopularSearchList";
-import RecentSearchList from "./RecentSearchList";
+import PopularSearchList from "./popular/PopularSearchList";
+import RecentSearchList from "./recent/RecentSearchList";
 
 const Search = () => {
   const dispatch = useDispatch();
