@@ -42,7 +42,6 @@ export const __getRecentKeywords = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await apis.get_recent_keywords();
-      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -55,7 +54,7 @@ export const __deleteAllRecentKeywords = createAsyncThunk(
   "search/__deleteAllRecentKeywords",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await apis.delete_all_keywords(arg.searchWord);
+      const { data } = await apis.delete_all_keywords();
       return thunkAPI.fulfillWithValue(arg);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -68,7 +67,6 @@ export const __deleteRecentKeyword = createAsyncThunk(
   "search/__deleteRecentKeyword",
   async (arg, thunkAPI) => {
     try {
-      console.log(arg);
       const { data } = await apis.delete_keyword(arg.searchWord);
       return thunkAPI.fulfillWithValue(arg);
     } catch (e) {
@@ -113,6 +111,7 @@ export const searchSlice = createSlice({
     [__getRecentKeywords.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.recentKeywordList = action.payload;
+      console.log(state.recentKeywordList);
     },
     [__getRecentKeywords.rejected]: (state, action) => {
       state.isLoading = false;
@@ -125,6 +124,7 @@ export const searchSlice = createSlice({
     [__deleteAllRecentKeywords.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.recentKeywordList = [];
+      console.log(state.recentKeywordList);
     },
     [__deleteAllRecentKeywords.rejected]: (state, action) => {
       state.isLoading = false;

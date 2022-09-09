@@ -21,6 +21,7 @@ const Search = () => {
   };
 
   const onAllRecentDeleteHandler = () => {
+    console.log("전체 삭제");
     dispatch(__deleteAllRecentKeywords());
   };
 
