@@ -4,9 +4,12 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { ReactComponent as ArrowBackIcon } from "../../../assets/icons/arrow_back_ios.svg";
 import { ReactComponent as SearchIcon } from "../../../assets/icons/search.svg";
+import { useDispatch } from "react-redux";
+import { __itemSearch } from "../../../redux/modules/searchSlice";
 
 const SearchHeader = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -25,8 +28,8 @@ const SearchHeader = () => {
   };
 
   // 검색 기능
-  const onSearchResultHandler = () => {
-    reset();
+  const onSearchResultHandler = (formData) => {
+    dispatch(__itemSearch({ keyword: formData.keyword }));
   };
 
   return (
@@ -35,19 +38,22 @@ const SearchHeader = () => {
         <NavItem>
           <ArrowBackIcon onClick={() => onPathHandler("/")} />
         </NavItem>
-        <NavItem>
-          <StForm onSubmit={handleSubmit(onSearchResultHandler)}>
+        <StForm onSubmit={handleSubmit(onSearchResultHandler)}>
+          <NavItem>
             <StInput
+              placeholder="검색어를 입력해주세요."
               type="text"
               name="keyword"
               required
               {...register("keyword")}
             />
-          </StForm>
-        </NavItem>
-        <NavItem>
-          <SearchIcon onClick={() => onSearchResultHandler()} />
-        </NavItem>
+          </NavItem>
+          <NavItem>
+            <SearchButton>
+              <SearchIcon />
+            </SearchButton>
+          </NavItem>
+        </StForm>
       </Navbar>
     </NavbarWrapper>
   );
@@ -92,12 +98,24 @@ const StInput = styled.input`
   color: rgba(0, 0, 0, 0.85);
   padding: 0.4rem 1.1rem;
   border: 1px solid #d9d9d9;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-weight: 500;
+  font-size: 1.6rem;
+  line-height: 2.3rem;
   &:hover {
     border-color: ${({ theme }) => theme.mainColor};
   }
   &:focus {
     border-color: ${({ theme }) => theme.mainColor};
     outline: none;
+  }
+  &::placeholder {
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 2.3rem;
+    color: ${({ theme }) => theme.gray};
   }
   @media (min-width: 1024px) {
     width: 40rem;
@@ -110,4 +128,15 @@ const StInput = styled.input`
   }
 `;
 
-const StForm = styled.form``;
+const StForm = styled.form`
+  width: 73%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const SearchButton = styled.button`
+  border: none;
+  cursor: pointer;
+  background-color: ${({ theme }) => theme.mainColor};
+`;
