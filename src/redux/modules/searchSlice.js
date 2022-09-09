@@ -24,7 +24,7 @@ export const __getPopularKeywords = createAsyncThunk(
 
 // 최근 검색어 조회
 export const __getRecentKeywords = createAsyncThunk(
-  "post/__getRecentKeywords",
+  "search/__getRecentKeywords",
   async (arg, thunkAPI) => {
     try {
       const { data } = await apis.get_recent_keywords();
@@ -37,7 +37,7 @@ export const __getRecentKeywords = createAsyncThunk(
 
 // 최근 검색어 전체 삭제
 export const __deleteAllRecentKeywords = createAsyncThunk(
-  "post/__deleteAllRecentKeywords",
+  "search/__deleteAllRecentKeywords",
   async (arg, thunkAPI) => {
     try {
       const { data } = await apis.delete_all_keywords(arg.searchWord);
@@ -50,7 +50,7 @@ export const __deleteAllRecentKeywords = createAsyncThunk(
 
 // 최근 검색어 개별 삭제
 export const __deleteRecentKeyword = createAsyncThunk(
-  "post/__deleteRecentKeyword",
+  "search/__deleteRecentKeyword",
   async (arg, thunkAPI) => {
     try {
       console.log(arg);
