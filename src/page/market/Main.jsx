@@ -13,7 +13,7 @@ const Main = () => {
   const isLogin = useSelector((state) => state.user.userToken);
 
   const onPathHandler = () => {
-    navigate("/market/post");
+    navigate('/market/post');
   };
 
   return (
