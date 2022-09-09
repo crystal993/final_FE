@@ -1,23 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   __getSinglePost,
   __deletePost,
-} from "../../../redux/modules/market/postSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import styled from "styled-components";
-import LikeButton from "../../elements/buttons/LikeButton";
-import SimpleSlider from "./SimpleSlider";
-import Button from "../../elements/GlobalButton";
-import Comment from "../comment/Comment";
-import FixButton from "../../elements/buttons/FixTwoButton";
+} from '../../../redux/modules/market/postSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import ItemZzimButton from '../../elements/buttons/ItemZzimButton';
+import SimpleSlider from './SimpleSlider';
+import Comment from '../comment/Comment';
+import FixButton from '../../elements/buttons/FixButton';
+import FixThreeButton from '../../elements/buttons/FixThreeButton';
+import PriceChart from '../../elements/chart/PriceChart';
+import GlobalModal from '../../elements/GlobalModal';
+import { ReactComponent as ProfileIcon } from '../../../assets/icons/profile_img_sm.svg';
+import EditIcon from '../../../assets/icons/edit_document2.svg';
+import DeleteIcon from '../../../assets/icons/delete.svg';
+import CheckIcon from '../../../assets/icons/check_circle.svg';
 
 const DetailInfo = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  console.log(id);
   const item = useSelector((state) => state.marketPost.singlePost);
+  const isLogin = useSelector((state) => state.user.userToken);
   const itemImgs = item.itemImgs;
   console.log(item);
 
@@ -27,7 +33,7 @@ const DetailInfo = () => {
 
   const deleteHandler = (id) => {
     dispatch(__deletePost({ id: id }));
-    navigate("/");
+    navigate('/');
   };
 
   const sharekakao = (event) => {
@@ -35,19 +41,19 @@ const DetailInfo = () => {
     if (window.Kakao) {
       const kakao = window.Kakao;
       if (!kakao.isInitialized()) {
-        kakao.init("a729d68f8474b39d110cdd9e7a162f5a");
+        kakao.init('a729d68f8474b39d110cdd9e7a162f5a');
       }
 
       kakao.Link.sendDefault({
-        objectType: "feed",
+        objectType: 'feed',
         content: {
           title: `${item.title}`,
           description: `${item.content}`,
           imageUrl: `${item.itemImgs[0]}`,
           link: {
             // 배포한 주소
-            mobileWebUrl: "공유할 url 주소",
-            webUrl: "공유할 url주소",
+            mobileWebUrl: '공유할 url 주소',
+            webUrl: '공유할 url주소',
           },
         },
       });
@@ -56,8 +62,8 @@ const DetailInfo = () => {
 
   // 사용할 컴포넌트에서만 script를 호출하기 위해서
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://developers.kakao.com/sdk/js/kakao.js";
+    const script = document.createElement('script');
+    script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
     script.async = true;
 
     document.body.appendChild(script);
@@ -67,63 +73,78 @@ const DetailInfo = () => {
     };
   }, []);
 
+  const onEditHandler = () => {
+    navigate(`/market/post/${id}`, { state: item });
+  };
+
+  const [isModal, setModal] = useState(false);
+  const [isMessage, setMessage] = useState(null);
+  const onDeleteHandler = (event) => {
+    event.stopPropagation();
+    // TODO:  추후에 모달로 바꿀 예정
+    // 모달 중에 예 아니요 선택하는 모달도 필요할 듯
+    const result = window.confirm('게시글을 삭제하겠습니까?');
+    if (result) {
+      return deleteHandler(id);
+    } else {
+      return;
+    }
+  };
   return (
     <>
+      {isModal ? (
+        <GlobalModal content={'로그인 하세요'} name={'로그인'} />
+      ) : null}
       <SimpleSlider itemImgs={itemImgs} />
       <DetailWrapper>
         <InfoWrapper>
           <P>
-            {item.itemCategory} {item.createdAt}
+            {item.itemCategory} {item.time}
           </P>
         </InfoWrapper>
         <Title>{item.title}</Title>
-        <InfoWrapper>
-          <Price>{item.sellingPrice}</Price>
-        </InfoWrapper>
-        <LinkWrapper>
-          <div>
-            <StUserBox>
-              <UserImgBox>
-                <UserImage src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxIHBg8SBw4PEhATDg0PFRAPEA8ODQ0RFREWFhURExYYKCggGBslHRUfITEhJSkrLi4uFx8zODMtNyg5OisBCgoKDg0OFw8QGjIlHSItNy0tKy4tKzctLy0tKzgtLS0tLSstLi0rNy0tLC0tKy0rOC0tKy03LS0rLTctKy0rN//AABEIAOAA4QMBIgACEQEDEQH/xAAaAAEAAgMBAAAAAAAAAAAAAAAABAUCAwYB/8QANhABAAECAgYIBAUFAQAAAAAAAAECAwQRBSExUWFxEhMiMkGRocEzcoGxNFJiotEUQoLh8SP/xAAZAQEBAQEBAQAAAAAAAAAAAAAAAwIBBAX/xAAdEQEBAQEAAgMBAAAAAAAAAAAAAQIRAzESIUET/9oADAMBAAIRAxEAPwDrAH0XzQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAe00zVPZiZ5a26nB3KtlE/XKHOu8aBInBXI/s8piWmuiaJ7cTHOMjsOViA64AAAAAAAAAAAAAAAAAAAAAAJ+F0f0ozv6v0+P1Z6OwuURXcjX4Ru4rBLW/yK5x+1jbtxbjKiIjkyBNQeVUxVGVURMcXoCBidHRMZ2NU/l8J5KyqOjOVW10SHj8L1tHSojtR+6FM7/KnrH7FSAqkAAAAAAAAAAAAAAAAAANuEtddfiPDbPKGpYaIo7VU8oZ1eRrM7VlGqNQCC4AAAAACm0hZ6rETlsnXHujLTS1Gdqmd1WXnCrXzexDU5QBpkAAAAAAAAAAAAAAAAWeiPhVfNH2VifomvK5VG+Iny/wCs79N49rMBBYAAAAABE0p+F/ypVCz0tX2KaeOfkrFsekd+wBtgAAAAAAAAAAAAAAAAZ2LnU3YqjwnzhgDroaKorpiadkxm9VOAxfUz0bnd3/l/0tonONSGpxfN7ABl0AAJnKNYrdIYzOJotTzn2h2TrlvEXGXuvvzMbNkcmkF4hQB1wAAAAAAAAAAAAAAAAAASMNjKrGqNdO6fZHHLOuy8XNrHUXNs5Tun+UiKoq2TDniJy2MXxtzyOimctrRdxdFrbVE8I1ypJnPaH8y+RLxOOqvRlR2afWUQG5OMW9AHXAAAAAAAAAAAAAAAAAAAZ2bNV6rK3H8Qs8Po+m3rudqf2s3UjUzarLdmq7P/AJ0zP2Srejaqu/MR6ytYjKNQnd1SYiDToymO9VVPLKGcaOo/V5pY58q18YiTo6jj5sKtGUz3aqo55SnB8qfGKq5oyqO5MT6Si3bNVr4lMx9l+TGca3Zus3Ec6Le/o+m58Pszw2eSsv2KrFWVyPr4SpNSp3NjWA0yAAAAAAAAAAAAAAJGDwk4ic51U79/CHmDw/8AUXOEbZ9l1RTFFMRTGUQxrXPpTOe/by3bi1RlbjKGQIqgAAAAAAADG5RFynKuM4ZAKfGYObE5066fWOaK6GqOlTlVsU2Nw39PX2e7OzhwVzrv1UtZ59xHAUTAAAAAAAAAACmOlVEU7Z1Cbou10rs1TsjZzly3kdk7eLDDWYsWoiPrO+W0HnegAAAAAAAAAAAAYX7UXrUxV4+k72YDnrlE265irbE5PFhpWzlMVRyn2V70S9iFnKAOsgAAAAAAAC60fb6GFp46/NS7XQ0R0aIiPCIhPyVTxx6AkqAAAAAAAAAAAAAA1Yu31uHqjhn9YULo3P3aehdqjdVMeqvjqfkjEBRIAAAAAAABlajO7T80fd0Cgs/Gp+an7r9LyK+MATUAAAAAAAAAAAAAAFHjIyxVfzLxR438XXz9lPH7Y8nppAVRAAAAf//Z"></UserImage>
-              </UserImgBox>
-              <UserInfoTxt>
-                <H3>{item.nickname}</H3>
-                <P>{item.location}</P>
-              </UserInfoTxt>
-            </StUserBox>
-          </div>
-          <button className="share" onClick={sharekakao}>
-            공유하기
-          </button>
-        </LinkWrapper>
-        <h1>{item.content}</h1>
-        <P>조회수 {item.viewCnt}</P>
-        <P>찜갯수 {item.zzimCnt}</P>
-        <LikeButton />
-        <FixButton content={"게시글 수정"} size={50}></FixButton>
-        <FixButton content={"게시글 삭제"} size={50}></FixButton>
-        <Button
-          content={"게시글 수정"}
-          onClick={() => {
-            navigate(`/market/post/${id}`, { state: item });
-          }}
-        ></Button>
-        <Button
-          content={"게시글 삭제"}
-          onClick={(event) => {
-            event.stopPropagation();
-            // TODO:  추후에 모달로 바꿀 예정
-            const result = window.confirm("게시글을 삭제할래?");
-            if (result) {
-              return deleteHandler(id);
-            } else {
-              return;
-            }
-          }}
-        >
-          게시글 삭제
-        </Button>
+        <StWrapper>
+          <Price>{item.sellingPrice?.toLocaleString('ko-KR')}</Price>
+          <StIcon>
+            <span class='material-icons' onClick={sharekakao}>
+              share
+            </span>
+          </StIcon>
+        </StWrapper>
+        <PriceChart
+          purchasePrice={item.purchasePrice}
+          sellingPrice={item.sellingPrice}
+        />
+        <StUserBox>
+          <UserImgBox>
+            <StProfileIcon />
+          </UserImgBox>
+          <UserInfoTxt>
+            <H3>{item.nickname}</H3>
+            <P>{item.location}</P>
+          </UserInfoTxt>
+        </StUserBox>
+        <Content>{item.content}</Content>
+        <InfoCntWrapper>
+          <P>
+            관심 {item.zzimCnt} 조회수 {item.viewCnt}
+          </P>
+        </InfoCntWrapper>
+        <ItemZzimButton postId={id} isLogin={isLogin} isZzim={item.isZzimed} />
         <Comment id={id} />
+        {!item.isMine && <FixButton content={'채팅으로 거래하기'}></FixButton>}
+        {item.isMine && (
+          <FixThreeButton
+            content1={'삭제하기'}
+            content2={'거래완료'}
+            content3={'수정하기'}
+            onClick1={onDeleteHandler}
+            onClick3={onEditHandler}
+            icon1={DeleteIcon}
+            icon2={CheckIcon}
+            icon3={EditIcon}
+          />
+        )}
       </DetailWrapper>
     </>
   );
@@ -151,10 +172,29 @@ const H3 = styled.p`
   font-weight: bold;
 `;
 
-const LinkWrapper = styled.div`
+const StWrapper = styled.div`
   width: 100%;
   display: flex;
+  margin: 0 0 2.8rem 0;
+  flex-direction: row;
   justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  span {
+    color: ${({ theme }) => theme.darkgray};
+  }
+`;
+
+const StIcon = styled.div`
+  @media (min-width: 1024px) {
+    margin: 0 1.3rem;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    margin: 0 1.3rem;
+  }
+  @media (max-width: 767px) {
+    margin: 0 1.3rem;
+  }
 `;
 
 const Title = styled.p`
@@ -163,6 +203,7 @@ const Title = styled.p`
 
 const Price = styled.p`
   font-size: 2.4rem;
+  color: ${({ theme }) => theme.mainColor};
   font-weight: bold;
 `;
 
@@ -171,8 +212,8 @@ const StUserBox = styled.div`
   flex-direction: row;
   align-content: center;
   justify-content: flex-start;
-  gap: 15px;
-  margin: 20px 0px;
+  gap: 1.5rem;
+  margin: 3rem 0;
   .user-info {
     justify-content: flex-start;
     background-color: green;
@@ -234,5 +275,23 @@ const UserImage = styled.img`
 `;
 
 const UserInfoTxt = styled.div``;
+
+const Content = styled.h1`
+  font-weight: 400;
+  font-size: 1.4rem;
+`;
+
+const InfoCntWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  color: ${({ theme }) => theme.darkgray};
+  margin: 3.2rem 0;
+`;
+
+const StProfileIcon = styled(ProfileIcon)`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
 
 export default DetailInfo;

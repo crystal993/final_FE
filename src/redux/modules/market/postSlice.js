@@ -5,33 +5,96 @@ import { apis } from "../../../shared/axios";
 
 const initialState = {
   list: [],
+  dogList: [],
+  catList: [],
+  foodList: [],
+  snackList: [],
+  clothesList: [],
+  beautyList: [],
+  toyList: [],
+  etcList: [],
+  doubleList: [],
   singlePost: {},
   hasMoreTwits: null,
   isLoading: null,
-  //   isLoading: false,
-  //   err: null,
+  page: 0,
 };
 
-// ${URI.BASE}/api/post?page=${arg.page}&pageSize=${arg.pageSize}
+// 고양이 , 강아지 필터링
+export const getData = createAsyncThunk(
+  "mainFilter/getData",
+  async (payload, thunkApi) => {
+    try {
+      const response = await axios.get(
+        `http://43.200.1.214/items/petcategory?petCategory=${payload.state}&page=${payload.page}&size=10`
+      );
+      console.log(response);
+      if (!response.data) {
+        return;
+      }
+      return thunkApi.fulfillWithValue(response.data);
+    } catch (error) {
+      console.log(error);
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
+
+// 전체 데이터 조회
 export const __getPost = createAsyncThunk(
   "post/__getPost",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await apis.get_market_posts();
-
-      //   const { data } = await axios({
-      //     method: "get",
-      //     url: `http://54.180.143.106/api/post?page=0&pageSize=100`,
-      //     headers: {
-      //       Authorization: localStorage.getItem("Authorization"),
-      //       RefreshToken: localStorage.getItem("RefreshToken"),
-      //       "Content-Type": "application/json",
-      //     },
-      //   });
-      // console.log(data);
-      // const { data } = RESP.GET_POSTS_SUCCESS;
+      const { data } = await axios.get(
+        `http://43.200.1.214/items?page=${arg.page}&size=10`
+      );
+      if (!data) {
+        return;
+      }
       console.log(data);
       return thunkAPI.fulfillWithValue(data);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.code);
+    }
+  }
+);
+
+// 카테고리 필터링
+export const __getItemCategories = createAsyncThunk(
+  "category/__getItemCategories",
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await axios.get(
+        `http://43.200.1.214/items/itemcategory?itemCategory=${arg.itemCategory}&page=${arg.page}&size=10`
+      );
+      if (!data) {
+        return;
+      }
+      return thunkAPI.fulfillWithValue(data);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.code);
+    }
+  }
+);
+
+// 중복 카테고리 필터링
+export const getTwoCategory = createAsyncThunk(
+  'category/getTwoCategories',
+  async (arg, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        `http://43.200.1.214/items/twocategory?petCategory=${arg.petCategory}&itemCategory=${arg.itemCategory}&page=${arg.page}`
+      );
+      console.log(response.data);
+      // localStorage.removeItem('petCategory');
+      // localStorage.removeItem('itemCategory');
+      if (response.data.length === 0) {
+        console.log('remove');
+        localStorage.removeItem('petCategory');
+        localStorage.removeItem('itemCategory');
+        return;
+      }
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
     }
@@ -44,18 +107,7 @@ export const __getSinglePost = createAsyncThunk(
     try {
       console.log(arg.id);
       const { data } = await apis.get_market_post(arg.id);
-      //   const { data } = await axios({
-      //     method: "get",
-      //     url: `http://54.180.143.106/api/post/${arg.postId}`,
-      //     headers: {
-      //       Authorization: localStorage.getItem("Authorization"),
-      //       RefreshToken: localStorage.getItem("RefreshToken"),
-      //       "Content-Type": "application/json",
-      //     },
-      //   });
-      // const { data } = RESP.GET_POST_SUCCESS;
       const datas = { ...data, imgLength: data.itemImgs.length };
-      console.log(data);
       return thunkAPI.fulfillWithValue(datas);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -67,22 +119,7 @@ export const __addPost = createAsyncThunk(
   "post/__addPost",
   async (arg, thunkAPI) => {
     try {
-      console.log(arg.data, arg.files);
-      // TODO arg로 formdata랑 filelist 따로 넘겨주는지 확인하기
       const { data } = await apis.create_market_post(arg.data, arg.files);
-
-      //   const { data } = await axios({
-      //     method: "post",
-      //     url: `http://54.180.143.106/api/post`,
-      //     data: arg,
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //       Authorization: localStorage.getItem("Authorization"),
-      //       RefreshToken: localStorage.getItem("RefreshToken"),
-      //     },
-      //   });
-      // const { data } = RESP.ADD_POST_SUCCESS;
-      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -95,12 +132,6 @@ export const __deletePost = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await apis.delete_market_post(arg.id);
-      // await axios({
-      //   method: "delete",
-      //   url: `http://54.180.143.106/api/post/${arg}`,
-      //   headers: config,
-      // });
-      // const { data } = RESP.DELETE_POST_SUCCESS;
       return thunkAPI.fulfillWithValue(arg);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -113,15 +144,8 @@ export const __updatePost = createAsyncThunk(
   async (arg, thunkAPI) => {
     console.log(arg);
     try {
-      // const { data } = await apis.edit_market_post(arg.data, arg.files);
-      // const { data } = await axios({
-      //   method: "put",
-      //   url: `http://54.180.143.106/api/post/${arg.id}`,
-      //   data: arg.data,
-      //   headers: config,
-      // });
-      // console.log(data);
-      const { data } = RESP.UPDATE_POST_SUCCESS;
+      const { data } = await apis.edit_market_post(arg.id, arg.data, arg.files);
+      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
@@ -132,15 +156,54 @@ export const __updatePost = createAsyncThunk(
 export const postSlice = createSlice({
   name: "postSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    addPage: (state) => {
+      state.page = state.page + 1;
+    },
+    pageToZero: (state) => {
+      state.page = 0;
+    },
+    doubleListToZero: (state) => {
+      state.list = [];
+      state.doubleList = [];
+      state.beautyList = [];
+      state.catList = [];
+      state.clothesList = [];
+      state.dogList = [];
+      state.etcList = [];
+      state.foodList = [];
+    },
+  },
   extraReducers: {
-    // get post list
+    // 고양이 , 강아지 필터
+    [getData.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [getData.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.list = [];
+      if (action.payload[0].petCategory.includes('강아지')) {
+        state.catList = [];
+        state.dogList = state.dogList.concat(action.payload);
+      }
+      if (action.payload[0].petCategory.includes('고양이')) {
+        state.dogList = [];
+        state.catList = state.catList.concat(action.payload);
+      }
+    },
+    [getData.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // get post list (전체 필터)
     [__getPost.pending]: (state, action) => {
       state.isLoading = true;
     },
     [__getPost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.list = action.payload;
+      state.dogList = [];
+      state.catList = [];
+      state.list = state.list.concat(action.payload);
     },
     [__getPost.rejected]: (state, action) => {
       state.isLoading = false;
@@ -158,7 +221,7 @@ export const postSlice = createSlice({
       state.isLoading = false;
       state.err = action.payload;
     },
-    // post
+    // add post
     [__addPost.pending]: (state, action) => {
       state.isLoading = true;
     },
@@ -169,7 +232,6 @@ export const postSlice = createSlice({
       state.isLoading = false;
       state.err = action.payload;
     },
-
     // delete post
     [__deletePost.pending]: (state, action) => {
       state.isLoading = true;
@@ -185,6 +247,7 @@ export const postSlice = createSlice({
       state.isLoading = false;
       state.err = action.payload;
     },
+    // update post
     [__updatePost.pending]: (state, action) => {
       state.isLoading = true;
     },
@@ -196,8 +259,93 @@ export const postSlice = createSlice({
       state.isLoading = false;
       state.err = action.payload;
     },
+    // item category filter (아이템 카테고리 필터)
+    [__getItemCategories.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__getItemCategories.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      console.log(action.payload);
+      state.itemCategory = action.payload[0].itemCategory;
+      if (state.itemCategory === '사료' && action.payload !== []) {
+        state.list = [];
+        state.snackList = [];
+        state.clothesList = [];
+        state.beautyList = [];
+        state.toyList = [];
+        state.etcList = [];
+        state.foodList = state.foodList.concat(action.payload);
+      }
+      if (state.itemCategory === '간식' && action.payload !== []) {
+        state.list = [];
+        state.foodList = [];
+        state.clothesList = [];
+        state.beautyList = [];
+        state.toyList = [];
+        state.etcList = [];
+        state.snackList = state.snackList.concat(action.payload);
+      }
+      if (state.itemCategory === '의류' && action.payload !== []) {
+        state.list = [];
+        state.foodList = [];
+        state.snackList = [];
+        state.beautyList = [];
+        state.toyList = [];
+        state.etcList = [];
+        state.clothesList = state.clothesList.concat(action.payload);
+      }
+      if (state.itemCategory === '미용' && action.payload !== []) {
+        state.list = [];
+        state.foodList = [];
+        state.snackList = [];
+        state.clothesList = [];
+        state.toyList = [];
+        state.etcList = [];
+        state.beautyList = state.beautyList.concat(action.payload);
+      }
+      if (state.itemCategory === '장난감' && action.payload !== []) {
+        state.list = [];
+        state.foodList = [];
+        state.snackList = [];
+        state.beautyList = [];
+        state.clothesList = [];
+        state.etcList = [];
+        state.toyList = state.toyList.concat(action.payload);
+      }
+      if (state.itemCategory === '기타용품' && action.payload !== []) {
+        state.list = [];
+        state.foodList = [];
+        state.snackList = [];
+        state.beautyList = [];
+        state.toyList = [];
+        state.clothesList = [];
+        state.etcList = state.etcList.concat(action.payload);
+      }
+    },
+    [__getItemCategories.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.err = action.payload;
+    }, // 두 가지 아이템 카테고리 필터
+    [getTwoCategory.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [getTwoCategory.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.list = [];
+      state.doubleList = state.doubleList.concat(action.payload);
+    },
+    [getTwoCategory.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.err = action.payload;
+    },
   },
 });
 
-export const {} = postSlice.actions;
+export const {
+  addPage,
+  pageToZero,
+  doubleListToZero,
+  petCategory,
+  itemCategory,
+} = postSlice.actions;
 export default postSlice.reducer;

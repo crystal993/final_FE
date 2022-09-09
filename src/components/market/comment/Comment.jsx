@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getCommentData,
   postCommentData,
   deleteCommentData,
   putCommentData,
-} from '../../../redux/modules/market/commentSlice';
-import DetailButton from '../../elements/buttons/DetailButton';
+} from "../../../redux/modules/market/commentSlice";
+import DetailButton from "../../elements/buttons/DetailButton";
 
 const Comment = ({ id }) => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const Comment = ({ id }) => {
   const comment_data = state.data;
   console.log(comment_data);
   //   입력받은 값
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
 
   const onChangeHandler = (event) => {
     setInput(event.target.value);
@@ -43,8 +43,8 @@ const Comment = ({ id }) => {
     <Wrapper>
       <Label>
         <Input
-          placeholder='댓글을 입력해 주세요'
-          name='input'
+          placeholder="댓글을 입력해 주세요"
+          name="input"
           value={input}
           onChange={onChangeHandler}
         />
@@ -53,7 +53,7 @@ const Comment = ({ id }) => {
         </button>
       </Label>
       {comment_data === undefined ? (
-        <section className='no-comment'>
+        <section className="no-comment">
           <p>아직 댓글이 없어요</p>
           <p>가장 먼저 댓글을 남겨 보세요.</p>
         </section>
@@ -81,11 +81,6 @@ const Comment = ({ id }) => {
           </section>
         ))
       )}
-      {/* 조건부 렌더링 */}
-      <DetailButton />
-      {/* <button className='btn'>거래 완료</button>
-      <button className='btn'>삭제하기</button>
-      <button className='btn'>수정하기</button> */}
     </Wrapper>
   );
 };

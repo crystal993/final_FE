@@ -32,6 +32,7 @@ const initialState = {
   kakaoToken: localStorage.getItem('kakao-token')
     ? localStorage.getItem('kakao-token')
     : null,
+  logoutInfo: {},
 };
 
 const userSlice = createSlice({
@@ -48,13 +49,18 @@ const userSlice = createSlice({
       state.loading = false;
       state.userInfo = payload.data;
       state.profileImg = payload.data.profileImg;
-      localStorage.setItem('user-profile', payload.data.profileImg);
-      localStorage.setItem('user-info', payload.data);
+      localStorage.setItem(
+        'user-profile',
+        JSON.stringify(payload.data.profileImg)
+      );
+      localStorage.setItem('user-info', JSON.stringify(payload.data));
       state.userToken = payload.headers.authorization;
+      state.success = true;
     },
     [userLogin.rejected]: (state, { payload }) => {
       state.loading = false;
       state.error = payload;
+      state.success = false;
     },
     // 유저 회원가입
     [registerUser.pending]: (state) => {
@@ -80,7 +86,7 @@ const userSlice = createSlice({
       localStorage.removeItem('kakao-token');
       localStorage.removeItem('user-info');
       state.loading = false;
-      state.userInfo = payload;
+      state.logoutInfo = payload;
       state.userToken = null;
       state.error = null;
     },

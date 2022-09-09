@@ -2,58 +2,75 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled, { css } from "styled-components";
 
-function GlobalButton({ content, icon, size, onClick, width }) {
+function GlobalButton({
+  content,
+  icon,
+  size,
+  onClick,
+  width,
+  height,
+  fontSize,
+  fontWeight,
+  color,
+}) {
   return (
-    <Wrapper onClick={onClick} width={width}>
+    <Wrapper onClick={onClick}>
       {icon && <Icon icon={icon} size={size} />}
-      {content && <Btn size={size}>{content}</Btn>}
+      {content && (
+        <Btn
+          size={size}
+          fontSize={fontSize}
+          fontWeight={fontWeight}
+          width={width}
+          height={height}
+          color={color}
+        >
+          {content}
+        </Btn>
+      )}
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
-  width: ${(width) => width};
+  width: ${(props) => props.width};
 `;
 const Icon = styled(FontAwesomeIcon)`
   color: ${(props) => props.theme.mainColor};
-  padding: 10px 20px;
+  padding: 1rem 2rem;
 `;
 
 const Btn = styled.button`
   text-align: center;
-  padding: 8px 15px;
-  margin: 5px auto;
-  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  font-weight: ${(props) => props.fontWeight};
+  color: ${(props) =>
+    props.color === "subColor" ? props.theme.mainColor : props.theme.white};
   border-radius: ${(props) => props.theme.buttonRadius};
   transition: ${(props) => props.theme.transition};
-  border: none;
-  background-color: ${(props) => props.theme.mainColor};
+  border: ${(props) =>
+    props.color === "subColor" ? `1px solid ${props.theme.mainColor}` : "none"};
+  background-color: ${(props) =>
+    props.color === "subColor" ? props.theme.white : props.theme.mainColor};
+  font-size: ${(props) => props.fontSize};
   &:hover {
     cursor: pointer;
-    background-color: #ffffff;
-    box-shadow: inset 0px 0px 4px 0px #b6b7b9;
-    color: ${(props) => props.theme.mainColor};
+    background-color: ${(props) =>
+      props.color === "subColor" ? props.theme.mainColor : props.theme.white};
+    box-shadow: ${(props) =>
+      props.color === "subColor" ? `none` : `inset 0px 0px 4px 0px #b6b7b9`};
+    color: ${(props) =>
+      props.color === "subColor" ? props.theme.white : props.theme.mainColor};
+    border: ${(props) =>
+      props.color === "subColor"
+        ? "none"
+        : `1px solid ${props.theme.mainColor}`};
   }
-  ${(props) =>
-    props.size === "large" &&
-    css`
-      height: 3rem;
-      font-size: 1.25rem;
-    `}
-  ${(props) =>
-    props.size === "medium" &&
-    css`
-      height: 2.25rem;
-      font-size: 1rem;
-    `}
-    ${(props) =>
-    props.size === "small" &&
-    css`
-      height: 1.75rem;
-      font-size: 0.875rem;
-    `}
-    display: flex;
-  align-items: center;
 `;
 
 export default GlobalButton;

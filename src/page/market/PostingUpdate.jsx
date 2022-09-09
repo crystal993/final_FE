@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../../components/elements/GlobalHeader";
+import Header from "../../components/elements/GlobalHeader2";
 import Footer from "../../components/elements/GlobalFooter";
 import Layout from "../../components/elements/GlobalLayout";
 import Update from "../../components/market/update/Update";

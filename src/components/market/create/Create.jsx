@@ -10,6 +10,8 @@ import ImgView from "../../elements/ImgView";
 import RESP from "../../../server/response";
 import axios from "axios";
 import { IoIosLocate } from "react-icons/io";
+import InputResetButton from "../../elements/buttons/InputResetButton";
+import FixButton from "../../elements/buttons/FixButton";
 
 function Create() {
   const dispatch = useDispatch();
@@ -46,6 +48,7 @@ function Create() {
     };
     dispatch(__addPost({ data, files }));
     reset();
+    navigate(`/`);
   };
 
   //다중 이미지 preview
@@ -114,6 +117,15 @@ function Create() {
   }
   getLocation(); //호출
 
+  const inputResetHandler = (inputId) => {
+    setValue(inputId, " ");
+  };
+
+  const inputOnlyNumHandler = (value, inputId) => {
+    const onlyNumber = value.replace(/[^0-9]/g, "");
+    return setValue(inputId, onlyNumber);
+  };
+
   return (
     <>
       <FormWrapper>
@@ -144,16 +156,24 @@ function Create() {
 
             <InputWrapper>
               <Input type="text" name="title" required {...register("title")} />
+              <InputResetButton onClick={() => inputResetHandler("title")} />
             </InputWrapper>
 
             <Label>구매 가격</Label>
 
             <InputWrapper>
               <Input
-                type="text"
+                type="number"
                 name="purchasePrice"
                 required
-                {...register("purchasePrice")}
+                {...register("purchasePrice", {
+                  validate: (value) => {
+                    inputOnlyNumHandler(value, "purchasePrice");
+                  },
+                })}
+              />
+              <InputResetButton
+                onClick={() => inputResetHandler("purchasePrice")}
               />
               <HelperText>
                 구매했을 당시 해당 물품의 가격을 적어주세요.
@@ -163,10 +183,17 @@ function Create() {
 
             <InputWrapper>
               <Input
-                type="text"
+                type="number"
                 name="sellingPrice"
                 required
-                {...register("sellingPrice")}
+                {...register("sellingPrice", {
+                  validate: (value) => {
+                    inputOnlyNumHandler(value, "sellingPrice");
+                  },
+                })}
+              />
+              <InputResetButton
+                onClick={() => inputResetHandler("sellingPrice")}
               />
               <HelperText>물품을 판매할 가격을 적어주세요.</HelperText>
             </InputWrapper>
@@ -181,6 +208,7 @@ function Create() {
             />
 
             {/* location */}
+            <Label>위치</Label>
             <LocationWrapper>
               <IoIosLocate />
               <LocationInput {...register("location")} readOnly></LocationInput>
@@ -194,14 +222,11 @@ function Create() {
               type="file"
               multiple
               onChange={changeImg}
-              // style={{ display: "none" }}
             />
             <ImgWrapper>
               {!isLoading && <ImgView imgUrls={itemImgs} />}
             </ImgWrapper>
-            <ButtonWrapper>
-              <Button content={"등록"} size={"small"} />
-            </ButtonWrapper>
+            <FixButton content={"게시글 등록하기"} version={2} />
           </Container>
         </Form>
       </FormWrapper>
@@ -229,6 +254,7 @@ const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 20rem;
 `;
 
 const TitleWrapper = styled.div`
@@ -280,6 +306,7 @@ const Label = styled.label`
 
 const InputWrapper = styled.div`
   margin-bottom: 4.7rem;
+  position: relative;
 `;
 
 const Input = styled.input`
@@ -297,12 +324,13 @@ const Input = styled.input`
   border-left-width: 0;
   border-right-width: 0;
   border-top-width: 0;
-  border-bottom-width: 3;
+  border-bottom-width: 2px;
   transition: all 0.3s;
   &:hover {
     border-color: ${({ theme }) => theme.mainColor};
   }
   &:focus {
+    border-color: ${({ theme }) => theme.mainColor};
     outline: none;
   }
   &[type="file"] {
@@ -383,7 +411,7 @@ const Select = styled.select`
   transition: all 0.3s;
   font-size: 1.4rem;
   &:hover {
-    border-color: #40a9ff;
+    border-color: ${({ theme }) => theme.mainColor};
     border-right-width: 1px;
   }
   &:focus {
@@ -431,7 +459,12 @@ const TextArea = styled.textarea`
   font-size: 1.4rem;
   padding: 10px;
   text-indent: 5px;
+  margin-bottom: 4.7rem;
+  &:hover {
+    border-color: ${({ theme }) => theme.mainColor};
+  }
   &:focus {
+    border-color: ${({ theme }) => theme.mainColor};
     outline: none;
   }
   &::placeholder {
@@ -476,9 +509,10 @@ const ImgWrapper = styled.div``;
 const LocationWrapper = styled.div`
   font-size: 1.4rem;
   height: 2.8rem;
-  margin: 2rem 0 4rem 0;
+  margin: 0.8rem 0 4rem 0;
   color: white;
   padding: 0.1rem 0.5rem;
+  margin-bottom: 4.7rem;
   background-color: ${({ theme }) => theme.darkgray};
 `;
 

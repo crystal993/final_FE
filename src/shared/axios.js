@@ -46,10 +46,7 @@ export const apis = {
     });
   },
   // pageNum, pageLimit
-  get_market_posts: () =>
-    api.get(
-      `/items/twocategory?petCategory=${"강아지"}&itemCategory=${"사료"}`
-    ),
+  // get_market_posts: () => api.get(`/items?page=0&size=10`),
   get_market_post: (id) => api.get(`/items/detail/${id}`),
   edit_market_post: (id, form, files) => {
     const formData = new FormData();
@@ -64,12 +61,26 @@ export const apis = {
     for (let i = 0; i < files.length; i++) {
       formData.append("multipartFileList", files[i]);
     }
-
-    api.put(`/items/detail/${id}`, formData);
+    return api.put(`/items/detail/${id}`, formData);
   },
   delete_market_post: (id) => api.delete(`/items/detail/${id}`),
 
   // like, unlike
-  like_post: (id) => api.post(`/api/like/${id}`),
-  unlike_post: (id) => api.post(`/api/unlike/${id}`),
+  like_post: (id) => api.post(`/items/detail/zzim/${id}`),
+  unlike_post: (id) => api.delete(`/items/detail/zzim/${id}`),
+
+  //category filter
+  get_market_category_posts: (itemCategory) =>
+    api.get(`/items/itemcategory?itemCategory=${itemCategory}`),
+
+  //logout
+  logout: () => api.post(`/members/logout`),
+
+  //search
+  item_search: (keyword) => api.post(`/items/search?keyword=${keyword}`),
+  get_popular_keywords: () => api.get(`/items/search/popularity`),
+  get_recent_keywords: () => api.get(`/items/search`),
+  delete_all_keywords: () => api.delete(`/items/search/all`),
+  delete_keyword: (searchWord) =>
+    api.delete(`/items/search/?searchWord=${searchWord}`),
 };

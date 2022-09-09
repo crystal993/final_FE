@@ -9,6 +9,8 @@ import {
   existMemberNickname,
 } from './../../redux/modules/user/userActions';
 import GlobalModal from './../elements/GlobalModal';
+import GlobalButton from '../elements/GlobalButton';
+import InputResetButton from '../elements/buttons/InputResetButton';
 
 const SignupForm = () => {
   const dispatch = useDispatch();
@@ -71,7 +73,9 @@ const SignupForm = () => {
 
   return (
     <>
-      {/* {duplicate ? <GlobalModal content={`중복확인 하라우`} /> : null} */}
+      {duplicate ? (
+        <GlobalModal content={`중복확인 하라우`} name={'로그인'} />
+      ) : null}
       <STwrap className='wrap'>
         <STsection>
           <p className='go-back' onClick={goBack}>
@@ -105,9 +109,9 @@ const SignupForm = () => {
                   }
                   name='userId'
                 />
-                <span className='material-icons cancel' onClick={onReset}>
-                  cancel
-                </span>
+                {watch().userId === '' ? null : (
+                  <InputResetButton className='input-reset' onClick={onReset} />
+                )}
                 <button className='idcheck-btn' onClick={onDuplicateUserId}>
                   중복체크
                 </button>
@@ -203,9 +207,13 @@ const SignupForm = () => {
               </button>
             </Label>
           </div>
-          <button className='signup-btn'>
-            <span>가입하기</span>
-          </button>
+          <div className='signup-button'>
+            <GlobalButton
+              content={'가입하기'}
+              width={'30rem'}
+              fontSize={'1.3rem'}
+            ></GlobalButton>
+          </div>
         </form>
       </STwrap>
     </>
@@ -273,8 +281,8 @@ const STwrap = styled.div`
     }
   }
 
-  .signup-btn:hover {
-    cursor: pointer;
+  .signup-button {
+    margin-top: 2rem;
   }
 
   .signup-form {
@@ -344,11 +352,13 @@ const Label = styled.label`
     height: 4rem;
   }
 
-  .cancel {
+  span {
+    transform: translate(-230%, 30%);
+  }
+
+  /* .cancel {
     position: absolute;
-    top: 0;
-    transform: translate(-255%, 45%);
-    right: 0;
+    transform: translateY(100%);
     display: flex;
     align-items: center;
     border-radius: 6px;
@@ -360,5 +370,5 @@ const Label = styled.label`
   }
   &:hover {
     border-color: ${({ theme }) => theme.mainColor};
-  }
+  } */
 `;

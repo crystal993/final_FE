@@ -2,15 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../../redux/modules/user/userActions';
 import KakaoLogin from './socialLogin/KakaoLogin';
+import Button from '../elements/GlobalButton';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // react-hook-form
-  // 실시간 유효성 검사
+  const success = useSelector((state) => state.user.userToken);
+
   const {
     register,
     handleSubmit,
@@ -23,7 +24,6 @@ const LoginForm = () => {
       email: watch().userId,
       password: watch().password,
     };
-
     dispatch(userLogin(body));
   };
 
@@ -35,7 +35,9 @@ const LoginForm = () => {
     navigate('/');
   };
 
-  // window.location.href
+  if (success) {
+    navigate('/');
+  }
 
   return (
     <>
@@ -93,13 +95,20 @@ const LoginForm = () => {
               )}
             </label>
           </div>
-          <button className='login-btn'>로그인</button>
+          <div className='login-btn-wrap'>
+            <Button
+              className='login-btn'
+              content={'로그인'}
+              width={'30rem'}
+              fontSize={'1.3rem'}
+            ></Button>
+          </div>
         </form>
-        <div>
-          <KakaoLogin className='login-btn' />
+        <div className='kakao-wrapper'>
+          <KakaoLogin className='kakao-btn' />
         </div>
         <div className='move-signup'>
-          <p className='isnot-member'>아직 회원이 아니신가요?</p>
+          <p className='isnot-member'>아직 멍냥마켓 회원이 아니신가요?</p>
           <p
             className='go-signup'
             onClick={() => {
@@ -141,12 +150,8 @@ const STwrap = styled.div`
     }
   }
 
-  .login-btn {
-    margin-top: 3.5rem;
-    width: 30rem;
-    border: 2px solid #cbcbcb;
-    border-radius: 6px;
-    height: 3.5rem;
+  .login-btn-wrap {
+    margin-top: 1.5rem;
   }
 
   .login-btn:hover {
@@ -179,7 +184,12 @@ const STwrap = styled.div`
     }
   }
 
+  .kakao-wrapper {
+    margin-top: 1rem;
+  }
+
   .error {
+    font-size: 1rem;
     color: red;
   }
 
@@ -192,7 +202,7 @@ const STwrap = styled.div`
       width: 22.5rem;
       height: 2.3rem;
       font-weight: 500;
-      font-size: 1.6rem;
+      font-size: 1.2rem;
       line-height: 2.3rem;
       color: #6b6b6b;
     }
