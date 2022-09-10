@@ -85,4 +85,7 @@ export const apis = {
   delete_all_keywords: () => api.delete(`/items/search/all`),
   delete_keyword: (searchWord) =>
     api.delete(`/items/search/?searchWord=${searchWord}`),
+
+  // mypage chart
+  my_page_chart: () => api.get(`/items/mypage/charts`),
 };
