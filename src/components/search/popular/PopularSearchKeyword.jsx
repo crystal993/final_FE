@@ -23,9 +23,9 @@ const PopularSearchKeyword = ({ keyword }) => {
 };
 
 const KeywordWrapper = styled.div`
+  display: block;
+  width: max-content;
   padding: 0.6rem 1rem;
-  margin: 0 1rem 0 0;
-  gap: 1rem;
   border: 1px solid ${({ theme }) => theme.mainColor};
   border-radius: 100px;
   cursor: pointer;
