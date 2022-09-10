@@ -22,6 +22,19 @@ export const __itemSearch = createAsyncThunk(
   }
 );
 
+// 상품 검색(인기 순 정렬)
+export const __itemSearchSortByPopular = createAsyncThunk(
+  "search/__itemSearchSortByPopular",
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await apis.item_search_sort_by_popular(arg.keyword);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
+
 // 인기 검색어 조회
 export const __getPopularKeywords = createAsyncThunk(
   "search/__getPopularKeywords",
@@ -92,6 +105,18 @@ export const searchSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    // 상품 검색(인기 순 정렬)
+    [__itemSearchSortByPopular.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__itemSearchSortByPopular.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.searchResultList = action.payload;
+    },
+    [__itemSearchSortByPopular.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
     // 인기 검색어
     [__getPopularKeywords.pending]: (state) => {
       state.isLoading = true;
@@ -124,7 +149,6 @@ export const searchSlice = createSlice({
     [__deleteAllRecentKeywords.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.recentKeywordList = [];
-      console.log(state.recentKeywordList);
     },
     [__deleteAllRecentKeywords.rejected]: (state, action) => {
       state.isLoading = false;

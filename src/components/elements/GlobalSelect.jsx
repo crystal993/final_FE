@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const GlobalSelect = ({ optionDatas }) => {
+const GlobalSelect = ({ optionDatas, setSelected }) => {
   const [currentOption, setCurrentOption] = useState(optionDatas[0].name);
   const [isShowOptions, setIsShowOptions] = useState(false);
 
   const onChangeSelectOptionHandler = (e) => {
     setCurrentOption(e.target.getAttribute("name"));
+    setSelected(e.target.getAttribute("value"));
   };
+
   return (
     <>
       <SelectorWrapper onClick={() => setIsShowOptions((prev) => !prev)}>
