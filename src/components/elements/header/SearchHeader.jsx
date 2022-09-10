@@ -105,6 +105,7 @@ const StInput = styled.input`
   font-weight: 500;
   font-size: 1.6rem;
   line-height: 2.3rem;
+
   &:hover {
     border-color: ${({ theme }) => theme.mainColor};
   }
@@ -120,12 +121,19 @@ const StInput = styled.input`
   }
   @media (min-width: 1024px) {
     width: 40rem;
+    margin-left: -2rem;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
-    width: 35rem;
+    width: 30rem;
+    margin-left: -2rem;
   }
   @media (max-width: 767px) {
-    width: 28rem;
+    width: 25rem;
+    margin-left: -2rem;
+  }
+  @media (max-width: 500px) {
+    width: 20rem;
+    margin-left: -1.3rem;
   }
 `;
 
