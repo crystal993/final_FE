@@ -67,10 +67,7 @@ export default function MyPageSumPriceChart({ chartData }) {
         }}
       >
         <CartesianGrid stroke="#f5f5f5" />
-        <XAxis dataKey="name">
-          <Label value="name" offset={-15} position="insideBottom" />
-        </XAxis>
-        <YAxis />
+        <XAxis dataKey="name"></XAxis>
         <YAxis />
         <Tooltip content={<CustomTooltip />} />
         <Bar dataKey="price" barSize={20} fill="#B192F3" />
