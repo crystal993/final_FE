@@ -3,6 +3,7 @@ import { apis } from "../../shared/axios";
 
 const initialState = {
   myWritings: [],
+  myZzims: [],
   isLoading: null,
   page: 0,
 };
@@ -20,12 +21,25 @@ export const __getMyWritings = createAsyncThunk(
   }
 );
 
+//내가 찜한 목록 조회
+export const __getMyZzims = createAsyncThunk(
+  "mypage/__getMyZzims",
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await apis.get_my_zzims();
+      return thunkAPI.fulfillWithValue(data);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
+
 export const myPageSlice = createSlice({
   name: "myPageSlice",
   initialState,
   reducers: {},
   extraReducers: {
-    // 상품 검색(최신 순 정렬)
+    // 내가 쓴 글 조회
     [__getMyWritings.pending]: (state) => {
       state.isLoading = true;
     },
@@ -34,6 +48,18 @@ export const myPageSlice = createSlice({
       state.myWritings = action.payload;
     },
     [__getMyWritings.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    //내가 찜한 목록 조회
+    [__getMyZzims.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__getMyZzims.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.myZzims = action.payload;
+    },
+    [__getMyZzims.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

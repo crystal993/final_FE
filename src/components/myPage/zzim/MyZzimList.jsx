@@ -1,41 +1,16 @@
-import React from "react";
+import React, { useEffect, Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { __getMyZzims } from "../../../redux/modules/myPageSlice";
 import Item from "./MyZzimItem";
-import RESP from "../../../server/response";
 
 const MyZzimList = () => {
-  const zzimItems = [
-    {
-      id: 373,
-      isComplete: false,
-      itemCategory: "식품",
-      itemImgs: [],
-      lastData: false,
-      location: "안드로메",
-      petCategory: "강아지\n",
-      sellingPrice: 100000,
-      time: "2일 전",
-      title: "saff",
-      viewCnt: 38,
-      zzimCnt: 0,
-    },
-    {
-      id: 372,
-      isComplete: false,
-      itemCategory: "사료",
-      itemImgs: [
-        "https://springadvancedbucket.s3.ap-northeast-2.amazonaws.com/heart1662598680432.png",
-      ],
-      lastData: false,
-      location: "서울 은평구",
-      petCategory: "강아지",
-      sellingPrice: 10000,
-      time: "3일 전",
-      title: "ㅁㄴㅇㅇ",
-      viewCnt: 120,
-      zzimCnt: 0,
-    },
-  ];
+  const dispatch = useDispatch();
+  const zzimItems = useSelector((state) => state.myPage.myZzims);
+  useEffect(() => {
+    dispatch(__getMyZzims());
+  }, [dispatch]);
+
   return (
     <>
       <MyZzimListWrapper>

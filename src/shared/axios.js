@@ -91,4 +91,5 @@ export const apis = {
 
   // mypage
   get_my_writings: () => api.get(`/items/mypage`),
+  get_my_zzims: () => api.get(`/items/mypage/zzim`),
 };
