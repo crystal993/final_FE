@@ -3,18 +3,18 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow_back_ios.svg";
 
-const GlobalHeader2 = () => {
+const GlobalHeader2 = ({ path }) => {
   const navigate = useNavigate();
 
-  const onPathHandler = (path) => {
-    navigate(path);
+  const onPathHandler = (paths) => {
+    navigate(paths);
   };
 
   return (
     <NavbarWrapper>
       <Navbar>
         <NavItem>
-          <ArrowBackIcon onClick={() => onPathHandler("/")} />
+          <ArrowBackIcon onClick={() => onPathHandler(path)} />
         </NavItem>
         <NavItem onClick={() => onPathHandler("/")}>
           <span style={{ marginRight: "-1.5rem" }}>LOGO</span>
@@ -23,6 +23,10 @@ const GlobalHeader2 = () => {
       </Navbar>
     </NavbarWrapper>
   );
+};
+
+GlobalHeader2.defaultProps = {
+  path: "/",
 };
 
 export default GlobalHeader2;
