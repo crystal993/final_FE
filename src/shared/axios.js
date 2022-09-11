@@ -88,4 +88,7 @@ export const apis = {
 
   // mypage chart
   my_page_chart: () => api.get(`/items/mypage/charts`),
+
+  // mypage
+  get_my_writings: () => api.get(`/items/mypage`),
 };

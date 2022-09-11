@@ -1,9 +1,16 @@
 import React, { useEffect, Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { __getMyWritings } from "../../../redux/modules/myPageSlice";
 import Item from "./MyWritingsItem";
 
 const MyWritingsList = () => {
-  const writings = [];
+  const dispatch = useDispatch();
+  const writings = useSelector((state) => state.myPage.myWritings);
+  useEffect(() => {
+    dispatch(__getMyWritings());
+  }, [dispatch]);
+
   return (
     <>
       <MyWritingsListWrapper>
