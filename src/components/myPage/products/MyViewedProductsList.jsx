@@ -1,9 +1,15 @@
 import React, { useEffect, Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { __getMyViewedProducts } from "../../../redux/modules/myPageSlice";
 import styled from "styled-components";
 import Item from "./MyViewedProductsItem";
 
 const MyViewedProductsList = () => {
-  const products = [];
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.myPage.myProducts);
+  useEffect(() => {
+    dispatch(__getMyViewedProducts());
+  }, [dispatch]);
   return (
     <>
       <MyViewedProductsListWrapper>
