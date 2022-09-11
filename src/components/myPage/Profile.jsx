@@ -100,13 +100,13 @@ const Profile = () => {
           />
         </ProfileUserWrapper>
         <ProfileIconWrapper>
-          <IconWrapper onClick={onPathHandler}>
+          <IconWrapper onClick={() => onPathHandler("/mypage/writings")}>
             <StEditDocumentIcon />
             <StTxt fontSize={"1rem"} fontWeight={100}>
               내가 쓴 글
             </StTxt>
           </IconWrapper>
-          <IconWrapper>
+          <IconWrapper onClick={() => onPathHandler("/mypage/zzims")}>
             <StFavoriteIcon />
             <StTxt fontSize={"1rem"} fontWeight={100}>
               찜목록
@@ -118,7 +118,7 @@ const Profile = () => {
               채팅목록
             </StTxt>
           </IconWrapper>
-          <IconWrapper>
+          <IconWrapper onClick={() => onPathHandler("/mypage/products")}>
             <StVisibilityIcon />
             <StTxt fontSize={"1rem"} fontWeight={100}>
               최근 본 상품

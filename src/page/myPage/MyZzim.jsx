@@ -6,7 +6,7 @@ import MyPageZzimContainer from "../../components/myPage/zzim/MyPageZzimContaine
 const MyZzim = () => {
   return (
     <Layout>
-      <Header />
+      <Header path={"/mypage"} />
       <MyPageZzimContainer />
     </Layout>
   );

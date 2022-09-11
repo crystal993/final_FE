@@ -6,7 +6,7 @@ import MyWritingsContainer from "../../components/myPage/writings/MyWritingsCont
 const MyWritings = () => {
   return (
     <Layout>
-      <Header />
+      <Header path={"/mypage"} />
       <MyWritingsContainer />
     </Layout>
   );

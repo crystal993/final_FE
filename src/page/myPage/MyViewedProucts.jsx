@@ -7,7 +7,7 @@ const MyViewedProucts = () => {
   return (
     <>
       <Layout>
-        <Header />
+        <Header path={"/mypage"} />
         <MyViewedProductsContainer />
       </Layout>
     </>
