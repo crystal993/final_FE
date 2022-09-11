@@ -14,7 +14,6 @@ const MyWritingsList = () => {
   return (
     <>
       <MyWritingsListWrapper>
-        {/* 검색 결과 조회 */}
         {writings &&
           writings?.map((item) => {
             return <Item item={item} key={item.id} />;
