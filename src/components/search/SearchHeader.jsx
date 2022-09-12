@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { ReactComponent as ArrowBackIcon } from "../../../assets/icons/arrow_back_ios.svg";
-import { ReactComponent as SearchIcon } from "../../../assets/icons/search.svg";
+import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow_back_ios.svg";
+import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
 import { useDispatch } from "react-redux";
-import { __itemSearch } from "../../../redux/modules/searchSlice";
+import { __itemSearch } from "../../redux/modules/searchSlice";
+// import { debounce } from "lodash";
 
 const SearchHeader = () => {
   const navigate = useNavigate();
@@ -14,11 +15,13 @@ const SearchHeader = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     mode: "onChange",
   });
 
+  const [keywordValue, setKeywordValue] = useState();
   // 검색 기능
   const onSearchResultHandler = (formData) => {
     dispatch(__itemSearch({ keyword: formData.keyword }));
@@ -39,6 +42,7 @@ const SearchHeader = () => {
               name="keyword"
               required
               {...register("keyword")}
+              onChange={() => console.log(watch("keyword"))}
             />
           </NavItem>
           <NavItem>

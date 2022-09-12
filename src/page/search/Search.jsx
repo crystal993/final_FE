@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../../components/elements/header/SearchHeader";
+import Header from "../../components/search/SearchHeader";
 import Layout from "../../components/elements/GlobalLayout";
 import SearchContainer from "../../components/search/Search";
 
