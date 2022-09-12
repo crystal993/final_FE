@@ -20,12 +20,17 @@ const SearchHeader = () => {
   } = useForm({
     mode: "onChange",
   });
+  const toggleState = useSelector((state) => state.search.toggle);
 
   const [keywordValue, setKeywordValue] = useState();
   // 검색 기능
   const onSearchResultHandler = (formData) => {
     dispatch(__itemSearch({ keyword: formData.keyword }));
     navigate(`/search/result/${formData.keyword}`);
+  const onSearchResultHandler = () => {
+    dispatch(__itemSearch({ keyword: keywordValue, toggleState: toggleState }));
+    navigate(`/search/result/${keywordValue}`);
+  };
   };
 
   return (

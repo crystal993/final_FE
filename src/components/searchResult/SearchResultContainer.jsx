@@ -13,6 +13,8 @@ import {
 const SearchResultContainer = () => {
   const dispatch = useDispatch();
   const { keyword } = useParams();
+  const toggleState = useSelector((state) => state.search.toggle);
+
   const searchResultList = useSelector(
     (state) => state.search.searchResultList
   );
@@ -21,11 +23,11 @@ const SearchResultContainer = () => {
 
   useEffect(() => {
     if (Selected === "recent") {
-      dispatch(__itemSearch({ keyword }));
+      dispatch(__itemSearch({ keyword, toggleState }));
     } else if (Selected === "popular") {
-      dispatch(__itemSearchSortByPopular({ keyword }));
+      dispatch(__itemSearchSortByPopular({ keyword, toggleState }));
     }
-  }, [Selected, dispatch, keyword]);
+  }, [Selected, dispatch, keyword, toggleState]);
 
   return (
     <>

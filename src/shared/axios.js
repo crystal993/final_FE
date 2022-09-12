@@ -47,7 +47,8 @@ export const apis = {
   },
   // pageNum, pageLimit
   // get_market_posts: () => api.get(`/items?page=0&size=10`),
-  get_market_post: (id) => api.get(`/items/detail/${id}`),
+  get_market_post: (id) =>
+    api.get(`/items/detail/${id}`, { withCredentials: true }),
   edit_market_post: (id, form, files) => {
     const formData = new FormData();
     formData.append("title", form.title);
@@ -77,9 +78,12 @@ export const apis = {
   logout: () => api.post(`/members/logout`),
 
   //search
-  item_search: (keyword) => api.post(`/items/search?keyword=${keyword}`),
-  item_search_sort_by_popular: (keyword) =>
-    api.post(`/items/search/popularity?keyword=${keyword}`),
+  item_search: (keyword, toggleState) =>
+    api.post(`/items/search?keyword=${keyword}&toggle=${toggleState}`),
+  item_search_sort_by_popular: (keyword, toggleState) =>
+    api.post(
+      `/items/search/popularity?keyword=${keyword}&toggle=${toggleState}`
+    ),
   get_popular_keywords: () => api.get(`/items/search/popularity`),
   get_recent_keywords: () => api.get(`/items/search`),
   delete_all_keywords: () => api.delete(`/items/search/all`),

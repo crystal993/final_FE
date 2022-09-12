@@ -5,6 +5,7 @@ const initialState = {
   popularKeywordList: [],
   recentKeywordList: [],
   searchResultList: [],
+  toggle: false,
   isLoading: null,
   page: 0,
 };
@@ -14,7 +15,7 @@ export const __itemSearch = createAsyncThunk(
   "search/__itemSearch",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await apis.item_search(arg.keyword);
+      const { data } = await apis.item_search(arg.keyword, arg.toggleState);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -27,7 +28,10 @@ export const __itemSearchSortByPopular = createAsyncThunk(
   "search/__itemSearchSortByPopular",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await apis.item_search_sort_by_popular(arg.keyword);
+      const { data } = await apis.item_search_sort_by_popular(
+        arg.keyword,
+        arg.toggleState
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -91,7 +95,14 @@ export const __deleteRecentKeyword = createAsyncThunk(
 export const searchSlice = createSlice({
   name: "searchSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    toggleOn: (state) => {
+      state.toggle = true;
+    },
+    toggleOff: (state) => {
+      state.toggle = false;
+    },
+  },
   extraReducers: {
     // 상품 검색(최신 순 정렬)
     [__itemSearch.pending]: (state) => {
@@ -172,5 +183,5 @@ export const searchSlice = createSlice({
   },
 });
 
-export const {} = searchSlice.actions;
+export const { toggleOn, toggleOff } = searchSlice.actions;
 export default searchSlice.reducer;
