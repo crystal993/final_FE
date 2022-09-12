@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux/es/exports";
+import { useDispatch } from "react-redux/es/exports";
 import {
   __updatePost,
   __getSinglePost,
 } from "../../../redux/modules/market/postSlice";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "../../elements/GlobalButton";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import ImgView from "../../elements/ImgView";
-import RESP from "../../../server/response";
 import axios from "axios";
 import { IoIosLocate } from "react-icons/io";
 import InputResetButton from "../../elements/buttons/InputResetButton";
@@ -22,7 +19,6 @@ function Update() {
   const { id } = useParams();
 
   const { state } = useLocation();
-  console.log(state);
 
   useEffect(() => {
     setValue("itemCategory", state.itemCategory);
@@ -52,7 +48,6 @@ function Update() {
   };
 
   const onUpdateHandler = (formData, e) => {
-    console.log(formData);
     const files = formData.files;
     const data = {
       itemCategory: formData.itemCategory,
@@ -79,7 +74,6 @@ function Update() {
     const urlList = fileList.map((file) => URL.createObjectURL(file));
 
     setItemImgs([...urlList]);
-    console.log(itemImgs);
     if (files.length !== 0) {
       setIsLoading(false);
     }

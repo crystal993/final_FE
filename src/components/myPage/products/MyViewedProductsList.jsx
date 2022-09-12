@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { __getMyViewedProducts } from "../../../redux/modules/myPageSlice";
 import styled from "styled-components";

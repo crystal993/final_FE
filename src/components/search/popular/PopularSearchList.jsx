@@ -1,13 +1,9 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import Keyword from "./PopularSearchKeyword";
-import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { __getPopularKeywords } from "../../../redux/modules/searchSlice";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
 
 const PopularSearchList = () => {
@@ -50,7 +46,6 @@ const PopularSearchList = () => {
       spaceBetween: -300,
     },
   };
-  console.log(keywords);
   return (
     <PopularSearchWrapper>
       <Swiper breakpoints={SwiperBreakPoints}>

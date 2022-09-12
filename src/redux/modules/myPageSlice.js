@@ -41,7 +41,6 @@ export const __getMyViewedProducts = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await apis.get_my_viewed_products();
-      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);

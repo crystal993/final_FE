@@ -4,7 +4,6 @@ import Profile from "./Profile";
 import styled from "styled-components";
 
 const MyPage = () => {
-  const userInfo = localStorage.getItem("user-info");
   return (
     <>
       <MyPageWrapper>

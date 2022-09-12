@@ -4,10 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getCommentData,
   postCommentData,
-  deleteCommentData,
-  putCommentData,
 } from "../../../redux/modules/market/commentSlice";
-import DetailButton from "../../elements/buttons/DetailButton";
 
 const Comment = ({ id }) => {
   const dispatch = useDispatch();
@@ -16,7 +13,6 @@ const Comment = ({ id }) => {
   const state = useSelector((state) => state.comment.comment);
   //   댓글 comment_data
   const comment_data = state.data;
-  console.log(comment_data);
   //   입력받은 값
   const [input, setInput] = useState("");
 

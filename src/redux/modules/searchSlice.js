@@ -47,7 +47,6 @@ export const __getPopularKeywords = createAsyncThunk(
       const { data } = await apis.get_popular_keywords();
       return thunkApi.fulfillWithValue(data);
     } catch (error) {
-      console.log(error);
       return thunkApi.rejectWithValue(error);
     }
   }
@@ -147,7 +146,6 @@ export const searchSlice = createSlice({
     [__getRecentKeywords.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.recentKeywordList = action.payload;
-      console.log(state.recentKeywordList);
     },
     [__getRecentKeywords.rejected]: (state, action) => {
       state.isLoading = false;

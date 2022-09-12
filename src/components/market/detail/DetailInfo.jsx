@@ -25,11 +25,10 @@ const DetailInfo = () => {
   const item = useSelector((state) => state.marketPost.singlePost);
   const isLogin = useSelector((state) => state.user.userToken);
   const itemImgs = item.itemImgs;
-  console.log(item);
 
   useEffect(() => {
     dispatch(__getSinglePost({ id: id }));
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   const deleteHandler = (id) => {
     dispatch(__deletePost({ id: id }));

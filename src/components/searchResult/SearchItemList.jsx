@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Item from "./SearchItem";
 
@@ -20,7 +20,6 @@ export default SearchItemList;
 
 const SearchListWrapper = styled.div`
   width: 100%;
-  /* border-radius: 10px; */
   margin: 1.6rem auto 0 auto;
   display: flex;
   flex-direction: column;

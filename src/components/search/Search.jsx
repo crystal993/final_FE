@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import {
@@ -15,7 +14,6 @@ const Search = () => {
   const dispatch = useDispatch();
   const [isToggled, setIsToggled] = useState(false);
 
-  // TODO 최근 검색어 자동 저장 켜기 끄기 기능
   const onToggleHandler = () => {
     if (isToggled) {
       dispatch(toggleOff());

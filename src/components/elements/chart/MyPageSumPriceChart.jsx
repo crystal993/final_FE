@@ -7,7 +7,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Label,
 } from "recharts";
 import styled from "styled-components";
 
