@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
@@ -14,18 +14,10 @@ const SearchHeader = () => {
   const {
     register,
     handleSubmit,
-    setFocus,
-    setValue,
-    reset,
-    watch,
     formState: { errors },
   } = useForm({
     mode: "onChange",
   });
-
-  const onPathHandler = (path) => {
-    navigate(path);
-  };
 
   // 검색 기능
   const onSearchResultHandler = (formData) => {
@@ -37,7 +29,7 @@ const SearchHeader = () => {
     <NavbarWrapper>
       <Navbar>
         <NavItem>
-          <ArrowBackIcon onClick={() => onPathHandler("/")} />
+          <ArrowBackIcon onClick={() => navigate(-1)} />
         </NavItem>
         <StForm onSubmit={handleSubmit(onSearchResultHandler)}>
           <NavItem>
