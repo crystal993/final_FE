@@ -1,68 +1,105 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useForm } from "react-hook-form";
 import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow_back_ios.svg";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { __itemSearch } from "../../redux/modules/searchSlice";
-// import { debounce } from "lodash";
+import { debounce } from "lodash";
+import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 const SearchHeader = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm({
-    mode: "onChange",
-  });
   const toggleState = useSelector((state) => state.search.toggle);
 
   const [keywordValue, setKeywordValue] = useState();
+  const [autoSearchKeywords, setAutoSearchKeywords] = useState([]);
   // 검색 기능
-  const onSearchResultHandler = (formData) => {
-    dispatch(__itemSearch({ keyword: formData.keyword }));
-    navigate(`/search/result/${formData.keyword}`);
   const onSearchResultHandler = () => {
     dispatch(__itemSearch({ keyword: keywordValue, toggleState: toggleState }));
     navigate(`/search/result/${keywordValue}`);
   };
+
+  // 자동 완성 기능
+  const onAutoCompleteHandler = ({ target }) => {
+    const keyword = target.value;
+    debounceApiCall(keyword);
+  };
+
+  const debounceApiCall = useCallback(
+    debounce((keyword) => {
+      axios
+        .get(`http://43.200.1.214/items/search/auto?keyword=${keyword}`)
+        .then(({ data }) => {
+          setAutoSearchKeywords(data);
+        });
+      console.log("api call!");
+    }, 350),
+    []
+  );
+
+  // enter 눌렀을 때 검색 기능
+  const onCheckEnterHandler = (e) => {
+    if (e.key === "Enter") {
+      onSearchResultHandler();
+    }
   };
 
   return (
-    <NavbarWrapper>
-      <Navbar>
-        <NavItem>
-          <ArrowBackIcon onClick={() => navigate(-1)} />
-        </NavItem>
-        <StForm onSubmit={handleSubmit(onSearchResultHandler)}>
+    <SearchWrapper>
+      <NavbarWrapper>
+        <Navbar>
           <NavItem>
-            <StInput
-              placeholder="검색어를 입력해주세요."
-              type="text"
-              name="keyword"
-              required
-              {...register("keyword")}
-              onChange={() => console.log(watch("keyword"))}
-            />
+            <ArrowBackIcon onClick={() => navigate(-1)} />
           </NavItem>
-          <NavItem>
-            <SearchButton>
-              <SearchIcon />
-            </SearchButton>
-          </NavItem>
-        </StForm>
-      </Navbar>
-    </NavbarWrapper>
+          <StForm onKeyPress={onCheckEnterHandler}>
+            <NavItem>
+              <SearchInput
+                id="keyword"
+                placeholder="검색어를 입력해주세요."
+                type="text"
+                name="keyword"
+                required
+                onChange={(e) => {
+                  setKeywordValue(e.target.value);
+                  onAutoCompleteHandler(e);
+                }}
+              />
+              {keywordValue && (
+                <AutoSearchContainer>
+                  {autoSearchKeywords?.map((keyword, idx) => {
+                    if (idx < 10) {
+                      return (
+                        <AutoSearchKeyword key={uuidv4()}>
+                          {keyword.searchWord}
+                        </AutoSearchKeyword>
+                      );
+                    }
+                  })}
+                </AutoSearchContainer>
+              )}
+            </NavItem>
+            <NavItem>
+              <SearchButton>
+                <SearchIcon onClick={() => onSearchResultHandler()} />
+              </SearchButton>
+            </NavItem>
+          </StForm>
+        </Navbar>
+      </NavbarWrapper>
+    </SearchWrapper>
   );
 };
 
 export default SearchHeader;
 
+const SearchWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
 const NavbarWrapper = styled.div`
   margin: 0;
   padding: 0;
@@ -92,7 +129,7 @@ const NavItem = styled.div`
   width: fit-content;
 `;
 
-const StInput = styled.input`
+const SearchInput = styled.input`
   width: 27rem;
   height: 3rem;
   border: none;
@@ -106,7 +143,7 @@ const StInput = styled.input`
   font-weight: 500;
   font-size: 1.6rem;
   line-height: 2.3rem;
-
+  position: relative;
   &:hover {
     border-color: ${({ theme }) => theme.mainColor};
   }
@@ -149,4 +186,51 @@ const SearchButton = styled.button`
   border: none;
   cursor: pointer;
   background-color: ${({ theme }) => theme.mainColor};
+`;
+
+const AutoSearchContainer = styled.div`
+  padding-top: 0.5rem;
+  position: absolute;
+  z-index: 5;
+  top: 3.8rem;
+  background-color: ${({ theme }) => theme.white};
+  height: 28rem;
+  width: 100%;
+  border-radius: 0.4rem;
+  border: 1px solid ${({ theme }) => theme.mainColor};
+  cursor: default;
+  @media (min-width: 1024px) {
+    width: 40rem;
+    margin-left: -2rem;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 30rem;
+    margin-left: -2rem;
+    left: 19.5rem;
+    top: 3.8rem;
+  }
+  @media (max-width: 767px) {
+    width: 25rem;
+    margin-left: -2rem;
+    left: 17rem;
+  }
+  @media (max-width: 600px) {
+    width: 25rem;
+    margin-left: -1.3rem;
+    left: 10.8rem;
+  }
+  @media (max-width: 500px) {
+    width: 20rem;
+    margin-left: -1.3rem;
+    left: 11.5rem;
+  }
+`;
+
+const AutoSearchKeyword = styled.p`
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  padding: 0.3rem 1rem;
+  color: ${({ theme }) => theme.mainColor};
+  cursor: pointer;
 `;
