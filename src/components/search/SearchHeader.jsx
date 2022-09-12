@@ -47,6 +47,11 @@ const SearchHeader = () => {
     }
   };
 
+  //자동완성 키워드로 검색
+  const onAutoCompleteSearchResultHandler = (keyword) => {
+    dispatch(__itemSearch({ keyword: keyword, toggleState: toggleState }));
+    navigate(`/search/result/${keyword}`);
+  };
   return (
     <SearchWrapper>
       <NavbarWrapper>
@@ -72,7 +77,14 @@ const SearchHeader = () => {
                   {autoSearchKeywords?.map((keyword, idx) => {
                     if (idx < 10) {
                       return (
-                        <AutoSearchKeyword key={uuidv4()}>
+                        <AutoSearchKeyword
+                          key={uuidv4()}
+                          onClick={() =>
+                            onAutoCompleteSearchResultHandler(
+                              keyword.searchWord
+                            )
+                          }
+                        >
                           {keyword.searchWord}
                         </AutoSearchKeyword>
                       );
