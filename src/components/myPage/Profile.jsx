@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ReactComponent as EditDocumentIcon } from "../../assets/icons/edit_document.svg";
 import { ReactComponent as FavoriteIcon } from "../../assets/icons/favorite.svg";
-import { ReactComponent as ChatBubbleIcon } from "../../assets/icons/chat_bubble.svg";
+import { ReactComponent as ChatBubbleIcon } from "../../assets/icons/comment-1.svg";
 import { ReactComponent as VisibilityIcon } from "../../assets/icons/visibility.svg";
 import { ReactComponent as ProfileIcon } from "../../assets/icons/profile_img_sm.svg";
 
@@ -113,15 +113,15 @@ const Profile = () => {
             </StTxt>
           </IconWrapper>
           <IconWrapper>
-            <StChatBubbleIcon />
-            <StTxt fontSize={"1rem"} fontWeight={100}>
-              채팅목록
-            </StTxt>
-          </IconWrapper>
-          <IconWrapper onClick={() => onPathHandler("/mypage/products")}>
             <StVisibilityIcon />
             <StTxt fontSize={"1rem"} fontWeight={100}>
               최근 본 상품
+            </StTxt>
+          </IconWrapper>
+          <IconWrapper onClick={() => onPathHandler("/mypage/products")}>
+            <StChatBubbleIcon />
+            <StTxt fontSize={"1rem"} fontWeight={100}>
+              채팅목록
             </StTxt>
           </IconWrapper>
         </ProfileIconWrapper>
