@@ -5,10 +5,12 @@ import MyWritingsContainer from "../../components/myPage/writings/MyWritingsCont
 
 const MyWritings = () => {
   return (
-    <Layout>
+    <>
       <Header />
-      <MyWritingsContainer />
-    </Layout>
+      <Layout>
+        <MyWritingsContainer />
+      </Layout>
+    </>
   );
 };
 

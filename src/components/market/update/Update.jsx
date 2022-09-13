@@ -251,7 +251,7 @@ function Update() {
 
 const FormWrapper = styled.div`
   width: 100%;
-  /* border-radius: 10px; */
+  padding-top: 6rem;
   border: 1px solid #eee;
   margin: auto;
   display: flex;
@@ -269,6 +269,7 @@ const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 20rem;
 `;
 
 const TitleWrapper = styled.div`

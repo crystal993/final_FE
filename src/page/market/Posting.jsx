@@ -7,8 +7,8 @@ import Create from "../../components/market/create/Create";
 const Posting = () => {
   return (
     <>
+      <Header />
       <Layout>
-        <Header />
         <Create />
         <Footer />
       </Layout>

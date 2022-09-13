@@ -18,18 +18,11 @@ export default MyPageZzimContainer;
 const SectionWrapper = styled.section`
   display: flex;
   flex-direction: row;
-  margin-top: 1rem;
+  padding-top: 6rem;
   margin-bottom: 1rem;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  .button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 1rem;
-    gap: 0.5rem;
-  }
 `;
 
 const MyZzimTitle = styled.h1`

@@ -7,8 +7,8 @@ import Update from "../../components/market/update/Update";
 const PostingUpdate = () => {
   return (
     <>
+      <Header />
       <Layout>
-        <Header />
         <Update />
         <Footer />
       </Layout>

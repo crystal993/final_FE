@@ -16,10 +16,10 @@ const MyViewedProductsContainer = () => {
 export default MyViewedProductsContainer;
 
 const SectionWrapper = styled.section`
+  padding-top: 6rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1rem;
   margin-bottom: 1rem;
   -webkit-appearance: none;
   -moz-appearance: none;
