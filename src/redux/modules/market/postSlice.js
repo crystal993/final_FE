@@ -100,9 +100,9 @@ export const __getSinglePost = createAsyncThunk(
   "post/__getSinglePost",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await apis.get_market_post(arg.id);
-      const datas = { ...data, imgLength: data.itemImgs.length };
-      return thunkAPI.fulfillWithValue(datas);
+      const response = await apis.get_market_post(arg.id);
+      console.log(response);
+      return thunkAPI.fulfillWithValue(response);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -207,7 +207,7 @@ export const postSlice = createSlice({
     },
     [__getSinglePost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.singlePost = action.payload;
+      state.singlePost = action.payload.data;
     },
     [__getSinglePost.rejected]: (state, action) => {
       state.isLoading = false;
