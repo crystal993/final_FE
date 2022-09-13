@@ -60,6 +60,7 @@ const SearchWrapper = styled.div`
 
 const PopularSearchWrapper = styled.div`
   width: 100%;
+  z-index: -100;
 `;
 
 const RecentSearchWrapper = styled.div`

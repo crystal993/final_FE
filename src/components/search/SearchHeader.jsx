@@ -128,6 +128,7 @@ const SearchWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  z-index: 100;
 `;
 const NavbarWrapper = styled.div`
   margin: 0;
@@ -193,11 +194,7 @@ const SearchInput = styled.input`
     width: 30rem;
     margin-left: -2rem;
   }
-  @media (max-width: 767px) {
-    width: 25rem;
-    margin-left: -2rem;
-  }
-  @media (max-width: 500px) {
+  @media (max-width: 500px) and (max-width: 767px) {
     width: 20rem;
     margin-left: -1.3rem;
   }
@@ -217,13 +214,14 @@ const SearchButton = styled.button`
 `;
 
 const AutoSearchContainer = styled.div`
-  padding-top: 0.5rem;
+  z-index: 100;
+  margin-top: 16rem;
   position: absolute;
-  z-index: 5;
+  top: -12.1rem;
   background-color: ${({ theme }) => theme.white};
   height: 28rem;
-  width: 100%;
   border-radius: 0.4rem;
+  width: 27rem;
   border: 1px solid ${({ theme }) => theme.mainColor};
   cursor: default;
   @media (min-width: 1024px) {
@@ -232,23 +230,12 @@ const AutoSearchContainer = styled.div`
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     width: 30rem;
-    margin-left: -2rem;
+    margin-left: -4.3rem;
     left: 19.5rem;
   }
-  @media (max-width: 767px) {
-    width: 25rem;
-    margin-left: -2rem;
-    left: 17rem;
-  }
-  @media (max-width: 600px) {
-    width: 25rem;
-    margin-left: -1.3rem;
-    left: 10.8rem;
-  }
-  @media (max-width: 500px) {
+  @media (max-width: 500px) and (max-width: 767px) {
     width: 20rem;
     margin-left: -1.3rem;
-    left: 11.5rem;
   }
 `;
 
