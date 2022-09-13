@@ -189,7 +189,7 @@ const STsection = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 6rem;
+  padding-top: 9rem;
   margin-bottom: 1rem;
   .button {
     display: flex;

@@ -15,8 +15,8 @@ const SearchResult = () => {
   };
   return (
     <>
+      <Header />
       <Layout>
-        <Header />
         <SearchResultContainer />
         {isLogin && (
           <>

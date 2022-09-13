@@ -18,7 +18,7 @@ export default MyPageZzimContainer;
 const SectionWrapper = styled.section`
   display: flex;
   flex-direction: row;
-  padding-top: 6rem;
+  padding-top: 9rem;
   margin-bottom: 1rem;
   -webkit-appearance: none;
   -moz-appearance: none;

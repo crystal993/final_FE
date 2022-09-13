@@ -217,7 +217,7 @@ function Create() {
 }
 
 const FormWrapper = styled.div`
-  padding-top: 6rem;
+  padding-top: 9rem;
   width: 100%;
   /* border-radius: 10px; */
   border: 1px solid #eee;

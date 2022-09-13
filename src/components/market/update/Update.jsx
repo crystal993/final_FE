@@ -251,7 +251,7 @@ function Update() {
 
 const FormWrapper = styled.div`
   width: 100%;
-  padding-top: 6rem;
+  padding-top: 9rem;
   border: 1px solid #eee;
   margin: auto;
   display: flex;

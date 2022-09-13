@@ -16,7 +16,7 @@ const MyViewedProductsContainer = () => {
 export default MyViewedProductsContainer;
 
 const SectionWrapper = styled.section`
-  padding-top: 6rem;
+  padding-top: 9rem;
   display: flex;
   justify-content: space-between;
   align-items: center;

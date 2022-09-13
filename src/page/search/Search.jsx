@@ -5,10 +5,12 @@ import SearchContainer from "../../components/search/Search";
 
 const Search = () => {
   return (
-    <Layout>
+    <>
       <Header />
-      <SearchContainer />
-    </Layout>
+      <Layout>
+        <SearchContainer />
+      </Layout>
+    </>
   );
 };
 
