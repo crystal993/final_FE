@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow_back_ios.svg";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
@@ -13,6 +13,7 @@ const SearchHeader = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toggleState = useSelector((state) => state.search.toggle);
+  const { keyword } = useParams();
 
   const [keywordValue, setKeywordValue] = useState();
   const [autoSearchKeywords, setAutoSearchKeywords] = useState([]);
@@ -61,17 +62,32 @@ const SearchHeader = () => {
           </NavItem>
           <StForm onKeyPress={onCheckEnterHandler}>
             <NavItem>
-              <SearchInput
-                id="keyword"
-                placeholder="검색어를 입력해주세요."
-                type="text"
-                name="keyword"
-                required
-                onChange={(e) => {
-                  setKeywordValue(e.target.value);
-                  onAutoCompleteHandler(e);
-                }}
-              />
+              {keyword !== undefined ? (
+                <SearchInput
+                  id="keyword"
+                  placeholder="검색어를 입력해주세요."
+                  type="text"
+                  name="keyword"
+                  value={keyword}
+                  required
+                  onChange={(e) => {
+                    setKeywordValue(e.target.value);
+                    onAutoCompleteHandler(e);
+                  }}
+                />
+              ) : (
+                <SearchInput
+                  id="keyword"
+                  placeholder="검색어를 입력해주세요."
+                  type="text"
+                  name="keyword"
+                  required
+                  onChange={(e) => {
+                    setKeywordValue(e.target.value);
+                    onAutoCompleteHandler(e);
+                  }}
+                />
+              )}
               {keywordValue && (
                 <AutoSearchContainer>
                   {autoSearchKeywords?.map((keyword, idx) => {
@@ -108,6 +124,7 @@ const SearchHeader = () => {
 export default SearchHeader;
 
 const SearchWrapper = styled.div`
+  position: fixed;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -203,7 +220,6 @@ const AutoSearchContainer = styled.div`
   padding-top: 0.5rem;
   position: absolute;
   z-index: 5;
-  top: 3.8rem;
   background-color: ${({ theme }) => theme.white};
   height: 28rem;
   width: 100%;
@@ -218,7 +234,6 @@ const AutoSearchContainer = styled.div`
     width: 30rem;
     margin-left: -2rem;
     left: 19.5rem;
-    top: 3.8rem;
   }
   @media (max-width: 767px) {
     width: 25rem;

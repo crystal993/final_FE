@@ -32,7 +32,7 @@ const SearchResultContainer = () => {
   return (
     <>
       <SectionWrapper>
-        <SearchResultTitle>멍냥마켓</SearchResultTitle>
+        <SearchResultTitle>'{keyword}' 검색결과</SearchResultTitle>
         <Select optionDatas={option} setSelected={setSelected} />
       </SectionWrapper>
       <SearchItemList searchResultList={searchResultList} />
@@ -45,7 +45,7 @@ const SectionWrapper = styled.section`
   justify-content: space-between;
   align-items: center;
   padding-top: 9rem;
-  margin-bottom: 1rem;
+  margin-bottom: 3.2rem;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -59,7 +59,7 @@ const SectionWrapper = styled.section`
 `;
 
 const SearchResultTitle = styled.h1`
-  font-size: 2.4rem;
+  font-size: 2rem;
   margin: 0 2.4rem;
   font-weight: 700;
 `;
