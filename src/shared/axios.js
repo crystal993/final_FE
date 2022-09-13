@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const base = {
-  server_http: "http://43.200.1.214",
+  server_http: "https://fabius-bk.shop",
   server_https: process.env.REACT_APP_HTTPS_URI,
 };
 

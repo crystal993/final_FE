@@ -31,7 +31,7 @@ const SearchHeader = () => {
   const debounceApiCall = useCallback(
     debounce((keyword) => {
       axios
-        .get(`http://43.200.1.214/items/search/auto?keyword=${keyword}`)
+        .get(`https://fabius-bk.shop/items/search/auto?keyword=${keyword}`)
         .then(({ data }) => {
           setAutoSearchKeywords(data);
         });
