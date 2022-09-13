@@ -156,13 +156,14 @@ Menu.propTypes = {
 const StUserWrapper = styled.div``;
 
 const StMenu = styled.nav`
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   background: ${({ theme }) => theme.white};
   transform: ${({ open }) => (open ? "translateX(17%)" : "translateX(100%)")};
-  height: 100%;
+  height: 100vh;
   text-align: left;
 
   position: absolute;
