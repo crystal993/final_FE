@@ -19,7 +19,7 @@ const SectionWrapper = styled.section`
   display: flex;
   flex-direction: row;
   padding-top: 9rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -27,6 +27,6 @@ const SectionWrapper = styled.section`
 
 const MyZzimTitle = styled.h1`
   font-size: 2.4rem;
-  margin: 0 2.4rem;
+  margin: 0 3rem;
   font-weight: 700;
 `;

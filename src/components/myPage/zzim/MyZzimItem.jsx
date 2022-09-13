@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import { ReactComponent as HeartIcon } from "../../../assets/icons/heart_zzim_list.svg";
 
 const MyZzimItem = ({ item }) => {
   const navigate = useNavigate();
@@ -10,7 +9,7 @@ const MyZzimItem = ({ item }) => {
     <ItemWrapper onClick={() => navigate(`/market/detail/${item.id}`)}>
       <ImgWrapper>
         <Img src={item.itemImgs[0]} />
-        <HeartIcon icon={solidHeart} />
+        <HeartIcons />
       </ImgWrapper>
       <TextWrapper>
         <TextsWrapper>
@@ -40,13 +39,6 @@ const ItemWrapper = styled.div`
   border-collapse: collapse;
   flex-wrap: wrap;
   cursor: pointer;
-  /* &:hover {
-    border-radius: 0.6rem;
-    background-color: rgba(210, 210, 210, 0.08);
-    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
-      rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-    color: black;
-  } */
 
   @media screen and (min-width: 1024px) {
     /* Desktop */
@@ -94,14 +86,15 @@ const Img = styled.img`
   background-color: ${({ theme }) => theme.lightgray};
 `;
 
-const HeartIcon = styled(FontAwesomeIcon)`
+const HeartIcons = styled(HeartIcon)`
   position: absolute;
   bottom: 1rem;
   right: 1rem;
   font-size: 1.8rem;
+  height: 1.8rem;
+  width: 1.9rem;
   cursor: pointer;
   color: ${(props) => props.theme.mainColor};
-  /* border: 2px solid ${(props) => props.theme.white}; */
 `;
 
 const TextWrapper = styled.div`
