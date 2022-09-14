@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux/es/exports";
 import { __addPost } from "../../../redux/modules/market/postSlice";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import ImgView from "../../elements/ImgView";
+import ImgSlider from "../../elements/GlobalImgSlider";
 import axios from "axios";
 import { IoIosLocate } from "react-icons/io";
 import InputResetButton from "../../elements/buttons/InputResetButton";
@@ -17,6 +17,11 @@ function Create() {
   const { register, handleSubmit, setValue, reset } = useForm({
     mode: "onChange",
   });
+
+  const inputRef = useRef();
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const onSubmitHandler = (formData, e) => {
     const files = formData.files;
@@ -137,7 +142,13 @@ function Create() {
             <Label>제목</Label>
 
             <InputWrapper>
-              <Input type="text" name="title" required {...register("title")} />
+              <Input
+                type="text"
+                name="title"
+                required
+                {...register("title")}
+                ref={inputRef}
+              />
               <InputResetButton onClick={() => inputResetHandler("title")} />
             </InputWrapper>
 
@@ -206,9 +217,9 @@ function Create() {
               onChange={changeImg}
             />
             <ImgWrapper>
-              {!isLoading && <ImgView imgUrls={itemImgs} />}
+              {!isLoading && <ImgSlider imgUrls={itemImgs} />}
             </ImgWrapper>
-            <FixButton content={"게시글 등록하기"} version={2} />
+            <FixButton content={"게시글 등록하기"} />
           </Container>
         </Form>
       </FormWrapper>
@@ -422,15 +433,6 @@ const Option = styled.option`
   font-size: 1.4rem;
 `;
 
-const ButtonWrapper = styled.div`
-  width: 50%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 5px;
-`;
-
 const TextArea = styled.textarea`
   width: 32.8rem;
   height: 20rem;
@@ -487,7 +489,9 @@ const LocationInput = styled.input`
   background-color: transparent;
 `;
 
-const ImgWrapper = styled.div``;
+const ImgWrapper = styled.div`
+  margin-top: 8rem;
+`;
 
 const LocationWrapper = styled.div`
   font-size: 1.4rem;
