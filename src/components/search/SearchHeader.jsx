@@ -82,7 +82,7 @@ const SearchHeader = () => {
             <ArrowBackIcon onClick={() => navigate(-1)} />
           </NavItem>
           <StForm onKeyPress={onCheckEnterHandler}>
-            <NavItem>
+            <NavItem ref={searchInput}>
               {keyword !== undefined ? (
                 <SearchInput
                   id="keyword"
@@ -109,7 +109,6 @@ const SearchHeader = () => {
                     setKeywordValue(e.target.value);
                     onAutoCompleteHandler(e);
                   }}
-                  ref={searchInput}
                 />
               )}
               {autoComplete && (
