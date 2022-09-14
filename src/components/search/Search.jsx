@@ -39,7 +39,7 @@ const Search = () => {
           <Title>최근 검색어</Title>
           <ButtonsWrapper>
             <ToggleWrapper>
-              <ToggleLabel>자동 저장</ToggleLabel>
+              <ToggleLabel>자동저장</ToggleLabel>
               <GlobalToggle isToggled={isToggled} onToggle={onToggleHandler} />
             </ToggleWrapper>
             <AllDeleteButton onClick={() => onAllRecentDeleteHandler()}>
