@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-const FixButton = ({ content, onClick, version }) => {
+const FixButton = ({ content, onClick, version, memberId }) => {
   return (
-    <STbutton className="btn" onClick={onClick} version={version}>
+    <STbutton className='btn' onClick={onClick} version={version}>
       <span>{content}</span>
     </STbutton>
   );

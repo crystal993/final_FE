@@ -17,6 +17,7 @@ import { ReactComponent as ProfileIcon } from '../../../assets/icons/profile_img
 import EditIcon from '../../../assets/icons/edit_document2.svg';
 import DeleteIcon from '../../../assets/icons/delete.svg';
 import CheckIcon from '../../../assets/icons/check_circle.svg';
+import DetailButton from '../../elements/buttons/DetailButton';
 
 const DetailInfo = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,11 @@ const DetailInfo = () => {
   const isLogin = useSelector((state) => state.user.userToken);
   const itemImgs = item.itemImgs;
   console.log(item);
+  console.log(item.memberId);
+  const moveChat = () => {
+    navigate(`/chatRoom/${id}`);
+    console.log(id);
+  };
 
   useEffect(() => {
     dispatch(__getSinglePost({ id: id }));
@@ -132,7 +138,14 @@ const DetailInfo = () => {
         </InfoCntWrapper>
         <ItemZzimButton postId={id} isLogin={isLogin} isZzim={item.isZzimed} />
         <Comment id={id} />
-        {!item.isMine && <FixButton content={'채팅으로 거래하기'}></FixButton>}
+        {!item.isMine && (
+          <DetailButton
+            content={'채팅으로 거래하기'}
+            memberId={item.memberId}
+            nickName={item.nickname}
+            onClick={moveChat}
+          ></DetailButton>
+        )}
         {item.isMine && (
           <FixThreeButton
             content1={'삭제하기'}

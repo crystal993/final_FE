@@ -11,8 +11,7 @@ import {
   pageToZero,
   doubleListToZero,
 } from '../../../redux/modules/market/postSlice';
-import { ReactComponent as ProfileIcon } from "../../../assets/icons/profile_img_sm.svg";
-
+import { ReactComponent as ProfileIcon } from '../../../assets/icons/profile_img_sm.svg';
 
 const Menu = ({ open, ...props }) => {
   const isHidden = open ? true : false;
@@ -36,8 +35,7 @@ const Menu = ({ open, ...props }) => {
     setState(itemCategory);
   };
 
-
-  const user = JSON.parse(localStorage.getItem("user-info"));
+  const user = JSON.parse(localStorage.getItem('user-info'));
   const nickname = user?.nickname;
 
   useEffect(() => {
@@ -45,7 +43,7 @@ const Menu = ({ open, ...props }) => {
       console.log(petCategory);
       console.log(item);
       console.log('menu');
-      dispatch(__getItemCategories({ itemCategory: item, page: categoryPage }));
+      // dispatch(__getItemCategories({ itemCategory: item, page: categoryPage }));
     }
     // if (item === state && petCategory !== null) {
     //   console.log(item);
@@ -70,8 +68,8 @@ const Menu = ({ open, ...props }) => {
               content={'로그인'}
               fontSize={'1.4rem'}
               fontWeight={900}
-              width={"18rem"}
-              height={"5rem"}
+              width={'18rem'}
+              height={'5rem'}
               onClick={onPathHandler}
             />
           </StBtnWrapper>
@@ -90,8 +88,8 @@ const Menu = ({ open, ...props }) => {
               </UserImgBox>
               <h3>{nickname}</h3>
             </StUserBox>
-            <StLink href="/mypage" tabIndex={tabIndex}>
-              <span aria-hidden="true"></span>
+            <StLink href='/mypage' tabIndex={tabIndex}>
+              <span aria-hidden='true'></span>
               <StText>마이페이지</StText>
             </StLink>
           </StUserWrapper>
@@ -176,24 +174,24 @@ const StMenu = styled.nav`
   color: ${({ theme }) => theme.black};
   transition: transform 0.3s ease-in-out;
   z-index: 100;
-  box-shadow: ${({ open }) => (open ? " rgba(0, 0, 0, 0.5) 0 0 0 9999px" : "")};
+  box-shadow: ${({ open }) => (open ? ' rgba(0, 0, 0, 0.5) 0 0 0 9999px' : '')};
   @media screen and (min-width: 1024px) {
     /* Desktop */
-    transform: ${({ open }) => (open ? "translateX(0%)" : "translateX(-100%)")};
+    transform: ${({ open }) => (open ? 'translateX(0%)' : 'translateX(-100%)')};
     width: 28rem;
     padding: 4rem 4rem;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     /* Tablet */
-    transform: ${({ open }) => (open ? "translateX(0%)" : "translateX(-100%)")};
+    transform: ${({ open }) => (open ? 'translateX(0%)' : 'translateX(-100%)')};
     width: 25rem;
     padding: 4rem 2rem;
   }
 
   @media (max-width: 767px) {
     /* Mobile */
-    transform: ${({ open }) => (open ? "translateX(0%)" : "translateX(-100%)")};
+    transform: ${({ open }) => (open ? 'translateX(0%)' : 'translateX(-100%)')};
     width: 20rem;
     padding: 4rem 0rem;
   }

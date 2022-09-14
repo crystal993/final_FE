@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getCommentData,
   postCommentData,
   deleteCommentData,
   putCommentData,
-} from "../../../redux/modules/market/commentSlice";
-import DetailButton from "../../elements/buttons/DetailButton";
+} from '../../../redux/modules/market/commentSlice';
+import DetailButton from '../../elements/buttons/DetailButton';
 
 const Comment = ({ id }) => {
   const dispatch = useDispatch();
@@ -15,10 +15,10 @@ const Comment = ({ id }) => {
   //    댓글 리덕스 상태 조회
   const state = useSelector((state) => state.comment.comment);
   //   댓글 comment_data
-  const comment_data = state.data;
+  const comment_data = state;
   console.log(comment_data);
   //   입력받은 값
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
 
   const onChangeHandler = (event) => {
     setInput(event.target.value);
@@ -28,7 +28,7 @@ const Comment = ({ id }) => {
     event.preventDefault();
     // postId 와 content를 같이 보냄
     let body = {
-      postId: id,
+      itemId: id,
       content: input,
     };
     dispatch(postCommentData(body));
@@ -36,15 +36,15 @@ const Comment = ({ id }) => {
 
   //   컴포넌트 마운트 시에 id에 해당하는 댓글을 가져옴
   useEffect(() => {
-    dispatch(getCommentData(id));
+    dispatch(getCommentData({ itemId: id }));
   }, []);
 
   return (
     <Wrapper>
       <Label>
         <Input
-          placeholder="댓글을 입력해 주세요"
-          name="input"
+          placeholder='댓글을 입력해 주세요'
+          name='input'
           value={input}
           onChange={onChangeHandler}
         />
@@ -53,31 +53,39 @@ const Comment = ({ id }) => {
         </button>
       </Label>
       {comment_data === undefined ? (
-        <section className="no-comment">
+        <section className='no-comment'>
           <p>아직 댓글이 없어요</p>
           <p>가장 먼저 댓글을 남겨 보세요.</p>
         </section>
       ) : (
         comment_data &&
-        comment_data.map((item) => (
-          <section key={item.id}>
+        comment_data.map((item, index) => (
+          <section key={index}>
             <h2>{item.nickname}</h2>
             <p>{item.content}</p>
             {/* ismine인지 확인하여 버튼 조건부 랜더링 */}
-            {/* <button
+            <button
               onClick={() => {
-                dispatch(putCommentData({ id: item.id, content: input }));
+                dispatch(
+                  putCommentData({
+                    itemId: id,
+                    content: input,
+                    commentId: item.commentId,
+                  })
+                );
               }}
             >
               수정
-            </button> */}
-            {/* <button
+            </button>
+            <button
               onClick={() => {
-                dispatch(deleteCommentData(item.id));
+                dispatch(
+                  deleteCommentData({ itemId: id, commentId: item.commentId })
+                );
               }}
             >
               삭제
-            </button> */}
+            </button>
           </section>
         ))
       )}
