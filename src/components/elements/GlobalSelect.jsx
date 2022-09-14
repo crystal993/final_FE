@@ -49,7 +49,6 @@ const SelectorWrapper = styled.div`
 
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: flex-start;
   padding: 0.3rem 0 0 1.4rem;
   transition: background-color 0.2s ease-in;
@@ -70,7 +69,7 @@ const SelectOptions = styled.ul`
   width: 8.8rem;
   margin: 0.5rem 0 0 -1.5rem;
   font-size: 1.4rem;
-
+  background-color: white;
   border: 2px solid ${({ theme }) => theme.mainColor};
   border-top: none;
   text-align: left;
@@ -80,11 +79,17 @@ const Option = styled.li`
   width: 8.8rem;
   padding: 0.6rem 0 0.6rem 0;
   padding-left: 1.3rem;
-  /* 짝수번째 요소에 배경색 넣기 */
-  &:nth-child(2n) {
-    width: 8.5rem;
-    background-color: #f6f2fe;
+  &:hover {
+    color: ${({ theme }) => theme.mainColor};
     font-weight: 900;
+    width: 8.5rem;
+    border-radius: 0.3rem;
+    background-color: #f6f2fe;
+  }
+  &:nth-child(1) {
+    width: 8.5rem;
+    border-top: 2px solid ${({ theme }) => theme.mainColor};
+    border-radius: 0.6rem;
   }
 `;
 
