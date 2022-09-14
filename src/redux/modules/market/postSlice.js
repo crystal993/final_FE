@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import RESP from "../../../server/response";
 import { apis } from "../../../shared/axios";
+import { setCookie } from "../../../shared/cookie";
 
 const initialState = {
   list: [],
@@ -101,7 +102,7 @@ export const __getSinglePost = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const response = await apis.get_market_post(arg.id);
-      console.log(response);
+      setCookie(`itemId${arg.id}`, `${arg.id}`);
       return thunkAPI.fulfillWithValue(response);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
