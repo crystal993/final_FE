@@ -100,5 +100,8 @@ export const apis = {
   // mypage
   get_my_writings: () => api.get(`/items/mypage`),
   get_my_zzims: () => api.get(`/items/mypage/zzim`),
-  get_my_viewed_products: () => api.get(`/items/mypage/list`),
+  get_my_viewed_products: (cookies) =>
+    api.get(`/items/mypage/list`, {
+      headers: { cookies },
+    }),
 };
