@@ -12,6 +12,7 @@ const FixButton = ({ content, onClick, version }) => {
 export default FixButton;
 
 const STbutton = styled.button`
+  width: 100%;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -32,19 +33,5 @@ const STbutton = styled.button`
   &:hover {
     background: ${(props) =>
       props.version === 2 ? props.theme.mainColor : props.theme.gray};
-  }
-
-  @media screen and (min-width: 1024px) {
-    /* Desktop */
-    width: 90%;
-  }
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Tablet */
-    width: 95%;
-  }
-
-  @media screen and (max-width: 767px) {
-    /* Mobile */
-    width: 98%;
   }
 `;

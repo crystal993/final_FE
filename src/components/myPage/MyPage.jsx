@@ -19,6 +19,7 @@ const MyPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 0 0 0;
+  padding-top: 6rem;
   background-color: ${({ theme }) => theme.lightgray};
 `;
 

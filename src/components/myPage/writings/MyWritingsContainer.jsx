@@ -19,7 +19,7 @@ const SectionWrapper = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1rem;
+  padding-top: 9rem;
   margin-bottom: 1rem;
   -webkit-appearance: none;
   -moz-appearance: none;

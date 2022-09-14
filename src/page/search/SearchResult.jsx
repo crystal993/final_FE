@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../../components/elements/GlobalHeader";
+import Header from "../../components/search/SearchHeader";
 import Layout from "../../components/elements/GlobalLayout";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -15,8 +15,8 @@ const SearchResult = () => {
   };
   return (
     <>
+      <Header />
       <Layout>
-        <Header />
         <SearchResultContainer />
         {isLogin && (
           <>

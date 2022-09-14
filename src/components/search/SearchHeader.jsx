@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useCallback, useRef, useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow_back_ios.svg";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
@@ -13,13 +13,36 @@ const SearchHeader = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toggleState = useSelector((state) => state.search.toggle);
+  const { keyword } = useParams();
 
-  const [keywordValue, setKeywordValue] = useState();
+  const [keywordValue, setKeywordValue] = useState(keyword);
   const [autoSearchKeywords, setAutoSearchKeywords] = useState([]);
+
+  const searchInput = useRef();
+  const [autoComplete, setAutoComplete] = useState(false);
+
+  // input의 외부 영역을 눌렀을 때
+  // 자동완성 영역이 꺼질 수 있도록
+  useEffect(() => {
+    const listener = (event) => {
+      if (searchInput.current && !searchInput.current.contains(event.target)) {
+        setAutoComplete(false);
+      } else {
+        setAutoComplete(true);
+      }
+    };
+    document.addEventListener("mousedown", listener);
+
+    return () => {
+      document.removeEventListener("mousedown", listener);
+    };
+  }, [searchInput]);
+
   // 검색 기능
   const onSearchResultHandler = () => {
     dispatch(__itemSearch({ keyword: keywordValue, toggleState: toggleState }));
     navigate(`/search/result/${keywordValue}`);
+    setAutoComplete(false);
   };
 
   // 자동 완성 기능
@@ -31,11 +54,10 @@ const SearchHeader = () => {
   const debounceApiCall = useCallback(
     debounce((keyword) => {
       axios
-        .get(`http://43.200.1.214/items/search/auto?keyword=${keyword}`)
+        .get(`https://fabius-bk.shop/items/search/auto?keyword=${keyword}`)
         .then(({ data }) => {
           setAutoSearchKeywords(data);
         });
-      console.log("api call!");
     }, 350),
     []
   );
@@ -61,18 +83,36 @@ const SearchHeader = () => {
           </NavItem>
           <StForm onKeyPress={onCheckEnterHandler}>
             <NavItem>
-              <SearchInput
-                id="keyword"
-                placeholder="검색어를 입력해주세요."
-                type="text"
-                name="keyword"
-                required
-                onChange={(e) => {
-                  setKeywordValue(e.target.value);
-                  onAutoCompleteHandler(e);
-                }}
-              />
-              {keywordValue && (
+              {keyword !== undefined ? (
+                <SearchInput
+                  id="keyword"
+                  placeholder="검색어를 입력해주세요."
+                  type="text"
+                  name="keyword"
+                  value={keywordValue}
+                  required
+                  onChange={(e) => {
+                    setKeywordValue(e.target.value);
+                    onAutoCompleteHandler(e);
+                    setAutoComplete(true);
+                  }}
+                  ref={searchInput}
+                />
+              ) : (
+                <SearchInput
+                  id="keyword"
+                  placeholder="검색어를 입력해주세요."
+                  type="text"
+                  name="keyword"
+                  required
+                  onChange={(e) => {
+                    setKeywordValue(e.target.value);
+                    onAutoCompleteHandler(e);
+                  }}
+                  ref={searchInput}
+                />
+              )}
+              {autoComplete && (
                 <AutoSearchContainer>
                   {autoSearchKeywords?.map((keyword, idx) => {
                     if (idx < 10) {
@@ -108,9 +148,11 @@ const SearchHeader = () => {
 export default SearchHeader;
 
 const SearchWrapper = styled.div`
+  position: fixed;
   display: flex;
   flex-direction: column;
   width: 100%;
+  z-index: 100;
 `;
 const NavbarWrapper = styled.div`
   margin: 0;
@@ -119,7 +161,6 @@ const NavbarWrapper = styled.div`
 `;
 
 const Navbar = styled.nav`
-  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -177,11 +218,7 @@ const SearchInput = styled.input`
     width: 30rem;
     margin-left: -2rem;
   }
-  @media (max-width: 767px) {
-    width: 25rem;
-    margin-left: -2rem;
-  }
-  @media (max-width: 500px) {
+  @media (max-width: 500px) and (max-width: 767px) {
     width: 20rem;
     margin-left: -1.3rem;
   }
@@ -201,14 +238,14 @@ const SearchButton = styled.button`
 `;
 
 const AutoSearchContainer = styled.div`
-  padding-top: 0.5rem;
+  z-index: 100;
+  margin-top: 16rem;
   position: absolute;
-  z-index: 5;
-  top: 3.8rem;
+  top: -12.1rem;
   background-color: ${({ theme }) => theme.white};
   height: 28rem;
-  width: 100%;
   border-radius: 0.4rem;
+  width: 27rem;
   border: 1px solid ${({ theme }) => theme.mainColor};
   cursor: default;
   @media (min-width: 1024px) {
@@ -217,24 +254,12 @@ const AutoSearchContainer = styled.div`
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     width: 30rem;
-    margin-left: -2rem;
+    margin-left: -4.3rem;
     left: 19.5rem;
-    top: 3.8rem;
   }
-  @media (max-width: 767px) {
-    width: 25rem;
-    margin-left: -2rem;
-    left: 17rem;
-  }
-  @media (max-width: 600px) {
-    width: 25rem;
-    margin-left: -1.3rem;
-    left: 10.8rem;
-  }
-  @media (max-width: 500px) {
+  @media (max-width: 500px) and (max-width: 767px) {
     width: 20rem;
     margin-left: -1.3rem;
-    left: 11.5rem;
   }
 `;
 

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { apis } from "../../shared/axios";
+import { getAllCookies, getCookie } from "../../shared/cookie";
 
 const initialState = {
   myWritings: [],
@@ -40,7 +41,8 @@ export const __getMyViewedProducts = createAsyncThunk(
   "mypage/__getMyViewedProducts",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await apis.get_my_viewed_products();
+      const cookies = getAllCookies();
+      const { data } = await apis.get_my_viewed_products(cookies);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);

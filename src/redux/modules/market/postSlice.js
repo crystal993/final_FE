@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import RESP from "../../../server/response";
 import { apis } from "../../../shared/axios";
+import { setCookie } from "../../../shared/cookie";
 
 const initialState = {
   list: [],
@@ -26,7 +27,7 @@ export const getData = createAsyncThunk(
   async (payload, thunkApi) => {
     try {
       const response = await axios.get(
-        `http://43.200.1.214/items/petcategory?petCategory=${payload.state}&page=${payload.page}&size=10`
+        `https://fabius-bk.shop/items/petcategory?petCategory=${payload.state}&page=${payload.page}&size=10`
       );
       if (!response.data) {
         return;
@@ -44,7 +45,7 @@ export const __getPost = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await axios.get(
-        `http://43.200.1.214/items?page=${arg.page}&size=10`
+        `https://fabius-bk.shop/items?page=${arg.page}&size=10`
       );
       if (!data) {
         return;
@@ -62,7 +63,7 @@ export const __getItemCategories = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await axios.get(
-        `http://43.200.1.214/items/itemcategory?itemCategory=${arg.itemCategory}&page=${arg.page}&size=10`
+        `https://fabius-bk.shop/items/itemcategory?itemCategory=${arg.itemCategory}&page=${arg.page}&size=10`
       );
       if (!data) {
         return;
@@ -80,7 +81,7 @@ export const getTwoCategory = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const response = await axios.get(
-        `http://43.200.1.214/items/twocategory?petCategory=${arg.petCategory}&itemCategory=${arg.itemCategory}&page=${arg.page}`
+        `https://fabius-bk.shop/items/twocategory?petCategory=${arg.petCategory}&itemCategory=${arg.itemCategory}&page=${arg.page}`
       );
       // localStorage.removeItem('petCategory');
       // localStorage.removeItem('itemCategory');
@@ -100,9 +101,9 @@ export const __getSinglePost = createAsyncThunk(
   "post/__getSinglePost",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await apis.get_market_post(arg.id);
-      const datas = { ...data, imgLength: data.itemImgs.length };
-      return thunkAPI.fulfillWithValue(datas);
+      const response = await apis.get_market_post(arg.id);
+      setCookie(`itemId${arg.id}`, `${arg.id}`);
+      return thunkAPI.fulfillWithValue(response);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -207,7 +208,7 @@ export const postSlice = createSlice({
     },
     [__getSinglePost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.singlePost = action.payload;
+      state.singlePost = action.payload.data;
     },
     [__getSinglePost.rejected]: (state, action) => {
       state.isLoading = false;

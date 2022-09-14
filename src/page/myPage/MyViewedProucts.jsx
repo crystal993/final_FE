@@ -6,8 +6,8 @@ import MyViewedProductsContainer from "../../components/myPage/products/MyViewed
 const MyViewedProucts = () => {
   return (
     <>
+      <Header />
       <Layout>
-        <Header />
         <MyViewedProductsContainer />
       </Layout>
     </>

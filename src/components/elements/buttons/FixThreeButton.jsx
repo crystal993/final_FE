@@ -68,18 +68,18 @@ const STbutton1 = styled.button`
   }
   @media screen and (min-width: 1024px) {
     /* Desktop */
-    left: 4.5%;
+    left: 0;
     width: 34%;
   }
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     /* Tablet */
-    left: 2.5%;
-    width: 32%;
+    left: 0;
+    width: 33%;
   }
 
   @media screen and (max-width: 767px) {
     /* Mobile */
-    left: 1%;
+    left: 0;
     width: 33%;
   }
 `;
@@ -113,19 +113,19 @@ const STbutton2 = styled.button`
   }
   @media screen and (min-width: 1024px) {
     /* Desktop */
-    left: 2.5%;
-    width: 30%;
+    left: 0;
+    width: 33%;
   }
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     /* Tablet */
-    left: -0.5%;
-    width: 32%;
+    left: -2%;
+    width: 34%;
   }
 
   @media screen and (max-width: 767px) {
     /* Mobile */
-    left: -1%;
-    width: 33%;
+    left: 0%;
+    width: 34%;
   }
 `;
 
@@ -158,19 +158,19 @@ const STbutton3 = styled.button`
   }
   @media screen and (min-width: 1024px) {
     /* Desktop */
-    left: 62%;
-    width: 30%;
+    left: 66%;
+    width: 34%;
   }
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     /* Tablet */
-    left: 63%;
-    width: 32%;
+    left: 66%;
+    width: 34%;
   }
 
   @media screen and (max-width: 767px) {
     /* Mobile */
-    left: 65%;
-    width: 33%;
+    left: 67%;
+    width: 34%;
   }
 `;
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const base = {
-  server_http: "http://43.200.1.214",
+  server_http: "https://fabius-bk.shop",
   server_https: process.env.REACT_APP_HTTPS_URI,
 };
 
@@ -47,7 +47,12 @@ export const apis = {
   },
   // pageNum, pageLimit
   // get_market_posts: () => api.get(`/items?page=0&size=10`),
-  get_market_post: (id) => api.get(`/items/detail/${id}`),
+  get_market_post: (id) =>
+    api.get(`/items/detail/${id}`, {
+      headers: {
+        withCredentials: true,
+      },
+    }),
   edit_market_post: (id, form, files) => {
     const formData = new FormData();
     formData.append("title", form.title);
@@ -95,5 +100,8 @@ export const apis = {
   // mypage
   get_my_writings: () => api.get(`/items/mypage`),
   get_my_zzims: () => api.get(`/items/mypage/zzim`),
-  get_my_viewed_products: () => api.get(`/items/mypage/list`),
+  get_my_viewed_products: (cookies) =>
+    api.get(`/items/mypage/list`, {
+      headers: { cookies },
+    }),
 };

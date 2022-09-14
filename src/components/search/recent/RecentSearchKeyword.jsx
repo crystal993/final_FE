@@ -21,7 +21,21 @@ const RecentSearchKeyword = ({ keyword }) => {
 
 const KeywordWrapper = styled.div`
   margin-bottom: 2.5rem;
-  width: 85%;
+
+  @media screen and (min-width: 1024px) {
+    /* Desktop */
+    width: 80%;
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Tablet */
+    width: 75%;
+  }
+
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 70%;
+  }
 `;
 
 const KeywordButtonWrapper = styled.div`

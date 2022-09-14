@@ -6,8 +6,8 @@ import MyPages from "../../components/myPage/MyPage";
 const MyPage = () => {
   return (
     <>
+      <Header />
       <Layout>
-        <Header />
         <MyPages />
       </Layout>
     </>

@@ -91,64 +91,76 @@ const DetailInfo = () => {
   };
   return (
     <>
-      {isModal ? (
-        <GlobalModal content={"로그인 하세요"} name={"로그인"} />
-      ) : null}
-      <SimpleSlider itemImgs={itemImgs} />
-      <DetailWrapper>
-        <InfoWrapper>
-          <P>
-            {item.itemCategory} {item.time}
-          </P>
-        </InfoWrapper>
-        <Title>{item.title}</Title>
-        <StWrapper>
-          <Price>{item.sellingPrice?.toLocaleString("ko-KR")}</Price>
-          <StIcon>
-            <span class="material-icons" onClick={sharekakao}>
-              share
-            </span>
-          </StIcon>
-        </StWrapper>
-        <PriceChart
-          purchasePrice={item.purchasePrice}
-          sellingPrice={item.sellingPrice}
-          averagePrice={item.averagePrice}
-        />
-        <StUserBox>
-          <UserImgBox>
-            <StProfileIcon />
-          </UserImgBox>
-          <UserInfoTxt>
-            <H3>{item.nickname}</H3>
-            <P>{item.location}</P>
-          </UserInfoTxt>
-        </StUserBox>
-        <Content>{item.content}</Content>
-        <InfoCntWrapper>
-          <P>
-            관심 {item.zzimCnt} 조회수 {item.viewCnt}
-          </P>
-        </InfoCntWrapper>
-        <ItemZzimButton postId={id} isLogin={isLogin} isZzim={item.isZzimed} />
-        <Comment id={id} />
-        {!item.isMine && <FixButton content={"채팅으로 거래하기"}></FixButton>}
-        {item.isMine && (
-          <FixThreeButton
-            content1={"삭제하기"}
-            content2={"거래완료"}
-            content3={"수정하기"}
-            onClick1={onDeleteHandler}
-            onClick3={onEditHandler}
-            icon1={DeleteIcon}
-            icon2={CheckIcon}
-            icon3={EditIcon}
+      <DetailInfoWrapper>
+        {isModal ? (
+          <GlobalModal content={"로그인 하세요"} name={"로그인"} />
+        ) : null}
+        <SimpleSlider itemImgs={itemImgs} />
+        <DetailWrapper>
+          <InfoWrapper>
+            <P>
+              {item.itemCategory} {item.time}
+            </P>
+          </InfoWrapper>
+          <Title>{item.title}</Title>
+          <StWrapper>
+            <Price>{item.sellingPrice?.toLocaleString("ko-KR")}</Price>
+            <StIcon>
+              <span class="material-icons" onClick={sharekakao}>
+                share
+              </span>
+            </StIcon>
+          </StWrapper>
+          <PriceChart
+            purchasePrice={item.purchasePrice}
+            sellingPrice={item.sellingPrice}
+            averagePrice={item.averagePrice}
           />
-        )}
-      </DetailWrapper>
+          <StUserBox>
+            <UserImgBox>
+              <StProfileIcon />
+            </UserImgBox>
+            <UserInfoTxt>
+              <H3>{item.nickname}</H3>
+              <P>{item.location}</P>
+            </UserInfoTxt>
+          </StUserBox>
+          <Content>{item.content}</Content>
+          <InfoCntWrapper>
+            <P>
+              관심 {item.zzimCnt} 조회수 {item.viewCnt}
+            </P>
+          </InfoCntWrapper>
+          <ItemZzimButton
+            postId={id}
+            isLogin={isLogin}
+            isZzim={item.isZzimed}
+          />
+          <Comment id={id} />
+          {!item.isMine && (
+            <FixButton content={"채팅으로 거래하기"}></FixButton>
+          )}
+          {item.isMine && (
+            <FixThreeButton
+              content1={"삭제하기"}
+              content2={"거래완료"}
+              content3={"수정하기"}
+              onClick1={onDeleteHandler}
+              onClick3={onEditHandler}
+              icon1={DeleteIcon}
+              icon2={CheckIcon}
+              icon3={EditIcon}
+            />
+          )}
+        </DetailWrapper>
+      </DetailInfoWrapper>
     </>
   );
 };
+
+const DetailInfoWrapper = styled.div`
+  padding-top: 4.9rem;
+`;
 
 const DetailWrapper = styled.div`
   display: flex;

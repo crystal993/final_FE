@@ -217,6 +217,7 @@ function Create() {
 }
 
 const FormWrapper = styled.div`
+  padding-top: 9rem;
   width: 100%;
   /* border-radius: 10px; */
   border: 1px solid #eee;
@@ -245,7 +246,7 @@ const TitleWrapper = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 1.6rem 0 0 0;
+  margin: 1.6rem 0 4rem 0;
   font-size: 1.3rem;
   @media screen and (min-width: 1024px) {
     /* Desktop */

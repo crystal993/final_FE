@@ -69,7 +69,6 @@ export default PopularSearchList;
 
 const PopularSearchWrapper = styled.div`
   margin-bottom: 4.6rem;
-
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

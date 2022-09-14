@@ -16,8 +16,8 @@ const Main = () => {
 
   return (
     <>
+      <Header />
       <Layout>
-        <Header />
         <MainContainer />
         {isLogin && (
           <>
