@@ -43,7 +43,7 @@ const Search = () => {
               <GlobalToggle isToggled={isToggled} onToggle={onToggleHandler} />
             </ToggleWrapper>
             <AllDeleteButton onClick={() => onAllRecentDeleteHandler()}>
-              모두 지우기
+              모두지우기
             </AllDeleteButton>
           </ButtonsWrapper>
         </TitleWrapper>
