@@ -326,7 +326,6 @@ const InputWrapper = styled.div`
 
 const Input = styled.input`
   box-sizing: border-box;
-
   padding: 0;
   position: relative;
   display: inline-block;
@@ -511,7 +510,7 @@ const LocationInput = styled.input`
 `;
 
 const ImgWrapper = styled.div`
-  margin-top: 8rem;
+  margin-top: 5rem;
 `;
 
 const LocationWrapper = styled.div`

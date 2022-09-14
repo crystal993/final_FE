@@ -490,7 +490,7 @@ const LocationInput = styled.input`
 `;
 
 const ImgWrapper = styled.div`
-  margin-top: 8rem;
+  margin-top: 5rem;
 `;
 
 const LocationWrapper = styled.div`
