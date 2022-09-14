@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from "recharts";
 
-const mainColors = ["#cbcbcb", "#B192F3", "#B192F3"];
+const mainColors = ["#cbcbcb", "#B192F3", "#FFE47A"];
 
 export default function PriceChart({
   sellingPrice,
