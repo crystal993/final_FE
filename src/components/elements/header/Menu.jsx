@@ -42,18 +42,6 @@ const Menu = ({ open, ...props }) => {
     if (item === state && petCategory === null) {
       dispatch(__getItemCategories({ itemCategory: item, page: categoryPage }));
     }
-    // if (item === state && petCategory !== null) {
-    //   console.log(item);
-    //   console.log(petCategory);
-    //   console.log('menu');
-    //   dispatch(
-    //     getTwoCategory({
-    //       itemCategory: state,
-    //       petCategory: petCategory,
-    //       page: categoryPage,
-    //     })
-    //   );
-    // }
   }, [dispatch, item, state, petCategory, categoryPage]);
 
   return (
@@ -65,7 +53,7 @@ const Menu = ({ open, ...props }) => {
               content={"로그인"}
               fontSize={"1.4rem"}
               fontWeight={900}
-              width={"18rem"}
+              width={"15.5rem"}
               height={"5rem"}
               onClick={onPathHandler}
             />
