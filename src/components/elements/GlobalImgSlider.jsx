@@ -58,24 +58,32 @@ const ImgWrapper = styled.div`
 `;
 
 const Button = styled.button`
-  background: transparent;
+  background: ${({ theme }) => theme.white};
+  border-radius: 0.2rem;
+  opacity: 0.9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: none;
-  margin: 1rem;
-  font-size: 2rem;
+  margin: 1rem -3.5rem;
+  font-size: 3rem;
   cursor: pointer;
-  color: #000000;
   transition: all 3ms ease;
-  &:hover {
-    color: ${({ theme }) => theme.darkgray};
-  }
+  z-index: 10;
+  color: ${({ theme }) => theme.darkgray};
 `;
 
 const RoundButton = styled.a`
-  width: 1rem;
-  height: 0.2rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 100%;
   border: none;
-  background-color: #000000;
-  margin: 1rem 0.5rem;
+  background-color: ${({ theme }) => theme.darkgray};
+  margin: 2rem 0.5rem;
+  cursor: pointer;
+  &:hover {
+    background-color: ${({ theme }) => theme.gray};
+  }
 `;
 
 const RoundButtonWrapper = styled.div`
@@ -100,7 +108,7 @@ const RoundButtonWrapper = styled.div`
 `;
 
 const ImgPreview = styled.img`
-  width: 20rem;
+  width: 100%;
   height: 20rem;
   background: cover;
   transition: all 3ms ease;
