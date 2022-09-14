@@ -112,13 +112,13 @@ const Profile = () => {
               찜목록
             </StTxt>
           </IconWrapper>
-          <IconWrapper>
+          <IconWrapper onClick={() => onPathHandler("/mypage/products")}>
             <StVisibilityIcon />
             <StTxt fontSize={"1rem"} fontWeight={100}>
               최근 본 상품
             </StTxt>
           </IconWrapper>
-          <IconWrapper onClick={() => onPathHandler("/mypage/products")}>
+          <IconWrapper>
             <StChatBubbleIcon />
             <StTxt fontSize={"1rem"} fontWeight={100}>
               채팅목록
