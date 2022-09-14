@@ -208,7 +208,7 @@ function Create() {
             <ImgWrapper>
               {!isLoading && <ImgView imgUrls={itemImgs} />}
             </ImgWrapper>
-            <FixButton content={"게시글 등록하기"} version={2} />
+            <FixButton content={"게시글 등록하기"} />
           </Container>
         </Form>
       </FormWrapper>

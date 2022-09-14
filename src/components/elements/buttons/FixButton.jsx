@@ -30,8 +30,4 @@ const STbutton = styled.button`
     text-align: center;
     color: #ffffff;
   }
-  &:hover {
-    background: ${(props) =>
-      props.version === 2 ? props.theme.mainColor : props.theme.gray};
-  }
 `;

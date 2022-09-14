@@ -241,7 +241,7 @@ function Update() {
             <ImgWrapper>
               {!isLoading && <ImgView imgUrls={itemImgs} />}
             </ImgWrapper>
-            <FixButton content={"게시글 수정하기"} version={2} />
+            <FixButton content={"게시글 수정하기"} />
           </Container>
         </Form>
       </FormWrapper>
