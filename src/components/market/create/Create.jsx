@@ -18,6 +18,11 @@ function Create() {
     mode: "onChange",
   });
 
+  const inputRef = useRef();
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   const onSubmitHandler = (formData, e) => {
     const files = formData.files;
     const data = {
@@ -137,7 +142,13 @@ function Create() {
             <Label>제목</Label>
 
             <InputWrapper>
-              <Input type="text" name="title" required {...register("title")} />
+              <Input
+                type="text"
+                name="title"
+                required
+                {...register("title")}
+                ref={inputRef}
+              />
               <InputResetButton onClick={() => inputResetHandler("title")} />
             </InputWrapper>
 
