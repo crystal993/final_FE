@@ -1,24 +1,38 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import {
   __deleteAllRecentKeywords,
   toggleOn,
   toggleOff,
+  __toggleStateRecentKeyword,
 } from "../../redux/modules/searchSlice";
 import GlobalToggle from "../elements/GlobalToggle";
 import PopularSearchList from "./popular/PopularSearchList";
 import RecentSearchList from "./recent/RecentSearchList";
+import { apis } from "../../shared/axios";
 
 const Search = () => {
   const dispatch = useDispatch();
-  const [isToggled, setIsToggled] = useState(false);
+  const autoSaveState = useSelector((state) => state.search.toggle);
+  const [isToggled, setIsToggled] = useState(autoSaveState);
+
+  useEffect(() => {
+    setIsToggled(autoSaveState);
+  }, [autoSaveState]);
+
+  useEffect(() => {
+    setIsToggled(isToggled);
+    dispatch(__toggleStateRecentKeyword());
+  }, [dispatch, setIsToggled, isToggled]);
 
   const onToggleHandler = () => {
     if (isToggled) {
       dispatch(toggleOff());
+      apis.put_toggle_state();
     } else {
       dispatch(toggleOn());
+      apis.put_toggle_state();
     }
     setIsToggled((prev) => !prev);
   };
