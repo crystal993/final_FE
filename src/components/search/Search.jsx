@@ -61,7 +61,7 @@ const Search = () => {
             </AllDeleteButton>
           </ButtonsWrapper>
         </TitleWrapper>
-        <RecentSearchList></RecentSearchList>
+        {isToggled && <RecentSearchList></RecentSearchList>}
       </RecentSearchWrapper>
     </SearchWrapper>
   );
