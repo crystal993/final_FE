@@ -22,19 +22,17 @@ const Search = () => {
   }, [autoSaveState]);
 
   useEffect(() => {
-    setIsToggled(isToggled);
     dispatch(__toggleStateRecentKeyword());
-  }, [dispatch, setIsToggled, isToggled]);
+  }, [dispatch]);
 
   const onToggleHandler = () => {
     if (isToggled) {
+      apis.put_toggle_state();
       dispatch(toggleOff());
-      apis.put_toggle_state();
     } else {
-      dispatch(toggleOn());
       apis.put_toggle_state();
+      dispatch(toggleOn());
     }
-    setIsToggled((prev) => !prev);
   };
 
   const onAllRecentDeleteHandler = () => {
@@ -61,7 +59,7 @@ const Search = () => {
             </AllDeleteButton>
           </ButtonsWrapper>
         </TitleWrapper>
-        <RecentSearchList></RecentSearchList>
+        {isToggled && <RecentSearchList></RecentSearchList>}
       </RecentSearchWrapper>
     </SearchWrapper>
   );
