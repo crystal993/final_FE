@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux/es/exports";
 import { __addPost } from "../../../redux/modules/market/postSlice";
@@ -17,11 +17,6 @@ function Create() {
   const { register, handleSubmit, setValue, reset } = useForm({
     mode: "onChange",
   });
-
-  const inputRef = useRef();
-  useEffect(() => {
-    inputRef.current.focus();
-  }, []);
 
   const onSubmitHandler = (formData, e) => {
     const files = formData.files;
@@ -142,13 +137,7 @@ function Create() {
             <Label>제목</Label>
 
             <InputWrapper>
-              <Input
-                type="text"
-                name="title"
-                required
-                {...register("title")}
-                ref={inputRef}
-              />
+              <Input type="text" name="title" required {...register("title")} />
               <InputResetButton onClick={() => inputResetHandler("title")} />
             </InputWrapper>
 
@@ -164,6 +153,7 @@ function Create() {
                     inputOnlyNumHandler(value, "purchasePrice");
                   },
                 })}
+                onWheel={(e) => e.target.blur()}
               />
               <InputResetButton
                 onClick={() => inputResetHandler("purchasePrice")}
@@ -184,6 +174,7 @@ function Create() {
                     inputOnlyNumHandler(value, "sellingPrice");
                   },
                 })}
+                onWheel={(e) => e.target.blur()}
               />
               <InputResetButton
                 onClick={() => inputResetHandler("sellingPrice")}
@@ -348,7 +339,11 @@ const Input = styled.input`
   &[type="file"]::file-selector-button:hover {
     background-color: #dadae1;
   }
-
+  &[type="number"]::-webkit-outer-spin-button,
+  &[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
   @media screen and (min-width: 1024px) {
     /* Desktop */
     width: 40rem;
@@ -490,6 +485,8 @@ const LocationInput = styled.input`
 `;
 
 const ImgWrapper = styled.div`
+  width: 100%;
+  height: 16rem;
   margin-top: 5rem;
 `;
 
