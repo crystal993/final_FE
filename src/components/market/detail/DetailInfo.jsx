@@ -50,9 +50,8 @@ const DetailInfo = () => {
           description: `${item.content}`,
           imageUrl: `${item.itemImgs[0]}`,
           link: {
-            // 배포한 주소
-            mobileWebUrl: "공유할 url 주소",
-            webUrl: "공유할 url주소",
+            mobileWebUrl: "https://d13psgq1alfu1t.cloudfront.net/",
+            webUrl: "https://d13psgq1alfu1t.cloudfront.net/",
           },
         },
       });
