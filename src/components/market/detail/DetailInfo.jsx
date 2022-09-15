@@ -11,12 +11,13 @@ import SimpleSlider from "./SimpleSlider";
 import Comment from "../comment/Comment";
 import FixButton from "../../elements/buttons/FixButton";
 import FixThreeButton from "../../elements/buttons/FixThreeButton";
-import PriceChart from "../../elements/chart/PriceChart";
 import GlobalModal from "../../elements/GlobalModal";
+import PriceChart from "../../elements/chart/PriceChart";
 import { ReactComponent as ProfileIcon } from "../../../assets/icons/profile_img_sm.svg";
 import EditIcon from "../../../assets/icons/edit_document2.svg";
 import DeleteIcon from "../../../assets/icons/delete.svg";
 import CheckIcon from "../../../assets/icons/check_circle.svg";
+import Accordian from "../../elements/GlobalAccordian";
 
 const DetailInfo = () => {
   const dispatch = useDispatch();
@@ -110,11 +111,6 @@ const DetailInfo = () => {
               </span>
             </StIcon>
           </StWrapper>
-          <PriceChart
-            purchasePrice={item.purchasePrice}
-            sellingPrice={item.sellingPrice}
-            averagePrice={item.averagePrice}
-          />
           <StUserBox>
             <UserImgBox>
               <StProfileIcon />
@@ -134,6 +130,16 @@ const DetailInfo = () => {
             postId={id}
             isLogin={isLogin}
             isZzim={item.isZzimed}
+          />
+          <Accordian
+            btnTxt={"차트보기"}
+            contents={
+              <PriceChart
+                purchasePrice={item.purchasePrice}
+                sellingPrice={item.sellingPrice}
+                averagePrice={item.averagePrice}
+              />
+            }
           />
           <Comment id={id} />
           {!item.isMine && (
@@ -296,7 +302,7 @@ const InfoCntWrapper = styled.div`
   display: flex;
   flex-direction: row;
   color: ${({ theme }) => theme.darkgray};
-  margin: 3.2rem 0;
+  margin: 3.2rem 0 3.4rem 0;
 `;
 
 const StProfileIcon = styled(ProfileIcon)`
