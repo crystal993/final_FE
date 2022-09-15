@@ -97,7 +97,6 @@ export const __toggleStateRecentKeyword = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await apis.get_toggle_state();
-      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -184,7 +183,8 @@ export const searchSlice = createSlice({
     [__deleteRecentKeyword.fulfilled]: (state, action) => {
       state.isLoading = false;
       const target = state.recentKeywordList.findIndex(
-        (recentKeyword) => recentKeyword.searchWord === action.payload
+        (recentKeyword) =>
+          recentKeyword.searchWord === action.payload.searchWord
       );
       state.recentKeywordList.splice(target, 1);
     },
