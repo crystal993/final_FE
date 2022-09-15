@@ -104,7 +104,7 @@ const DetailInfo = () => {
           </InfoWrapper>
           <Title>{item.title}</Title>
           <StWrapper>
-            <Price>{item.sellingPrice?.toLocaleString("ko-KR")}</Price>
+            <Price>{item.sellingPrice?.toLocaleString("ko-KR")}원</Price>
             <StIcon>
               <span class="material-icons" onClick={sharekakao}>
                 share

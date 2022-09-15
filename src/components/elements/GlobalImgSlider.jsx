@@ -109,7 +109,7 @@ const RoundButtonWrapper = styled.div`
 
 const ImgPreview = styled.img`
   width: 100%;
-  height: 20rem;
+  height: 28rem;
   background: cover;
   transition: all 3ms ease;
 `;

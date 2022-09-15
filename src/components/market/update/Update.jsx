@@ -136,8 +136,8 @@ function Update() {
   };
 
   const inputOnlyNumHandler = (value, inputId) => {
-    const onlyNumber = value.replace(/[^0-9]/g, "");
-    return setValue(inputId, onlyNumber);
+    // const onlyNumber = value.replace(/[^0-9]/g, "");
+    return setValue(inputId, value);
   };
 
   return (
@@ -185,6 +185,7 @@ function Update() {
                     inputOnlyNumHandler(value, "purchasePrice");
                   },
                 })}
+                onWheel={(e) => e.target.blur()}
               />
               <InputResetButton
                 onClick={() => inputResetHandler("purchasePrice")}
@@ -205,6 +206,7 @@ function Update() {
                     inputOnlyNumHandler(value, "sellingPrice");
                   },
                 })}
+                onWheel={(e) => e.target.blur()}
               />
               <InputResetButton
                 onClick={() => inputResetHandler("sellingPrice")}
@@ -340,6 +342,11 @@ const Input = styled.input`
   border-top-width: 0;
   border-bottom-width: 3;
   transition: all 0.3s;
+  &::-webkit-inner-spin-button {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+  }
   &:hover {
     border-color: ${({ theme }) => theme.mainColor};
   }

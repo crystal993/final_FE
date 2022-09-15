@@ -23,6 +23,7 @@ const STbutton = styled.button`
   padding: 1rem;
   border: none;
   cursor: pointer;
+  z-index: 40;
   span {
     font-weight: 700;
     font-size: 1.6rem;
