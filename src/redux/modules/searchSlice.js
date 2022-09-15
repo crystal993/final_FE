@@ -91,6 +91,20 @@ export const __deleteRecentKeyword = createAsyncThunk(
   }
 );
 
+//자동 저장 끄기 켜기 상태값 받기
+export const __toggleStateRecentKeyword = createAsyncThunk(
+  "search/__toggleStateRecentKeyword",
+  async (arg, thunkAPI) => {
+    try {
+      const { data } = await apis.get_toggle_state();
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
+    }
+  }
+);
+
 export const searchSlice = createSlice({
   name: "searchSlice",
   initialState,
@@ -175,6 +189,18 @@ export const searchSlice = createSlice({
       state.recentKeywordList.splice(target, 1);
     },
     [__deleteRecentKeyword.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.err = action.payload;
+    },
+    //자동 저장 끄기 켜기 상태값 받기
+    [__toggleStateRecentKeyword.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__toggleStateRecentKeyword.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.toggle = action.payload;
+    },
+    [__toggleStateRecentKeyword.rejected]: (state, action) => {
       state.isLoading = false;
       state.err = action.payload;
     },

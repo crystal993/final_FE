@@ -93,7 +93,8 @@ export const apis = {
   delete_all_keywords: () => api.delete(`/items/search/all`),
   delete_keyword: (searchWord) =>
     api.delete(`/items/search/?searchWord=${searchWord}`),
-
+  get_toggle_state: () => api.get("/items/search/toggle"),
+  put_toggle_state: () => api.put("/items/search/toggle"),
   // mypage chart
   my_page_chart: () => api.get(`/items/mypage/charts`),
 
