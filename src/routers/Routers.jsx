@@ -1,4 +1,3 @@
-
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MarketMain from "../page/market/Main";
@@ -8,8 +7,8 @@ import MarketPostingUpdate from "../page/market/PostingUpdate";
 import Login from "../page/register/Login";
 import Signup from "../page/register/Signup";
 import Search from "../page/search/Search";
-import ChatRoomPage from '../page/chatting/ChatRoomPage';
-import ChatListPage from '../page/chatting/ChatListPage';
+import ChatRoomPage from "../page/chatting/ChatRoomPage";
+import ChatListPage from "../page/chatting/ChatListPage";
 import NotFound from "../page/NotFound";
 import MyPage from "../page/myPage/MyPage";
 import Kakao from "../components/register/socialLogin/Kakao";
@@ -17,7 +16,6 @@ import SearchResult from "../page/search/SearchResult";
 import MyZzim from "../page/myPage/MyZzim";
 import MyWritings from "../page/myPage/MyWritings";
 import MyViewedProucts from "../page/myPage/MyViewedProucts";
-
 
 const Routers = () => {
   return (
@@ -33,8 +31,8 @@ const Routers = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/search" element={<Search />} />
         <Route path="/search/result/:keyword" element={<SearchResult />} />
-        <Route path='/chatroom/:itemId/:memberId' element={<ChatRoomPage />} />
-        <Route path='/chatlist/:roomId' element={<ChatListPage />} />
+        <Route path="/chatroom/:itemId/:memberId" element={<ChatRoomPage />} />
+        <Route path="/chatlist/:roomId" element={<ChatListPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/zzims" element={<MyZzim />} />
         <Route path="/mypage/writings" element={<MyWritings />} />
