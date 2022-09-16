@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const base = {
-  server_http: "http://43.200.1.214",
+  server_http: "https://fabius-bk.shop",
   server_https: process.env.REACT_APP_HTTPS_URI,
 };
 
@@ -47,7 +47,12 @@ export const apis = {
   },
   // pageNum, pageLimit
   // get_market_posts: () => api.get(`/items?page=0&size=10`),
-  get_market_post: (id) => api.get(`/items/detail/${id}`),
+  get_market_post: (id) =>
+    api.get(`/items/detail/${id}`, {
+      headers: {
+        withCredentials: true,
+      },
+    }),
   edit_market_post: (id, form, files) => {
     const formData = new FormData();
     formData.append("title", form.title);
@@ -77,10 +82,27 @@ export const apis = {
   logout: () => api.post(`/members/logout`),
 
   //search
-  item_search: (keyword) => api.post(`/items/search?keyword=${keyword}`),
+  item_search: (keyword, toggleState) =>
+    api.post(`/items/search?keyword=${keyword}&toggle=${toggleState}`),
+  item_search_sort_by_popular: (keyword, toggleState) =>
+    api.post(
+      `/items/search/popularity?keyword=${keyword}&toggle=${toggleState}`
+    ),
   get_popular_keywords: () => api.get(`/items/search/popularity`),
   get_recent_keywords: () => api.get(`/items/search`),
   delete_all_keywords: () => api.delete(`/items/search/all`),
   delete_keyword: (searchWord) =>
     api.delete(`/items/search/?searchWord=${searchWord}`),
+  get_toggle_state: () => api.get("/items/search/toggle"),
+  put_toggle_state: () => api.put("/items/search/toggle"),
+  // mypage chart
+  my_page_chart: () => api.get(`/items/mypage/charts`),
+
+  // mypage
+  get_my_writings: () => api.get(`/items/mypage`),
+  get_my_zzims: () => api.get(`/items/mypage/zzim`),
+  get_my_viewed_products: (cookies) =>
+    api.get(`/items/mypage/list`, {
+      headers: { cookies },
+    }),
 };

@@ -4,7 +4,6 @@ import Profile from "./Profile";
 import styled from "styled-components";
 
 const MyPage = () => {
-  const userInfo = localStorage.getItem("user-info");
   return (
     <>
       <MyPageWrapper>
@@ -20,6 +19,7 @@ const MyPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 0 0 0;
+  padding-top: 6rem;
   background-color: ${({ theme }) => theme.lightgray};
 `;
 

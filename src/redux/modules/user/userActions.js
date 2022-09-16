@@ -19,7 +19,7 @@ export const userLogin = createAsyncThunk(
       };
 
       const response = await axios.post(
-        `http://43.200.1.214/members/login`,
+        `https://fabius-bk.shop/members/login`,
         payload,
         config
       );
@@ -49,7 +49,7 @@ export const registerUser = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        `http://43.200.1.214/members/signup`,
+        `https://fabius-bk.shop/members/signup`,
         payload,
         config
       );
@@ -114,7 +114,7 @@ export const existMemberId = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        `http://43.200.1.214/members/email-check`,
+        `https://fabius-bk.shop/members/email-check`,
         payload,
         config
       );
@@ -141,7 +141,7 @@ export const existMemberNickname = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        `http://43.200.1.214/members/nickname-check`,
+        `https://fabius-bk.shop/members/nickname-check`,
         payload,
         config
       );

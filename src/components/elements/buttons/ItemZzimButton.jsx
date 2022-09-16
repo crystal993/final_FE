@@ -1,12 +1,10 @@
-import { useState, useEffect } from 'react';
-import RESP from '../../../server/response';
-import Button from '../GlobalButton';
-import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
-import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
-import { apis } from '../../../shared/axios';
-import GlobalModal from '../GlobalModal';
+import { useState, useEffect } from "react";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import { apis } from "../../../shared/axios";
+import GlobalModal from "../GlobalModal";
 
 const ItemZzimButton = ({ isZzim, isLogin, postId }) => {
   const [isZzimed, setZzimed] = useState(isZzim);
@@ -24,7 +22,7 @@ const ItemZzimButton = ({ isZzim, isLogin, postId }) => {
   const toggleLike = async () => {
     if (!isLogin) {
       setModal(true);
-      setMessage('로그인을 해주세요!');
+      setMessage("로그인을 해주세요!");
       return;
     }
 

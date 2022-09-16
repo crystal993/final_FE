@@ -1,26 +1,42 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { __deleteAllRecentKeywords } from "../../redux/modules/searchSlice";
+import {
+  __deleteAllRecentKeywords,
+  toggleOn,
+  toggleOff,
+  __toggleStateRecentKeyword,
+} from "../../redux/modules/searchSlice";
 import GlobalToggle from "../elements/GlobalToggle";
-import PopularSearchList from "./PopularSearchList";
-import RecentSearchList from "./RecentSearchList";
+import PopularSearchList from "./popular/PopularSearchList";
+import RecentSearchList from "./recent/RecentSearchList";
+import { apis } from "../../shared/axios";
 
 const Search = () => {
   const dispatch = useDispatch();
-  const [isToggled, setIsToggled] = useState(false);
+  const autoSaveState = useSelector((state) => state.search.toggle);
+  const [isToggled, setIsToggled] = useState(autoSaveState);
 
-  // TODO 최근 검색어 자동 저장 켜기 끄기 기능
+  useEffect(() => {
+    setIsToggled(autoSaveState);
+  }, [autoSaveState]);
+
+  useEffect(() => {
+    dispatch(__toggleStateRecentKeyword());
+  }, [dispatch]);
+
   const onToggleHandler = () => {
     if (isToggled) {
-      //TODO dispatch
+      apis.put_toggle_state();
+      dispatch(toggleOff());
     } else {
-      //TODO dispatch
+      apis.put_toggle_state();
+      dispatch(toggleOn());
     }
-    setIsToggled((prev) => !prev);
   };
 
   const onAllRecentDeleteHandler = () => {
+    console.log("전체 삭제");
     dispatch(__deleteAllRecentKeywords());
   };
 
@@ -35,26 +51,28 @@ const Search = () => {
           <Title>최근 검색어</Title>
           <ButtonsWrapper>
             <ToggleWrapper>
-              <p>자동 저장</p>
+              <ToggleLabel>자동저장</ToggleLabel>
               <GlobalToggle isToggled={isToggled} onToggle={onToggleHandler} />
             </ToggleWrapper>
             <AllDeleteButton onClick={() => onAllRecentDeleteHandler()}>
-              모두 지우기
+              모두지우기
             </AllDeleteButton>
           </ButtonsWrapper>
         </TitleWrapper>
-        <RecentSearchList></RecentSearchList>
+        {isToggled && <RecentSearchList></RecentSearchList>}
       </RecentSearchWrapper>
     </SearchWrapper>
   );
 };
 
 const SearchWrapper = styled.div`
-  margin: 3.3rem 1.8rem;
+  padding-top: 9rem;
+  margin: 0 1.8rem;
 `;
 
 const PopularSearchWrapper = styled.div`
   width: 100%;
+  z-index: -100;
 `;
 
 const RecentSearchWrapper = styled.div`
@@ -66,6 +84,7 @@ const TitleWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding-top: 3rem;
 `;
 
 const Title = styled.h1`
@@ -75,7 +94,7 @@ const Title = styled.h1`
 `;
 
 const ButtonsWrapper = styled.div`
-  width: 33%;
+  width: 30%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -84,7 +103,22 @@ const ButtonsWrapper = styled.div`
   font-weight: 500;
   font-size: 1.2rem;
   line-height: 1.7rem;
+  margin-bottom: 2rem;
   color: ${({ theme }) => theme.darkgray};
+  @media screen and (min-width: 1024px) {
+    /* Desktop */
+    width: 20%;
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Tablet */
+    width: 23%;
+  }
+
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 25%;
+  }
 `;
 
 const AllDeleteButton = styled.div`
@@ -92,11 +126,16 @@ const AllDeleteButton = styled.div`
 `;
 
 const ToggleWrapper = styled.div`
+  font-size: 1.2rem;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.6rem;
+`;
+
+const ToggleLabel = styled.p`
+  margin-left: -10rem;
+  font-size: 1.2rem;
 `;
 
 export default Search;

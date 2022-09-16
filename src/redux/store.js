@@ -5,7 +5,8 @@ import user from "./modules/user/userSlice";
 import mainFilter from "./modules/filter/mainFilterSlice";
 import comment from "./modules/market/commentSlice";
 import search from "./modules/searchSlice";
-
+import chart from "./modules/chartSlice";
+import myPage from "./modules/myPageSlice";
 const middlewares = [thunk];
 
 // 리듀서 통합
@@ -15,6 +16,8 @@ const rootReducer = combineReducers({
   comment,
   mainFilter,
   search,
+  chart,
+  myPage,
 });
 
 // 스토어 연결

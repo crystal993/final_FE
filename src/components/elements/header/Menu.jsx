@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { bool } from 'prop-types';
-import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import GlobalButton from '../GlobalButton';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { bool } from "prop-types";
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import GlobalButton from "../GlobalButton";
+import { useNavigate } from "react-router-dom";
 import {
   __getItemCategories,
   getTwoCategory,
   addPage,
   pageToZero,
   doubleListToZero,
-} from '../../../redux/modules/market/postSlice';
+} from "../../../redux/modules/market/postSlice";
 import { ReactComponent as ProfileIcon } from "../../../assets/icons/profile_img_sm.svg";
-
 
 const Menu = ({ open, ...props }) => {
   const isHidden = open ? true : false;
@@ -20,45 +19,29 @@ const Menu = ({ open, ...props }) => {
   const isLogin = useSelector((state) => state.user.userToken);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [state, setState] = useState('');
+  const [state, setState] = useState("");
   const categoryPage = useSelector((state) => state.marketPost.page);
   // const [page, setPage] = useState(categoryPage);
   const onPathHandler = () => {
     navigate(`/login`);
   };
 
-  const item = localStorage.getItem('itemCategory');
-  const petCategory = localStorage.getItem('petCategory');
+  const item = localStorage.getItem("itemCategory");
+  const petCategory = localStorage.getItem("petCategory");
   const onRequestHandler = (itemCategory) => {
-    localStorage.setItem('itemCategory', itemCategory);
+    localStorage.setItem("itemCategory", itemCategory);
     dispatch(pageToZero());
     dispatch(doubleListToZero());
     setState(itemCategory);
   };
-
 
   const user = JSON.parse(localStorage.getItem("user-info"));
   const nickname = user?.nickname;
 
   useEffect(() => {
     if (item === state && petCategory === null) {
-      console.log(petCategory);
-      console.log(item);
-      console.log('menu');
       dispatch(__getItemCategories({ itemCategory: item, page: categoryPage }));
     }
-    // if (item === state && petCategory !== null) {
-    //   console.log(item);
-    //   console.log(petCategory);
-    //   console.log('menu');
-    //   dispatch(
-    //     getTwoCategory({
-    //       itemCategory: state,
-    //       petCategory: petCategory,
-    //       page: categoryPage,
-    //     })
-    //   );
-    // }
   }, [dispatch, item, state, petCategory, categoryPage]);
 
   return (
@@ -67,16 +50,16 @@ const Menu = ({ open, ...props }) => {
         <>
           <StBtnWrapper>
             <GlobalButton
-              content={'로그인'}
-              fontSize={'1.4rem'}
+              content={"로그인"}
+              fontSize={"1.4rem"}
               fontWeight={900}
-              width={"18rem"}
+              width={"15.5rem"}
               height={"5rem"}
               onClick={onPathHandler}
             />
           </StBtnWrapper>
-          <StLink href='/signup' tabIndex={tabIndex}>
-            <span aria-hidden='true'></span>
+          <StLink href="/signup" tabIndex={tabIndex}>
+            <span aria-hidden="true"></span>
             <StText>회원가입</StText>
           </StLink>
         </>
@@ -103,49 +86,49 @@ const Menu = ({ open, ...props }) => {
           <StCategoryBtn
             tabIndex={tabIndex}
             onClick={() => {
-              onRequestHandler('사료');
+              onRequestHandler("사료");
             }}
           >
-            <span aria-hidden='true'></span>
+            <span aria-hidden="true"></span>
             사료
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
             onClick={() => {
-              onRequestHandler('간식');
+              onRequestHandler("간식");
             }}
           >
-            <span aria-hidden='true'></span>
+            <span aria-hidden="true"></span>
             간식
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
             onClick={() => {
-              onRequestHandler('의류');
+              onRequestHandler("의류");
             }}
           >
-            <span aria-hidden='true'></span>
+            <span aria-hidden="true"></span>
             의류
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
-            onClick={() => onRequestHandler('미용')}
+            onClick={() => onRequestHandler("미용")}
           >
-            <span aria-hidden='true'></span>
+            <span aria-hidden="true"></span>
             미용
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
-            onClick={() => onRequestHandler('장난감')}
+            onClick={() => onRequestHandler("장난감")}
           >
-            <span aria-hidden='true'></span>
+            <span aria-hidden="true"></span>
             장난감
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
-            onClick={() => onRequestHandler('기타용품')}
+            onClick={() => onRequestHandler("기타용품")}
           >
-            <span aria-hidden='true'></span>
+            <span aria-hidden="true"></span>
             기타용품
           </StCategoryBtn>
         </StCategoryBtnWrapper>
@@ -161,13 +144,14 @@ Menu.propTypes = {
 const StUserWrapper = styled.div``;
 
 const StMenu = styled.nav`
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   background: ${({ theme }) => theme.white};
-  transform: ${({ open }) => (open ? 'translateX(17%)' : 'translateX(100%)')};
-  height: 100%;
+  transform: ${({ open }) => (open ? "translateX(17%)" : "translateX(100%)")};
+  height: 100vh;
   text-align: left;
 
   position: absolute;

@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons'; // ♡
+import React from "react";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons"; // ♡
 
 export const Item = ({ item }) => {
   const navigate = useNavigate();
-  const items = useSelector((state) => state.marketPost.singlePost);
 
   return (
     <>
@@ -30,7 +27,7 @@ export const Item = ({ item }) => {
               <StCnt>{item.zzimCnt}</StCnt>
             </IconWrapper>
             <IconWrapper>
-              <span className='material-icons eye'>visibility</span>{' '}
+              <span className="material-icons eye">visibility</span>{" "}
               <StCnt>{item.viewCnt}</StCnt>
             </IconWrapper>
           </IconsWrapper>
