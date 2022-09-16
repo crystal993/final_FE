@@ -7,6 +7,7 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
+  ResponsiveContainer,
 } from "recharts";
 import styled from "styled-components";
 
@@ -40,38 +41,38 @@ export default function MyPageSumPriceChart({ chartData }) {
 
   const data = [
     {
-      name: "A",
+      name: "등록상품 가격총합",
       price: chartData[0]?.price,
     },
     {
-      name: "B",
+      name: "판매완료 가격총합",
       price: chartData[1]?.price,
     },
     {
-      name: "C",
+      name: "찜한상품 가격총합",
       price: chartData[2]?.price,
     },
   ];
   return (
     <StComposedChartWrapper>
-      <ComposedChart
-        width={400}
-        height={400}
-        data={data}
-        margin={{
-          top: 20,
-          right: 20,
-          bottom: 20,
-          left: 20,
-        }}
-      >
-        <CartesianGrid stroke="#f5f5f5" />
-        <XAxis dataKey="name"></XAxis>
-        <YAxis />
-        <Tooltip content={<CustomTooltip />} />
-        <Bar dataKey="price" barSize={20} fill="#B192F3" />
-        <Line type="monotone" dataKey="price" stroke="#ffd324" />
-      </ComposedChart>
+      <ResponsiveContainer width={"99%"} height={"100%"}>
+        <ComposedChart
+          data={data}
+          margin={{
+            top: 20,
+            right: 20,
+            bottom: 60,
+            left: 20,
+          }}
+        >
+          <CartesianGrid stroke="#f5f5f5" />
+          <XAxis dataKey="name"></XAxis>
+          <YAxis />
+          <Tooltip content={<CustomTooltip />} />
+          <Bar dataKey="price" barSize={20} fill="#B192F3" />
+          <Line type="monotone" dataKey="price" stroke="#ffd324" />
+        </ComposedChart>
+      </ResponsiveContainer>
     </StComposedChartWrapper>
   );
 }
@@ -80,9 +81,25 @@ const StComposedChartWrapper = styled.div`
   font-family: sans-serif;
   text-align: center;
   margin: 0 auto;
+  padding-bottom: 2rem;
   border: none;
   font-size: 1.2rem;
+  height: 40rem;
   color: ${({ theme }) => theme.grayColor};
+  @media screen and (min-width: 1024px) {
+    /* Desktop */
+    width: 50rem;
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Tablet */
+    width: 40rem;
+  }
+
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 30rem;
+  }
 `;
 
 const StCustomToolTip = styled.div`
