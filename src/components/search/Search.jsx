@@ -68,6 +68,10 @@ const Search = () => {
 const SearchWrapper = styled.div`
   padding-top: 9rem;
   margin: 0 1.8rem;
+  @media (max-width: 320px) {
+    /* Mobile */
+    margin: 0 0.8rem;
+  }
 `;
 
 const PopularSearchWrapper = styled.div`
@@ -91,6 +95,24 @@ const Title = styled.h1`
   font-size: 2rem;
   line-height: 2.9rem;
   margin-bottom: 3rem;
+  @media screen and (min-width: 1024px) {
+    /* Desktop */
+    font-size: 2rem;
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Tablet */
+    font-size: 2rem;
+  }
+
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 2rem;
+  }
+  @media (max-width: 320px) {
+    /* Mobile */
+    font-size: 1.8rem;
+  }
 `;
 
 const ButtonsWrapper = styled.div`
@@ -112,17 +134,34 @@ const ButtonsWrapper = styled.div`
 
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     /* Tablet */
-    width: 23%;
+    width: 25%;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 500px) and (max-width: 767px) {
     /* Mobile */
-    width: 25%;
+    width: 32%;
+  }
+  @media (max-width: 320px) and (max-width: 499px) {
+    /* Mobile */
+    width: 35%;
   }
 `;
 
 const AllDeleteButton = styled.div`
   cursor: pointer;
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Tablet */
+    font-size: 1.1rem;
+  }
+  @media (max-width: 500px) and (max-width: 767px) {
+    /* Mobile */
+    margin-left: 1rem;
+  }
+  @media (max-width: 320px) and (max-width: 499px) {
+    /* Mobile */
+    margin-left: 0.6rem;
+    font-size: 0.8rem;
+  }
 `;
 
 const ToggleWrapper = styled.div`
@@ -131,11 +170,40 @@ const ToggleWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 500px) and (max-width: 767px) {
+    /* Mobile */
+    font-size: 1rem;
+  }
+  @media (max-width: 320px) and (max-width: 499px) {
+    /* Mobile */
+    font-size: 0.8rem;
+  }
 `;
 
 const ToggleLabel = styled.p`
   margin-left: -10rem;
   font-size: 1.2rem;
+  @media screen and (min-width: 1024px) {
+    /* Desktop */
+    font-size: 1.2rem;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Tablet */
+    margin-left: -6rem;
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+  }
+  @media (max-width: 500px) and (max-width: 767px) {
+    /* Mobile */
+    margin-left: -6rem;
+    margin-right: 0.5rem;
+  }
+  @media (max-width: 320px) and (max-width: 499px) {
+    /* Mobile */
+    margin-left: -4rem;
+    margin-right: 0.5rem;
+    font-size: 0.8rem;
+  }
 `;
 
 export default Search;

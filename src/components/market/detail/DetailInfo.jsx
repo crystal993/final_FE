@@ -120,7 +120,7 @@ const DetailInfo = () => {
           <StWrapper>
             <Price>{item.sellingPrice?.toLocaleString("ko-KR")}원</Price>
             <StIcon>
-              <span class="material-icons" onClick={sharekakao}>
+              <span className="material-icons" onClick={sharekakao}>
                 share
               </span>
             </StIcon>
@@ -146,7 +146,7 @@ const DetailInfo = () => {
             isZzim={item.isZzimed}
           />
           <Accordian
-            btnTxt={"차트보기"}
+            btnTxt={"가격 비교"}
             contents={
               <PriceChart
                 purchasePrice={item.purchasePrice}
