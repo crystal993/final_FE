@@ -103,7 +103,7 @@ const Profile = () => {
           <IconWrapper onClick={() => onPathHandler("/mypage/writings")}>
             <StEditDocumentIcon />
             <StTxt fontSize={"1rem"} fontWeight={100}>
-              내가 쓴 글
+              내가쓴글
             </StTxt>
           </IconWrapper>
           <IconWrapper onClick={() => onPathHandler("/mypage/zzims")}>
@@ -115,7 +115,7 @@ const Profile = () => {
           <IconWrapper onClick={() => onPathHandler("/mypage/products")}>
             <StVisibilityIcon />
             <StTxt fontSize={"1rem"} fontWeight={100}>
-              최근 본 상품
+              최근본상품
             </StTxt>
           </IconWrapper>
           <IconWrapper>
@@ -163,7 +163,6 @@ const ProfileIconWrapper = styled.div`
 const StUserBox = styled.div`
   display: flex;
   width: 100%;
-  /* padding: 2.4rem 0 0 1.6rem; */
   flex-direction: row;
   align-content: flex-start;
   justify-content: flex-start;
@@ -217,13 +216,13 @@ const IconWrapper = styled.div`
   justify-content: center;
   color: ${({ theme }) => theme.mainColor};
   align-items: center;
-  margin: 0 0.5rem;
-  width: 6.8rem;
+  margin: 0 0.2rem;
+  width: 10rem;
   height: 6rem;
   gap: 0.4rem;
   cursor: pointer;
   &span {
-    width: 5rem;
+    width: 10rem;
     height: 5rem;
     margin: 0 0.2rem;
   }
