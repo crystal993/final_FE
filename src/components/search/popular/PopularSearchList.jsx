@@ -21,8 +21,8 @@ const PopularSearchList = () => {
       slidesPerView: 3,
     },
     640: {
-      width: 820,
-      slidesPerView: 3,
+      width: 840,
+      slidesPerView: 4,
     },
     767: {
       width: 940,
@@ -30,7 +30,7 @@ const PopularSearchList = () => {
     },
     850: {
       width: 1030,
-      slidesPerView: 4,
+      slidesPerView: 5,
     },
     1024: {
       width: 1680,
