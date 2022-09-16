@@ -29,7 +29,6 @@ const KeywordWrapper = styled.div`
   border: 1px solid ${({ theme }) => theme.mainColor};
   border-radius: 100px;
   cursor: pointer;
-  margin-right: -2rem;
 `;
 const Keyword = styled.span`
   font-weight: 500;
