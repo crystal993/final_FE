@@ -6,8 +6,8 @@ import DetailInfo from "../../components/market/detail/DetailInfo";
 const Detail = () => {
   return (
     <>
+      <Header />
       <Layout>
-        <Header />
         <DetailInfo />
       </Layout>
     </>

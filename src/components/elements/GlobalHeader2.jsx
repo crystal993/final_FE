@@ -6,15 +6,15 @@ import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow_back_i
 const GlobalHeader2 = () => {
   const navigate = useNavigate();
 
-  const onPathHandler = (path) => {
-    navigate(path);
+  const onPathHandler = (paths) => {
+    navigate(paths);
   };
 
   return (
     <NavbarWrapper>
       <Navbar>
         <NavItem>
-          <ArrowBackIcon onClick={() => onPathHandler("/")} />
+          <ArrowBackIcon onClick={() => navigate(-1)} />
         </NavItem>
         <NavItem onClick={() => onPathHandler("/")}>
           <span style={{ marginRight: "-1.5rem" }}>LOGO</span>
@@ -28,9 +28,13 @@ const GlobalHeader2 = () => {
 export default GlobalHeader2;
 
 const NavbarWrapper = styled.div`
+  position: fixed;
+  height: 4.8rem;
+  width: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  z-index: 5;
 `;
 
 const Navbar = styled.nav`

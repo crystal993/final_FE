@@ -1,6 +1,6 @@
-import React, { useEffect, Fragment, useState } from 'react';
-import styled from 'styled-components';
-import Item from './Item';
+import React from "react";
+import styled from "styled-components";
+import Item from "./Item";
 
 const ItemList = ({
   list,
@@ -17,8 +17,6 @@ const ItemList = ({
   const filtered = doubleList.filter((x) => {
     return x !== undefined;
   });
-
-  console.log(filtered);
 
   return (
     <>

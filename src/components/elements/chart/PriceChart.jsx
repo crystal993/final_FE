@@ -10,16 +10,29 @@ import {
   Tooltip,
 } from "recharts";
 
-const mainColors = ["#cbcbcb", "#B192F3"];
+const mainColors = ["#cbcbcb", "#B192F3", "#FFE47A"];
 
-export default function PriceChart({ sellingPrice, purchasePrice }) {
+export default function PriceChart({
+  sellingPrice,
+  purchasePrice,
+  averagePrice,
+}) {
   const [pPrice, setPprice] = useState();
   const [sPrice, setSprice] = useState();
+  const [aPrice, setAPrice] = useState();
 
   useEffect(() => {
     setSprice(sellingPrice);
     setPprice(purchasePrice);
-  }, [setPprice, setSprice, purchasePrice, sellingPrice]);
+    setAPrice(averagePrice);
+  }, [
+    setPprice,
+    setSprice,
+    setAPrice,
+    purchasePrice,
+    sellingPrice,
+    averagePrice,
+  ]);
 
   const data = [
     {
@@ -29,6 +42,10 @@ export default function PriceChart({ sellingPrice, purchasePrice }) {
     {
       name: "판매 희망가",
       price: sPrice,
+    },
+    {
+      name: "평균 가격",
+      price: aPrice,
     },
   ];
 

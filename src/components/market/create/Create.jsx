@@ -1,13 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux/es/exports";
 import { __addPost } from "../../../redux/modules/market/postSlice";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "../../elements/GlobalButton";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import ImgView from "../../elements/ImgView";
-import RESP from "../../../server/response";
+import ImgSlider from "../../elements/GlobalImgSlider";
 import axios from "axios";
 import { IoIosLocate } from "react-icons/io";
 import InputResetButton from "../../elements/buttons/InputResetButton";
@@ -17,25 +14,11 @@ function Create() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    setFocus,
-    setValue,
-    reset,
-    watch,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit, setValue, reset } = useForm({
     mode: "onChange",
   });
 
-  const handleClick = (e) => {
-    let myInput = document.getElementById("fileInput");
-    myInput.click();
-  };
-
   const onSubmitHandler = (formData, e) => {
-    console.log(formData);
     const files = formData.files;
     const data = {
       itemCategory: formData.itemCategory,
@@ -63,7 +46,6 @@ function Create() {
     const urlList = fileList.map((file) => URL.createObjectURL(file));
 
     setItemImgs([...urlList]);
-    console.log(itemImgs);
     if (files.length !== 0) {
       setIsLoading(false);
     }
@@ -171,6 +153,7 @@ function Create() {
                     inputOnlyNumHandler(value, "purchasePrice");
                   },
                 })}
+                onWheel={(e) => e.target.blur()}
               />
               <InputResetButton
                 onClick={() => inputResetHandler("purchasePrice")}
@@ -191,6 +174,7 @@ function Create() {
                     inputOnlyNumHandler(value, "sellingPrice");
                   },
                 })}
+                onWheel={(e) => e.target.blur()}
               />
               <InputResetButton
                 onClick={() => inputResetHandler("sellingPrice")}
@@ -224,9 +208,9 @@ function Create() {
               onChange={changeImg}
             />
             <ImgWrapper>
-              {!isLoading && <ImgView imgUrls={itemImgs} />}
+              {!isLoading && <ImgSlider imgUrls={itemImgs} />}
             </ImgWrapper>
-            <FixButton content={"게시글 등록하기"} version={2} />
+            <FixButton content={"게시글 등록하기"} />
           </Container>
         </Form>
       </FormWrapper>
@@ -235,6 +219,7 @@ function Create() {
 }
 
 const FormWrapper = styled.div`
+  padding-top: 9rem;
   width: 100%;
   /* border-radius: 10px; */
   border: 1px solid #eee;
@@ -263,7 +248,7 @@ const TitleWrapper = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 1.6rem 0 0 0;
+  margin: 1.6rem 0 4rem 0;
   font-size: 1.3rem;
   @media screen and (min-width: 1024px) {
     /* Desktop */
@@ -354,7 +339,11 @@ const Input = styled.input`
   &[type="file"]::file-selector-button:hover {
     background-color: #dadae1;
   }
-
+  &[type="number"]::-webkit-outer-spin-button,
+  &[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
   @media screen and (min-width: 1024px) {
     /* Desktop */
     width: 40rem;
@@ -439,15 +428,6 @@ const Option = styled.option`
   font-size: 1.4rem;
 `;
 
-const ButtonWrapper = styled.div`
-  width: 50%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 5px;
-`;
-
 const TextArea = styled.textarea`
   width: 32.8rem;
   height: 20rem;
@@ -504,7 +484,11 @@ const LocationInput = styled.input`
   background-color: transparent;
 `;
 
-const ImgWrapper = styled.div``;
+const ImgWrapper = styled.div`
+  width: 100%;
+  height: 16rem;
+  margin-top: 5rem;
+`;
 
 const LocationWrapper = styled.div`
   font-size: 1.4rem;

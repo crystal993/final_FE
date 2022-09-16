@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux/es/exports";
+import { useDispatch } from "react-redux/es/exports";
 import {
   __updatePost,
   __getSinglePost,
 } from "../../../redux/modules/market/postSlice";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "../../elements/GlobalButton";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import ImgView from "../../elements/ImgView";
-import RESP from "../../../server/response";
+import ImgSlider from "../../elements/GlobalImgSlider";
 import axios from "axios";
 import { IoIosLocate } from "react-icons/io";
 import InputResetButton from "../../elements/buttons/InputResetButton";
@@ -22,7 +19,6 @@ function Update() {
   const { id } = useParams();
 
   const { state } = useLocation();
-  console.log(state);
 
   useEffect(() => {
     setValue("itemCategory", state.itemCategory);
@@ -52,7 +48,6 @@ function Update() {
   };
 
   const onUpdateHandler = (formData, e) => {
-    console.log(formData);
     const files = formData.files;
     const data = {
       itemCategory: formData.itemCategory,
@@ -79,7 +74,6 @@ function Update() {
     const urlList = fileList.map((file) => URL.createObjectURL(file));
 
     setItemImgs([...urlList]);
-    console.log(itemImgs);
     if (files.length !== 0) {
       setIsLoading(false);
     }
@@ -142,8 +136,8 @@ function Update() {
   };
 
   const inputOnlyNumHandler = (value, inputId) => {
-    const onlyNumber = value.replace(/[^0-9]/g, "");
-    return setValue(inputId, onlyNumber);
+    // const onlyNumber = value.replace(/[^0-9]/g, "");
+    return setValue(inputId, value);
   };
 
   return (
@@ -191,6 +185,7 @@ function Update() {
                     inputOnlyNumHandler(value, "purchasePrice");
                   },
                 })}
+                onWheel={(e) => e.target.blur()}
               />
               <InputResetButton
                 onClick={() => inputResetHandler("purchasePrice")}
@@ -211,6 +206,7 @@ function Update() {
                     inputOnlyNumHandler(value, "sellingPrice");
                   },
                 })}
+                onWheel={(e) => e.target.blur()}
               />
               <InputResetButton
                 onClick={() => inputResetHandler("sellingPrice")}
@@ -245,9 +241,9 @@ function Update() {
               // style={{ display: "none" }}
             />
             <ImgWrapper>
-              {!isLoading && <ImgView imgUrls={itemImgs} />}
+              {!isLoading && <ImgSlider imgUrls={itemImgs} />}
             </ImgWrapper>
-            <FixButton content={"게시글 수정하기"} version={2} />
+            <FixButton content={"게시글 수정하기"} />
           </Container>
         </Form>
       </FormWrapper>
@@ -257,7 +253,7 @@ function Update() {
 
 const FormWrapper = styled.div`
   width: 100%;
-  /* border-radius: 10px; */
+  padding-top: 9rem;
   border: 1px solid #eee;
   margin: auto;
   display: flex;
@@ -275,6 +271,7 @@ const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 20rem;
 `;
 
 const TitleWrapper = styled.div`
@@ -283,7 +280,7 @@ const TitleWrapper = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 1.6rem 0 0 0;
+  margin: 1.6rem 0 4rem 0;
   font-size: 1.3rem;
   @media screen and (min-width: 1024px) {
     /* Desktop */
@@ -331,7 +328,6 @@ const InputWrapper = styled.div`
 
 const Input = styled.input`
   box-sizing: border-box;
-
   padding: 0;
   position: relative;
   display: inline-block;
@@ -346,6 +342,11 @@ const Input = styled.input`
   border-top-width: 0;
   border-bottom-width: 3;
   transition: all 0.3s;
+  &::-webkit-inner-spin-button {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+  }
   &:hover {
     border-color: ${({ theme }) => theme.mainColor};
   }
@@ -459,15 +460,6 @@ const Option = styled.option`
   font-size: 1.4rem;
 `;
 
-const ButtonWrapper = styled.div`
-  width: 50%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 5px;
-`;
-
 const TextArea = styled.textarea`
   width: 32.8rem;
   height: 20rem;
@@ -524,7 +516,9 @@ const LocationInput = styled.input`
   background-color: transparent;
 `;
 
-const ImgWrapper = styled.div``;
+const ImgWrapper = styled.div`
+  margin-top: 5rem;
+`;
 
 const LocationWrapper = styled.div`
   font-size: 1.4rem;

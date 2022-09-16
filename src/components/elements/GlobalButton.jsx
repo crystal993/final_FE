@@ -58,19 +58,7 @@ const Btn = styled.button`
   background-color: ${(props) =>
     props.color === "subColor" ? props.theme.white : props.theme.mainColor};
   font-size: ${(props) => props.fontSize};
-  &:hover {
-    cursor: pointer;
-    background-color: ${(props) =>
-      props.color === "subColor" ? props.theme.mainColor : props.theme.white};
-    box-shadow: ${(props) =>
-      props.color === "subColor" ? `none` : `inset 0px 0px 4px 0px #b6b7b9`};
-    color: ${(props) =>
-      props.color === "subColor" ? props.theme.white : props.theme.mainColor};
-    border: ${(props) =>
-      props.color === "subColor"
-        ? "none"
-        : `1px solid ${props.theme.mainColor}`};
-  }
+  cursor: pointer;
 `;
 
 export default GlobalButton;

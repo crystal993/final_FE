@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -11,7 +10,7 @@ const GlobalHeader = () => {
   const navigate = useNavigate();
 
   const menuBackground = {
-    boxShadow: 'rgba(0,0,0,0.5) 0 0 0 9999px',
+    boxShadow: "rgba(0,0,0,0.5) 0 0 0 9999px",
   };
   // menu 외부를 눌렀을 때 꺼지도록
   const useOnClickOutside = (ref, handler) => {
@@ -22,17 +21,17 @@ const GlobalHeader = () => {
         }
         handler(event);
       };
-      document.addEventListener('mousedown', listener);
+      document.addEventListener("mousedown", listener);
 
       return () => {
-        document.removeEventListener('mousedown', listener);
+        document.removeEventListener("mousedown", listener);
       };
     }, [ref, handler]);
   };
 
   const [open, setOpen] = useState(false);
   const node = useRef();
-  const menuId = 'main-menu';
+  const menuId = "main-menu";
 
   const onPathHandler = (path) => {
     navigate(path);
@@ -63,11 +62,16 @@ export default GlobalHeader;
 
 const NavbarWrapper = styled.div`
   margin: 0;
+  z-index: 5;
   padding: 0;
+  height: 4.8rem;
+  width: 100%;
+  position: fixed;
   box-sizing: border-box;
 `;
 
 const Navbar = styled.nav`
+  height: 4.8rem;
   width: 100%;
   display: flex;
   flex-direction: row;

@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import ItemList from '../../market/main/ItemList';
-import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect, useRef } from "react";
+import ItemList from "../../market/main/ItemList";
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getData,
   __getPost,
@@ -9,8 +9,8 @@ import {
   __getItemCategories,
   addPage,
   doubleListToZero,
-} from '../../../redux/modules/market/postSlice';
-import option from './Option';
+} from "../../../redux/modules/market/postSlice";
+import option from "./Option";
 
 const MainContainer = () => {
   const dispatch = useDispatch();
@@ -29,19 +29,19 @@ const MainContainer = () => {
   const categoryPage = useSelector((state) => state.marketPost.page);
 
   console.log(doubleList);
-  const [state, setState] = useState('');
+  const [state, setState] = useState("");
   const [page, setPage] = useState(0);
   const lastIntersectingData = useRef(null);
 
-  const itemCategory = localStorage.getItem('itemCategory');
-  const petCategory = localStorage.getItem('petCategory');
+  const itemCategory = localStorage.getItem("itemCategory");
+  const petCategory = localStorage.getItem("petCategory");
 
-  console.log('categoryPage', categoryPage);
+  console.log("categoryPage", categoryPage);
   const handleChange = (event) => {
     setState(event.target.value);
-    let e = document.getElementById('selectElementID');
+    let e = document.getElementById("selectElementID");
     let text = e.options[e.selectedIndex].text;
-    localStorage.setItem('petCategory', `${text}`);
+    localStorage.setItem("petCategory", `${text}`);
     setPage(0);
     dispatch(doubleListToZero());
   };
@@ -52,7 +52,7 @@ const MainContainer = () => {
   const onIntersect = (entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        console.log('!?!?!?');
+        console.log("!?!?!?");
         setPage((page) => page + 1);
         dispatch(addPage());
         // 현재 타겟을 observe한다.
@@ -63,17 +63,17 @@ const MainContainer = () => {
 
   // 컴포넌트 마운트 할 때
   useEffect(() => {
-    console.log('page?', page);
+    console.log("page?", page);
     if (petCategory === null && itemCategory === null) {
       dispatch(__getPost({ page: page }));
     }
-    if (petCategory === '강아지' && itemCategory === null) {
-      dispatch(getData({ state: '강아지', page: page }));
+    if (petCategory === "강아지" && itemCategory === null) {
+      dispatch(getData({ state: "강아지", page: page }));
     }
-    if (petCategory === '고양이' && itemCategory === null) {
-      dispatch(getData({ state: '고양이', page: page }));
+    if (petCategory === "고양이" && itemCategory === null) {
+      dispatch(getData({ state: "고양이", page: page }));
     }
-    if (petCategory === '모두' && itemCategory === null) {
+    if (petCategory === "모두" && itemCategory === null) {
       dispatch(__getPost({ page: page }));
     }
     if (petCategory === null && itemCategory !== null) {
@@ -86,6 +86,7 @@ const MainContainer = () => {
           __getItemCategories({ itemCategory: itemCategory, page: page })
         );
       }
+
       dispatch(
         getTwoCategory({
           itemCategory: itemCategory,
@@ -141,12 +142,12 @@ const MainContainer = () => {
     <>
       <STsection>
         <STh1>멍냥마켓</STh1>
-        <div className='button'>
+        <div className="button">
           <select
-            name='choice'
+            name="choice"
             onChange={handleChange}
             defaultValue={option[2].value}
-            id='selectElementID'
+            id="selectElementID"
           >
             {option.map((option) => (
               <option
@@ -194,7 +195,7 @@ const STsection = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1rem;
+  padding-top: 9rem;
   margin-bottom: 1rem;
   .button {
     display: flex;
