@@ -168,6 +168,9 @@ const Navbar = styled.nav`
   height: 4.8rem;
   background-color: ${({ theme }) => theme.mainColor};
   color: white;
+  @media (max-width: 375px) and (max-width: 499px) {
+    padding: 10px;
+  }
 `;
 
 const NavItem = styled.div`
@@ -179,6 +182,9 @@ const NavItem = styled.div`
   gap: 2rem;
   cursor: pointer;
   width: fit-content;
+  @media (max-width: 375px) and (max-width: 499px) {
+    gap: 1rem;
+  }
 `;
 
 const SearchInput = styled.input`
@@ -208,6 +214,21 @@ const SearchInput = styled.input`
     font-size: 1.6rem;
     line-height: 2.3rem;
     color: ${({ theme }) => theme.gray};
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    @media (min-width: 1024px) {
+      font-size: 1.6rem;
+    }
+    @media (min-width: 768px) and (max-width: 1023px) {
+      font-size: 1.5rem;
+    }
+    @media (max-width: 500px) and (max-width: 767px) {
+      font-size: 1.4rem;
+    }
+    @media (max-width: 375px) and (max-width: 499px) {
+      font-size: 1.2rem;
+    }
   }
   @media (min-width: 1024px) {
     width: 40rem;
@@ -220,6 +241,10 @@ const SearchInput = styled.input`
   @media (max-width: 500px) and (max-width: 767px) {
     width: 20rem;
     margin-left: -1.3rem;
+  }
+  @media (max-width: 375px) and (max-width: 499px) {
+    width: 15rem;
+    margin-left: -2rem;
   }
 `;
 
@@ -259,6 +284,10 @@ const AutoSearchContainer = styled.div`
   @media (max-width: 500px) and (max-width: 767px) {
     width: 20rem;
     margin-left: -1.3rem;
+  }
+  @media (max-width: 375px) and (max-width: 499px) {
+    width: 15rem;
+    margin-left: -2rem;
   }
 `;
 

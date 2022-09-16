@@ -72,8 +72,8 @@ export default function PriceChart({
           barSize={50}
           margin={{
             top: 20,
-            right: 20,
-            left: 20,
+            right: 30,
+            left: 5,
             bottom: 5,
           }}
         >
@@ -111,9 +111,14 @@ const StBarChartWrapper = styled.div`
     width: 40rem;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 500px) and (max-width: 767px) {
     /* Mobile */
-    width: 30rem;
+    width: 20rem;
+  }
+
+  @media (max-width: 374px) and (max-width: 499px) {
+    /* Mobile */
+    width: 15rem;
   }
 `;
 

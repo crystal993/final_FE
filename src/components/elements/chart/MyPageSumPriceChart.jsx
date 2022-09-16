@@ -61,8 +61,8 @@ export default function MyPageSumPriceChart({ chartData }) {
           margin={{
             top: 20,
             right: 20,
-            bottom: 60,
-            left: 20,
+            bottom: 5,
+            left: 5,
           }}
         >
           <CartesianGrid stroke="#f5f5f5" />
@@ -95,10 +95,14 @@ const StComposedChartWrapper = styled.div`
     /* Tablet */
     width: 40rem;
   }
-
-  @media (max-width: 767px) {
+  @media (max-width: 500px) and (max-width: 767px) {
     /* Mobile */
-    width: 30rem;
+    width: 20rem;
+  }
+
+  @media (max-width: 374px) and (max-width: 499px) {
+    /* Mobile */
+    width: 15rem;
   }
 `;
 
