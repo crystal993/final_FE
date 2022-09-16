@@ -20,7 +20,14 @@ const SignupForm = () => {
   // react-hook-form
   // 실시간 유효성 검사
 
-  const [duplicate, onDuplicate] = useState(false);
+  //아이디 중복확인 상태
+  const [idDuplicate, onIdDuplicate] = useState(false);
+  //닉네임 중복확인 상태
+  const [nickDuplicate, onNickDuplicate] = useState(false);
+
+  const idSuccess = useSelector((state) => state.user.idSuccess);
+  const nickSuccess = useSelector((state) => state.user.nickSuccess);
+  const registerSuccess = useSelector((state) => state.user.registerSuccess);
 
   const {
     register,
@@ -52,15 +59,15 @@ const SignupForm = () => {
   };
 
   const onDuplicateUserId = (event) => {
-    dispatch(existMemberId({ email: watch().userId }));
-    onDuplicate(!duplicate);
     event.preventDefault();
+    event.stopPropagation();
+    dispatch(existMemberId({ email: watch().userId }));
   };
 
   const onDuplicateUserNickname = (event) => {
-    dispatch(existMemberNickname({ nickname: watch().nickname }));
-    onDuplicate(!duplicate);
     event.preventDefault();
+    event.stopPropagation();
+    dispatch(existMemberNickname({ nickname: watch().nickname }));
   };
 
   const onError = (error) => {
@@ -71,11 +78,18 @@ const SignupForm = () => {
     navigate('/');
   };
 
+  if (registerSuccess) {
+    navigate('/login');
+  }
+
   return (
     <>
-      {duplicate ? (
-        <GlobalModal content={`중복확인 하라우`} name={'로그인'} />
-      ) : null}
+      {idSuccess === true ? null : (
+        <GlobalModal content={`아이디 중복확인 하세요`} />
+      )}
+      {nickSuccess === true ? null : (
+        <GlobalModal content={`닉네임 중복확인 하세요`} />
+      )}
       <STwrap className='wrap'>
         <STsection>
           <p className='go-back' onClick={goBack}>
@@ -91,14 +105,14 @@ const SignupForm = () => {
         >
           <div className='field'>
             <Label className='label'>
-              아이디
+              이메일
               <div>
                 <input
                   type='text'
                   tabIndex='2'
                   className='input'
                   {...register('userId', {
-                    required: '아이디는 필수값입니다.',
+                    required: '이메일은 필수값입니다.',
                     pattern: {
                       value: /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/,
                       message: '이메일 형식을 지켜주세요',

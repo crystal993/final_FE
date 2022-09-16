@@ -19,6 +19,7 @@ import DeleteIcon from "../../../assets/icons/delete.svg";
 import CheckIcon from "../../../assets/icons/check_circle.svg";
 import Accordian from "../../elements/GlobalAccordian";
 
+
 const DetailInfo = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,6 +27,19 @@ const DetailInfo = () => {
   const item = useSelector((state) => state.marketPost.singlePost);
   const isLogin = useSelector((state) => state.user.userToken);
   const itemImgs = item.itemImgs;
+
+
+  useEffect(() => {
+    localStorage.setItem('itemMemberId', item.memberId);
+    localStorage.setItem('itemId', item.id);
+    localStorage.setItem('itemNickname', item.nickname);
+  }, []);
+
+  const moveChat = () => {
+    navigate(`/chatRoom/${id}`);
+    console.log(id);
+  };
+
 
   useEffect(() => {
     dispatch(__getSinglePost({ id: id }));
