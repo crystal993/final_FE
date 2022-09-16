@@ -41,7 +41,7 @@ const DetailInfo = () => {
     if (window.Kakao) {
       const kakao = window.Kakao;
       if (!kakao.isInitialized()) {
-        kakao.init("a729d68f8474b39d110cdd9e7a162f5a");
+        kakao.init("8b381eabbff2d4e3c918294426dde58d");
       }
 
       kakao.Link.sendDefault({
