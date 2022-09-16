@@ -1,18 +1,29 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { __deleteRecentKeyword } from "../../../redux/modules/searchSlice";
+import {
+  __deleteRecentKeyword,
+  __itemSearch,
+} from "../../../redux/modules/searchSlice";
 import { ReactComponent as DeleteIcon } from "../../../assets/icons/close2.svg";
+import { useNavigate } from "react-router-dom";
 
 const RecentSearchKeyword = ({ keyword }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const toggleState = useSelector((state) => state.search.toggle);
+
   const onDeleteKeywordHandler = (keyword) => {
     dispatch(__deleteRecentKeyword({ searchWord: keyword }));
+  };
+  const onSearchHandler = (keyword) => {
+    dispatch(__itemSearch({ keyword: keyword, toggleState: toggleState }));
+    navigate(`/search/result/${keyword}`);
   };
   return (
     <KeywordWrapper>
       <KeywordButtonWrapper>
-        <Keyword>{keyword}</Keyword>
+        <Keyword onClick={() => onSearchHandler(keyword)}>{keyword}</Keyword>
         <StDeletIcon onClick={() => onDeleteKeywordHandler(keyword)} />
       </KeywordButtonWrapper>
     </KeywordWrapper>
@@ -50,6 +61,7 @@ const Keyword = styled.span`
   font-size: 1.6rem;
   line-height: 2.3rem;
   color: ${({ theme }) => theme.darkgray};
+  cursor: pointer;
 `;
 
 const StDeletIcon = styled(DeleteIcon)`
