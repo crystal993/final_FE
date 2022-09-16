@@ -21,8 +21,8 @@ const initialState = {
     : null,
 };
 
-// const api = 'https://fabius-bk.shop';
-const api = 'http://3.35.47.137';
+const api = 'https://fabius-bk.shop';
+// const api = 'http://3.35.47.137';
 
 // postId -> 메인글의 id => useParams의 값
 // id -> 댓글의 순번 , 댓글 리스트의 id

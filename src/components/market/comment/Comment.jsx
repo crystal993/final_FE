@@ -52,7 +52,7 @@ const Comment = ({ id }) => {
           <span>등록</span>
         </button>
       </Label>
-      {comment_data === undefined ? (
+      {comment_data === [] ? (
         <section className='no-comment'>
           <p>아직 댓글이 없어요</p>
           <p>가장 먼저 댓글을 남겨 보세요.</p>
@@ -97,7 +97,7 @@ export default Comment;
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 24.5rem;
+  height: auto;
   background: #f0f0f0;
   display: flex;
   flex-direction: column;

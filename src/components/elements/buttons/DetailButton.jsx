@@ -9,9 +9,6 @@ const DetailButton = ({ memberId, nickName, roomId }) => {
   const ws = webstomp.over(sock);
   const token = localStorage.getItem('access-token');
   const navigate = useNavigate();
-  console.log(roomId);
-  console.log(memberId);
-  console.log(nickName);
 
   const member = localStorage.getItem('user-info');
   const obj = JSON.parse(member);
