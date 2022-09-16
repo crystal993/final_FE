@@ -5,6 +5,7 @@ import webstomp from 'webstomp-client';
 import SockJS from 'sockjs-client';
 import ChatRoomCard from '../../elements/ChatRoomCard';
 
+// 채팅방 리스트 컴포넌트
 function ChatRoomList({ stompClient }) {
   const WSURI = useSelector((state) => state.chatSlice.URI) + '/ws';
   // const stompClient = useRef(null);

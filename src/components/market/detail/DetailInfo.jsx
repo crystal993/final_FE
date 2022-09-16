@@ -26,8 +26,13 @@ const DetailInfo = () => {
   const item = useSelector((state) => state.marketPost.singlePost);
   const isLogin = useSelector((state) => state.user.userToken);
   const itemImgs = item.itemImgs;
-  console.log(item);
-  console.log(item.memberId);
+
+  useEffect(() => {
+    localStorage.setItem('itemMemberId', item.memberId);
+    localStorage.setItem('itemId', item.id);
+    localStorage.setItem('itemNickname', item.nickname);
+  }, []);
+
   const moveChat = () => {
     navigate(`/chatRoom/${id}`);
     console.log(id);
@@ -143,6 +148,7 @@ const DetailInfo = () => {
             content={'채팅으로 거래하기'}
             memberId={item.memberId}
             nickName={item.nickname}
+            roomId={id}
             onClick={moveChat}
           ></DetailButton>
         )}

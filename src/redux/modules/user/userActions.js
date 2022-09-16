@@ -105,8 +105,6 @@ export const kakaoLogin = createAsyncThunk(
 export const existMemberId = createAsyncThunk(
   'user/existMemberId',
   async (payload, { rejectWithValue }) => {
-    console.log(payload);
-    console.log(typeof payload);
     try {
       const config = {
         headers: {
@@ -131,7 +129,7 @@ export const existMemberId = createAsyncThunk(
 );
 
 export const existMemberNickname = createAsyncThunk(
-  'user/existMemberId',
+  'user/existMemberNickname',
   async (payload, { rejectWithValue }) => {
     console.log(payload);
     try {

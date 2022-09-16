@@ -2,13 +2,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import SockJS from 'sockjs-client';
 import webstomp from 'webstomp-client';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 
-const DetailButton = ({ memberId, nickName }) => {
+const DetailButton = ({ memberId, nickName, roomId }) => {
   const sock = new SockJS('http://3.35.47.137/ws');
   const ws = webstomp.over(sock);
   const token = localStorage.getItem('access-token');
   const navigate = useNavigate();
+  console.log(roomId);
+  console.log(memberId);
+  console.log(nickName);
+
+  const member = localStorage.getItem('user-info');
+  const obj = JSON.parse(member);
+  const loginMemberId = obj.memberId;
 
   useEffect(() => {
     waitForConnection(ws, wsConnectSubscribe());
@@ -16,21 +23,6 @@ const DetailButton = ({ memberId, nickName }) => {
       wsDisConnectUnsubscribe();
     };
   }, []);
-
-  //렌더링 될 때마다 연결,구독 다른 방으로 옮길 때 연결, 구독 해제
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     console.log('connected');
-  //     ws.send(
-  //       `http://3.35.47.137/room/invite/3`,
-  //       JSON.stringify({ memberId: 3 })
-  //     );
-  //   }, 500);
-
-  //   return () => {
-  //     wsDisConnectUnsubscribe();
-  //   };
-  // }, [ws, wsDisConnectUnsubscribe]);
 
   // 웹소켓 연결, 구독
   function wsConnectSubscribe() {
@@ -41,13 +33,15 @@ const DetailButton = ({ memberId, nickName }) => {
         },
         () => {
           // 채팅 만들기,메시지 보내기(roomId) , 해당 채팅방 구독
-          ws.subscribe(`sub/chat/room/31`, {}, { token: token });
+          // ws.subscribe(`sub/chat/room/31`, {}, { token: token });
           // 채팅방 만들기(memberId) -> 방 만드는 사람의 아이디
           // send랑 똑같은 멤버 아이디
-          // ws.subscribe(`/sub/room/founder/9`, function (greeting) {
+          // ws.subscribe(`/sub/room/founder/5`, function (greeting) {
           //   console.log(greeting.body);
           //   console.log('채팅방');
           // });
+          // 채팅만든사람의 memberId 리스트
+          // ws.subscribe('/sub/room/15', {}, { token: token });
         }
       );
     } catch (error) {
@@ -102,13 +96,19 @@ const DetailButton = ({ memberId, nickName }) => {
       // 데이터 보내기
       waitForConnection(ws, function () {
         // 해당 채팅방에 메시지 보내기(roomId) , 해당 채팅방에 메시지 보내기
-        ws.send('/pub/chat/room/31', JSON.stringify(content), { token: token });
+        // ws.send('/pub/chat/room/31', JSON.stringify(content), { token: token });
         // 초대하는 사람의 멤버 아이디
-        // 방을 만드는 사람 , 두번째가 초대되는 사람
-        // ws.send(`/pub/room/founder/9`, JSON.stringify({ memberId: 4 }), {
-        //   token: token,
-        // });
-        console.log(ws.ws.readyState);
+        // 방을 만드는 사람 , 두번째가 초대되는 사람 , 초대되는사람 닉네임
+        // ws.send(
+        //   `/pub/room/founder/5`,
+        //   JSON.stringify({ memberId: 4, nickname: 'cocoa' }),
+        //   {
+        //     token: token,
+        //   }
+        // );
+        // 채팅만든 사람의 memberId 방에 들어가있는 리스트
+        // ws.send(`/pub/room/15`, {}, { token: token });
+        // console.log(ws.ws.readyState);
       });
     } catch (error) {
       console.log(error);
@@ -120,8 +120,14 @@ const DetailButton = ({ memberId, nickName }) => {
     <STbutton className='btn'>
       <span
         onClick={() => {
-          // navigate(`/chatRoom/24`);
-          sendMessage();
+          navigate(
+            `/chatRoom/${localStorage.getItem('itemId')}/${loginMemberId}`,
+            {
+              memberId: memberId,
+              nickName: nickName,
+            }
+          );
+          // sendMessage();
         }}
       >
         채팅으로 거래하기

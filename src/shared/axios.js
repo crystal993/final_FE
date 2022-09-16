@@ -1,24 +1,24 @@
-import axios from "axios";
+import axios from 'axios';
 
 const base = {
-  server_http: "http://43.200.1.214",
+  server_http: 'https://fabius-bk.shop',
   server_https: process.env.REACT_APP_HTTPS_URI,
 };
 
 const api = axios.create({
   baseURL: base.server_http,
   headers: {
-    "content-type": "application/json; charset=UTF-8",
-    accept: "application/json,",
+    'content-type': 'application/json; charset=UTF-8',
+    accept: 'application/json,',
     withCredentials: true,
   },
 });
 
 api.interceptors.request.use(function (config) {
-  const auth = localStorage.getItem("access-token");
-  const auth2 = localStorage.getItem("refresh-token");
-  config.headers.common["Authorization"] = auth;
-  config.headers.common["RefreshToken"] = auth2;
+  const auth = localStorage.getItem('access-token');
+  const auth2 = localStorage.getItem('refresh-token');
+  config.headers.common['Authorization'] = auth;
+  config.headers.common['RefreshToken'] = auth2;
 
   return config;
 });
@@ -27,21 +27,21 @@ export const apis = {
   // market : CRUD
   create_market_post: (form, files) => {
     const formData = new FormData();
-    formData.append("title", form.title);
-    formData.append("content", form.content);
-    formData.append("nickname", form.nickname);
-    formData.append("petCategory", form.petCategory);
-    formData.append("itemCategory", form.itemCategory);
-    formData.append("location", form.location);
-    formData.append("purchasePrice", form.purchasePrice);
-    formData.append("sellingPrice", form.sellingPrice);
+    formData.append('title', form.title);
+    formData.append('content', form.content);
+    formData.append('nickname', form.nickname);
+    formData.append('petCategory', form.petCategory);
+    formData.append('itemCategory', form.itemCategory);
+    formData.append('location', form.location);
+    formData.append('purchasePrice', form.purchasePrice);
+    formData.append('sellingPrice', form.sellingPrice);
     for (let i = 0; i < files.length; i++) {
-      formData.append("multipartFileList", files[i]);
+      formData.append('multipartFileList', files[i]);
     }
 
-    return api.post("/items", formData, {
+    return api.post('/items', formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
       },
     });
   },
@@ -50,16 +50,16 @@ export const apis = {
   get_market_post: (id) => api.get(`/items/detail/${id}`),
   edit_market_post: (id, form, files) => {
     const formData = new FormData();
-    formData.append("title", form.title);
-    formData.append("content", form.content);
-    formData.append("nickname", form.nickname);
-    formData.append("petCategory", form.petCategory);
-    formData.append("itemCategory", form.itemCategory);
-    formData.append("location", form.location);
-    formData.append("purchasePrice", form.purchasePrice);
-    formData.append("sellingPrice", form.sellingPrice);
+    formData.append('title', form.title);
+    formData.append('content', form.content);
+    formData.append('nickname', form.nickname);
+    formData.append('petCategory', form.petCategory);
+    formData.append('itemCategory', form.itemCategory);
+    formData.append('location', form.location);
+    formData.append('purchasePrice', form.purchasePrice);
+    formData.append('sellingPrice', form.sellingPrice);
     for (let i = 0; i < files.length; i++) {
-      formData.append("multipartFileList", files[i]);
+      formData.append('multipartFileList', files[i]);
     }
     return api.put(`/items/detail/${id}`, formData);
   },

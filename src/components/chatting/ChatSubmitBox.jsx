@@ -1,83 +1,88 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 
-function ChatSubmitBox({ stompClient, roomId }) {
+// 채팅방 메시지 보내기 컴포넌트
+function ChatSubmitBox({ sock, ws, room, token }) {
   const [chatBody, setChatBody] = useState('');
 
-  const handleSubmitChat = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const createdAt = Date.now().toString();
+    console.log(createdAt);
     const content = {
       content: chatBody,
-      memberId: localStorage.getItem('userId'),
-      nickname: localStorage.getItem('userName'),
-      profilePic:
-        'https://images.unsplash.com/photo-1497171156029-51dfc973e5f9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
-      createdAt,
+      memberId: 5,
+      createdAt: '2022-01-01',
     };
-    stompClient.current.send(
-      `/pub/chat/room/${roomId}`,
-      JSON.stringify(content),
-      {
-        Authorization: localStorage.getItem('accessToken'),
-      }
-    );
+    //roomId에 해당하는 채팅방으로 구독하고
+    ws.subscribe(`sub/chat/room/${room}`, {}, { token: token });
+    // 해당하는 채팅방에 메시지 보내기
+    ws.send(`/pub/chat/room/${room}`, JSON.stringify(content), {
+      token: token,
+    });
     setChatBody('');
   };
+
   return (
-    <StBoxContainer>
-      <StChatForm onSubmit={handleSubmitChat} chatLength={chatBody.length}>
-        <textarea
+    <StboxContainer>
+      <StChatForm>
+        <input
           onChange={(e) => {
             setChatBody(e.target.value);
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
-              handleSubmitChat(e);
+              handleSubmit(e);
             }
           }}
           value={chatBody}
         />
-        <button>전송</button>
+        <button onClick={handleSubmit}>전송</button>
       </StChatForm>
-    </StBoxContainer>
+    </StboxContainer>
   );
 }
 
-const StBoxContainer = styled.div`
+export default ChatSubmitBox;
+
+const StboxContainer = styled.div`
   width: 100vw;
-  height: 103px;
+  height: max-content;
   background-color: #fff;
 `;
 
 const StChatForm = styled.form`
-  padding: 10px 8px 8px 10px;
   width: 100%;
-  height: 80%;
+  height: 10%;
   display: flex;
-  textarea {
-    width: calc(100vw - 74px);
-    height: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  input {
+    width: 100%;
     flex-grow: 1;
     overflow-y: hidden;
     text-align: justify;
     resize: none;
     border: none;
-    font-size: 0.8rem;
+    font-size: 1.3rem;
     :focus {
       outline: none;
       text-decoration: none;
       color: black;
     }
   }
-
   button {
-    margin-left: 8px;
-    width: 48px;
-    height: 28px;
+    position: absolute;
+    bottom: 1.5rem;
+    right: 0;
+    margin-right: 1rem;
+    width: 4.8rem;
+    height: 2.8rem;
     background-color: #ffec42;
     border: 1px solid #e8d73f;
-    border-radius: 5px;
+    border-radius: 0.5rem;
     ${({ chatLength }) => {
       switch (chatLength > 0) {
         case true:
@@ -92,5 +97,3 @@ const StChatForm = styled.form`
     }}
   }
 `;
-
-export default ChatSubmitBox;

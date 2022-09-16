@@ -1,10 +1,11 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import thunk from "redux-thunk";
-import marketPost from "./modules/market/postSlice";
-import user from "./modules/user/userSlice";
-import mainFilter from "./modules/filter/mainFilterSlice";
-import comment from "./modules/market/commentSlice";
-import search from "./modules/searchSlice";
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
+import marketPost from './modules/market/postSlice';
+import user from './modules/user/userSlice';
+import mainFilter from './modules/filter/mainFilterSlice';
+import comment from './modules/market/commentSlice';
+import chat from './modules/chattingSlice';
+import search from './modules/searchSlice';
 
 const middlewares = [thunk];
 
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   comment,
   mainFilter,
   search,
+  chat,
 });
 
 // 스토어 연결

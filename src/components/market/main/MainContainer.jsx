@@ -81,6 +81,11 @@ const MainContainer = () => {
     }
     if (petCategory !== null && itemCategory !== null) {
       console.log('mainContainer');
+      if (petCategory === '모두') {
+        dispatch(
+          __getItemCategories({ itemCategory: itemCategory, page: page })
+        );
+      }
       dispatch(
         getTwoCategory({
           itemCategory: itemCategory,

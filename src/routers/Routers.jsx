@@ -11,6 +11,7 @@ import NotFound from '../page/NotFound';
 import MyPage from '../page/MyPage';
 import Kakao from '../components/register/socialLogin/Kakao';
 import ChatRoomPage from '../page/chatting/ChatRoomPage';
+import ChatListPage from '../page/chatting/ChatListPage';
 
 const Routers = () => {
   return (
@@ -25,7 +26,8 @@ const Routers = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/search' element={<Search />} />
-        <Route path='/chatRoom/:roomId' element={<ChatRoomPage />} />
+        <Route path='/chatroom/:itemId/:memberId' element={<ChatRoomPage />} />
+        <Route path='/chatlist/:roomId' element={<ChatListPage />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='*' element={<NotFound />} />
       </Routes>

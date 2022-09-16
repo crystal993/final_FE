@@ -17,12 +17,12 @@ export const __getinitialChatList = createAsyncThunk(
   '/chat/__getinitialChatList',
   async (payload, thunkAPI) => {
     try {
-      const requestRes = await axios.get(`${URI.BASE}/api/room/${payload}`, {
+      const response = await axios.get(`http://3.35.47.137/room/${payload}`, {
         headers: {
           Authorization: localStorage.getItem('accessToken'),
         },
       });
-      return thunkAPI.fulfillWithValue(requestRes.data);
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
