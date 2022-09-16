@@ -4,12 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   getCommentData,
   postCommentData,
-
   deleteCommentData,
   putCommentData,
 } from '../../../redux/modules/market/commentSlice';
-import DetailButton from '../../elements/buttons/DetailButton';
-
+import GlobalButton from './../../elements/GlobalButton';
 
 const Comment = ({ id }) => {
   const dispatch = useDispatch();
@@ -35,6 +33,7 @@ const Comment = ({ id }) => {
       content: input,
     };
     dispatch(postCommentData(body));
+    setInput('');
   };
 
   //   컴포넌트 마운트 시에 id에 해당하는 댓글을 가져옴
@@ -43,56 +42,60 @@ const Comment = ({ id }) => {
   }, []);
 
   return (
-    <Wrapper>
-      <Label>
-        <Input
-          placeholder='댓글을 입력해 주세요'
-          name='input'
-          value={input}
-          onChange={onChangeHandler}
-        />
-        <button onClick={onPostHandler}>
-          <span>등록</span>
-        </button>
-      </Label>
-      {comment_data === [] ? (
-        <section className='no-comment'>
-          <p>아직 댓글이 없어요</p>
-          <p>가장 먼저 댓글을 남겨 보세요.</p>
-        </section>
-      ) : (
-        comment_data &&
-        comment_data.map((item, index) => (
-          <section key={index}>
-            <h2>{item.nickname}</h2>
-            <p>{item.content}</p>
-            {/* ismine인지 확인하여 버튼 조건부 랜더링 */}
-            <button
-              onClick={() => {
-                dispatch(
-                  putCommentData({
-                    itemId: id,
-                    content: input,
-                    commentId: item.commentId,
-                  })
-                );
-              }}
-            >
-              수정
-            </button>
-            <button
-              onClick={() => {
-                dispatch(
-                  deleteCommentData({ itemId: id, commentId: item.commentId })
-                );
-              }}
-            >
-              삭제
-            </button>
+    <>
+      <Wrapper>
+        <Label>
+          <Input
+            placeholder='댓글을 입력해 주세요'
+            name='input'
+            value={input}
+            onChange={onChangeHandler}
+          />
+          <button onClick={onPostHandler}>
+            <span>등록</span>
+          </button>
+        </Label>
+        {comment_data.length === 0 ? (
+          <section className='no-comment'>
+            <p>아직 댓글이 없어요</p>
+            <p>가장 먼저 댓글을 남겨 보세요.</p>
           </section>
-        ))
-      )}
-    </Wrapper>
+        ) : (
+          comment_data &&
+          comment_data.map((item, index) => (
+            <section key={index} className='comment-section'>
+              <h2>{item.nickname}</h2>
+              <p>{item.content}</p>
+              {/* ismine인지 확인하여 버튼 조건부 랜더링 */}
+              <button
+                content={'수정'}
+                onClick={() => {
+                  dispatch(
+                    putCommentData({
+                      itemId: id,
+                      content: input,
+                      commentId: item.commentId,
+                    })
+                  );
+                  setInput('');
+                }}
+              >
+                수정
+              </button>
+              <button
+                onClick={() => {
+                  dispatch(
+                    deleteCommentData({ itemId: id, commentId: item.commentId })
+                  );
+                }}
+              >
+                삭제
+              </button>
+            </section>
+          ))
+        )}
+      </Wrapper>
+    </>
   );
 };
 
@@ -100,12 +103,31 @@ export default Comment;
 
 const Wrapper = styled.div`
   width: 100%;
-  height: auto;
+  min-height: 24.5rem;
   background: #f0f0f0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-bottom: 10rem;
+
+  .comment-section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    margin-left: 10rem;
+    gap: 10px;
+
+    button {
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #f0f0f0;
+    }
+  }
 
   .no-comment {
     font-weight: 500;
@@ -165,7 +187,7 @@ const Input = styled.input`
 
 const Label = styled.label`
   position: relative;
-
+  margin-bottom: 5rem;
   button {
     position: absolute;
     top: 50%;
