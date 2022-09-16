@@ -219,7 +219,7 @@ export const postSlice = createSlice({
       state.isLoading = true;
     },
     [__addPost.fulfilled]: (state, action) => {
-      state.list.push(action.payload);
+      state.list.unshift(action.payload);
     },
     [__addPost.rejected]: (state, action) => {
       state.isLoading = false;
@@ -232,7 +232,7 @@ export const postSlice = createSlice({
     [__deletePost.fulfilled]: (state, action) => {
       state.isLoading = false;
       const target = state.list.findIndex(
-        (post) => post.itemId === action.payload
+        (post) => post.id == action.payload.id
       );
       state.list.splice(target, 1);
     },
