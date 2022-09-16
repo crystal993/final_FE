@@ -15,6 +15,9 @@ const MyPageChart = () => {
 
   return (
     <MyPageChartWrapper>
+      <TitleWrapper>
+        <Title>가격 총합</Title>
+      </TitleWrapper>
       <MyPageSumPriceChart chartData={chartData} />
     </MyPageChartWrapper>
   );
@@ -29,9 +32,25 @@ const MyPageChartWrapper = styled.div`
   align-items: center;
   justify-items: center;
   margin: 0rem 2rem 4rem 2rem;
-  padding: 6.4rem 0 0 0;
+  padding: 3rem 0 3rem 0;
   border-radius: 0.6rem;
   background-color: ${({ theme }) => theme.white};
+`;
+
+const TitleWrapper = styled.div`
+  width: 80%;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+`;
+
+const Title = styled.h1`
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  font-size: 2rem;
 `;
 
 export default MyPageChart;
