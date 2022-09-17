@@ -5,7 +5,9 @@ import {
   Bar,
   XAxis,
   YAxis,
+  Cell,
   CartesianGrid,
+  LabelList,
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
@@ -38,18 +40,19 @@ export default function MyPageSumPriceChart({ chartData }) {
 
     return null;
   };
+  const mainColors = ["#B192F3", "#cbcbcb", "#FFE47A"];
 
   const data = [
     {
-      name: "등록상품 가격총합",
+      name: "등록상품",
       price: chartData[0]?.price,
     },
     {
-      name: "판매완료 가격총합",
+      name: "판매완료",
       price: chartData[1]?.price,
     },
     {
-      name: "찜한상품 가격총합",
+      name: "찜한상품",
       price: chartData[2]?.price,
     },
   ];
@@ -66,11 +69,15 @@ export default function MyPageSumPriceChart({ chartData }) {
           }}
         >
           <CartesianGrid stroke="#f5f5f5" />
-          <XAxis dataKey="name"></XAxis>
-          <YAxis />
+          <XAxis dataKey="name" axisLine={false}></XAxis>
+          {/* <YAxis /> */}
           <Tooltip content={<CustomTooltip />} />
-          <Bar dataKey="price" barSize={20} fill="#B192F3" />
-          <Line type="monotone" dataKey="price" stroke="#ffd324" />
+          <Bar dataKey="price" barSize={20} fill="#B192F3">
+            {data.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={mainColors[index % 20]} />
+            ))}
+            <LabelList dataKey="price" position="top" />
+          </Bar>
         </ComposedChart>
       </ResponsiveContainer>
     </StComposedChartWrapper>
@@ -84,6 +91,7 @@ const StComposedChartWrapper = styled.div`
   padding-bottom: 2rem;
   border: none;
   font-size: 1.2rem;
+  width: 50rem;
   height: 40rem;
   color: ${({ theme }) => theme.grayColor};
   @media screen and (min-width: 1024px) {
@@ -97,12 +105,12 @@ const StComposedChartWrapper = styled.div`
   }
   @media (max-width: 500px) and (max-width: 767px) {
     /* Mobile */
-    width: 20rem;
+    width: 30rem;
   }
 
   @media (max-width: 374px) and (max-width: 499px) {
     /* Mobile */
-    width: 15rem;
+    width: 20rem;
   }
 `;
 

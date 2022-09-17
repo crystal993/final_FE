@@ -18,7 +18,6 @@ const SearchResultContainer = () => {
   const searchResultList = useSelector(
     (state) => state.search.searchResultList
   );
-
   const [Selected, setSelected] = useState("recent");
 
   useEffect(() => {
@@ -35,7 +34,11 @@ const SearchResultContainer = () => {
         <SearchResultTitle>'{keyword}' 검색결과</SearchResultTitle>
         <Select optionDatas={option} setSelected={setSelected} />
       </SectionWrapper>
-      <SearchItemList searchResultList={searchResultList} />
+      {searchResultList?.length > 0 ? (
+        <SearchItemList searchResultList={searchResultList} />
+      ) : (
+        <NoSearchResult>검색 결과가 없습니다.</NoSearchResult>
+      )}
     </>
   );
 };
@@ -62,6 +65,15 @@ const SearchResultTitle = styled.h1`
   font-size: 2rem;
   margin: 0 2.4rem;
   font-weight: 700;
+`;
+
+const NoSearchResult = styled.h1`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 7rem;
+  font-size: 1.5rem;
+  color: ${({ theme }) => theme.darkgray};
 `;
 
 export default SearchResultContainer;
