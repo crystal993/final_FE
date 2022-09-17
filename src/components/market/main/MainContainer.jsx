@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
-import ItemList from "../../market/main/ItemList";
-import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect, useRef } from 'react';
+import ItemList from '../../market/main/ItemList';
+import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getData,
   __getPost,
@@ -9,8 +9,9 @@ import {
   __getItemCategories,
   addPage,
   doubleListToZero,
-} from "../../../redux/modules/market/postSlice";
-import option from "./Option";
+} from '../../../redux/modules/market/postSlice';
+import option from './Option';
+import Select from '../../elements/GlobalSelect';
 
 const MainContainer = () => {
   const dispatch = useDispatch();
@@ -29,30 +30,36 @@ const MainContainer = () => {
   const categoryPage = useSelector((state) => state.marketPost.page);
 
   console.log(doubleList);
-  const [state, setState] = useState("");
+  const [state, setState] = useState('');
   const [page, setPage] = useState(0);
   const lastIntersectingData = useRef(null);
 
-  const itemCategory = localStorage.getItem("itemCategory");
-  const petCategory = localStorage.getItem("petCategory");
-
-  console.log("categoryPage", categoryPage);
   const handleChange = (event) => {
     setState(event.target.value);
-    let e = document.getElementById("selectElementID");
+    let e = document.getElementById('selectElementID');
     let text = e.options[e.selectedIndex].text;
-    localStorage.setItem("petCategory", `${text}`);
+    localStorage.setItem('petCategory', `${text}`);
     setPage(0);
     dispatch(doubleListToZero());
   };
 
-  console.log(doubleList);
+  // const [selected, setSelected] = useState('');
+
+  // useEffect(() => {
+  //   if (selected === 'dog') {
+  //     localStorage.setItem('petCategory', `강아지`);
+  //   } else if (selected === 'cat') {
+  //     localStorage.setItem('petCategory', `고양이`);
+  //   } else if (selected === 'all') {
+  //     localStorage.setItem('petCategory', '모두');
+  //   }
+  // }, [selected]);
 
   //observe 콜백 함수
   const onIntersect = (entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        console.log("!?!?!?");
+        console.log('!?!?!?');
         setPage((page) => page + 1);
         dispatch(addPage());
         // 현재 타겟을 observe한다.
@@ -61,19 +68,20 @@ const MainContainer = () => {
     });
   };
 
-  // 컴포넌트 마운트 할 때
+  const itemCategory = localStorage.getItem('itemCategory');
+  const petCategory = localStorage.getItem('petCategory');
+
   useEffect(() => {
-    console.log("page?", page);
     if (petCategory === null && itemCategory === null) {
       dispatch(__getPost({ page: page }));
     }
-    if (petCategory === "강아지" && itemCategory === null) {
-      dispatch(getData({ state: "강아지", page: page }));
+    if (petCategory === '강아지' && itemCategory === null) {
+      dispatch(getData({ state: '강아지', page: page }));
     }
-    if (petCategory === "고양이" && itemCategory === null) {
-      dispatch(getData({ state: "고양이", page: page }));
+    if (petCategory === '고양이' && itemCategory === null) {
+      dispatch(getData({ state: '고양이', page: page }));
     }
-    if (petCategory === "모두" && itemCategory === null) {
+    if (petCategory === '모두' && itemCategory === null) {
       dispatch(__getPost({ page: page }));
     }
     if (petCategory === null && itemCategory !== null) {
@@ -142,15 +150,16 @@ const MainContainer = () => {
     <>
       <STsection>
         <STh1>멍냥마켓</STh1>
-        <div className="button">
-          <select
-            name="choice"
+        <div className='button'>
+          <STselect
+            name='choice'
             onChange={handleChange}
             defaultValue={option[2].value}
-            id="selectElementID"
+            id='selectElementID'
           >
             {option.map((option) => (
               <option
+                className='option'
                 key={option.value}
                 value={option.value}
                 name={option.name}
@@ -158,7 +167,8 @@ const MainContainer = () => {
                 {option.name}
               </option>
             ))}
-          </select>
+          </STselect>
+          {/* <Select optionDatas={option} setSelected={setSelected} /> */}
         </div>
       </STsection>
       <ItemList
@@ -210,4 +220,29 @@ const STh1 = styled.h1`
   font-size: 2.4rem;
   margin: 0 2.4rem;
   font-weight: 700;
+`;
+
+const STselect = styled.select`
+  position: relative;
+  width: 8.8rem;
+  height: 3.2rem;
+  border-radius: 0.6rem;
+  text-align: center;
+  color: ${({ theme }) => theme.mainColor};
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 20rem;
+  align-self: center;
+  border: 2px solid ${({ theme }) => theme.mainColor};
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.5rem 0 0 2.3rem;
+  transition: background-color 0.2s ease-in;
+
+  .option {
+    margin-right: 1rem;
+  }
 `;

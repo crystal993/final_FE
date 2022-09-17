@@ -1,10 +1,8 @@
-
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import RESP from "../../../server/response";
-import { apis } from "../../../shared/axios";
-import { setCookie } from "../../../shared/cookie";
-
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+import RESP from '../../../server/response';
+import { apis } from '../../../shared/axios';
+import { setCookie } from '../../../shared/cookie';
 
 const initialState = {
   list: [],
@@ -79,7 +77,7 @@ export const __getItemCategories = createAsyncThunk(
 
 // 중복 카테고리 필터링
 export const getTwoCategory = createAsyncThunk(
-  "category/getTwoCategories",
+  'category/getTwoCategories',
   async (arg, thunkAPI) => {
     try {
       const response = await axios.get(
@@ -88,8 +86,8 @@ export const getTwoCategory = createAsyncThunk(
       // localStorage.removeItem('petCategory');
       // localStorage.removeItem('itemCategory');
       if (response.data.length === 0) {
-        localStorage.removeItem("petCategory");
-        localStorage.removeItem("itemCategory");
+        localStorage.removeItem('petCategory');
+        localStorage.removeItem('itemCategory');
         return;
       }
       return thunkAPI.fulfillWithValue(response.data);
@@ -177,11 +175,11 @@ export const postSlice = createSlice({
     [getData.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.list = [];
-      if (action.payload[0].petCategory.includes("강아지")) {
+      if (action.payload[0].petCategory.includes('강아지')) {
         state.catList = [];
         state.dogList = state.dogList.concat(action.payload);
       }
-      if (action.payload[0].petCategory.includes("고양이")) {
+      if (action.payload[0].petCategory.includes('고양이')) {
         state.dogList = [];
         state.catList = state.catList.concat(action.payload);
       }
@@ -261,7 +259,7 @@ export const postSlice = createSlice({
     [__getItemCategories.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.itemCategory = action.payload[0].itemCategory;
-      if (state.itemCategory === "사료" && action.payload !== []) {
+      if (state.itemCategory === '사료' && action.payload !== []) {
         state.list = [];
         state.snackList = [];
         state.clothesList = [];
@@ -270,7 +268,7 @@ export const postSlice = createSlice({
         state.etcList = [];
         state.foodList = state.foodList.concat(action.payload);
       }
-      if (state.itemCategory === "간식" && action.payload !== []) {
+      if (state.itemCategory === '간식' && action.payload !== []) {
         state.list = [];
         state.foodList = [];
         state.clothesList = [];
@@ -279,7 +277,7 @@ export const postSlice = createSlice({
         state.etcList = [];
         state.snackList = state.snackList.concat(action.payload);
       }
-      if (state.itemCategory === "의류" && action.payload !== []) {
+      if (state.itemCategory === '의류' && action.payload !== []) {
         state.list = [];
         state.foodList = [];
         state.snackList = [];
@@ -288,7 +286,7 @@ export const postSlice = createSlice({
         state.etcList = [];
         state.clothesList = state.clothesList.concat(action.payload);
       }
-      if (state.itemCategory === "미용" && action.payload !== []) {
+      if (state.itemCategory === '미용' && action.payload !== []) {
         state.list = [];
         state.foodList = [];
         state.snackList = [];
@@ -297,7 +295,7 @@ export const postSlice = createSlice({
         state.etcList = [];
         state.beautyList = state.beautyList.concat(action.payload);
       }
-      if (state.itemCategory === "장난감" && action.payload !== []) {
+      if (state.itemCategory === '장난감' && action.payload !== []) {
         state.list = [];
         state.foodList = [];
         state.snackList = [];
@@ -306,7 +304,7 @@ export const postSlice = createSlice({
         state.etcList = [];
         state.toyList = state.toyList.concat(action.payload);
       }
-      if (state.itemCategory === "기타용품" && action.payload !== []) {
+      if (state.itemCategory === '기타용품' && action.payload !== []) {
         state.list = [];
         state.foodList = [];
         state.snackList = [];
