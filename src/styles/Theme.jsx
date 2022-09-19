@@ -6,6 +6,10 @@ export const lightTheme = {
   // sub
   subColor: "#FFE47A",
 
+  //header
+  headerMainColor: "#ffffff",
+  headerTxtColor: "#B192F3",
+
   // achromatic color
   white: "#ffffff",
   lightgray: "#F0F0F0",

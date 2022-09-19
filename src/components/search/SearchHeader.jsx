@@ -165,8 +165,9 @@ const Navbar = styled.nav`
   padding: 20px;
   align-items: center;
   height: 4.8rem;
-  background-color: ${({ theme }) => theme.mainColor};
-  color: white;
+  background-color: ${({ theme }) => theme.headerMainColor};
+  color: ${({ theme }) => theme.headerTxtColor};
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
   @media (max-width: 375px) and (max-width: 499px) {
     padding: 10px;
   }
@@ -181,6 +182,7 @@ const NavItem = styled.div`
   gap: 2rem;
   cursor: pointer;
   width: fit-content;
+  background-color: ${({ theme }) => theme.headerMainColor};
   @media (max-width: 375px) and (max-width: 499px) {
     gap: 1rem;
   }
@@ -257,7 +259,7 @@ const StForm = styled.form`
 const SearchButton = styled.button`
   border: none;
   cursor: pointer;
-  background-color: ${({ theme }) => theme.mainColor};
+  background-color: ${({ theme }) => theme.white};
 `;
 
 const AutoSearchContainer = styled.div`
