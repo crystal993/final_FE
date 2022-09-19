@@ -47,12 +47,17 @@ const DetailInfo = () => {
     navigate("/");
   };
 
+  const URI = {
+    KAKAO_JAVASCRIPT_KEY: process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY,
+    REACT_APP_BASE_URL: process.env.REACT_APP_BASE_URL,
+  };
+
   const sharekakao = (event) => {
     event.preventDefault();
     if (window.Kakao) {
       const kakao = window.Kakao;
       if (!kakao.isInitialized()) {
-        kakao.init("8b381eabbff2d4e3c918294426dde58d");
+        kakao.init(`${URI.KAKAO_JAVASCRIPT_KEY}`);
       }
 
       kakao.Link.sendDefault({
@@ -62,8 +67,8 @@ const DetailInfo = () => {
           description: `${item.content}`,
           imageUrl: `${item.itemImgs[0]}`,
           link: {
-            mobileWebUrl: "https://d13psgq1alfu1t.cloudfront.net/",
-            webUrl: "https://d13psgq1alfu1t.cloudfront.net/",
+            mobileWebUrl: `${URI.REACT_APP_BASE_URL}`,
+            webUrl: `${URI.REACT_APP_BASE_URL}`,
           },
         },
       });
