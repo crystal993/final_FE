@@ -8,6 +8,7 @@ import { __itemSearch } from "../../redux/modules/searchSlice";
 import { debounce } from "lodash";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+import { apis } from "../../shared/axios";
 
 const SearchHeader = () => {
   const navigate = useNavigate();
@@ -53,11 +54,9 @@ const SearchHeader = () => {
 
   const debounceApiCall = useCallback(
     debounce((keyword) => {
-      axios
-        .get(`https://fabius-bk.shop/items/search/auto?keyword=${keyword}`)
-        .then(({ data }) => {
-          setAutoSearchKeywords(data);
-        });
+      apis.get_auto_complete(keyword).then(({ data }) => {
+        setAutoSearchKeywords(data);
+      });
     }, 350),
     []
   );

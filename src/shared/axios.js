@@ -95,6 +95,9 @@ export const apis = {
     api.delete(`/items/search/?searchWord=${searchWord}`),
   get_toggle_state: () => api.get("/items/search/toggle"),
   put_toggle_state: () => api.put("/items/search/toggle"),
+  get_auto_complete: (keyword) =>
+    api.get(`/items/search/auto?keyword=${keyword}`),
+
   // mypage chart
   my_page_chart: () => api.get(`/items/mypage/charts`),
 
