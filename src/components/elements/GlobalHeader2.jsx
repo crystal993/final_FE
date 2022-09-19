@@ -45,8 +45,9 @@ const Navbar = styled.nav`
   padding: 20px;
   align-items: center;
   height: 4.8rem;
-  background-color: ${({ theme }) => theme.mainColor};
-  color: white;
+  background-color: ${({ theme }) => theme.headerMainColor};
+  color: ${({ theme }) => theme.headerTxtColor};
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
 `;
 
 const NavItem = styled.div`
