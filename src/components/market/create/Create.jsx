@@ -9,6 +9,9 @@ import axios from "axios";
 import { IoIosLocate } from "react-icons/io";
 import InputResetButton from "../../elements/buttons/InputResetButton";
 import FixButton from "../../elements/buttons/FixButton";
+import Select from "../../elements/GlobalSelect";
+import PetOption from "../options/PetOption";
+import ItemOption from "../options/ItemOption";
 
 function Create() {
   const dispatch = useDispatch();
@@ -18,18 +21,24 @@ function Create() {
     mode: "onChange",
   });
 
-  const onSubmitHandler = (formData, e) => {
+  const [petCategory, setPetCategory] = useState(PetOption[0].value);
+  const [itemCategory, setItemCategory] = useState(ItemOption[0].value);
+
+  useEffect(() => {
+    setPetCategory(petCategory);
+    setItemCategory(itemCategory);
+  }, [setPetCategory, setItemCategory, petCategory, itemCategory]);
+
+  const onSubmitHandler = (formData) => {
     const files = formData.files;
     const data = {
-      itemCategory: formData.itemCategory,
-      petCategory: formData.petCategory,
       title: formData.title,
       content: formData.content,
       location: formData.location,
       purchasePrice: formData.purchasePrice,
       sellingPrice: formData.sellingPrice,
     };
-    dispatch(__addPost({ data, files }));
+    dispatch(__addPost({ data, itemCategory, petCategory, files }));
     reset();
     navigate(`/`);
   };
@@ -117,21 +126,22 @@ function Create() {
         <Form onSubmit={handleSubmit(onSubmitHandler)}>
           <Container>
             <SelectWrapper>
-              <Select name="petCategory" {...register("petCategory")}>
-                <Option value="">동물 종류</Option>
-                <Option value="강아지">강아지</Option>
-                <Option value="고양이">고양이</Option>
-              </Select>
-
-              <Select name="itemCategory" {...register("itemCategory")}>
-                <Option value="">카테고리</Option>
-                <Option value="사료">사료</Option>
-                <Option value="간식">간식</Option>
-                <Option value="의류">의류</Option>
-                <Option value="미용">미용</Option>
-                <Option value="장난감">장난감</Option>
-                <Option value="기타용품">기타용품</Option>
-              </Select>
+              <Select
+                optionDatas={PetOption}
+                color={"gray"}
+                width={"36%"}
+                height={"3.1rem"}
+                optionsWidth={"115%"}
+                setSelected={setPetCategory}
+              />
+              <Select
+                optionDatas={ItemOption}
+                color={"gray"}
+                width={"60%"}
+                height={"3.1rem"}
+                optionsWidth={"110%"}
+                setSelected={setItemCategory}
+              />
             </SelectWrapper>
 
             <Label>제목</Label>
@@ -304,7 +314,7 @@ const Input = styled.input`
   color: rgba(0, 0, 0, 0.85);
   font-size: 1.4rem;
   background-color: #fff;
-  border: 1px solid #d9d9d9;
+  border: 2px solid #d9d9d9;
   border-left-width: 0;
   border-right-width: 0;
   border-top-width: 0;
@@ -367,6 +377,9 @@ const HelperText = styled.p`
 
 const SelectWrapper = styled.div`
   margin-bottom: 3.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
   @media screen and (min-width: 1024px) {
     /* Desktop */
     width: 40rem;
@@ -383,54 +396,10 @@ const SelectWrapper = styled.div`
   }
 `;
 
-const Select = styled.select`
-  box-sizing: border-box;
-  margin: 5px;
-  padding: 0;
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  padding: 0.4rem 1.1rem;
-  color: rgba(0, 0, 0, 0.85);
-  font-size: 1.4rem;
-  background-color: #fff;
-  border: 1px solid #d9d9d9;
-  border-radius: 0.4rem;
-  transition: all 0.3s;
-  font-size: 1.4rem;
-  &:hover {
-    border-color: ${({ theme }) => theme.mainColor};
-    border-right-width: 1px;
-  }
-  &:focus {
-    outline: none;
-  }
-
-  @media screen and (min-width: 1024px) {
-    /* Desktop */
-    width: 18.5rem;
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Tablet */
-    width: 16.5rem;
-  }
-
-  @media (max-width: 767px) {
-    /* Mobile */
-    width: 15.5rem;
-  }
-`;
-
-const Option = styled.option`
-  color: rgba(0, 0, 0, 0.85);
-  font-size: 1.4rem;
-`;
-
 const TextArea = styled.textarea`
   width: 32.8rem;
   height: 20rem;
-  border: 1px solid #d5d0d0;
+  border: 2px solid #d5d0d0;
   background-color: ${({ theme }) => theme.whiteColor};
   margin: 15px 0px;
   border-radius: 4px;

@@ -25,13 +25,13 @@ api.interceptors.request.use(function (config) {
 
 export const apis = {
   // market : CRUD
-  create_market_post: (form, files) => {
+  create_market_post: (form, petCategory, itemCategory, files) => {
     const formData = new FormData();
     formData.append("title", form.title);
     formData.append("content", form.content);
     formData.append("nickname", form.nickname);
-    formData.append("petCategory", form.petCategory);
-    formData.append("itemCategory", form.itemCategory);
+    formData.append("petCategory", petCategory);
+    formData.append("itemCategory", itemCategory);
     formData.append("location", form.location);
     formData.append("purchasePrice", form.purchasePrice);
     formData.append("sellingPrice", form.sellingPrice);

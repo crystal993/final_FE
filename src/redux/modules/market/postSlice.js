@@ -111,10 +111,15 @@ export const __getSinglePost = createAsyncThunk(
 );
 
 export const __addPost = createAsyncThunk(
-  'post/__addPost',
+  "post/__addPost",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await apis.create_market_post(arg.data, arg.files);
+      const { data } = await apis.create_market_post(
+        arg.data,
+        arg.petCategory,
+        arg.itemCategory,
+        arg.files
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
