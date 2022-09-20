@@ -53,13 +53,13 @@ export const apis = {
         withCredentials: true,
       },
     }),
-  edit_market_post: (id, form, files) => {
+  edit_market_post: (id, form, petCategory, itemCategory, files) => {
     const formData = new FormData();
     formData.append("title", form.title);
     formData.append("content", form.content);
     formData.append("nickname", form.nickname);
-    formData.append("petCategory", form.petCategory);
-    formData.append("itemCategory", form.itemCategory);
+    formData.append("petCategory", petCategory);
+    formData.append("itemCategory", itemCategory);
     formData.append("location", form.location);
     formData.append("purchasePrice", form.purchasePrice);
     formData.append("sellingPrice", form.sellingPrice);
