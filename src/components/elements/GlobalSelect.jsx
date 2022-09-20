@@ -1,8 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { ReactComponent as DropDownIcon } from "../../assets/icons/arrow_drop_down.svg";
 
-const GlobalSelect = ({ optionDatas, setSelected }) => {
-  const [currentOption, setCurrentOption] = useState(optionDatas[0].name);
+const GlobalSelect = ({
+  optionDatas,
+  setSelected,
+  color,
+  width,
+  height,
+  optionWidth,
+  optionsWidth,
+  initialValue = optionDatas[0].name,
+}) => {
+  const [currentOption, setCurrentOption] = useState(initialValue);
   const [isShowOptions, setIsShowOptions] = useState(false);
 
   const onChangeSelectOptionHandler = (e) => {
@@ -12,16 +22,24 @@ const GlobalSelect = ({ optionDatas, setSelected }) => {
 
   return (
     <>
-      <SelectorWrapper onClick={() => setIsShowOptions((prev) => !prev)}>
+      <SelectorWrapper
+        color={color}
+        width={width}
+        height={height}
+        onClick={() => setIsShowOptions((prev) => !prev)}
+      >
+        <DropDownIconSet color={color} />
         <Label>{currentOption}</Label>
         {isShowOptions && (
-          <SelectOptions>
+          <SelectOptions color={color} optionsWidth={optionsWidth}>
             {optionDatas.map((option) => (
               <Option
                 onClick={onChangeSelectOptionHandler}
                 key={option.value}
                 value={option.value}
                 name={option.name}
+                color={color}
+                optionWidth={optionWidth}
               >
                 {option.name}
               </Option>
@@ -35,60 +53,76 @@ const GlobalSelect = ({ optionDatas, setSelected }) => {
 
 const SelectorWrapper = styled.div`
   position: relative;
-  width: 8.8rem;
-  height: 3.2rem;
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
   border-radius: 0.6rem;
   text-align: center;
-  color: ${({ theme }) => theme.mainColor};
+  color: ${({ color, theme }) =>
+    color === "gray" ? theme.darkgray : theme.mainColor};
   font-weight: 500;
   font-size: 1.4rem;
   line-height: 20rem;
   align-self: center;
-  border: 2px solid ${({ theme }) => theme.mainColor};
+  border: 2px solid
+    ${({ color, theme }) => (color === "gray" ? theme.gray : theme.mainColor)};
   cursor: pointer;
 
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 0.3rem 0 0 1.4rem;
-  transition: background-color 0.2s ease-in;
-  &::before {
-    content: "⌵";
-    position: absolute;
-    top: -9rem;
-    right: 0.8rem;
-    font-size: 1.4rem;
+  transition: all 0.3s;
+`;
+
+const DropDownIconSet = styled(DropDownIcon)`
+  position: absolute;
+  right: 1rem;
+  top: 1.25rem;
+  width: 1rem;
+  height: 0.5rem;
+  path {
+    fill: ${({ color, theme }) =>
+      color === "gray" ? "#1C1B1F" : theme.mainColor};
   }
 `;
 
 const Label = styled.label`
   font-size: 1.4rem;
   cursor: pointer;
+  transition: all 0.3s;
 `;
 const SelectOptions = styled.ul`
-  width: 8.8rem;
-  margin: 0.5rem 0 0 -1.5rem;
+  width: ${({ optionsWidth }) => optionsWidth};
+  margin: 0.5rem 0 0.2rem -1.6rem;
   font-size: 1.4rem;
   background-color: white;
-  border: 2px solid ${({ theme }) => theme.mainColor};
+  z-index: 100;
+  border: 2px solid
+    ${({ color, theme }) => (color === "gray" ? theme.gray : theme.mainColor)};
   border-top: none;
   text-align: left;
   border-radius: 0.6rem;
+  transition: all 0.3s;
 `;
 const Option = styled.li`
-  width: 8.8rem;
+  width: ${({ optionWidth }) => optionWidth};
   padding: 0.6rem 0 0.6rem 0;
-  padding-left: 1.3rem;
+  padding-left: 1.6rem;
+  z-index: 100;
+  transition: all 0.3s;
   &:hover {
-    color: ${({ theme }) => theme.mainColor};
+    color: ${({ color, theme }) =>
+      color === "gray" ? theme.darkgray : theme.mainColor};
     font-weight: 900;
-    width: 8.5rem;
+    width: ${({ optionWidth }) => optionWidth};
     border-radius: 0.3rem;
-    background-color: #f6f2fe;
+    background-color: ${({ color, theme }) =>
+      color === "gray" ? theme.lightgray : "#f6f2fe"};
   }
   &:nth-child(1) {
-    width: 8.5rem;
-    border-top: 2px solid ${({ theme }) => theme.mainColor};
+    width: ${({ optionWidth }) => optionWidth};
+    border-top: 2px solid
+      ${({ color, theme }) => (color === "gray" ? theme.gray : theme.mainColor)};
     border-radius: 0.6rem;
   }
 `;
