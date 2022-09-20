@@ -296,7 +296,6 @@ const InputWrapper = styled.div`
 
 const Input = styled.input`
   box-sizing: border-box;
-
   padding: 0;
   position: relative;
   display: inline-block;
