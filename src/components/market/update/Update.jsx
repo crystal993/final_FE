@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux/es/exports";
+import { useDispatch, useSelector } from "react-redux/es/exports";
 import {
   __updatePost,
   __getSinglePost,
@@ -12,17 +12,24 @@ import axios from "axios";
 import { IoIosLocate } from "react-icons/io";
 import InputResetButton from "../../elements/buttons/InputResetButton";
 import FixButton from "../../elements/buttons/FixButton";
+import Select from "../../elements/GlobalSelect";
+import PetOption from "../options/PetOption";
+import ItemOption from "../options/ItemOption";
 
 function Update() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-
   const { state } = useLocation();
+  const items = useSelector((state) => state.marketPost.singlePost);
+  const [petCategory, setPetCategory] = useState(state.petCategory);
+  const [itemCategory, setItemCategory] = useState(state.itemCategory);
+  const [item, setItem] = useState(items);
+  useEffect(() => {
+    setItem(items);
+  }, [setItem, items]);
 
   useEffect(() => {
-    setValue("itemCategory", state.itemCategory);
-    setValue("petCategory", state.petCategory);
     setValue("title", state.title);
     setValue("content", state.content);
     setValue("location", state.location);
@@ -30,36 +37,31 @@ function Update() {
     setValue("sellingPrice", state.sellingPrice);
   }, []);
 
-  const {
-    register,
-    handleSubmit,
-    setFocus,
-    setValue,
-    reset,
-    watch,
-    formState: { errors },
-  } = useForm({
+  useEffect(() => {
+    dispatch(__getSinglePost({ id: id }));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    setPetCategory(petCategory);
+    setItemCategory(itemCategory);
+  }, [setPetCategory, setItemCategory, petCategory, itemCategory]);
+
+  const { register, handleSubmit, setValue } = useForm({
     mode: "onChange",
   });
-
-  const handleClick = (e) => {
-    let myInput = document.getElementById("fileInput");
-    myInput.click();
-  };
 
   const onUpdateHandler = (formData, e) => {
     const files = formData.files;
     const data = {
-      itemCategory: formData.itemCategory,
-      petCategory: formData.petCategory,
       title: formData.title,
       content: formData.content,
       location: formData.location,
       purchasePrice: formData.purchasePrice,
       sellingPrice: formData.sellingPrice,
     };
-    dispatch(__updatePost({ id, data, files }));
-    navigate(`/market/detail/${id}`);
+    dispatch(__updatePost({ id, data, itemCategory, petCategory, files }));
+    console.log(items);
+    navigate(`/market/detail/${id}`, { items });
   };
 
   //다중 이미지 preview
@@ -127,10 +129,6 @@ function Update() {
   }
   getLocation(); //호출
 
-  useEffect(() => {
-    dispatch(__getSinglePost({ itemId: id }));
-  }, [dispatch]);
-
   const inputResetHandler = (inputId) => {
     setValue(inputId, " ");
   };
@@ -149,21 +147,24 @@ function Update() {
         <Form onSubmit={handleSubmit(onUpdateHandler)}>
           <Container>
             <SelectWrapper>
-              <Select name="petCategory" {...register("petCategory")}>
-                <Option value="">동물 종류</Option>
-                <Option value="강아지">강아지</Option>
-                <Option value="고양이">고양이</Option>
-              </Select>
-
-              <Select name="itemCategory" {...register("itemCategory")}>
-                <Option value="">카테고리</Option>
-                <Option value="사료">사료</Option>
-                <Option value="간식">간식</Option>
-                <Option value="의류">의류</Option>
-                <Option value="미용">미용</Option>
-                <Option value="장난감">장난감</Option>
-                <Option value="기타용품">기타용품</Option>
-              </Select>
+              <Select
+                optionDatas={PetOption}
+                color={"gray"}
+                width={"36%"}
+                height={"3.1rem"}
+                optionsWidth={"115%"}
+                setSelected={setPetCategory}
+                initialValue={petCategory}
+              />
+              <Select
+                optionDatas={ItemOption}
+                color={"gray"}
+                width={"60%"}
+                height={"3.1rem"}
+                optionsWidth={"110%"}
+                setSelected={setItemCategory}
+                initialValue={itemCategory}
+              />
             </SelectWrapper>
 
             <Label>제목</Label>
@@ -336,7 +337,7 @@ const Input = styled.input`
   color: rgba(0, 0, 0, 0.85);
   font-size: 1.4rem;
   background-color: #fff;
-  border: 1px solid #d9d9d9;
+  border: 2px solid #d9d9d9;
   border-left-width: 0;
   border-right-width: 0;
   border-top-width: 0;
@@ -400,6 +401,9 @@ const HelperText = styled.p`
 
 const SelectWrapper = styled.div`
   margin-bottom: 3.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
   @media screen and (min-width: 1024px) {
     /* Desktop */
     width: 40rem;
@@ -416,54 +420,10 @@ const SelectWrapper = styled.div`
   }
 `;
 
-const Select = styled.select`
-  box-sizing: border-box;
-  margin: 5px;
-  padding: 0;
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  padding: 0.4rem 1.1rem;
-  color: rgba(0, 0, 0, 0.85);
-  font-size: 1.4rem;
-  background-color: #fff;
-  border: 1px solid #d9d9d9;
-  border-radius: 0.4rem;
-  transition: all 0.3s;
-  font-size: 1.4rem;
-  &:hover {
-    border-color: #40a9ff;
-    border-right-width: 1px;
-  }
-  &:focus {
-    outline: none;
-  }
-
-  @media screen and (min-width: 1024px) {
-    /* Desktop */
-    width: 18.5rem;
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Tablet */
-    width: 16.5rem;
-  }
-
-  @media (max-width: 767px) {
-    /* Mobile */
-    width: 15.5rem;
-  }
-`;
-
-const Option = styled.option`
-  color: rgba(0, 0, 0, 0.85);
-  font-size: 1.4rem;
-`;
-
 const TextArea = styled.textarea`
   width: 32.8rem;
   height: 20rem;
-  border: 1px solid #d5d0d0;
+  border: 2px solid #d5d0d0;
   background-color: ${({ theme }) => theme.whiteColor};
   margin: 15px 0px;
   border-radius: 4px;

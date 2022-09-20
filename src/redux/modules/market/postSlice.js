@@ -111,10 +111,15 @@ export const __getSinglePost = createAsyncThunk(
 );
 
 export const __addPost = createAsyncThunk(
-  'post/__addPost',
+  "post/__addPost",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await apis.create_market_post(arg.data, arg.files);
+      const { data } = await apis.create_market_post(
+        arg.data,
+        arg.petCategory,
+        arg.itemCategory,
+        arg.files
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -135,10 +140,16 @@ export const __deletePost = createAsyncThunk(
 );
 
 export const __updatePost = createAsyncThunk(
-  'post/__updatePost',
+  "post/__updatePost",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await apis.edit_market_post(arg.id, arg.data, arg.files);
+      const { data } = await apis.edit_market_post(
+        arg.id,
+        arg.data,
+        arg.petCategory,
+        arg.itemCategory,
+        arg.files
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
