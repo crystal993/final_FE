@@ -9,6 +9,7 @@ import { debounce } from "lodash";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { apis } from "../../shared/axios";
+import InputResetButton from "../elements/buttons/InputResetButton";
 
 const SearchHeader = () => {
   const navigate = useNavigate();
@@ -73,6 +74,12 @@ const SearchHeader = () => {
     dispatch(__itemSearch({ keyword: keyword, toggleState: toggleState }));
     navigate(`/search/result/${keyword}`);
   };
+
+  const inputResetHandler = () => {
+    document.getElementById("keyword").value = ""; //검색 페이지의 input값 reset
+    setKeywordValue(""); //KeywordValue값 리셋
+    setAutoComplete(false);
+  };
   return (
     <SearchWrapper>
       <NavbarWrapper>
@@ -83,54 +90,59 @@ const SearchHeader = () => {
           <StForm onKeyPress={onCheckEnterHandler}>
             <NavItem ref={searchInput}>
               {keyword !== undefined ? (
-                <SearchInput
-                  id="keyword"
-                  placeholder="검색어를 입력해주세요."
-                  type="text"
-                  name="keyword"
-                  value={keywordValue}
-                  required
-                  onChange={(e) => {
-                    setKeywordValue(e.target.value);
-                    onAutoCompleteHandler(e);
-                    setAutoComplete(true);
-                  }}
-                  ref={searchInput}
-                />
+                <InputWrapper>
+                  <SearchInput
+                    id="keyword"
+                    placeholder="검색어를 입력해주세요."
+                    type="text"
+                    name="keyword"
+                    value={keywordValue}
+                    required
+                    onChange={(e) => {
+                      setKeywordValue(e.target.value);
+                      onAutoCompleteHandler(e);
+                      setAutoComplete(true);
+                    }}
+                    ref={searchInput}
+                  />
+                  <InputResetButton onClick={() => inputResetHandler()} />
+                </InputWrapper>
               ) : (
-                <SearchInput
-                  id="keyword"
-                  placeholder="검색어를 입력해주세요."
-                  type="text"
-                  name="keyword"
-                  required
-                  onChange={(e) => {
-                    setKeywordValue(e.target.value);
-                    onAutoCompleteHandler(e);
-                  }}
-                />
-              )}
-              {autoComplete && (
-                <AutoSearchContainer>
-                  {autoSearchKeywords?.map((keyword, idx) => {
-                    if (idx < 10) {
-                      return (
-                        <AutoSearchKeyword
-                          key={uuidv4()}
-                          onClick={() =>
-                            onAutoCompleteSearchResultHandler(
-                              keyword.searchWord
-                            )
-                          }
-                        >
-                          {keyword.searchWord}
-                        </AutoSearchKeyword>
-                      );
-                    }
-                  })}
-                </AutoSearchContainer>
+                <InputWrapper>
+                  <SearchInput
+                    id="keyword"
+                    placeholder="검색어를 입력해주세요."
+                    type="text"
+                    name="keyword"
+                    required
+                    onChange={(e) => {
+                      setKeywordValue(e.target.value);
+                      onAutoCompleteHandler(e);
+                      setAutoComplete(true);
+                    }}
+                  />
+                  <InputResetButton onClick={() => inputResetHandler()} />
+                </InputWrapper>
               )}
             </NavItem>
+            {autoComplete && (
+              <AutoSearchContainer>
+                {autoSearchKeywords?.map((keyword, idx) => {
+                  if (idx < 10) {
+                    return (
+                      <AutoSearchKeyword
+                        key={uuidv4()}
+                        onClick={() =>
+                          onAutoCompleteSearchResultHandler(keyword.searchWord)
+                        }
+                      >
+                        {keyword.searchWord}
+                      </AutoSearchKeyword>
+                    );
+                  }
+                })}
+              </AutoSearchContainer>
+            )}
             <NavItem>
               <SearchButton>
                 <SearchIcon onClick={() => onSearchResultHandler()} />
@@ -186,6 +198,10 @@ const NavItem = styled.div`
   @media (max-width: 375px) and (max-width: 499px) {
     gap: 1rem;
   }
+`;
+
+const InputWrapper = styled.div`
+  position: relative;
 `;
 
 const SearchInput = styled.input`
