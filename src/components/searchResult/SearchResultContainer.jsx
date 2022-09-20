@@ -32,7 +32,13 @@ const SearchResultContainer = () => {
     <>
       <SectionWrapper>
         <SearchResultTitle>'{keyword}' 검색결과</SearchResultTitle>
-        <Select optionDatas={option} setSelected={setSelected} />
+        <Select
+          optionDatas={option}
+          setSelected={setSelected}
+          width={"8.8rem"}
+          height={"3.2rem"}
+          optionWidth={"8.6rem"}
+        />
       </SectionWrapper>
       {searchResultList?.length > 0 ? (
         <SearchItemList searchResultList={searchResultList} />
