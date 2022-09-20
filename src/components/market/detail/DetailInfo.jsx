@@ -4,7 +4,7 @@ import {
   __deletePost,
 } from "../../../redux/modules/market/postSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import ItemZzimButton from "../../elements/buttons/ItemZzimButton";
 import SimpleSlider from "./SimpleSlider";
@@ -23,7 +23,12 @@ const DetailInfo = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const item = useSelector((state) => state.marketPost.singlePost);
+  const items = useSelector((state) => state.marketPost.singlePost);
+  const [item, setItem] = useState(items);
+  useEffect(() => {
+    setItem(items);
+  }, [setItem, items]);
+
   const isLogin = useSelector((state) => state.user.userToken);
   const itemImgs = item.itemImgs;
 
@@ -37,6 +42,10 @@ const DetailInfo = () => {
     navigate(`/chatRoom/${id}`);
     console.log(id);
   };
+
+  useEffect(() => {
+    dispatch(__getSinglePost({ id: id }));
+  }, []);
 
   useEffect(() => {
     dispatch(__getSinglePost({ id: id }));
