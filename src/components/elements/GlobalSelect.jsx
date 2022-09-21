@@ -61,6 +61,7 @@ const GlobalSelect = ({
                 name={option.name}
                 color={color}
                 optionWidth={optionWidth}
+                fontWeight={option.name === currentOption ? "900" : "0"}
               >
                 {option.name}
               </Option>
@@ -143,6 +144,7 @@ const Option = styled.li`
   padding-left: 1.6rem;
   z-index: 100;
   transition: all 0.3s;
+  font-weight: ${({ fontWeight }) => fontWeight};
   &:hover {
     color: ${({ color, theme }) =>
       color === "gray" ? theme.darkgray : theme.mainColor};
