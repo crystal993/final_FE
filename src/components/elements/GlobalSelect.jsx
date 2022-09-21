@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as DropDownIcon } from "../../assets/icons/arrow_drop_down.svg";
 
@@ -20,6 +20,21 @@ const GlobalSelect = ({
     setSelected(e.target.getAttribute("value"));
   };
 
+  const selectRef = useRef();
+
+  useEffect(() => {
+    const listener = (event) => {
+      if (selectRef.current && !selectRef.current.contains(event.target)) {
+        setIsShowOptions(false);
+      }
+    };
+    document.addEventListener("mousedown", listener);
+
+    return () => {
+      document.removeEventListener("mousedown", listener);
+    };
+  }, [selectRef]);
+
   return (
     <>
       <SelectorWrapper
@@ -27,6 +42,7 @@ const GlobalSelect = ({
         width={width}
         height={height}
         onClick={() => setIsShowOptions((prev) => !prev)}
+        ref={selectRef}
       >
         <DropDownIconSet color={color} />
         <Label>{currentOption}</Label>
