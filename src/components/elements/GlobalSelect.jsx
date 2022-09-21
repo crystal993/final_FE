@@ -88,7 +88,7 @@ const SelectorWrapper = styled.div`
   border: 2px solid
     ${({ color, theme }) => (color === "gray" ? theme.gray : theme.mainColor)};
   cursor: pointer;
-  z-index: 101;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -130,7 +130,7 @@ const SelectOptions = styled.ul`
   margin: 0.4rem 0 0.1rem -1.5rem;
   font-size: 1.4rem;
   background-color: white;
-  z-index: 100;
+  z-index: 2;
   border: 2px solid
     ${({ color, theme }) => (color === "gray" ? theme.gray : theme.mainColor)};
   text-align: left;
