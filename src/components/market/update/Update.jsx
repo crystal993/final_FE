@@ -243,6 +243,7 @@ function Update() {
             />
             <ImgWrapper>
               {!isLoading && <ImgSlider imgUrls={itemImgs} />}
+              {isLoading && <ImgSlider imgUrls={state.itemImgs} />}
             </ImgWrapper>
             <FixButton content={"게시글 수정하기"} />
           </Container>
