@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
-const ImgView = ({ imgUrls }) => {
+const GlobalImgSlider = ({ imgUrls }) => {
   const [currImg, setCurrImg] = useState(0);
   const [lastImg, setLastImg] = useState(imgUrls.length - 1);
 
@@ -114,4 +114,4 @@ const ImgPreview = styled.img`
   transition: all 3ms ease;
 `;
 
-export default ImgView;
+export default GlobalImgSlider;
