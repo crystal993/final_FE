@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as DropDownIcon } from "../../assets/icons/arrow_drop_down.svg";
+import { ReactComponent as DropUpIcon } from "../../assets/icons/arrow_drop_up.svg";
 
 const GlobalSelect = ({
   optionDatas,
@@ -44,7 +45,11 @@ const GlobalSelect = ({
         onClick={() => setIsShowOptions((prev) => !prev)}
         ref={selectRef}
       >
-        <DropDownIconSet color={color} />
+        {!isShowOptions ? (
+          <DropDownIconSet color={color} />
+        ) : (
+          <DropUpIconSet color={color} />
+        )}
         <Label>{currentOption}</Label>
         {isShowOptions && (
           <SelectOptions color={color} optionsWidth={optionsWidth}>
@@ -91,6 +96,18 @@ const SelectorWrapper = styled.div`
 `;
 
 const DropDownIconSet = styled(DropDownIcon)`
+  position: absolute;
+  right: 1rem;
+  top: 1.25rem;
+  width: 1rem;
+  height: 0.5rem;
+  path {
+    fill: ${({ color, theme }) =>
+      color === "gray" ? "#1C1B1F" : theme.mainColor};
+  }
+`;
+
+const DropUpIconSet = styled(DropUpIcon)`
   position: absolute;
   right: 1rem;
   top: 1.25rem;
