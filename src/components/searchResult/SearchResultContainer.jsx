@@ -37,7 +37,7 @@ const SearchResultContainer = () => {
           setSelected={setSelected}
           width={"8.8rem"}
           height={"3.2rem"}
-          optionWidth={"8.6rem"}
+          optionWidth={"8.5rem"}
         />
       </SectionWrapper>
       {searchResultList?.length > 0 ? (

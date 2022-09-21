@@ -77,7 +77,7 @@ const SelectorWrapper = styled.div`
   position: relative;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
-  border-radius: 0.6rem;
+  border-radius: 0.3rem;
   text-align: center;
   color: ${({ color, theme }) =>
     color === "gray" ? theme.darkgray : theme.mainColor};
@@ -88,7 +88,7 @@ const SelectorWrapper = styled.div`
   border: 2px solid
     ${({ color, theme }) => (color === "gray" ? theme.gray : theme.mainColor)};
   cursor: pointer;
-
+  z-index: 101;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -127,15 +127,13 @@ const Label = styled.label`
 `;
 const SelectOptions = styled.ul`
   width: ${({ optionsWidth }) => optionsWidth};
-  margin: 0.5rem 0 0.2rem -1.6rem;
+  margin: 0.4rem 0 0.1rem -1.5rem;
   font-size: 1.4rem;
   background-color: white;
   z-index: 100;
   border: 2px solid
     ${({ color, theme }) => (color === "gray" ? theme.gray : theme.mainColor)};
-  border-top: none;
   text-align: left;
-  border-radius: 0.6rem;
   transition: all 0.3s;
 `;
 const Option = styled.li`
@@ -150,15 +148,11 @@ const Option = styled.li`
       color === "gray" ? theme.darkgray : theme.mainColor};
     font-weight: 900;
     width: ${({ optionWidth }) => optionWidth};
-    border-radius: 0.3rem;
     background-color: ${({ color, theme }) =>
       color === "gray" ? theme.lightgray : "#f6f2fe"};
   }
   &:nth-child(1) {
     width: ${({ optionWidth }) => optionWidth};
-    border-top: 2px solid
-      ${({ color, theme }) => (color === "gray" ? theme.gray : theme.mainColor)};
-    border-radius: 0.6rem;
   }
 `;
 

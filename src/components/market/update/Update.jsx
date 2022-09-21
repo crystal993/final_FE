@@ -161,7 +161,7 @@ function Update() {
                 color={"gray"}
                 width={"60%"}
                 height={"3.1rem"}
-                optionsWidth={"110%"}
+                optionsWidth={"108.5%"}
                 setSelected={setItemCategory}
                 initialValue={itemCategory}
               />
