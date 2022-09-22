@@ -4,10 +4,10 @@ import {
   __deletePost,
 } from "../../../redux/modules/market/postSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import ItemZzimButton from "../../elements/buttons/ItemZzimButton";
-import SimpleSlider from "./SimpleSlider";
+import ImgSlider from "../../elements/GlobalImgSlider2";
 import Comment from "../comment/Comment";
 import FixButton from "../../elements/buttons/FixButton";
 import FixThreeButton from "../../elements/buttons/FixThreeButton";
@@ -120,7 +120,7 @@ const DetailInfo = () => {
         {isModal ? (
           <GlobalModal content={"로그인 하세요"} name={"로그인"} />
         ) : null}
-        <SimpleSlider itemImgs={itemImgs} />
+        <ImgSlider itemImgs={itemImgs} />
         <DetailWrapper>
           <InfoWrapper>
             <P>

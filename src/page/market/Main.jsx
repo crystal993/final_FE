@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import AddPostButton from "../../components/elements/buttons/AddPostButton";
 import GlobalModal from "../../components/elements/GlobalModal";
+import MainBanner from "../../components/market/main/MainBanner";
 
 const Main = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const Main = () => {
       {isModal && <GlobalModal content={"로그인이 필요합니다."} />}
       <Header />
       <Layout>
+        <MainBanner />
         <MainContainer />
         {isLogin ? (
           <AddPostButton
