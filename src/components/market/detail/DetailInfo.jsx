@@ -14,6 +14,7 @@ import FixThreeButton from "../../elements/buttons/FixThreeButton";
 import GlobalModal from "../../elements/GlobalModal";
 import PriceChart from "../../elements/chart/PriceChart";
 import { ReactComponent as ProfileIcon } from "../../../assets/icons/profile_img_sm.svg";
+import { ReactComponent as ShareIcon } from "../../../assets/icons/share_icon.svg";
 import EditIcon from "../../../assets/icons/edit_document2.svg";
 import DeleteIcon from "../../../assets/icons/delete.svg";
 import CheckIcon from "../../../assets/icons/check_circle.svg";
@@ -28,6 +29,7 @@ const DetailInfo = () => {
   useEffect(() => {
     setItem(items);
   }, [setItem, items]);
+  console.log(items);
 
   const isLogin = useSelector((state) => state.user.userToken);
   const itemImgs = item.itemImgs;
@@ -120,7 +122,13 @@ const DetailInfo = () => {
         {isModal ? (
           <GlobalModal content={"로그인 하세요"} name={"로그인"} />
         ) : null}
-        <ImgSlider itemImgs={itemImgs} />
+        <ImgSlider
+          itemImgs={itemImgs}
+          width={"36rem"}
+          mobileHeight={"22.2rem"}
+          tabletHeight={"22.2rem"}
+          desktopHeight={"22.2rem"}
+        />
         <DetailWrapper>
           <InfoWrapper>
             <P>
@@ -130,11 +138,7 @@ const DetailInfo = () => {
           <Title>{item.title}</Title>
           <StWrapper>
             <Price>{item.sellingPrice?.toLocaleString("ko-KR")}원</Price>
-            <StIcon>
-              <span className="material-icons" onClick={sharekakao}>
-                share
-              </span>
-            </StIcon>
+            <StShareIcon onClick={sharekakao} />
           </StWrapper>
           <StUserBox>
             <UserImgBox>
@@ -190,7 +194,9 @@ const DetailInfo = () => {
 };
 
 const DetailInfoWrapper = styled.div`
+  width: 26rem;
   padding-top: 4.9rem;
+  margin: 0 auto;
 `;
 
 const DetailWrapper = styled.div`
@@ -218,7 +224,7 @@ const H3 = styled.p`
 const StWrapper = styled.div`
   width: 100%;
   display: flex;
-  margin: 0 0 2.8rem 0;
+  margin: 0 0 2.5rem 0;
   flex-direction: row;
   justify-content: space-between;
   align-content: center;
@@ -228,20 +234,11 @@ const StWrapper = styled.div`
   }
 `;
 
-const StIcon = styled.div`
-  @media (min-width: 1024px) {
-    margin: 0 1.3rem;
-  }
-  @media (min-width: 768px) and (max-width: 1023px) {
-    margin: 0 1.3rem;
-  }
-  @media (max-width: 767px) {
-    margin: 0 1.3rem;
-  }
-`;
-
 const Title = styled.p`
+  display: block;
+  width: 100%;
   font-size: 2rem;
+  text-overflow: ellipsis;
 `;
 
 const Price = styled.p`
@@ -256,15 +253,7 @@ const StUserBox = styled.div`
   align-content: center;
   justify-content: flex-start;
   gap: 1.5rem;
-  margin: 3rem 0;
-  .user-info {
-    justify-content: flex-start;
-    background-color: green;
-  }
-  .share {
-    justify-content: flex-end;
-    background-color: red;
-  }
+  margin-bottom: 3rem;
   @media screen and (min-width: 1024px) {
     /* Desktop */
     display: flex;
@@ -311,10 +300,13 @@ const UserImgBox = styled.div`
   }
 `;
 
-const UserImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+const StShareIcon = styled(ShareIcon)`
+  width: 1.4rem;
+  height: 1.4rem;
+  cursor: pointer;
+  path {
+    fill: ${({ theme }) => theme.darkgray};
+  }
 `;
 
 const UserInfoTxt = styled.div``;

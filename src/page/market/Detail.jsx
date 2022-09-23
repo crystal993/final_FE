@@ -7,9 +7,7 @@ const Detail = () => {
   return (
     <>
       <Header />
-      <Layout>
-        <DetailInfo />
-      </Layout>
+      <DetailInfo />
     </>
   );
 };

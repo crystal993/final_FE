@@ -71,15 +71,13 @@ export default function PriceChart({
           data={data}
           barSize={50}
           margin={{
-            top: 20,
-            right: 30,
+            top: 0,
+            right: 20,
             left: 5,
             bottom: 5,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
-          <YAxis />
           <Bar dataKey="price" fill="#000000" label={{ position: "top" }}>
             {data.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={mainColors[index % 20]} />
@@ -96,30 +94,11 @@ export default function PriceChart({
 }
 
 const StBarChartWrapper = styled.div`
-  width: 50rem;
-  min-width: 30rem;
-  height: 40rem;
+  width: 20rem;
+  min-width: 26rem;
+  height: 30rem;
   margin: 0 auto;
   font-size: 1.2rem;
-  @media screen and (min-width: 1024px) {
-    /* Desktop */
-    width: 50rem;
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Tablet */
-    width: 40rem;
-  }
-
-  @media (max-width: 500px) and (max-width: 767px) {
-    /* Mobile */
-    width: 20rem;
-  }
-
-  @media (max-width: 374px) and (max-width: 499px) {
-    /* Mobile */
-    width: 15rem;
-  }
 `;
 
 const StCustomToolTip = styled.div`
