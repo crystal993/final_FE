@@ -25,7 +25,7 @@ const MainBanner = () => {
 };
 
 const ImgWrapper = styled.div`
-  padding: 8.4rem 1.6rem 0rem 1.6rem;
+  padding: 8.4rem 0rem 0rem 0rem;
 `;
 
 export default MainBanner;

@@ -44,7 +44,6 @@ const StyledSlider = styled(Slider)`
 `;
 
 const Img = styled.img`
-  width: 100%;
   object-fit: fill;
   background-color: ${({ theme }) => theme.lightgray};
   @media screen and (min-width: 1024px) {
