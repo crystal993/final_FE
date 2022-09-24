@@ -10,6 +10,7 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { apis } from "../../shared/axios";
 import InputResetButton from "../elements/buttons/InputResetButton";
+import useDebounce from "../../customHook/useDebounce";
 
 const SearchHeader = () => {
   const navigate = useNavigate();
@@ -18,7 +19,6 @@ const SearchHeader = () => {
   const { keyword } = useParams();
 
   const [keywordValue, setKeywordValue] = useState(keyword);
-  const [autoSearchKeywords, setAutoSearchKeywords] = useState([]);
 
   const searchInput = useRef();
   const [autoComplete, setAutoComplete] = useState(false);
@@ -47,20 +47,16 @@ const SearchHeader = () => {
     setAutoComplete(false);
   };
 
-  // 자동 완성 기능
-  const onAutoCompleteHandler = ({ target }) => {
-    const keyword = target.value;
-    debounceApiCall(keyword);
-  };
-
-  const debounceApiCall = useCallback(
-    debounce((keyword) => {
-      apis.get_auto_complete(keyword).then(({ data }) => {
-        setAutoSearchKeywords(data);
-      });
-    }, 350),
-    []
-  );
+  const [autoSearchKeywords, setAutoSearchKeywords] = useState([]);
+  const debouncedValue = useDebounce(keywordValue, 350);
+  // debouncedValue가 useDebounce에 의해 0.35초마다
+  // debouncedValue가 바뀔 때 호출
+  useEffect(() => {
+    console.log("api call!");
+    apis.get_auto_complete(debouncedValue).then(({ data }) => {
+      setAutoSearchKeywords(data);
+    });
+  }, [debouncedValue]);
 
   // enter 눌렀을 때 검색 기능
   const onCheckEnterHandler = (e) => {
@@ -99,7 +95,6 @@ const SearchHeader = () => {
                   required
                   onChange={(e) => {
                     setKeywordValue(e.target.value);
-                    onAutoCompleteHandler(e);
                     setAutoComplete(true);
                   }}
                   ref={searchInput}
@@ -116,7 +111,6 @@ const SearchHeader = () => {
                   required
                   onChange={(e) => {
                     setKeywordValue(e.target.value);
-                    onAutoCompleteHandler(e);
                     setAutoComplete(true);
                   }}
                 />
