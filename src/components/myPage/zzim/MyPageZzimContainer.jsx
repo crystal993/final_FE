@@ -16,6 +16,7 @@ const MyPageZzimContainer = () => {
 export default MyPageZzimContainer;
 
 const SectionWrapper = styled.section`
+  width: 100%;
   display: flex;
   margin: 0 auto;
   margin-left: 0.6rem;
@@ -25,6 +26,12 @@ const SectionWrapper = styled.section`
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+`;
+
+const MyZzimTitle = styled.h1`
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin: 0.5rem auto;
   @media (min-width: 1280px) {
     /* Desktop */
     width: 70rem;
@@ -37,9 +44,4 @@ const SectionWrapper = styled.section`
     /* Mobile */
     width: 28rem;
   }
-`;
-
-const MyZzimTitle = styled.h1`
-  font-size: 2.4rem;
-  font-weight: 700;
 `;
