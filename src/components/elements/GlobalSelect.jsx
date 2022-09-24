@@ -127,7 +127,7 @@ const Label = styled.label`
 `;
 const SelectOptions = styled.ul`
   width: ${({ optionsWidth }) => optionsWidth};
-  margin: 0.4rem 0 0.1rem -1.5rem;
+  margin: 0.4rem 0 0.1rem -1.6rem;
   font-size: 1.4rem;
   background-color: white;
   z-index: 2;
