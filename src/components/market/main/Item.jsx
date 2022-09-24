@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons"; // ♡
 import { ReactComponent as VisibilityIcon } from "../../../assets/icons/visibility.svg";
 import { ReactComponent as HeartIcon } from "../../../assets/icons/favorite.svg";
 

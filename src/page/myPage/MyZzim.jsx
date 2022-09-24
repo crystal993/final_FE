@@ -7,9 +7,7 @@ const MyZzim = () => {
   return (
     <>
       <Header />
-      <Layout>
-        <MyPageZzimContainer />
-      </Layout>
+      <MyPageZzimContainer />
     </>
   );
 };
