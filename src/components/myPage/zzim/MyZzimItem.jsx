@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as HeartIcon } from "../../../assets/icons/heart_zzim_list.svg";
+import { ReactComponent as VisibilityIcon } from "../../../assets/icons/visibility.svg";
 
 const MyZzimItem = ({ item }) => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const MyZzimItem = ({ item }) => {
           <PriceIconWrapper>
             <Price>{item.sellingPrice.toLocaleString("ko-KR")}원</Price>
             <IconWrapper>
-              <span className="material-icons eye">visibility</span>{" "}
+              <StVisibilityIcon />
               <StCnt>{item.viewCnt}</StCnt>
             </IconWrapper>
           </PriceIconWrapper>
@@ -33,52 +34,24 @@ const MyZzimItem = ({ item }) => {
 export default MyZzimItem;
 
 const ItemWrapper = styled.div`
-  margin: 0 0.5rem;
   display: flex;
   flex-direction: column;
   border-collapse: collapse;
   flex-wrap: wrap;
   cursor: pointer;
-
-  @media screen and (min-width: 1024px) {
-    /* Desktop */
-    width: 16.2rem;
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Tablet */
-    width: 16.2rem;
-  }
-
-  @media (max-width: 767px) {
-    /* Mobile */
-    width: 16.2rem;
-  }
+  width: 13.2rem;
 `;
 
 const ImgWrapper = styled.div`
   position: relative;
   border: none;
   border-radius: 0.6rem;
-  @media screen and (min-width: 1024px) {
-    /* Desktop */
-    width: 16.2rem;
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Tablet */
-    width: 16.2rem;
-  }
-
-  @media (max-width: 767px) {
-    /* Mobile */
-    width: 16.2rem;
-  }
+  width: 13.2rem;
 `;
 
 const Img = styled.img`
-  width: 20rem;
-  height: 16rem;
+  width: 13.2rem;
+  height: 12.6rem;
   border: none;
   border-radius: 0.6rem;
   width: 100%;
@@ -102,20 +75,7 @@ const TextWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   margin-bottom: 1.7rem;
-  @media screen and (min-width: 1024px) {
-    /* Desktop */
-    width: 16.2rem;
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Tablet */
-    width: 16.2rem;
-  }
-
-  @media (max-width: 767px) {
-    /* Mobile */
-    width: 16.2rem;
-  }
+  width: 13.2rem;
 `;
 
 const TextsWrapper = styled.div`
@@ -136,7 +96,7 @@ const Title = styled.div`
 
 const ItemInfoWrapper = styled.div`
   display: flex;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: medium;
   color: ${({ theme }) => theme.gray};
 `;
@@ -159,6 +119,15 @@ const IconWrapper = styled.div`
   color: #cbcbcb;
   align-items: center;
   margin-right: -0.8rem;
+`;
+
+const StVisibilityIcon = styled(VisibilityIcon)`
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+  path {
+    fill: #cbcbcb;
+  }
 `;
 
 const StCnt = styled.div`

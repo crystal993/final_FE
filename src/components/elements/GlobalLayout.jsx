@@ -10,13 +10,18 @@ export default GlobalLayout;
 const StGlobalLayoutWrap = styled.div`
   width: 1760px;
   margin: 0 auto;
-  @media (min-width: 1024px) {
-    width: 90%;
-  }
-  @media (min-width: 768px) and (max-width: 1023px) {
-    width: 95%;
-  }
   @media (max-width: 767px) {
-    width: 98%;
+    /* Mobile */
+    width: calc(100% - 2.8rem);
+  }
+
+  @media (min-width: 768px) and (max-width: 1279px) {
+    /* Tablet */
+    width: calc(100% - 26rem);
+  }
+
+  @media (min-width: 1280px) {
+    /* Desktop */
+    width: calc(100% - 16rem);
   }
 `;

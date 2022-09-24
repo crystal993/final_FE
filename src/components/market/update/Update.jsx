@@ -141,10 +141,10 @@ function Update() {
   return (
     <>
       <FormWrapper>
-        <TitleWrapper>
-          <Title>게시글 수정</Title>
-        </TitleWrapper>
         <Form onSubmit={handleSubmit(onUpdateHandler)}>
+          <TitleWrapper>
+            <Title>게시글 수정</Title>
+          </TitleWrapper>
           <Container>
             <SelectWrapper>
               <Select
@@ -254,26 +254,31 @@ function Update() {
 }
 
 const FormWrapper = styled.div`
-  width: 100%;
   padding-top: 9rem;
-  border: 1px solid #eee;
-  margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-content: center;
   align-items: center;
   border-collapse: collapse;
 `;
 
 const Form = styled.form`
-  width: 100%;
-  padding: 30px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   margin-bottom: 20rem;
+  margin-left: 11.5rem;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    width: 50rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    width: 50rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 36rem;
+  }
 `;
 
 const TitleWrapper = styled.div`
@@ -283,26 +288,34 @@ const TitleWrapper = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   margin: 1.6rem 0 4rem 0;
-  font-size: 1.3rem;
-  @media screen and (min-width: 1024px) {
+  @media (min-width: 1280px) {
     /* Desktop */
-    width: 40rem;
+    margin-bottom: 6rem;
   }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: 768px) and (max-width: 1280px) {
     /* Tablet */
-    width: 35rem;
+    margin-bottom: 6rem;
   }
-
   @media (max-width: 767px) {
     /* Mobile */
-
-    width: 32.8rem;
+    margin-bottom: 4rem;
   }
 `;
 
 const Title = styled.h1`
   text-align: left;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    font-size: 3.6rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    font-size: 3.6rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 2.4rem;
+  }
 `;
 
 const Container = styled.div`
@@ -315,7 +328,7 @@ const Container = styled.div`
 const Label = styled.label`
   font-weight: 500;
   font-size: 1.4rem;
-  margin: 0.5rem 0.5rem;
+  margin: 0.5rem 0rem;
   line-height: 20px;
   display: flex;
   flex-direction: row;
@@ -342,13 +355,8 @@ const Input = styled.input`
   border-left-width: 0;
   border-right-width: 0;
   border-top-width: 0;
-  border-bottom-width: 3;
+  border-bottom-width: 2px;
   transition: all 0.3s;
-  &::-webkit-inner-spin-button {
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-  }
   &:hover {
     border-color: ${({ theme }) => theme.mainColor};
   }
@@ -377,20 +385,22 @@ const Input = styled.input`
   &[type="file"]::file-selector-button:hover {
     background-color: #dadae1;
   }
-
-  @media screen and (min-width: 1024px) {
+  &[type="number"]::-webkit-outer-spin-button,
+  &[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  @media (min-width: 1280px) {
     /* Desktop */
-    width: 40rem;
+    width: 38rem;
   }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: 768px) and (max-width: 1280px) {
     /* Tablet */
-    width: 35rem;
+    width: 38rem;
   }
-
   @media (max-width: 767px) {
     /* Mobile */
-    width: 32.8rem;
+    width: 25rem;
   }
 `;
 
@@ -405,19 +415,20 @@ const SelectWrapper = styled.div`
   display: flex;
   flex-direction: row;
   gap: 1rem;
-  @media screen and (min-width: 1024px) {
+  @media (min-width: 1280px) {
     /* Desktop */
-    width: 40rem;
+    width: 38rem;
+    margin-bottom: 5rem;
   }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: 768px) and (max-width: 1280px) {
     /* Tablet */
-    width: 35rem;
+    width: 38rem;
+    margin-bottom: 5rem;
   }
-
   @media (max-width: 767px) {
     /* Mobile */
-    width: 32.8rem;
+    width: 25rem;
+    margin-bottom: 3.5rem;
   }
 `;
 
@@ -444,19 +455,17 @@ const TextArea = styled.textarea`
     color: #eae0e0;
   }
 
-  @media screen and (min-width: 1024px) {
+  @media (min-width: 1280px) {
     /* Desktop */
     width: 38rem;
   }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: 768px) and (max-width: 1280px) {
     /* Tablet */
-    width: 35rem;
+    width: 38rem;
   }
-
   @media (max-width: 767px) {
     /* Mobile */
-    width: 32.8rem;
+    width: 25rem;
   }
 `;
 
@@ -478,6 +487,8 @@ const LocationInput = styled.input`
 `;
 
 const ImgWrapper = styled.div`
+  width: 100%;
+  height: 16rem;
   margin-top: 5rem;
 `;
 

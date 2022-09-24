@@ -66,11 +66,21 @@ const Search = () => {
 };
 
 const SearchWrapper = styled.div`
-  padding-top: 9rem;
-  margin: 0 1.8rem;
-  @media (max-width: 320px) {
+  padding-top: 8rem;
+  margin: 0 auto;
+  @media (max-width: 767px) {
     /* Mobile */
-    margin: 0 0.8rem;
+    width: calc(100% - 2.8rem);
+  }
+
+  @media (min-width: 768px) and (max-width: 1279px) {
+    /* Tablet */
+    width: calc(100% - 14.4rem);
+  }
+
+  @media (min-width: 1280px) {
+    /* Desktop */
+    width: calc(100% - 33rem);
   }
 `;
 
@@ -95,71 +105,56 @@ const Title = styled.h1`
   font-size: 2rem;
   line-height: 2.9rem;
   margin-bottom: 3rem;
-  @media screen and (min-width: 1024px) {
+  @media (min-width: 1280px) {
     /* Desktop */
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: 768px) and (max-width: 1280px) {
     /* Tablet */
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
-
   @media (max-width: 767px) {
     /* Mobile */
-    font-size: 2rem;
-  }
-  @media (max-width: 320px) {
-    /* Mobile */
-    font-size: 1.8rem;
+    font-size: 1.6rem;
   }
 `;
 
 const ButtonsWrapper = styled.div`
-  width: 30%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
+  gap: 1.8rem;
   font-weight: 500;
   font-size: 1.2rem;
-  line-height: 1.7rem;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   color: ${({ theme }) => theme.darkgray};
-  @media screen and (min-width: 1024px) {
+  @media (min-width: 1280px) {
     /* Desktop */
-    width: 20%;
+    gap: 3rem;
   }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: 768px) and (max-width: 1280px) {
     /* Tablet */
-    width: 25%;
+    gap: 2.4rem;
   }
-
-  @media (max-width: 500px) and (max-width: 767px) {
+  @media (max-width: 767px) {
     /* Mobile */
-    width: 32%;
-  }
-  @media (max-width: 320px) and (max-width: 499px) {
-    /* Mobile */
-    width: 35%;
+    gap: 1.8rem;
   }
 `;
 
 const AllDeleteButton = styled.div`
   cursor: pointer;
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Tablet */
+  @media (min-width: 1280px) {
+    /* Desktop */
     font-size: 1.1rem;
   }
-  @media (max-width: 500px) and (max-width: 767px) {
-    /* Mobile */
-    margin-left: 1rem;
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    font-size: 1rem;
   }
-  @media (max-width: 320px) and (max-width: 499px) {
+  @media (max-width: 767px) {
     /* Mobile */
-    margin-left: 0.6rem;
     font-size: 0.8rem;
   }
 `;
@@ -170,38 +165,33 @@ const ToggleWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  @media (max-width: 500px) and (max-width: 767px) {
-    /* Mobile */
+  gap: 0.4rem;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    font-size: 1.1rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
     font-size: 1rem;
   }
-  @media (max-width: 320px) and (max-width: 499px) {
+  @media (max-width: 767px) {
     /* Mobile */
     font-size: 0.8rem;
   }
 `;
 
 const ToggleLabel = styled.p`
-  margin-left: -10rem;
-  font-size: 1.2rem;
-  @media screen and (min-width: 1024px) {
+  display: block;
+  @media (min-width: 1280px) {
     /* Desktop */
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: 768px) and (max-width: 1280px) {
     /* Tablet */
-    margin-left: -6rem;
-    margin-right: 0.5rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
-  @media (max-width: 500px) and (max-width: 767px) {
+  @media (max-width: 767px) {
     /* Mobile */
-    margin-left: -6rem;
-    margin-right: 0.5rem;
-  }
-  @media (max-width: 320px) and (max-width: 499px) {
-    /* Mobile */
-    margin-left: -4rem;
-    margin-right: 0.5rem;
     font-size: 0.8rem;
   }
 `;

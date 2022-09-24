@@ -82,49 +82,47 @@ const SearchHeader = () => {
   };
   return (
     <SearchWrapper>
-      <NavbarWrapper>
-        <Navbar>
+      <Navbar>
+        <StForm onKeyPress={onCheckEnterHandler}>
           <NavItem>
-            <ArrowBackIcon onClick={() => navigate(-1)} />
+            <StArrowBackIcon onClick={() => navigate("/")} />
           </NavItem>
-          <StForm onKeyPress={onCheckEnterHandler}>
-            <NavItem ref={searchInput}>
-              {keyword !== undefined ? (
-                <InputWrapper>
-                  <SearchInput
-                    id="keyword"
-                    placeholder="검색어를 입력해주세요."
-                    type="text"
-                    name="keyword"
-                    value={keywordValue}
-                    required
-                    onChange={(e) => {
-                      setKeywordValue(e.target.value);
-                      onAutoCompleteHandler(e);
-                      setAutoComplete(true);
-                    }}
-                    ref={searchInput}
-                  />
-                  <InputResetButton onClick={() => inputResetHandler()} />
-                </InputWrapper>
-              ) : (
-                <InputWrapper>
-                  <SearchInput
-                    id="keyword"
-                    placeholder="검색어를 입력해주세요."
-                    type="text"
-                    name="keyword"
-                    required
-                    onChange={(e) => {
-                      setKeywordValue(e.target.value);
-                      onAutoCompleteHandler(e);
-                      setAutoComplete(true);
-                    }}
-                  />
-                  <InputResetButton onClick={() => inputResetHandler()} />
-                </InputWrapper>
-              )}
-            </NavItem>
+          <NavItem ref={searchInput}>
+            {keyword !== undefined ? (
+              <InputWrapper>
+                <SearchInput
+                  id="keyword"
+                  placeholder="검색어를 입력해주세요."
+                  type="text"
+                  name="keyword"
+                  value={keywordValue}
+                  required
+                  onChange={(e) => {
+                    setKeywordValue(e.target.value);
+                    onAutoCompleteHandler(e);
+                    setAutoComplete(true);
+                  }}
+                  ref={searchInput}
+                />
+                <InputResetButton onClick={() => inputResetHandler()} />
+              </InputWrapper>
+            ) : (
+              <InputWrapper>
+                <SearchInput
+                  id="keyword"
+                  placeholder="검색어를 입력해주세요."
+                  type="text"
+                  name="keyword"
+                  required
+                  onChange={(e) => {
+                    setKeywordValue(e.target.value);
+                    onAutoCompleteHandler(e);
+                    setAutoComplete(true);
+                  }}
+                />
+                <InputResetButton onClick={() => inputResetHandler()} />
+              </InputWrapper>
+            )}
             {autoComplete && (
               <AutoSearchContainer>
                 {autoSearchKeywords?.map((keyword, idx) => {
@@ -143,14 +141,14 @@ const SearchHeader = () => {
                 })}
               </AutoSearchContainer>
             )}
-            <NavItem>
-              <SearchButton>
-                <SearchIcon onClick={() => onSearchResultHandler()} />
-              </SearchButton>
-            </NavItem>
-          </StForm>
-        </Navbar>
-      </NavbarWrapper>
+          </NavItem>
+          <NavItem>
+            <SearchButton>
+              <SearchIcon onClick={() => onSearchResultHandler()} />
+            </SearchButton>
+          </NavItem>
+        </StForm>
+      </Navbar>
     </SearchWrapper>
   );
 };
@@ -159,29 +157,34 @@ export default SearchHeader;
 
 const SearchWrapper = styled.div`
   position: fixed;
-  display: flex;
   flex-direction: column;
   width: 100%;
   z-index: 100;
 `;
-const NavbarWrapper = styled.div`
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-`;
+
+const StArrowBackIcon = styled(ArrowBackIcon)``;
 
 const Navbar = styled.nav`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  padding: 20px;
+  justify-content: center;
   align-items: center;
+  padding: 1rem;
   height: 4.8rem;
   background-color: ${({ theme }) => theme.headerMainColor};
   color: ${({ theme }) => theme.headerTxtColor};
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
-  @media (max-width: 375px) and (max-width: 499px) {
-    padding: 10px;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    padding: 1rem 0rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    padding: 1rem 0rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    padding: 1rem 0rem;
   }
 `;
 
@@ -190,18 +193,26 @@ const NavItem = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.8rem;
-  gap: 2rem;
   cursor: pointer;
   width: fit-content;
+  position: relative;
   background-color: ${({ theme }) => theme.headerMainColor};
-  @media (max-width: 375px) and (max-width: 499px) {
-    gap: 1rem;
-  }
 `;
 
-const InputWrapper = styled.div`
-  position: relative;
+const InputWrapper = styled.div``;
+
+const StForm = styled.form`
+  width: 95%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const SearchButton = styled.button`
+  border: none;
+  cursor: pointer;
+  background-color: ${({ theme }) => theme.white};
 `;
 
 const SearchInput = styled.input`
@@ -219,6 +230,21 @@ const SearchInput = styled.input`
   font-size: 1.6rem;
   line-height: 2.3rem;
   position: relative;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    width: 44rem;
+    height: 3rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    width: 44rem;
+    height: 3rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 20rem;
+    height: 3rem;
+  }
   &:hover {
     border-color: ${({ theme }) => theme.mainColor};
   }
@@ -234,77 +260,51 @@ const SearchInput = styled.input`
     display: flex;
     flex-direction: row;
     align-items: center;
-    @media (min-width: 1024px) {
-      font-size: 1.6rem;
+    @media (min-width: 1280px) {
+      /* Desktop */
+      font-size: 1.8rem;
+      line-height: 2.9rem;
     }
-    @media (min-width: 768px) and (max-width: 1023px) {
+    @media (min-width: 768px) and (max-width: 1280px) {
+      /* Tablet */
+      font-size: 1.8rem;
+      line-height: 2.9rem;
+    }
+    @media (max-width: 767px) {
+      /* Mobile */
       font-size: 1.5rem;
-    }
-    @media (max-width: 500px) and (max-width: 767px) {
-      font-size: 1.4rem;
-    }
-    @media (max-width: 375px) and (max-width: 499px) {
-      font-size: 1.2rem;
+      line-height: 2.3rem;
     }
   }
-  @media (min-width: 1024px) {
-    width: 40rem;
-    margin-left: -2rem;
-  }
-  @media (min-width: 768px) and (max-width: 1023px) {
-    width: 30rem;
-    margin-left: -2rem;
-  }
-  @media (max-width: 500px) and (max-width: 767px) {
-    width: 20rem;
-    margin-left: -1.3rem;
-  }
-  @media (max-width: 375px) and (max-width: 499px) {
-    width: 15rem;
-    margin-left: -2rem;
-  }
-`;
-
-const StForm = styled.form`
-  width: 73%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const SearchButton = styled.button`
-  border: none;
-  cursor: pointer;
-  background-color: ${({ theme }) => theme.white};
 `;
 
 const AutoSearchContainer = styled.div`
   z-index: 100;
   margin-top: 16rem;
   position: absolute;
-  top: -12.1rem;
   background-color: ${({ theme }) => theme.white};
   height: 28rem;
   border-radius: 0.4rem;
   width: 27rem;
   border: 1px solid ${({ theme }) => theme.mainColor};
   cursor: default;
-  @media (min-width: 1024px) {
-    width: 40rem;
-    margin-left: -2rem;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    width: 44rem;
+    height: 27rem;
+    top: -13rem;
   }
-  @media (min-width: 768px) and (max-width: 1023px) {
-    width: 30rem;
-    margin-left: -4.3rem;
-    left: 19.5rem;
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    width: 44rem;
+    height: 27rem;
+    top: -13rem;
   }
-  @media (max-width: 500px) and (max-width: 767px) {
+  @media (max-width: 767px) {
+    /* Mobile */
     width: 20rem;
-    margin-left: -1.3rem;
-  }
-  @media (max-width: 375px) and (max-width: 499px) {
-    width: 15rem;
-    margin-left: -2rem;
+    height: 27rem;
+    top: -13rem;
   }
 `;
 
