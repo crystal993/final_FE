@@ -12,7 +12,7 @@ const StGlobalLayoutWrap = styled.div`
   margin: 0 auto;
   @media (max-width: 767px) {
     /* Mobile */
-    width: calc(100% - 3.2rem);
+    width: calc(100% - 2.8rem);
   }
 
   @media (min-width: 768px) and (max-width: 1279px) {

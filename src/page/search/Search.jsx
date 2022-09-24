@@ -7,9 +7,7 @@ const Search = () => {
   return (
     <>
       <Header />
-      <Layout>
-        <SearchContainer />
-      </Layout>
+      <SearchContainer />
     </>
   );
 };
