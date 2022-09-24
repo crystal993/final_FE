@@ -53,9 +53,15 @@ const SearchHeader = () => {
   // debouncedValue가 바뀔 때 호출
   useEffect(() => {
     console.log("api call!");
-    apis.get_auto_complete(debouncedValue).then(({ data }) => {
-      setAutoSearchKeywords(data);
-    });
+    apis
+      .get_auto_complete(debouncedValue)
+      .then(({ data }) => {
+        setAutoSearchKeywords(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        setAutoSearchKeywords([]);
+      });
   }, [debouncedValue]);
 
   // enter 눌렀을 때 검색 기능
