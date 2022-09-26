@@ -96,11 +96,11 @@ const StComposedChartWrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 1rem;
-  height: 63rem;
+  height: 60rem;
   width: 45.5rem;
   @media (max-width: 767px) {
     /* Mobile */
-    height: 33rem;
+    height: 30rem;
     width: 25rem;
   }
 `;
