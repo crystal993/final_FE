@@ -147,7 +147,7 @@ const MainContainer = () => {
   ]);
 
   return (
-    <>
+    <Wrapper>
       <STsection>
         <STh1>멍냥마켓</STh1>
         <div className="button">
@@ -195,7 +195,7 @@ const MainContainer = () => {
         (doubleList !== null && doubleList.length !== 0)) && (
         <div ref={lastIntersectingData}>.</div>
       )}
-    </>
+    </Wrapper>
   );
 };
 
@@ -243,5 +243,21 @@ const STselect = styled.select`
 
   .option {
     margin-right: 1rem;
+  }
+`;
+
+const Wrapper = styled.div`
+  height: auto;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    min-height: 77vh;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    min-height: 77vh;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    min-height: 86.4vh;
   }
 `;
