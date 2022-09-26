@@ -16,10 +16,9 @@ const GlobalFooter = () => {
 };
 
 const Footer = styled.footer`
-  z-index: -1px;
+  z-index: -10px;
   background-color: ${({ theme }) => theme.darkgray};
   width: 100%;
-  height: 15rem;
   text-align: center;
   margin: 0 auto;
   display: flex;
@@ -31,11 +30,12 @@ const Footer = styled.footer`
   font-size: 1rem;
   line-height: 1.7rem;
   font-weight: 500;
-  position: absolute;
-  bottom: 0;
+  height: 15rem;
+  position: relative;
+  transform: translatY(-100%);
   @media (max-width: 767px) {
     /* Mobile */
-    height: 8rem;
+    height: 10rem;
   }
 `;
 
