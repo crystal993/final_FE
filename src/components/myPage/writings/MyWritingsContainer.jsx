@@ -5,10 +5,12 @@ import MyWritingsList from "./MyWritingsList";
 const MyWritingsContainer = () => {
   return (
     <>
-      <SectionWrapper>
-        <MyWritingsTitle>내가 쓴 글</MyWritingsTitle>
-      </SectionWrapper>
-      <MyWritingsList />
+      <Wrapper>
+        <SectionWrapper>
+          <MyWritingsTitle>내가 쓴 글</MyWritingsTitle>
+        </SectionWrapper>
+        <MyWritingsList />
+      </Wrapper>
     </>
   );
 };
@@ -26,4 +28,20 @@ const SectionWrapper = styled.section`
 const MyWritingsTitle = styled.h1`
   font-size: 2.4rem;
   font-weight: 700;
+`;
+
+const Wrapper = styled.div`
+  height: auto;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    min-height: 77vh;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    min-height: 78.5vh;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    min-height: 86.5vh;
+  }
 `;
