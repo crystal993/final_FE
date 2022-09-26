@@ -24,25 +24,41 @@ const MyPageChart = () => {
 };
 
 const MyPageChartWrapper = styled.div`
-  height: 40rem;
   margin: 0 auto;
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-items: center;
-  margin: 0rem 2rem 4rem 2rem;
-  padding: 3rem 0 3rem 0;
+  margin-bottom: 10rem;
   border-radius: 0.6rem;
   background-color: ${({ theme }) => theme.white};
+  padding: 4rem 2rem;
+  width: 50rem;
+  height: 70rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    padding: 3rem 0;
+    width: 26rem;
+    height: 40rem;
+    margin: 1rem;
+    margin-bottom: 10rem;
+  }
 `;
 
 const TitleWrapper = styled.div`
-  width: 80%;
   text-align: left;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  width: 47.5rem;
+  margin: 0 4rem;
+  padding: 0 2rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 23.5rem;
+    margin: 0 2rem;
+  }
 `;
 
 const Title = styled.h1`
@@ -50,7 +66,13 @@ const Title = styled.h1`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  font-size: 2rem;
+  font-size: 2.1rem;
+  margin-bottom: 2rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 2rem;
+    margin-bottom: 0.8rem;
+  }
 `;
 
 export default MyPageChart;

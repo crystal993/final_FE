@@ -7,10 +7,13 @@ function GlobalButton({
   icon,
   size,
   onClick,
+  mogileWidth,
   width,
+  mobileHeight,
   height,
-  fontSize,
   fontWeight,
+  fontSize,
+  mobileFontSize,
   color,
 }) {
   return (
@@ -19,10 +22,13 @@ function GlobalButton({
       {content && (
         <Btn
           size={size}
-          fontSize={fontSize}
           fontWeight={fontWeight}
           width={width}
+          mogileWidth={mogileWidth}
           height={height}
+          mobileHeight={mobileHeight}
+          fontSize={fontSize}
+          mobileFontSize={mobileFontSize}
           color={color}
         >
           {content}
@@ -51,7 +57,7 @@ const Btn = styled.button`
   font-weight: ${(props) => props.fontWeight};
   color: ${(props) =>
     props.color === "subColor" ? props.theme.mainColor : props.theme.white};
-  border-radius: ${(props) => props.theme.buttonRadius};
+  border-radius: 1rem;
   transition: ${(props) => props.theme.transition};
   border: ${(props) =>
     props.color === "subColor" ? `1px solid ${props.theme.mainColor}` : "none"};
@@ -59,6 +65,13 @@ const Btn = styled.button`
     props.color === "subColor" ? props.theme.white : props.theme.mainColor};
   font-size: ${(props) => props.fontSize};
   cursor: pointer;
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: ${(props) => props.mogileWidth};
+    height: ${(props) => props.mobileHeight};
+    border-radius: 0.5rem;
+    font-size: ${(props) => props.mobileFontSize};
+  }
 `;
 
 export default GlobalButton;
