@@ -30,29 +30,31 @@ const SearchResultContainer = () => {
 
   return (
     <>
-      {searchResultList?.length > 0 ? (
-        <>
-          <SectionWrapper>
-            <SearchResultTitle>'{keyword}' 검색결과</SearchResultTitle>
-            <Select
-              optionDatas={option}
-              setSelected={setSelected}
-              width={"8.8rem"}
-              height={"3.2rem"}
-              optionWidth={"8.5rem"}
-            />
-          </SectionWrapper>
-          <SearchItemList searchResultList={searchResultList} />
-        </>
-      ) : (
-        <SectionsWrapper>
-          <NoSearchResult>
-            검색 결과가 없습니다.
-            <br />
-            철자를 확인하거나 다시 검색해주세요.
-          </NoSearchResult>
-        </SectionsWrapper>
-      )}
+      <Wrapper>
+        {searchResultList?.length > 0 ? (
+          <>
+            <SectionWrapper>
+              <SearchResultTitle>'{keyword}' 검색결과</SearchResultTitle>
+              <Select
+                optionDatas={option}
+                setSelected={setSelected}
+                width={"8.8rem"}
+                height={"3.2rem"}
+                optionWidth={"8.5rem"}
+              />
+            </SectionWrapper>
+            <SearchItemList searchResultList={searchResultList} />
+          </>
+        ) : (
+          <SectionsWrapper>
+            <NoSearchResult>
+              검색 결과가 없습니다.
+              <br />
+              철자를 확인하거나 다시 검색해주세요.
+            </NoSearchResult>
+          </SectionsWrapper>
+        )}
+      </Wrapper>
     </>
   );
 };
@@ -125,6 +127,22 @@ const NoSearchResult = styled.h1`
   @media (max-width: 380px) {
     /* Mobile */
     font-size: 1.3rem;
+  }
+`;
+
+const Wrapper = styled.div`
+  height: auto;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    min-height: 77vh;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    min-height: 81vh;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    min-height: 86.4vh;
   }
 `;
 
