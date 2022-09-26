@@ -11,6 +11,7 @@ const AddPostButton = ({ onClick, isLogin }) => {
 };
 
 const StAddPostBtn = styled.button`
+  z-index: 100;
   border-radius: 5rem;
   width: 6rem;
   height: 6rem;
