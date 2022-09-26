@@ -5,10 +5,12 @@ import MyZzimList from "./MyZzimList";
 const MyPageZzimContainer = () => {
   return (
     <>
-      <SectionWrapper>
-        <MyZzimTitle>찜 목록</MyZzimTitle>
-      </SectionWrapper>
-      <MyZzimList />
+      <Wrapper>
+        <SectionWrapper>
+          <MyZzimTitle>찜 목록</MyZzimTitle>
+        </SectionWrapper>
+        <MyZzimList />
+      </Wrapper>
     </>
   );
 };
@@ -43,5 +45,21 @@ const MyZzimTitle = styled.h1`
   @media (max-width: 767px) {
     /* Mobile */
     width: 28rem;
+  }
+`;
+
+const Wrapper = styled.div`
+  height: auto;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    min-height: 77vh;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    min-height: 78.5vh;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    min-height: 86.5vh;
   }
 `;
