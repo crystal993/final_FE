@@ -5,10 +5,12 @@ import MyViewedProductsList from "./MyViewedProductsList";
 const MyViewedProductsContainer = () => {
   return (
     <>
-      <SectionWrapper>
-        <MyViewedProductsTitle>최근 본 상품</MyViewedProductsTitle>
-      </SectionWrapper>
-      <MyViewedProductsList />
+      <Wrapper>
+        <SectionWrapper>
+          <MyViewedProductsTitle>최근 본 상품</MyViewedProductsTitle>
+        </SectionWrapper>
+        <MyViewedProductsList />
+      </Wrapper>
     </>
   );
 };
@@ -43,5 +45,21 @@ const MyViewedProductsTitle = styled.h1`
   @media (max-width: 767px) {
     /* Mobile */
     width: 28rem;
+  }
+`;
+
+const Wrapper = styled.div`
+  height: auto;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    min-height: 77vh;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    min-height: 78.5vh;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    min-height: 86.5vh;
   }
 `;
