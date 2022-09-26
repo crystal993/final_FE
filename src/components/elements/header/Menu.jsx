@@ -13,8 +13,7 @@ import {
 } from '../../../redux/modules/market/postSlice';
 import { ReactComponent as ProfileIcon } from '../../../assets/icons/profile_img_sm.svg';
 
-
-const Menu = ({ open, ...props }) => {
+const Menu = ({ open, setOpen, ...props }) => {
   const isHidden = open ? true : false;
   const tabIndex = isHidden ? 0 : -1;
   const isLogin = useSelector((state) => state.user.userToken);
@@ -34,6 +33,7 @@ const Menu = ({ open, ...props }) => {
     dispatch(pageToZero());
     dispatch(doubleListToZero());
     setState(itemCategory);
+    setOpen(false);
   };
 
 
