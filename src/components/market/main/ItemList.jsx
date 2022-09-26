@@ -80,7 +80,7 @@ export default ItemList;
 
 const TwitListBox = styled.div`
   width: 100%;
-  /* border-radius: 10px; */
+  min-height: 20rem;
   margin: 1.6rem auto 0 auto;
   display: flex;
   flex-direction: column;

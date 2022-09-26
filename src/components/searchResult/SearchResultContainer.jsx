@@ -107,6 +107,8 @@ const NoSearchResult = styled.h1`
   align-items: center;
   margin-top: 7rem;
   text-align: center;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   color: ${({ theme }) => theme.darkgray};
   @media (min-width: 1280px) {
     /* Desktop */
