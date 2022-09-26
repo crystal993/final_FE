@@ -1,15 +1,14 @@
 import React from "react";
 import Header from "../../components/elements/GlobalHeader";
-import Layout from "../../components/elements/GlobalLayout";
 import MyPages from "../../components/myPage/MyPage";
+import Footer from "../../components/elements/GlobalFooter";
 
 const MyPage = () => {
   return (
     <>
       <Header />
-      <Layout>
-        <MyPages />
-      </Layout>
+      <MyPages />
+      <Footer />
     </>
   );
 };

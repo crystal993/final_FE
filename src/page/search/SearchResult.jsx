@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import AddPostButton from "../../components/elements/buttons/AddPostButton";
 import SearchResultContainer from "../../components/searchResult/SearchResultContainer";
 import GlobalModal from "../../components/elements/GlobalModal";
+import Footer from "../../components/elements/GlobalFooter";
 
 const SearchResult = () => {
   const navigate = useNavigate();
@@ -35,6 +36,7 @@ const SearchResult = () => {
           ></AddPostButton>
         )}
       </Layout>
+      <Footer />
     </>
   );
 };

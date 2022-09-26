@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ReactComponent as AddIcon } from "../../../assets/icons/add.svg";
+import { ReactComponent as AddIcon } from "../../../assets/icons/edit_document2.svg";
 
 const AddPostButton = ({ onClick, isLogin }) => {
   return (
@@ -18,7 +18,7 @@ const StAddPostBtn = styled.button`
   position: fixed;
   cursor: pointer;
   background-color: ${(props) =>
-    props.isLogin ? props.theme.mainColor : props.theme.grey};
+    props.isLogin ? props.theme.mainColor : "#ADADAD"};
   @media (min-width: 1024px) {
     right: 10%;
     bottom: 5%;
@@ -34,8 +34,9 @@ const StAddPostBtn = styled.button`
 `;
 
 const StAddIcon = styled(AddIcon)`
-  width: 3.4rem;
-  height: 3.4rem;
+  margin-left: 0.5rem;
+  width: 2.4rem;
+  height: 2.4rem;
 `;
 
 export default AddPostButton;

@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import AddPostButton from "../../components/elements/buttons/AddPostButton";
 import GlobalModal from "../../components/elements/GlobalModal";
 import MainBanner from "../../components/market/main/MainBanner";
+import Footer from "../../components/elements/GlobalFooter";
 
 const Main = () => {
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ const Main = () => {
           ></AddPostButton>
         )}
       </Layout>
+      <Footer />
     </>
   );
 };
