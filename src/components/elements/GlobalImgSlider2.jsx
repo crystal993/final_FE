@@ -12,7 +12,9 @@ const GlobalImgSlider2 = ({
   autoplaySpeed = 0,
   nextArrow,
   prevArrow,
-  width = "100%",
+  mobileWidth,
+  tabletWidth,
+  desktopWidth,
   mobileHeight = "14rem",
   tabletHeight = "22rem",
   desktopHeight = "33rem",
@@ -39,7 +41,9 @@ const GlobalImgSlider2 = ({
             src={url}
             key={uuidv4()}
             alt={idx + 1}
-            width={width}
+            mobileWidth={mobileWidth}
+            tabletWidth={tabletWidth}
+            desktopWidth={desktopWidth}
             mobileHeight={mobileHeight}
             tabletHeight={tabletHeight}
             desktopHeight={desktopHeight}
@@ -60,16 +64,19 @@ const Img = styled.img`
   background-color: ${({ theme }) => theme.lightgray};
   @media screen and (min-width: 1024px) {
     /* Desktop */
+    width: ${({ desktopWidth }) => desktopWidth};
     height: ${({ desktopHeight }) => desktopHeight};
   }
 
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     /* Tablet */
+    width: ${({ tabletWidth }) => tabletWidth};
     height: ${({ tabletHeight }) => tabletHeight};
   }
 
   @media (max-width: 767px) {
     /* Mobile */
+    width: ${({ mobileWidth }) => mobileWidth};
     height: ${({ mobileHeight }) => mobileHeight};
   }
 `;

@@ -124,10 +124,12 @@ const DetailInfo = () => {
         ) : null}
         <ImgSlider
           itemImgs={itemImgs}
-          width={"36rem"}
+          mobileWidth={"36rem"}
+          tabletWidth={"50.6rem"}
+          desktopWidth={"50.6rem"}
           mobileHeight={"22.2rem"}
-          tabletHeight={"22.2rem"}
-          desktopHeight={"22.2rem"}
+          tabletHeight={"31.2rem"}
+          desktopHeight={"31.2rem"}
         />
         <DetailWrapper>
           <InfoWrapper>
@@ -194,9 +196,16 @@ const DetailInfo = () => {
 };
 
 const DetailInfoWrapper = styled.div`
-  width: 26rem;
   padding-top: 4.9rem;
   margin: 0 auto;
+  @media (min-width: 768px) {
+    /* Tablet */ /* Desktop */
+    width: 50.6rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 26rem;
+  }
 `;
 
 const DetailWrapper = styled.div`
@@ -213,12 +222,26 @@ const InfoWrapper = styled.div`
 `;
 
 const P = styled.p`
-  font-size: 1rem;
+  @media (min-width: 768px) {
+    /* Tablet */ /* Desktop */
+    font-size: 1.2rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 1rem;
+  }
 `;
 
 const H3 = styled.p`
-  font-size: 1.4rem;
   font-weight: bold;
+  @media (min-width: 768px) {
+    /* Tablet */ /* Desktop */
+    font-size: 1.6rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 1.4rem;
+  }
 `;
 
 const StWrapper = styled.div`
@@ -229,22 +252,34 @@ const StWrapper = styled.div`
   justify-content: space-between;
   align-content: center;
   align-items: center;
-  span {
-    color: ${({ theme }) => theme.darkgray};
-  }
 `;
 
 const Title = styled.p`
   display: block;
   width: 100%;
-  font-size: 2rem;
+
   text-overflow: ellipsis;
+  @media (min-width: 768px) {
+    /* Tablet */ /* Desktop */
+    font-size: 2.4rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 2rem;
+  }
 `;
 
 const Price = styled.p`
-  font-size: 2.4rem;
   color: ${({ theme }) => theme.mainColor};
   font-weight: bold;
+  @media (min-width: 768px) {
+    /* Tablet */ /* Desktop */
+    font-size: 2.8rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 2.4rem;
+  }
 `;
 
 const StUserBox = styled.div`
@@ -276,36 +311,34 @@ const StUserBox = styled.div`
 `;
 
 const UserImgBox = styled.div`
-  width: 50px;
-  height: 50px;
   border-radius: 70%;
   overflow: hidden;
-
-  @media screen and (min-width: 1024px) {
-    /* Desktop */
-    width: 50px;
-    height: 50px;
+  @media (min-width: 768px) {
+    /* Tablet */ /* Desktop */
+    width: 5rem;
+    height: 5rem;
   }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Tablet */
-    width: 50px;
-    height: 50px;
-  }
-
   @media (max-width: 767px) {
     /* Mobile */
-    width: 50px;
-    height: 50px;
+    width: 4rem;
+    height: 4rem;
   }
 `;
 
 const StShareIcon = styled(ShareIcon)`
-  width: 1.4rem;
-  height: 1.4rem;
   cursor: pointer;
   path {
     fill: ${({ theme }) => theme.darkgray};
+  }
+  @media (min-width: 768px) {
+    /* Tablet */ /* Desktop */
+    width: 1.8rem;
+    height: 2rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 1.4rem;
+    height: 1.4rem;
   }
 `;
 
@@ -313,7 +346,14 @@ const UserInfoTxt = styled.div``;
 
 const Content = styled.h1`
   font-weight: 400;
-  font-size: 1.4rem;
+  @media (min-width: 768px) {
+    /* Tablet */ /* Desktop */
+    font-size: 1.6rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 1.4rem;
+  }
 `;
 
 const InfoCntWrapper = styled.div`

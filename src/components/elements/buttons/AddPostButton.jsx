@@ -18,7 +18,7 @@ const StAddPostBtn = styled.button`
   position: fixed;
   cursor: pointer;
   background-color: ${(props) =>
-    props.isLogin ? props.theme.mainColor : props.theme.grey};
+    props.isLogin ? props.theme.mainColor : "#ADADAD"};
   @media (min-width: 1024px) {
     right: 10%;
     bottom: 5%;
