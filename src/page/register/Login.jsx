@@ -1,12 +1,12 @@
-import React from 'react';
-import GlobalLayout from './../../components/elements/GlobalLayout';
-import LoginForm from '../../components/register/LoginForm';
+import React from "react";
+import Layout from "./../../components/elements/GlobalLayout";
+import LoginForm from "../../components/register/LoginForm";
 
 const Login = () => {
   return (
-    <GlobalLayout>
+    <Layout>
       <LoginForm />
-    </GlobalLayout>
+    </Layout>
   );
 };
 

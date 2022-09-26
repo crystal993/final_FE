@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "../../components/elements/GlobalFooter";
 import Header from "../../components/elements/GlobalHeader2";
 import MyViewedProductsContainer from "../../components/myPage/products/MyViewedProductsContainer";
 
@@ -7,6 +8,7 @@ const MyViewedProucts = () => {
     <>
       <Header />
       <MyViewedProductsContainer />
+      <Footer />
     </>
   );
 };
