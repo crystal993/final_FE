@@ -30,20 +30,25 @@ const SearchResultContainer = () => {
 
   return (
     <>
-      <SectionWrapper>
-        <SearchResultTitle>'{keyword}' 검색결과</SearchResultTitle>
-        <Select
-          optionDatas={option}
-          setSelected={setSelected}
-          width={"8.8rem"}
-          height={"3.2rem"}
-          optionWidth={"8.5rem"}
-        />
-      </SectionWrapper>
+      <SectionWrapper></SectionWrapper>
       {searchResultList?.length > 0 ? (
-        <SearchItemList searchResultList={searchResultList} />
+        <>
+          <SearchResultTitle>'{keyword}' 검색결과</SearchResultTitle>
+          <Select
+            optionDatas={option}
+            setSelected={setSelected}
+            width={"8.8rem"}
+            height={"3.2rem"}
+            optionWidth={"8.5rem"}
+          />
+          <SearchItemList searchResultList={searchResultList} />
+        </>
       ) : (
-        <NoSearchResult>검색 결과가 없습니다.</NoSearchResult>
+        <NoSearchResult>
+          검색 결과가 없습니다.
+          <br />
+          철자를 확인하거나 다시 검색해주세요.
+        </NoSearchResult>
       )}
     </>
   );
@@ -68,9 +73,24 @@ const SectionWrapper = styled.section`
 `;
 
 const SearchResultTitle = styled.h1`
-  font-size: 2rem;
-  margin: 0 2.4rem;
+  font-size: 1.7rem;
   font-weight: 700;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    font-size: 2.4rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    font-size: 2.4rem;
+  }
+  @media (min-width: 380px) and (max-width: 767px) {
+    /* Mobile */
+    font-size: 2.1rem;
+  }
+  @media (max-width: 380px) {
+    /* Mobile */
+    font-size: 1.7rem;
+  }
 `;
 
 const NoSearchResult = styled.h1`
@@ -78,8 +98,24 @@ const NoSearchResult = styled.h1`
   justify-content: center;
   align-items: center;
   margin-top: 7rem;
-  font-size: 1.5rem;
+  text-align: center;
   color: ${({ theme }) => theme.darkgray};
+  @media (min-width: 1280px) {
+    /* Desktop */
+    font-size: 2.4rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    font-size: 2.4rem;
+  }
+  @media (min-width: 380px) and (max-width: 767px) {
+    /* Mobile */
+    font-size: 1.5rem;
+  }
+  @media (max-width: 380px) {
+    /* Mobile */
+    font-size: 1.5rem;
+  }
 `;
 
 export default SearchResultContainer;
