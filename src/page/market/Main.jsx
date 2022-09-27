@@ -13,7 +13,8 @@ import styled from "styled-components";
 const Main = () => {
   const navigate = useNavigate();
   const isLogin = useSelector((state) => state.user.userToken);
-
+  const isLoading = useSelector((state) => state.marketPost.isLoading);
+  console.log(isLoading);
   const onPathHandler = () => {
     navigate("/market/post");
   };

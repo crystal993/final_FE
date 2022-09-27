@@ -25,11 +25,6 @@ const LoginForm = () => {
       password: watch().password,
     };
     dispatch(userLogin(body));
-    setTimeout(removeAccessToken, 3600 * 1000);
-  };
-
-  const removeAccessToken = () => {
-    localStorage.removeItem("access-token");
   };
 
   const onError = (error) => {
