@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { userLogin } from '../../redux/modules/user/userActions';
-import KakaoLogin from './socialLogin/KakaoLogin';
-import Button from '../elements/GlobalButton';
+import React from "react";
+import styled from "styled-components";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogin } from "../../redux/modules/user/userActions";
+import KakaoLogin from "./socialLogin/KakaoLogin";
+import Button from "../elements/GlobalButton";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const LoginForm = () => {
     handleSubmit,
     watch,
     formState: { isDirty, errors },
-  } = useForm({ mode: 'onChange' });
+  } = useForm({ mode: "onChange" });
 
   const onSubmit = () => {
     const body = {
@@ -32,87 +32,87 @@ const LoginForm = () => {
   };
 
   const goHome = () => {
-    navigate('/');
+    navigate("/");
   };
 
   if (success) {
-    navigate('/');
+    navigate("/");
   }
 
   return (
     <>
-      <STwrap className='wrap'>
+      <STwrap className="wrap">
         <section>
-          <p className='go-back' onClick={goHome}>
+          <p className="go-back" onClick={goHome}>
             홈 아이콘
           </p>
-          <section className='login-context'>
-            <h2 className='title'>로그인</h2>
+          <section className="login-context">
+            <h2 className="title">로그인</h2>
           </section>
         </section>
-        <form className='login-form' onSubmit={handleSubmit(onSubmit, onError)}>
-          <div className='field'>
-            <Label className='label'>
+        <form className="login-form" onSubmit={handleSubmit(onSubmit, onError)}>
+          <div className="field">
+            <Label className="label">
               아이디
               <div>
                 <input
-                  type='text'
-                  tabIndex='2'
-                  className='input'
-                  {...register('userId', {
-                    required: '아이디는 필수값입니다.',
+                  type="text"
+                  tabIndex="2"
+                  className="input"
+                  {...register("userId", {
+                    required: "아이디는 필수값입니다.",
                   })}
                   aria-invalid={
-                    !isDirty ? undefined : errors.userId ? 'true' : 'false'
+                    !isDirty ? undefined : errors.userId ? "true" : "false"
                   }
-                  name='userId'
+                  name="userId"
                 />
               </div>
               {errors.userId && (
-                <p className='error'>{errors?.userId?.message}</p>
+                <p className="error">{errors?.userId?.message}</p>
               )}
             </Label>
           </div>
-          <div className='field'>
-            <label className='label'>
+          <div className="field">
+            <label className="label">
               비밀번호
               <div>
                 <input
-                  type='password'
-                  tabIndex='2'
-                  className='input'
-                  {...register('password', {
-                    required: '비밀번호는 필수값입니다.',
+                  type="password"
+                  tabIndex="2"
+                  className="input"
+                  {...register("password", {
+                    required: "비밀번호는 필수값입니다.",
                   })}
                   aria-invalid={
-                    !isDirty ? undefined : errors.password ? 'true' : 'false'
+                    !isDirty ? undefined : errors.password ? "true" : "false"
                   }
-                  name='password'
+                  name="password"
                 />
               </div>
               {errors.password && (
-                <p className='error'>{errors?.password?.message}</p>
+                <p className="error">{errors?.password?.message}</p>
               )}
             </label>
           </div>
-          <div className='login-btn-wrap'>
+          <div className="login-btn-wrap">
             <Button
-              className='login-btn'
-              content={'로그인'}
-              width={'30rem'}
-              fontSize={'1.3rem'}
+              className="login-btn"
+              content={"로그인"}
+              width={"30rem"}
+              fontSize={"1.3rem"}
             ></Button>
           </div>
         </form>
-        <div className='kakao-wrapper'>
-          <KakaoLogin className='kakao-btn' />
+        <div className="kakao-wrapper">
+          <KakaoLogin className="kakao-btn" />
         </div>
-        <div className='move-signup'>
-          <p className='isnot-member'>아직 멍냥마켓 회원이 아니신가요?</p>
+        <div className="move-signup">
+          <p className="isnot-member">아직 멍냥마켓 회원이 아니신가요?</p>
           <p
-            className='go-signup'
+            className="go-signup"
             onClick={() => {
-              navigate('/signup');
+              navigate("/signup");
             }}
           >
             회원가입

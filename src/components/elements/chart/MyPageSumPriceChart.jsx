@@ -88,29 +88,20 @@ const StComposedChartWrapper = styled.div`
   font-family: sans-serif;
   text-align: center;
   margin: 0 auto;
-  padding-bottom: 2rem;
   border: none;
   font-size: 1.2rem;
-  width: 50rem;
-  height: 40rem;
   color: ${({ theme }) => theme.grayColor};
-  @media screen and (min-width: 1024px) {
-    /* Desktop */
-    width: 50rem;
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Tablet */
-    width: 40rem;
-  }
-  @media (max-width: 500px) and (max-width: 767px) {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
+  height: 60rem;
+  width: 45.5rem;
+  @media (max-width: 767px) {
     /* Mobile */
-    width: 30rem;
-  }
-
-  @media (max-width: 374px) and (max-width: 499px) {
-    /* Mobile */
-    width: 20rem;
+    height: 30rem;
+    width: 25rem;
   }
 `;
 

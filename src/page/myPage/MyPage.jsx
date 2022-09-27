@@ -1,17 +1,25 @@
 import React from "react";
 import Header from "../../components/elements/GlobalHeader";
-import Layout from "../../components/elements/GlobalLayout";
 import MyPages from "../../components/myPage/MyPage";
+import Footer from "../../components/elements/GlobalFooter";
+import styled from "styled-components";
 
 const MyPage = () => {
   return (
     <>
       <Header />
-      <Layout>
+      <Wrapper>
         <MyPages />
-      </Layout>
+      </Wrapper>
+      <Footer />
     </>
   );
 };
 
 export default MyPage;
+
+const Wrapper = styled.div`
+  height: auto;
+  min-height: 100%;
+  padding-bottom: 0rem;
+`;

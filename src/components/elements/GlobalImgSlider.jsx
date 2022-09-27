@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
-const ImgView = ({ imgUrls }) => {
+const GlobalImgSlider = ({ imgUrls }) => {
   const [currImg, setCurrImg] = useState(0);
   const [lastImg, setLastImg] = useState(imgUrls.length - 1);
 
@@ -41,19 +41,17 @@ const ImgWrapper = styled.div`
   justify-content: center;
   align-items: center;
   transition: all 3ms ease;
-  @media screen and (min-width: 1024px) {
+  @media (min-width: 1280px) {
     /* Desktop */
-    width: 40rem;
+    width: 38rem;
   }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: 768px) and (max-width: 1280px) {
     /* Tablet */
-    width: 35rem;
+    width: 38rem;
   }
-
   @media (max-width: 767px) {
     /* Mobile */
-    width: 32.8rem;
+    width: 25rem;
   }
 `;
 
@@ -91,19 +89,17 @@ const RoundButtonWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  @media screen and (min-width: 1024px) {
+  @media (min-width: 1280px) {
     /* Desktop */
-    width: 40rem;
+    width: 38rem;
   }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: 768px) and (max-width: 1280px) {
     /* Tablet */
-    width: 35rem;
+    width: 38rem;
   }
-
   @media (max-width: 767px) {
     /* Mobile */
-    width: 32.8rem;
+    width: 25rem;
   }
 `;
 
@@ -114,4 +110,4 @@ const ImgPreview = styled.img`
   transition: all 3ms ease;
 `;
 
-export default ImgView;
+export default GlobalImgSlider;

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { ReactComponent as DropDownIcon } from "../../assets/icons/arrow_drop_down.svg";
+import { ReactComponent as DropUpIcon } from "../../assets/icons/arrow_drop_up.svg";
 
 const GlobalSelect = ({
   optionDatas,
@@ -44,7 +45,11 @@ const GlobalSelect = ({
         onClick={() => setIsShowOptions((prev) => !prev)}
         ref={selectRef}
       >
-        <DropDownIconSet color={color} />
+        {!isShowOptions ? (
+          <DropDownIconSet color={color} />
+        ) : (
+          <DropUpIconSet color={color} />
+        )}
         <Label>{currentOption}</Label>
         {isShowOptions && (
           <SelectOptions color={color} optionsWidth={optionsWidth}>
@@ -56,6 +61,7 @@ const GlobalSelect = ({
                 name={option.name}
                 color={color}
                 optionWidth={optionWidth}
+                fontWeight={option.name === currentOption ? "900" : "0"}
               >
                 {option.name}
               </Option>
@@ -71,7 +77,7 @@ const SelectorWrapper = styled.div`
   position: relative;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
-  border-radius: 0.6rem;
+  border-radius: 0.3rem;
   text-align: center;
   color: ${({ color, theme }) =>
     color === "gray" ? theme.darkgray : theme.mainColor};
@@ -82,7 +88,7 @@ const SelectorWrapper = styled.div`
   border: 2px solid
     ${({ color, theme }) => (color === "gray" ? theme.gray : theme.mainColor)};
   cursor: pointer;
-
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -102,6 +108,18 @@ const DropDownIconSet = styled(DropDownIcon)`
   }
 `;
 
+const DropUpIconSet = styled(DropUpIcon)`
+  position: absolute;
+  right: 1rem;
+  top: 1.25rem;
+  width: 1rem;
+  height: 0.5rem;
+  path {
+    fill: ${({ color, theme }) =>
+      color === "gray" ? "#1C1B1F" : theme.mainColor};
+  }
+`;
+
 const Label = styled.label`
   font-size: 1.4rem;
   cursor: pointer;
@@ -109,15 +127,13 @@ const Label = styled.label`
 `;
 const SelectOptions = styled.ul`
   width: ${({ optionsWidth }) => optionsWidth};
-  margin: 0.5rem 0 0.2rem -1.6rem;
+  margin: 0.4rem 0 0.1rem -1.6rem;
   font-size: 1.4rem;
   background-color: white;
-  z-index: 100;
+  z-index: 2;
   border: 2px solid
     ${({ color, theme }) => (color === "gray" ? theme.gray : theme.mainColor)};
-  border-top: none;
   text-align: left;
-  border-radius: 0.6rem;
   transition: all 0.3s;
 `;
 const Option = styled.li`
@@ -126,20 +142,17 @@ const Option = styled.li`
   padding-left: 1.6rem;
   z-index: 100;
   transition: all 0.3s;
+  font-weight: ${({ fontWeight }) => fontWeight};
   &:hover {
     color: ${({ color, theme }) =>
       color === "gray" ? theme.darkgray : theme.mainColor};
     font-weight: 900;
     width: ${({ optionWidth }) => optionWidth};
-    border-radius: 0.3rem;
     background-color: ${({ color, theme }) =>
       color === "gray" ? theme.lightgray : "#f6f2fe"};
   }
   &:nth-child(1) {
     width: ${({ optionWidth }) => optionWidth};
-    border-top: 2px solid
-      ${({ color, theme }) => (color === "gray" ? theme.gray : theme.mainColor)};
-    border-radius: 0.6rem;
   }
 `;
 

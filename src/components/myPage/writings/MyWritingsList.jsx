@@ -27,7 +27,6 @@ export default MyWritingsList;
 
 const MyWritingsListWrapper = styled.div`
   width: 100%;
-  /* border-radius: 10px; */
   margin: 1.6rem auto 0 auto;
   display: flex;
   flex-direction: column;

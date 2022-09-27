@@ -87,17 +87,29 @@ const Profile = () => {
               <StProfileIcon />
             </UserImgBox>
             <UserTxtWrapper>
-              <StTxt fontSize={"1.3rem"} fontWeight={900}>
+              <StTxt
+                mobileFontSize={"1.3rem"}
+                fontSize={"2rem"}
+                fontWeight={900}
+              >
                 {nickname}
               </StTxt>
-              <StTxt fontSize={"1rem"} fontWeight={100}>
+              <StTxt
+                mobileFontSize={"1rem"}
+                fontSize={"1.5rem"}
+                fontWeight={100}
+              >
                 {location}
               </StTxt>
             </UserTxtWrapper>
           </StUserBox>
           <GlobalButton
-            width={"6.4rem"}
-            height={"2.8"}
+            width={"10rem"}
+            height={"5rem"}
+            fontSize={"1.4rem"}
+            mogileWidth={"5.6rem"}
+            mobileHeight={"2.8rem"}
+            mobileFontSize={"0.8rem"}
             content={"로그아웃"}
             onClick={onLogoutHandler}
             color={"subColor"}
@@ -106,25 +118,25 @@ const Profile = () => {
         <ProfileIconWrapper>
           <IconWrapper onClick={() => onPathHandler("/mypage/writings")}>
             <StEditDocumentIcon />
-            <StTxt fontSize={"1rem"} fontWeight={100}>
+            <StTxt mobileFontSize={"1rem"} fontSize={"1.5rem"} fontWeight={100}>
               내가쓴글
             </StTxt>
           </IconWrapper>
           <IconWrapper onClick={() => onPathHandler("/mypage/zzims")}>
             <StFavoriteIcon />
-            <StTxt fontSize={"1rem"} fontWeight={100}>
+            <StTxt mobileFontSize={"1rem"} fontSize={"1.5rem"} fontWeight={100}>
               찜목록
             </StTxt>
           </IconWrapper>
           <IconWrapper onClick={() => onPathHandler("/mypage/products")}>
             <StVisibilityIcon />
-            <StTxt fontSize={"1rem"} fontWeight={100}>
+            <StTxt mobileFontSize={"1rem"} fontSize={"1.5rem"} fontWeight={100}>
               최근본상품
             </StTxt>
           </IconWrapper>
           <IconWrapper>
             <StChatBubbleIcon />
-            <StTxt fontSize={"1rem"} fontWeight={100}>
+            <StTxt mobileFontSize={"1rem"} fontSize={"1.5rem"} fontWeight={100}>
               채팅목록
             </StTxt>
           </IconWrapper>
@@ -139,10 +151,17 @@ const ProfileWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-items: center;
-  margin: 2rem;
-  height: 17.5rem;
   border-radius: 0.6rem;
   background-color: ${({ theme }) => theme.white};
+  width: 50rem;
+  height: 30rem;
+  margin: 2rem 2rem 1.5rem 2rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 26rem;
+    height: 17.5rem;
+    margin: 0.5rem 1rem;
+  }
 `;
 
 const ProfileUserWrapper = styled.div`
@@ -150,10 +169,18 @@ const ProfileUserWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: 9.5rem;
-  width: 90%;
-  padding: 1.1rem;
   border-bottom: 2px solid #f0f0f0;
+  width: 47.5rem;
+  height: 14.5rem;
+  margin: 0 2rem;
+  padding: 0 2rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    padding: 0 1rem;
+    width: 23.5rem;
+    height: 9.5rem;
+    margin: 0 2rem;
+  }
 `;
 
 const ProfileIconWrapper = styled.div`
@@ -161,7 +188,13 @@ const ProfileIconWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 90%;
+  width: 48.5rem;
+  margin: 4rem 2rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 24.5rem;
+    margin: 0 2rem;
+  }
 `;
 
 const StUserBox = styled.div`
@@ -171,32 +204,24 @@ const StUserBox = styled.div`
   align-content: flex-start;
   justify-content: flex-start;
   align-items: center;
-  font-size: 2rem;
-  gap: 1.5rem;
+  font-size: 3.6rem;
+  gap: 2rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 2rem;
+    gap: 1rem;
+  }
 `;
 
 const UserImgBox = styled.div`
-  width: 50px;
-  height: 50px;
   border-radius: 70%;
   overflow: hidden;
-
-  @media screen and (min-width: 1024px) {
-    /* Desktop */
-    width: 50px;
-    height: 50px;
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Tablet */
-    width: 50px;
-    height: 50px;
-  }
-
+  width: 6rem;
+  height: 6rem;
   @media (max-width: 767px) {
     /* Mobile */
-    width: 50px;
-    height: 50px;
+    width: 4rem;
+    height: 4rem;
   }
 `;
 
@@ -204,7 +229,11 @@ const UserTxtWrapper = styled.div``;
 
 const StTxt = styled.p`
   font-size: ${(props) => props.fontSize};
-  font-weight: ${(props) => props.fontWeight}; ;
+  font-weight: ${(props) => props.fontWeight};
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: ${(props) => props.mobileFontSize};
+  }
 `;
 
 const StProfileIcon = styled(ProfileIcon)`
@@ -220,39 +249,53 @@ const IconWrapper = styled.div`
   justify-content: center;
   color: ${({ theme }) => theme.mainColor};
   align-items: center;
-  margin: 0 0.2rem;
   width: 10rem;
   height: 6rem;
-  gap: 0.4rem;
+  row-gap: 0.4rem;
   cursor: pointer;
-  &span {
-    width: 10rem;
-    height: 5rem;
-    margin: 0 0.2rem;
-  }
   &:hover {
     background-color: ${({ theme }) => theme.lightgray};
   }
 `;
 
 const StEditDocumentIcon = styled(EditDocumentIcon)`
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 2.8rem;
+  height: 2.8rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 2.2rem;
+    height: 2.2rem;
+  }
 `;
 
 const StFavoriteIcon = styled(FavoriteIcon)`
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 2.8rem;
+  height: 2.8rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 2.2rem;
+    height: 2.2rem;
+  }
 `;
 
 const StChatBubbleIcon = styled(ChatBubbleIcon)`
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 2.8rem;
+  height: 2.8rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 2.2rem;
+    height: 2.2rem;
+  }
 `;
 
 const StVisibilityIcon = styled(VisibilityIcon)`
-  width: 2.2rem;
-  height: 2.2rem;
+  width: 2.8rem;
+  height: 2.8rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 2.2rem;
+    height: 2.2rem;
+  }
 `;
 
 export default Profile;

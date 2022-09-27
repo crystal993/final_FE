@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import ItemList from '../../market/main/ItemList';
-import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect, useRef } from "react";
+import ItemList from "../../market/main/ItemList";
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getData,
   __getPost,
@@ -9,9 +9,9 @@ import {
   __getItemCategories,
   addPage,
   doubleListToZero,
-} from '../../../redux/modules/market/postSlice';
-import option from './Option';
-import Select from '../../elements/GlobalSelect';
+} from "../../../redux/modules/market/postSlice";
+import option from "./Option";
+import Select from "../../elements/GlobalSelect";
 
 const MainContainer = () => {
   const dispatch = useDispatch();
@@ -30,15 +30,15 @@ const MainContainer = () => {
   const categoryPage = useSelector((state) => state.marketPost.page);
 
   console.log(doubleList);
-  const [state, setState] = useState('');
+  const [state, setState] = useState("");
   const [page, setPage] = useState(0);
   const lastIntersectingData = useRef(null);
 
   const handleChange = (event) => {
     setState(event.target.value);
-    let e = document.getElementById('selectElementID');
+    let e = document.getElementById("selectElementID");
     let text = e.options[e.selectedIndex].text;
-    localStorage.setItem('petCategory', `${text}`);
+    localStorage.setItem("petCategory", `${text}`);
     setPage(0);
     dispatch(doubleListToZero());
   };
@@ -59,7 +59,7 @@ const MainContainer = () => {
   const onIntersect = (entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        console.log('!?!?!?');
+        console.log("!?!?!?");
         setPage((page) => page + 1);
         dispatch(addPage());
         // 현재 타겟을 observe한다.
@@ -68,28 +68,28 @@ const MainContainer = () => {
     });
   };
 
-  const itemCategory = localStorage.getItem('itemCategory');
-  const petCategory = localStorage.getItem('petCategory');
+  const itemCategory = localStorage.getItem("itemCategory");
+  const petCategory = localStorage.getItem("petCategory");
 
   useEffect(() => {
     if (petCategory === null && itemCategory === null) {
       dispatch(__getPost({ page: page }));
     }
-    if (petCategory === '강아지' && itemCategory === null) {
-      dispatch(getData({ state: '강아지', page: page }));
+    if (petCategory === "강아지" && itemCategory === null) {
+      dispatch(getData({ state: "강아지", page: page }));
     }
-    if (petCategory === '고양이' && itemCategory === null) {
-      dispatch(getData({ state: '고양이', page: page }));
+    if (petCategory === "고양이" && itemCategory === null) {
+      dispatch(getData({ state: "고양이", page: page }));
     }
-    if (petCategory === '모두' && itemCategory === null) {
+    if (petCategory === "모두" && itemCategory === null) {
       dispatch(__getPost({ page: page }));
     }
     if (petCategory === null && itemCategory !== null) {
       dispatch(__getItemCategories({ itemCategory: itemCategory, page: page }));
     }
     if (petCategory !== null && itemCategory !== null) {
-      console.log('mainContainer');
-      if (petCategory === '모두') {
+      console.log("mainContainer");
+      if (petCategory === "모두") {
         dispatch(
           __getItemCategories({ itemCategory: itemCategory, page: page })
         );
@@ -147,19 +147,19 @@ const MainContainer = () => {
   ]);
 
   return (
-    <>
+    <Wrapper>
       <STsection>
         <STh1>멍냥마켓</STh1>
-        <div className='button'>
+        <div className="button">
           <STselect
-            name='choice'
+            name="choice"
             onChange={handleChange}
             defaultValue={option[2].value}
-            id='selectElementID'
+            id="selectElementID"
           >
             {option.map((option) => (
               <option
-                className='option'
+                className="option"
                 key={option.value}
                 value={option.value}
                 name={option.name}
@@ -195,7 +195,7 @@ const MainContainer = () => {
         (doubleList !== null && doubleList.length !== 0)) && (
         <div ref={lastIntersectingData}>.</div>
       )}
-    </>
+    </Wrapper>
   );
 };
 
@@ -205,7 +205,7 @@ const STsection = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 9rem;
+  padding-top: 5rem;
   margin-bottom: 1rem;
   .button {
     display: flex;
@@ -218,7 +218,6 @@ const STsection = styled.section`
 
 const STh1 = styled.h1`
   font-size: 2.4rem;
-  margin: 0 2.4rem;
   font-weight: 700;
 `;
 
@@ -244,5 +243,21 @@ const STselect = styled.select`
 
   .option {
     margin-right: 1rem;
+  }
+`;
+
+const Wrapper = styled.div`
+  height: auto;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    min-height: 77vh;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    min-height: 77vh;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    min-height: 86.4vh;
   }
 `;

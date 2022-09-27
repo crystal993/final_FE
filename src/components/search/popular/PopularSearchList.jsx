@@ -16,28 +16,32 @@ const PopularSearchList = () => {
   }, []);
 
   const SwiperBreakPoints = {
+    340: {
+      width: 440,
+      slidesPerView: 3,
+    },
     499: {
       width: 580,
       slidesPerView: 3,
     },
     640: {
-      width: 840,
-      slidesPerView: 4,
+      width: 740,
+      slidesPerView: 5,
     },
     767: {
-      width: 940,
+      width: 767,
       slidesPerView: 5,
     },
     850: {
-      width: 1030,
+      width: 860,
       slidesPerView: 5,
     },
     1024: {
-      width: 1680,
+      width: 900,
       slidesPerView: 5,
     },
     1500: {
-      width: 1780,
+      width: 1500,
       slidesPerView: 5,
     },
   };

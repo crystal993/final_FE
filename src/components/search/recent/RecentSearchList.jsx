@@ -26,6 +26,7 @@ const RecentSearchWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 2rem 1rem;
+  min-height: 50rem;
 `;
 
 export default RecentSearchList;

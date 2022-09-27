@@ -4,16 +4,17 @@ import {
   __deletePost,
 } from "../../../redux/modules/market/postSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import ItemZzimButton from "../../elements/buttons/ItemZzimButton";
-import SimpleSlider from "./SimpleSlider";
+import ImgSlider from "../../elements/GlobalImgSlider2";
 import Comment from "../comment/Comment";
 import FixButton from "../../elements/buttons/FixButton";
 import FixThreeButton from "../../elements/buttons/FixThreeButton";
 import GlobalModal from "../../elements/GlobalModal";
 import PriceChart from "../../elements/chart/PriceChart";
 import { ReactComponent as ProfileIcon } from "../../../assets/icons/profile_img_sm.svg";
+import { ReactComponent as ShareIcon } from "../../../assets/icons/share_icon.svg";
 import EditIcon from "../../../assets/icons/edit_document2.svg";
 import DeleteIcon from "../../../assets/icons/delete.svg";
 import CheckIcon from "../../../assets/icons/check_circle.svg";
@@ -28,6 +29,7 @@ const DetailInfo = () => {
   useEffect(() => {
     setItem(items);
   }, [setItem, items]);
+  console.log(items);
 
   const isLogin = useSelector((state) => state.user.userToken);
   const itemImgs = item.itemImgs;
@@ -120,7 +122,15 @@ const DetailInfo = () => {
         {isModal ? (
           <GlobalModal content={"로그인 하세요"} name={"로그인"} />
         ) : null}
-        <SimpleSlider itemImgs={itemImgs} />
+        <ImgSlider
+          itemImgs={itemImgs}
+          mobileWidth={"36rem"}
+          tabletWidth={"50.6rem"}
+          desktopWidth={"50.6rem"}
+          mobileHeight={"22.2rem"}
+          tabletHeight={"31.2rem"}
+          desktopHeight={"31.2rem"}
+        />
         <DetailWrapper>
           <InfoWrapper>
             <P>
@@ -130,11 +140,7 @@ const DetailInfo = () => {
           <Title>{item.title}</Title>
           <StWrapper>
             <Price>{item.sellingPrice?.toLocaleString("ko-KR")}원</Price>
-            <StIcon>
-              <span className="material-icons" onClick={sharekakao}>
-                share
-              </span>
-            </StIcon>
+            <StShareIcon onClick={sharekakao} />
           </StWrapper>
           <StUserBox>
             <UserImgBox>
@@ -191,6 +197,15 @@ const DetailInfo = () => {
 
 const DetailInfoWrapper = styled.div`
   padding-top: 4.9rem;
+  margin: 0 auto;
+  @media (min-width: 768px) {
+    /* Tablet */ /* Desktop */
+    width: 50.6rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 26rem;
+  }
 `;
 
 const DetailWrapper = styled.div`
@@ -207,47 +222,64 @@ const InfoWrapper = styled.div`
 `;
 
 const P = styled.p`
-  font-size: 1rem;
+  @media (min-width: 768px) {
+    /* Tablet */ /* Desktop */
+    font-size: 1.2rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 1rem;
+  }
 `;
 
 const H3 = styled.p`
-  font-size: 1.4rem;
   font-weight: bold;
+  @media (min-width: 768px) {
+    /* Tablet */ /* Desktop */
+    font-size: 1.6rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 1.4rem;
+  }
 `;
 
 const StWrapper = styled.div`
   width: 100%;
   display: flex;
-  margin: 0 0 2.8rem 0;
+  margin: 0 0 2.5rem 0;
   flex-direction: row;
   justify-content: space-between;
   align-content: center;
   align-items: center;
-  span {
-    color: ${({ theme }) => theme.darkgray};
-  }
-`;
-
-const StIcon = styled.div`
-  @media (min-width: 1024px) {
-    margin: 0 1.3rem;
-  }
-  @media (min-width: 768px) and (max-width: 1023px) {
-    margin: 0 1.3rem;
-  }
-  @media (max-width: 767px) {
-    margin: 0 1.3rem;
-  }
 `;
 
 const Title = styled.p`
-  font-size: 2rem;
+  display: block;
+  width: 100%;
+
+  text-overflow: ellipsis;
+  @media (min-width: 768px) {
+    /* Tablet */ /* Desktop */
+    font-size: 2.4rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 2rem;
+  }
 `;
 
 const Price = styled.p`
-  font-size: 2.4rem;
   color: ${({ theme }) => theme.mainColor};
   font-weight: bold;
+  @media (min-width: 768px) {
+    /* Tablet */ /* Desktop */
+    font-size: 2.8rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 2.4rem;
+  }
 `;
 
 const StUserBox = styled.div`
@@ -256,15 +288,7 @@ const StUserBox = styled.div`
   align-content: center;
   justify-content: flex-start;
   gap: 1.5rem;
-  margin: 3rem 0;
-  .user-info {
-    justify-content: flex-start;
-    background-color: green;
-  }
-  .share {
-    justify-content: flex-end;
-    background-color: red;
-  }
+  margin-bottom: 3rem;
   @media screen and (min-width: 1024px) {
     /* Desktop */
     display: flex;
@@ -287,41 +311,49 @@ const StUserBox = styled.div`
 `;
 
 const UserImgBox = styled.div`
-  width: 50px;
-  height: 50px;
   border-radius: 70%;
   overflow: hidden;
-
-  @media screen and (min-width: 1024px) {
-    /* Desktop */
-    width: 50px;
-    height: 50px;
+  @media (min-width: 768px) {
+    /* Tablet */ /* Desktop */
+    width: 5rem;
+    height: 5rem;
   }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Tablet */
-    width: 50px;
-    height: 50px;
-  }
-
   @media (max-width: 767px) {
     /* Mobile */
-    width: 50px;
-    height: 50px;
+    width: 4rem;
+    height: 4rem;
   }
 `;
 
-const UserImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+const StShareIcon = styled(ShareIcon)`
+  cursor: pointer;
+  path {
+    fill: ${({ theme }) => theme.darkgray};
+  }
+  @media (min-width: 768px) {
+    /* Tablet */ /* Desktop */
+    width: 1.8rem;
+    height: 2rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 1.4rem;
+    height: 1.4rem;
+  }
 `;
 
 const UserInfoTxt = styled.div``;
 
 const Content = styled.h1`
   font-weight: 400;
-  font-size: 1.4rem;
+  @media (min-width: 768px) {
+    /* Tablet */ /* Desktop */
+    font-size: 1.6rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 1.4rem;
+  }
 `;
 
 const InfoCntWrapper = styled.div`

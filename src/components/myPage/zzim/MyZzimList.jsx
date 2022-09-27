@@ -12,26 +12,38 @@ const MyZzimList = () => {
   }, [dispatch]);
 
   return (
-    <>
-      <MyZzimListWrapper>
-        {zzimItems &&
-          zzimItems?.map((item) => {
-            return <Item item={item} key={item.id} />;
-          })}
-      </MyZzimListWrapper>
-    </>
+    <MyZzimListWrapper>
+      {zzimItems &&
+        zzimItems?.map((item) => {
+          return <Item item={item} key={item.id} />;
+        })}
+    </MyZzimListWrapper>
   );
 };
 
 export default MyZzimList;
 
 const MyZzimListWrapper = styled.div`
-  width: 100%;
-  margin: 1.6rem 2.4rem 0 2.4rem;
+  margin: 1.6rem auto;
   display: flex;
   flex-direction: row;
   align-content: center;
   align-items: center;
   border-collapse: collapse;
   flex-wrap: wrap;
+  transition: all 0.3s;
+  row-gap: 0.3rem;
+  column-gap: 0.3rem;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    width: 70rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    width: 42rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 28rem;
+  }
 `;
