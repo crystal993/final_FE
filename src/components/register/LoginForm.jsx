@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../../redux/modules/user/userActions";
-import KakaoLogin from "./socialLogin/KakaoLogin";
 import Button from "../elements/GlobalButton";
 
 const LoginForm = () => {
@@ -50,18 +49,21 @@ const LoginForm = () => {
                 tabIndex="2"
                 className="input"
                 {...register("userId", {
-                  required: "아이디는 필수값입니다.",
+                  required: "가입한 이메일을 적어주세요.",
                 })}
                 aria-invalid={
                   !isDirty ? undefined : errors.userId ? "true" : "false"
                 }
                 name="userId"
               />
-              <HelperText>가입한 이메일을 적어주세요.</HelperText>
+              {errors.userId && (
+                <HelperText>{errors?.userId?.message}</HelperText>
+              )}
+              {!errors.userId && (
+                <HelperText>{"가입한 이메일을 적어주세요."}</HelperText>
+              )}
             </InputWrapper>
-            {errors.userId && (
-              <p className="error">{errors?.userId?.message}</p>
-            )}
+
             <Label>비밀번호</Label>
             <InputWrapper>
               <Input
@@ -69,18 +71,20 @@ const LoginForm = () => {
                 tabIndex="2"
                 className="input"
                 {...register("password", {
-                  required: "비밀번호는 필수값입니다.",
+                  required: "비밀번호를 입력해주세요.",
                 })}
                 aria-invalid={
                   !isDirty ? undefined : errors.password ? "true" : "false"
                 }
                 name="password"
               />
-              <HelperText>비밀번호를 입력해주세요.</HelperText>
+              {errors.password && (
+                <HelperText>{errors?.password?.message}</HelperText>
+              )}
+              {!errors.password && (
+                <HelperText>{"비밀번호를 입력해주세요."}</HelperText>
+              )}
             </InputWrapper>
-            {errors.password && (
-              <p className="error">{errors?.password?.message}</p>
-            )}
           </Container>
           <ButtonsWrapper>
             <Button
