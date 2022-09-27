@@ -2,25 +2,14 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { v4 as uuidv4 } from "uuid";
 import styled from "styled-components";
 
 const MainBannerSlide = ({
-  itemImgs,
-  mobileImgs,
-  tabletImgs,
-  desktopImgs,
   autoplay = false,
   fade = false,
   autoplaySpeed = 0,
   nextArrow,
   prevArrow,
-  mobileWidth,
-  tabletWidth,
-  desktopWidth,
-  mobileHeight = "14rem",
-  tabletHeight = "22rem",
-  desktopHeight = "33rem",
 }) => {
   const settings = {
     dots: true,
@@ -52,7 +41,6 @@ const StyledSlider = styled(Slider)`
 
 const Img1 = styled.div`
   object-fit: contain;
-  background-color: #b192f3;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 50% 50%;
@@ -60,7 +48,7 @@ const Img1 = styled.div`
     /* Desktop */
     background-image: url(${process.env.PUBLIC_URL}/img/desktop.png);
     width: 100%;
-    height: 30rem;
+    height: 24rem;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1023px) {
@@ -80,27 +68,26 @@ const Img1 = styled.div`
 
 const Img2 = styled.div`
   object-fit: contain;
-  background-color: #b192f3;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 50% 50%;
   @media screen and (min-width: 1024px) {
     /* Desktop */
-    background-image: url(${process.env.PUBLIC_URL}/img/desktop.png);
+    background-image: url(${process.env.PUBLIC_URL}/img/설문배너_PC.png);
     width: 100%;
-    height: 30rem;
+    height: 24rem;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     /* Tablet */
-    background-image: url(${process.env.PUBLIC_URL}/img/tablet.png);
+    background-image: url(${process.env.PUBLIC_URL}/img/설문배너_TA.png);
     width: 100%;
     height: 18.4rem;
   }
 
   @media (max-width: 767px) {
     /* Mobile */
-    background-image: url(${process.env.PUBLIC_URL}/img/mobile.png);
+    background-image: url(${process.env.PUBLIC_URL}/img/설문배너_MO.png);
     width: 100%;
     height: 14rem;
   }

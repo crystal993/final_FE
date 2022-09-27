@@ -32,7 +32,7 @@ const Button = styled.div`
     width: 2.5rem;
     height: 3.5rem;
     font-size: 2.5rem;
-    top: 13rem;
+    top: 10rem;
     right: 1rem;
   }
 
