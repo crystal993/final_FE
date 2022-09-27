@@ -41,6 +41,10 @@ const Comment = ({ id }) => {
     dispatch(getCommentData({ itemId: id }));
   }, []);
 
+  const user = JSON.parse(localStorage.getItem("user-info"));
+
+  const nickname = user?.nickname;
+
   return (
     <>
       <Wrapper>
@@ -74,34 +78,37 @@ const Comment = ({ id }) => {
                 </UserInfoTxt>
               </StUserBox>
               <ButtonsWrapper>
-                {/* ismine인지 확인하여 버튼 조건부 랜더링 */}
-                <button
-                  content={"수정"}
-                  onClick={() => {
-                    dispatch(
-                      putCommentData({
-                        itemId: id,
-                        content: input,
-                        commentId: item.commentId,
-                      })
-                    );
-                    setInput("");
-                  }}
-                >
-                  수정
-                </button>
-                <button
-                  onClick={() => {
-                    dispatch(
-                      deleteCommentData({
-                        itemId: id,
-                        commentId: item.commentId,
-                      })
-                    );
-                  }}
-                >
-                  삭제
-                </button>
+                {nickname === item.nickname && (
+                  <>
+                    <button
+                      content={"수정"}
+                      onClick={() => {
+                        dispatch(
+                          putCommentData({
+                            itemId: id,
+                            content: input,
+                            commentId: item.commentId,
+                          })
+                        );
+                        setInput("");
+                      }}
+                    >
+                      수정
+                    </button>
+                    <button
+                      onClick={() => {
+                        dispatch(
+                          deleteCommentData({
+                            itemId: id,
+                            commentId: item.commentId,
+                          })
+                        );
+                      }}
+                    >
+                      삭제
+                    </button>
+                  </>
+                )}
               </ButtonsWrapper>
             </section>
           ))
