@@ -97,14 +97,14 @@ const Logo = styled.img`
   @media (min-width: 1280px) {
     /* Desktop */
     margin-left: 3rem;
-    width: 10.3rem;
-    height: 2.9rem;
+    width: 9.3rem;
+    height: 2.4rem;
   }
   @media (min-width: 768px) and (max-width: 1280px) {
     /* Tablet */
     margin-left: 3.5rem;
-    width: 10rem;
-    height: 2.7rem;
+    width: 9.3rem;
+    height: 2.4rem;
   }
   @media (min-width: 361px) and (max-width: 767px) {
     /* Mobile */
