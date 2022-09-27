@@ -20,7 +20,7 @@ const GlobalHeader2 = ({ IconType = "Home" }) => {
           {IconType === "Home" && <HomeIcon onClick={() => navigate("/")} />}
         </NavItem>
         <NavItem onClick={() => onPathHandler("/")}>
-          <span style={{ marginRight: "-1.5rem" }}>LOGO</span>
+          <Logo src="img/logo_gnb2@2x.png" alt="멍냥마켓 로고"></Logo>
         </NavItem>
         <NavItem></NavItem>
       </Navbar>
@@ -62,4 +62,30 @@ const NavItem = styled.div`
   gap: 2rem;
   cursor: pointer;
   width: fit-content;
+`;
+
+const Logo = styled.img`
+  @media (min-width: 1280px) {
+    /* Desktop */
+    margin-left: -3rem;
+    width: 10.3rem;
+    height: 2.9rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    margin-left: -2rem;
+    width: 10rem;
+    height: 2.7rem;
+  }
+  @media (min-width: 361px) and (max-width: 767px) {
+    /* Mobile */
+    margin-left: -2rem;
+    width: 9rem;
+    height: 2.4rem;
+  }
+  @media (max-width: 360px) {
+    /* Mobile */
+    width: 8rem;
+    height: 2.1rem;
+  }
 `;

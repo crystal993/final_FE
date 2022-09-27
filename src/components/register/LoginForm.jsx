@@ -31,221 +31,297 @@ const LoginForm = () => {
     console.log(error);
   };
 
-  const goHome = () => {
-    navigate("/");
-  };
-
   if (success) {
     navigate("/");
   }
 
   return (
     <>
-      <STwrap className="wrap">
-        <section>
-          <p className="go-back" onClick={goHome}>
-            홈 아이콘
-          </p>
-          <section className="login-context">
-            <h2 className="title">로그인</h2>
-          </section>
-        </section>
-        <form className="login-form" onSubmit={handleSubmit(onSubmit, onError)}>
-          <div className="field">
-            <Label className="label">
-              아이디
-              <div>
-                <input
-                  type="text"
-                  tabIndex="2"
-                  className="input"
-                  {...register("userId", {
-                    required: "아이디는 필수값입니다.",
-                  })}
-                  aria-invalid={
-                    !isDirty ? undefined : errors.userId ? "true" : "false"
-                  }
-                  name="userId"
-                />
-              </div>
-              {errors.userId && (
-                <p className="error">{errors?.userId?.message}</p>
-              )}
-            </Label>
-          </div>
-          <div className="field">
-            <label className="label">
-              비밀번호
-              <div>
-                <input
-                  type="password"
-                  tabIndex="2"
-                  className="input"
-                  {...register("password", {
-                    required: "비밀번호는 필수값입니다.",
-                  })}
-                  aria-invalid={
-                    !isDirty ? undefined : errors.password ? "true" : "false"
-                  }
-                  name="password"
-                />
-              </div>
-              {errors.password && (
-                <p className="error">{errors?.password?.message}</p>
-              )}
-            </label>
-          </div>
-          <div className="login-btn-wrap">
+      <FormWrapper>
+        <Form onSubmit={handleSubmit(onSubmit, onError)}>
+          <TitleWrapper>
+            <Title>로그인</Title>
+          </TitleWrapper>
+          <Container>
+            <Label> 아이디</Label>
+            <InputWrapper>
+              <Input
+                type="text"
+                tabIndex="2"
+                className="input"
+                {...register("userId", {
+                  required: "아이디는 필수값입니다.",
+                })}
+                aria-invalid={
+                  !isDirty ? undefined : errors.userId ? "true" : "false"
+                }
+                name="userId"
+              />
+              <HelperText>가입한 이메일을 적어주세요.</HelperText>
+            </InputWrapper>
+            {errors.userId && (
+              <p className="error">{errors?.userId?.message}</p>
+            )}
+            <Label>비밀번호</Label>
+            <InputWrapper>
+              <Input
+                type="password"
+                tabIndex="2"
+                className="input"
+                {...register("password", {
+                  required: "비밀번호는 필수값입니다.",
+                })}
+                aria-invalid={
+                  !isDirty ? undefined : errors.password ? "true" : "false"
+                }
+                name="password"
+              />
+              <HelperText>비밀번호를 입력해주세요.</HelperText>
+            </InputWrapper>
+            {errors.password && (
+              <p className="error">{errors?.password?.message}</p>
+            )}
+          </Container>
+          <ButtonsWrapper>
             <Button
-              className="login-btn"
               content={"로그인"}
-              width={"30rem"}
+              mobileWidth={"25rem"}
+              width={"38rem"}
               fontSize={"1.3rem"}
-            ></Button>
-          </div>
-        </form>
-        <div className="kakao-wrapper">
-          <KakaoLogin className="kakao-btn" />
-        </div>
-        <div className="move-signup">
-          <p className="isnot-member">아직 멍냥마켓 회원이 아니신가요?</p>
-          <p
-            className="go-signup"
-            onClick={() => {
-              navigate("/signup");
-            }}
-          >
-            회원가입
-          </p>
-        </div>
-      </STwrap>
+            />
+            <Button
+              content={"카카오 로그인"}
+              mobileWidth={"25rem"}
+              width={"38rem"}
+              fontSize={"1.3rem"}
+              color={"subColor"}
+            />
+          </ButtonsWrapper>
+        </Form>
+        <SignUpHelperTxt>아직 멍냥마켓 회원이 아니신가요?</SignUpHelperTxt>
+        <SignUpLink
+          onClick={() => {
+            navigate("/signup");
+          }}
+        >
+          회원가입
+        </SignUpLink>
+      </FormWrapper>
     </>
   );
 };
 
 export default LoginForm;
 
-const STwrap = styled.div`
-  display: block;
-  width: max-content;
-  /* 페이지에서 정의 */
-  margin: 0 auto;
-  margin-top: 2rem;
+const FormWrapper = styled.div`
+  padding-top: 7rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 5rem;
+`;
 
-  .label {
-    width: 4.5rem;
-    height: 2.3rem;
-    font-weight: 500;
-    font-size: 1.6rem;
-    line-height: 2.3rem;
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  margin-left: 11.5rem;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    width: 50rem;
   }
-
-  .login-context {
-    margin-top: 2rem;
-    margin-left: 1rem;
-    .title {
-      font-size: 2.8rem;
-      line-height: 4.1rem;
-      font-weight: 700;
-    }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    width: 50rem;
   }
-
-  .login-btn-wrap {
-    margin-top: 1.5rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 36rem;
   }
+`;
 
-  .login-btn:hover {
-    cursor: pointer;
+const TitleWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin: 1.6rem 0 3rem 0;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    margin-bottom: 6rem;
   }
-
-  .login-form {
-    margin-top: 3rem;
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    margin-bottom: 6rem;
   }
-
-  .field {
-    margin-top: 1rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    margin-bottom: 4rem;
   }
+`;
 
-  .input {
-    border: 2px solid #cbcbcb;
-    width: 30rem;
-    height: 4rem;
-    font-size: 1.8rem;
-    border-right: 0px;
-    border-top: 0px;
-    border-left: 0px;
-
-    &:active {
-      border-color: ${({ theme }) => theme.mainColor};
-    }
-    &:focus {
-      outline: none;
-      border-color: ${({ theme }) => theme.mainColor};
-    }
+const Title = styled.h1`
+  text-align: left;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    font-size: 3rem;
   }
-
-  .kakao-wrapper {
-    margin-top: 1rem;
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    font-size: 3rem;
   }
-
-  .error {
-    font-size: 1rem;
-    color: red;
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 2rem;
   }
+`;
 
-  .move-signup {
-    display: flex;
-    margin-top: 6rem;
-    justify-content: center;
-    align-items: center;
-    .isnot-member {
-      width: 22.5rem;
-      height: 2.3rem;
-      font-weight: 500;
-      font-size: 1.2rem;
-      line-height: 2.3rem;
-      color: #6b6b6b;
-    }
-    .go-signup {
-      width: 6.8rem;
-      height: 2.3rem;
-      font-weight: 500;
-      font-size: 1.6rem;
-      line-height: 2.3rem;
-      text-decoration-line: underline;
-      color: #6b6b6b;
-    }
-    @media screen and (max-width: 767px) {
-      /* Mobile */
-      display: block;
-      .isnot-member {
-        margin: 0 auto;
-        text-align: center;
-      }
-      .go-signup {
-        margin: 0 auto;
-        margin-top: 1rem;
-      }
-    }
-    .go-signup:hover {
-      cursor: pointer;
-    }
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: max-content;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    margin-bottom: 5.5rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    margin-bottom: 5rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    margin-bottom: 4rem;
   }
 `;
 
 const Label = styled.label`
+  font-weight: 900;
+  font-size: 1.4rem;
+  margin: 0.5rem 0rem;
+  line-height: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  color: ${({ theme }) => theme.darkgray};
+`;
+
+const InputWrapper = styled.div`
   position: relative;
-
-  button {
-    position: absolute;
-    top: 1;
-    right: 0;
-    border: 2px solid #cbcbcb;
-    border-radius: 6px;
-    height: 4rem;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    margin-bottom: 2rem;
   }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    margin-bottom: 1.8rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    margin-bottom: 1.6rem;
+  }
+`;
 
-  button:hover {
+const Input = styled.input`
+  box-sizing: border-box;
+  padding: 0;
+  position: relative;
+  display: inline-block;
+  width: 28.7rem;
+  padding: 4px 11px;
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 1.4rem;
+  background-color: #fff;
+  border: 2px solid ${({ theme }) => theme.darkgray};
+  border-left-width: 0;
+  border-right-width: 0;
+  border-top-width: 0;
+  border-bottom-width: 2px;
+  transition: all 0.3s;
+  &:hover {
+    border-color: ${({ theme }) => theme.mainColor};
+  }
+  &:focus {
+    border-color: ${({ theme }) => theme.mainColor};
+    outline: none;
+  }
+  &[type="file"] {
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    color: ${({ theme }) => theme.darkgray};
+  }
+  &[type="file"]::file-selector-button {
+    margin-left: -10px;
+    width: fit-content;
+    font-size: small;
+    text-align: center;
+    padding: 10px 15px;
+    border-radius: 20px;
     cursor: pointer;
+    color: #ffffff;
+    border-radius: 10px;
+    border: none;
+    background-color: ${({ theme }) => theme.mainColor};
   }
+  &[type="file"]::file-selector-button:hover {
+    background-color: #dadae1;
+  }
+  &[type="number"]::-webkit-outer-spin-button,
+  &[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  @media (min-width: 1280px) {
+    /* Desktop */
+    width: 38rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    width: 38rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 25rem;
+  }
+`;
+
+const HelperText = styled.p`
+  margin-top: 0.3rem;
+  font-size: 1.2rem;
+  color: #cbcbcb;
+`;
+
+const ButtonsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.8rem;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    margin-bottom: 5rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    margin-bottom: 5rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    margin-bottom: 13rem;
+  }
+`;
+
+const SignUpHelperTxt = styled.h1`
+  font-weight: 500;
+  font-size: 1.1rem;
+  line-height: 2.3rem;
+  color: ${({ theme }) => theme.gray};
+`;
+
+const SignUpLink = styled.a`
+  color: ${({ theme }) => theme.darkgray};
+  font-weight: 500;
+  font-size: 1.1rem;
+  line-height: 2.3rem;
+  text-decoration-line: underline;
 `;
