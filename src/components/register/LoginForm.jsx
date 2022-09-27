@@ -240,6 +240,9 @@ const Input = styled.input`
   border-top-width: 0;
   border-bottom-width: 2px;
   transition: all 0.3s;
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset;
+  }
   &:hover {
     border-color: ${({ theme }) => theme.mainColor};
   }
