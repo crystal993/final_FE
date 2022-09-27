@@ -15,6 +15,7 @@ function GlobalButton({
   fontSize,
   mobileFontSize,
   color,
+  padding = "1rem",
 }) {
   return (
     <Wrapper onClick={onClick}>
@@ -30,6 +31,7 @@ function GlobalButton({
           fontSize={fontSize}
           mobileFontSize={mobileFontSize}
           color={color}
+          padding={padding}
         >
           {content}
         </Btn>
@@ -51,7 +53,7 @@ const Btn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: ${(props) => props.padding};
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   font-weight: ${(props) => props.fontWeight};
@@ -62,7 +64,11 @@ const Btn = styled.button`
   border: ${(props) =>
     props.color === "subColor" ? `1px solid ${props.theme.mainColor}` : "none"};
   background-color: ${(props) =>
-    props.color === "subColor" ? props.theme.white : props.theme.mainColor};
+    props.color === "subColor"
+      ? props.theme.white
+      : props.color === "gray"
+      ? props.theme.gray
+      : props.theme.mainColor};
   font-size: ${(props) => props.fontSize};
   cursor: pointer;
   @media (max-width: 767px) {
