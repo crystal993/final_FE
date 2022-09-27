@@ -4,10 +4,10 @@ import jwt_decode from "jwt-decode";
 
 function App() {
   useEffect(() => {
-    const user = window.localStorage.getItem("access-token");
-    if (user) {
+    const accessToken = window.localStorage.getItem("access-token");
+    if (accessToken) {
       try {
-        const { exp } = jwt_decode(user);
+        const { exp } = jwt_decode(accessToken);
         console.log(exp);
         console.log(Date.now());
         if (Date.now() >= exp * 1000) {
