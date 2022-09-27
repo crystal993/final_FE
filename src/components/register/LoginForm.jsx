@@ -114,7 +114,7 @@ const LoginForm = () => {
 export default LoginForm;
 
 const FormWrapper = styled.div`
-  padding-top: 7rem;
+  padding-top: 9rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -149,11 +149,11 @@ const TitleWrapper = styled.div`
   margin: 1.6rem 0 3rem 0;
   @media (min-width: 1280px) {
     /* Desktop */
-    margin-bottom: 6rem;
+    margin-bottom: 5rem;
   }
   @media (min-width: 768px) and (max-width: 1280px) {
     /* Tablet */
-    margin-bottom: 6rem;
+    margin-bottom: 5rem;
   }
   @media (max-width: 767px) {
     /* Mobile */
@@ -165,11 +165,11 @@ const Title = styled.h1`
   text-align: left;
   @media (min-width: 1280px) {
     /* Desktop */
-    font-size: 3rem;
+    font-size: 2.4rem;
   }
   @media (min-width: 768px) and (max-width: 1280px) {
     /* Tablet */
-    font-size: 3rem;
+    font-size: 2.4rem;
   }
   @media (max-width: 767px) {
     /* Mobile */
