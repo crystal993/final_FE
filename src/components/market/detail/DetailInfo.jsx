@@ -29,7 +29,6 @@ const DetailInfo = () => {
   useEffect(() => {
     setItem(items);
   }, [setItem, items]);
-  console.log(items);
 
   const isLogin = useSelector((state) => state.user.userToken);
   const itemImgs = item.itemImgs;
