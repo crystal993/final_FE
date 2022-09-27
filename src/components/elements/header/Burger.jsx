@@ -37,7 +37,7 @@ const StyledBurger = styled.button`
   border: none;
   cursor: pointer;
   padding: 0;
-  z-index: 101;
+  z-index: 99999;
   color: ${({ theme }) => theme.black};
 `;
 
