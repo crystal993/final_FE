@@ -9,10 +9,6 @@ import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
 const GlobalHeader = () => {
   const navigate = useNavigate();
 
-  const menuBackground = {
-    boxShadow: "rgba(0,0,0,0.5) 0 0 0 9999px",
-  };
-  // menu 외부를 눌렀을 때 꺼지도록
   const useOnClickOutside = (ref, handler) => {
     useEffect(() => {
       const listener = (event) => {
@@ -46,11 +42,10 @@ const GlobalHeader = () => {
           <Menu open={open} setOpen={setOpen} id={menuId} />
         </NavItem>
         <NavItem onClick={() => onPathHandler("/")}>
-          <span style={{ marginRight: "-1.5rem" }}>LOGO</span>
+          <Logo src="img/logo_gnb2@2x.png" alt="멍냥마켓 로고"></Logo>
         </NavItem>
         <NavItem>
           <SearchIcon onClick={() => onPathHandler("/search")} />
-          {/* TODO 추후에 채팅 리스트 페이지 생기면 path 적용 */}
           <ChatIcon />
         </NavItem>
       </Navbar>
@@ -93,4 +88,31 @@ const NavItem = styled.div`
   gap: 2rem;
   cursor: pointer;
   width: fit-content;
+`;
+
+const Logo = styled.img`
+  @media (min-width: 1280px) {
+    /* Desktop */
+    margin-left: 3rem;
+    width: 10.3rem;
+    height: 2.9rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    margin-left: 3.5rem;
+    width: 10rem;
+    height: 2.7rem;
+  }
+  @media (min-width: 361px) and (max-width: 767px) {
+    /* Mobile */
+    margin-left: 2.3rem;
+    width: 9rem;
+    height: 2.4rem;
+  }
+  @media (max-width: 360px) {
+    /* Mobile */
+    margin-left: 1.4rem;
+    width: 8rem;
+    height: 2.1rem;
+  }
 `;
