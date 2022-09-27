@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow_back_ios.svg";
+import { ReactComponent as HomeIcon } from "../../assets/icons/home.svg";
 
-const GlobalHeader2 = () => {
+const GlobalHeader2 = ({ IconType = "Home" }) => {
   const navigate = useNavigate();
-
   const onPathHandler = (paths) => {
     navigate(paths);
   };
@@ -14,7 +14,10 @@ const GlobalHeader2 = () => {
     <NavbarWrapper>
       <Navbar>
         <NavItem>
-          <ArrowBackIcon onClick={() => navigate(-1)} />
+          {IconType === "ArrowBack" && (
+            <ArrowBackIcon onClick={() => navigate(-1)} />
+          )}
+          {IconType === "Home" && <HomeIcon onClick={() => navigate("/")} />}
         </NavItem>
         <NavItem onClick={() => onPathHandler("/")}>
           <span style={{ marginRight: "-1.5rem" }}>LOGO</span>
