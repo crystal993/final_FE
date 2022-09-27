@@ -72,19 +72,19 @@ const Logo = styled.img`
     /* Desktop */
     margin-left: -3rem;
     width: 9.3rem;
-    height: 2.4rem;
+    height: 2.3rem;
   }
   @media (min-width: 768px) and (max-width: 1280px) {
     /* Tablet */
     margin-left: -2rem;
     width: 9.3rem;
-    height: 2.4rem;
+    height: 2.3rem;
   }
   @media (min-width: 361px) and (max-width: 767px) {
     /* Mobile */
     margin-left: -2rem;
     width: 9rem;
-    height: 2.4rem;
+    height: 2.3rem;
   }
   @media (max-width: 360px) {
     /* Mobile */
