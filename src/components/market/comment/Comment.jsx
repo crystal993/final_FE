@@ -11,14 +11,8 @@ import GlobalButton from "./../../elements/GlobalButton";
 import { ReactComponent as ProfileIcon } from "../../../assets/icons/profile_img_sm.svg";
 const Comment = ({ id }) => {
   const dispatch = useDispatch();
-
-  //    댓글 리덕스 상태 조회
   const state = useSelector((state) => state.comment.comment);
-  //   댓글 comment_data
   const comment_data = state;
-  console.log(comment_data);
-
-  //   입력받은 값
   const [input, setInput] = useState("");
 
   const onChangeHandler = (event) => {
@@ -27,7 +21,6 @@ const Comment = ({ id }) => {
 
   const onPostHandler = (event) => {
     event.preventDefault();
-    // postId 와 content를 같이 보냄
     let body = {
       itemId: id,
       content: input,
@@ -36,14 +29,33 @@ const Comment = ({ id }) => {
     setInput("");
   };
 
-  //   컴포넌트 마운트 시에 id에 해당하는 댓글을 가져옴
   useEffect(() => {
     dispatch(getCommentData({ itemId: id }));
   }, []);
 
   const user = JSON.parse(localStorage.getItem("user-info"));
-
   const nickname = user?.nickname;
+
+  const [isUpdateInput, setIsUpdateInput] = useState(false);
+  const [updateInput, setUpdateInput] = useState();
+  const onUpdateHandler = (commtentId) => {
+    dispatch(
+      putCommentData({
+        itemId: id,
+        content: updateInput,
+        commentId: commtentId,
+      })
+    );
+    setUpdateInput("");
+    setIsUpdateInput(false);
+  };
+  const onUpdateChangeHandler = (event) => {
+    setUpdateInput(event.target.value);
+  };
+
+  useEffect(() => {
+    setUpdateInput(updateInput);
+  }, [setUpdateInput, updateInput]);
 
   return (
     <>
@@ -74,23 +86,40 @@ const Comment = ({ id }) => {
                 </UserImgBox>
                 <UserInfoTxt>
                   <H3>{item.nickname}</H3>
-                  <P>{item.content}</P>
+                  {!isUpdateInput && <P>{item.content}</P>}
+                  {isUpdateInput && (
+                    <>
+                      <UpdateWrapper>
+                        <UpdateInput
+                          name="updateInput"
+                          value={updateInput}
+                          onChange={onUpdateChangeHandler}
+                        />
+                        <UpdateButtonsWrapper>
+                          <button
+                            onClick={() => {
+                              onUpdateHandler(item.commentId);
+                            }}
+                          >
+                            수정
+                          </button>
+                          <button onClick={() => setIsUpdateInput(false)}>
+                            취소
+                          </button>
+                        </UpdateButtonsWrapper>
+                      </UpdateWrapper>
+                    </>
+                  )}
                 </UserInfoTxt>
               </StUserBox>
               <ButtonsWrapper>
-                {nickname === item.nickname && (
+                {!isUpdateInput && nickname === item.nickname && (
                   <>
                     <button
                       content={"수정"}
                       onClick={() => {
-                        dispatch(
-                          putCommentData({
-                            itemId: id,
-                            content: input,
-                            commentId: item.commentId,
-                          })
-                        );
-                        setInput("");
+                        setIsUpdateInput(true);
+                        setUpdateInput(item.content);
                       }}
                     >
                       수정
@@ -301,7 +330,7 @@ const StProfileIcon = styled(ProfileIcon)`
 `;
 
 const UserInfoTxt = styled.div`
-  margin-top: -0.5rem;
+  margin-top: -0.8rem;
   display: flex;
   flex-direction: column;
   row-gap: 0.3rem;
@@ -328,7 +357,7 @@ const ButtonsWrapper = styled.div`
   margin-top: -5rem;
   display: flex;
   flex-direction: row;
-  column-gap: 1rem;
+  column-gap: 0.5rem;
 
   button {
     border: none;
@@ -337,6 +366,53 @@ const ButtonsWrapper = styled.div`
     @media (max-width: 767px) {
       /* Mobile */
       font-size: 0.8rem;
+    }
+  }
+`;
+
+const UpdateInput = styled.input`
+  width: 22rem;
+  height: 2rem;
+  border: 0.1rem solid #cbcbcb;
+  border-radius: 0.4rem;
+  font-size: 1.4rem;
+  padding: 0.5rem;
+  outline: none;
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    padding: 0.8rem;
+    font-size: 1.1rem;
+    width: 12rem;
+    height: 1.5rem;
+  }
+`;
+
+const UpdateWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  column-gap: 0.5rem;
+`;
+
+const UpdateButtonsWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  column-gap: 0.2rem;
+  button {
+    border: none;
+    background: #cbcbcb;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    width: 3rem;
+    height: 2rem;
+    color: white;
+    @media (max-width: 767px) {
+      /* Mobile */
+      font-size: 0.6rem;
+      width: 2.2rem;
+      height: 1.7rem;
     }
   }
 `;
