@@ -221,6 +221,7 @@ function Update() {
               textAlign="top"
               placeholder={"제품에 대한 설명을 입력해 주세요."}
               name="content"
+              required
               {...register("content")}
             />
 
