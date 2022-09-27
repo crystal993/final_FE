@@ -8,8 +8,6 @@ function App() {
     if (accessToken) {
       try {
         const { exp } = jwt_decode(accessToken);
-        console.log(exp);
-        console.log(Date.now());
         if (Date.now() >= exp * 1000) {
           window.localStorage.removeItem("access-token");
           window.localStorage.removeItem("refresh-token");
