@@ -217,8 +217,19 @@ const STsection = styled.section`
 `;
 
 const STh1 = styled.h1`
-  font-size: 2.4rem;
   font-weight: 700;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    font-size: 2.4rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    font-size: 2.3rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 2.1rem;
+  }
 `;
 
 const STselect = styled.select`
