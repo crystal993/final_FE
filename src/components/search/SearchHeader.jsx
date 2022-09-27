@@ -23,8 +23,6 @@ const SearchHeader = () => {
   const searchInput = useRef();
   const [autoComplete, setAutoComplete] = useState(false);
 
-  // input의 외부 영역을 눌렀을 때
-  // 자동완성 영역이 꺼질 수 있도록
   useEffect(() => {
     const listener = (event) => {
       if (searchInput.current && !searchInput.current.contains(event.target)) {
@@ -40,7 +38,6 @@ const SearchHeader = () => {
     };
   }, [searchInput]);
 
-  // 검색 기능
   const onSearchResultHandler = () => {
     dispatch(__itemSearch({ keyword: keywordValue, toggleState: toggleState }));
     navigate(`/search/result/${keywordValue}`);
@@ -49,10 +46,8 @@ const SearchHeader = () => {
 
   const [autoSearchKeywords, setAutoSearchKeywords] = useState([]);
   const debouncedValue = useDebounce(keywordValue, 350);
-  // debouncedValue가 useDebounce에 의해 0.35초마다
-  // debouncedValue가 바뀔 때 호출
+
   useEffect(() => {
-    console.log("api call!");
     apis
       .get_auto_complete(debouncedValue)
       .then(({ data }) => {
@@ -64,14 +59,12 @@ const SearchHeader = () => {
       });
   }, [debouncedValue]);
 
-  // enter 눌렀을 때 검색 기능
   const onCheckEnterHandler = (e) => {
     if (e.key === "Enter") {
       onSearchResultHandler();
     }
   };
 
-  //자동완성 키워드로 검색
   const onAutoCompleteSearchResultHandler = (keyword) => {
     dispatch(__itemSearch({ keyword: keyword, toggleState: toggleState }));
     navigate(`/search/result/${keyword}`);
@@ -79,7 +72,7 @@ const SearchHeader = () => {
 
   const inputResetHandler = () => {
     document.getElementById("keyword").value = ""; //검색 페이지의 input값 reset
-    setKeywordValue(""); //KeywordValue값 리셋
+    setKeywordValue("");
     setAutoComplete(false);
   };
   return (
