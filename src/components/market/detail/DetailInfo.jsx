@@ -173,7 +173,6 @@ const DetailInfo = () => {
             }
           />
           <Comment id={id} />
-          {/* 채팅으로 거래하기 수정  */}
           {!item.isMine && (
             <FixButton content={"채팅으로 거래하기"}></FixButton>
           )}
@@ -198,10 +197,7 @@ const DetailInfo = () => {
 const DetailInfoWrapper = styled.div`
   padding-top: 4.9rem;
   margin: 0 auto;
-  @media (min-width: 768px) {
-    /* Tablet */ /* Desktop */
-    width: 50.6rem;
-  }
+  width: 50.6rem;
   @media (max-width: 767px) {
     /* Mobile */
     width: 26rem;
@@ -222,10 +218,7 @@ const InfoWrapper = styled.div`
 `;
 
 const P = styled.p`
-  @media (min-width: 768px) {
-    /* Tablet */ /* Desktop */
-    font-size: 1.2rem;
-  }
+  font-size: 1.2rem;
   @media (max-width: 767px) {
     /* Mobile */
     font-size: 1rem;
@@ -234,10 +227,7 @@ const P = styled.p`
 
 const H3 = styled.p`
   font-weight: bold;
-  @media (min-width: 768px) {
-    /* Tablet */ /* Desktop */
-    font-size: 1.6rem;
-  }
+  font-size: 1.6rem;
   @media (max-width: 767px) {
     /* Mobile */
     font-size: 1.4rem;
@@ -257,12 +247,8 @@ const StWrapper = styled.div`
 const Title = styled.p`
   display: block;
   width: 100%;
-
   text-overflow: ellipsis;
-  @media (min-width: 768px) {
-    /* Tablet */ /* Desktop */
-    font-size: 2.4rem;
-  }
+  font-size: 2.4rem;
   @media (max-width: 767px) {
     /* Mobile */
     font-size: 2rem;
@@ -272,10 +258,7 @@ const Title = styled.p`
 const Price = styled.p`
   color: ${({ theme }) => theme.mainColor};
   font-weight: bold;
-  @media (min-width: 768px) {
-    /* Tablet */ /* Desktop */
-    font-size: 2.8rem;
-  }
+  font-size: 2.8rem;
   @media (max-width: 767px) {
     /* Mobile */
     font-size: 2.4rem;
