@@ -8,7 +8,7 @@ import styled from "styled-components";
 const MyWritings = () => {
   return (
     <>
-      <Header />
+      <Header IconType={"ArrowBack"} />
       <Wrapper>
         <Layout>
           <MyWritingsContainer />

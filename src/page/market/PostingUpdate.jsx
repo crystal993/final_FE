@@ -6,7 +6,7 @@ import Update from "../../components/market/update/Update";
 const PostingUpdate = () => {
   return (
     <>
-      <Header />
+      <Header IconType={"ArrowBack"} />
       <Layout>
         <Update />
       </Layout>

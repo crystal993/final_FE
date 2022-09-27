@@ -7,7 +7,7 @@ import styled from "styled-components";
 const MyViewedProucts = () => {
   return (
     <>
-      <Header />
+      <Header IconType={"ArrowBack"} />
       <Wrapper>
         <MyViewedProductsContainer />
       </Wrapper>
