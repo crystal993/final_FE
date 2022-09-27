@@ -42,7 +42,10 @@ const GlobalHeader = () => {
           <Menu open={open} setOpen={setOpen} id={menuId} />
         </NavItem>
         <NavItem onClick={() => onPathHandler("/")}>
-          <Logo src="img/logo_gnb2@2x.png" alt="멍냥마켓 로고"></Logo>
+          <Logo
+            src={process.env.PUBLIC_URL + "/img/logo_gnb2@2x.png"}
+            alt="멍냥마켓 로고"
+          ></Logo>
         </NavItem>
         <NavItem>
           <SearchIcon onClick={() => onPathHandler("/search")} />

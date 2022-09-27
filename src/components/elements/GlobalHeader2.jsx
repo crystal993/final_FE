@@ -20,7 +20,10 @@ const GlobalHeader2 = ({ IconType = "Home" }) => {
           {IconType === "Home" && <HomeIcon onClick={() => navigate("/")} />}
         </NavItem>
         <NavItem onClick={() => onPathHandler("/")}>
-          <Logo src="img/logo_gnb2@2x.png" alt="멍냥마켓 로고"></Logo>
+          <Logo
+            src={process.env.PUBLIC_URL + "/img/logo_gnb2@2x.png"}
+            alt="멍냥마켓 로고"
+          ></Logo>
         </NavItem>
         <NavItem></NavItem>
       </Navbar>
@@ -85,6 +88,7 @@ const Logo = styled.img`
   }
   @media (max-width: 360px) {
     /* Mobile */
+    margin-left: -2.6rem;
     width: 8rem;
     height: 2.1rem;
   }
