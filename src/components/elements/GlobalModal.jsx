@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
-import ModalPortal from '../modal/Portal';
-import { useNavigate } from 'react-router-dom';
-import Modal from '../modal/Modal';
+import React from "react";
+import ModalPortal from "../modal/Portal";
+import Modal from "../modal/Modal";
 
-const GlobalModal = ({ content, name }) => {
-  const [modalOn, setMoadlOn] = useState(true);
+const GlobalModal = ({
+  content1,
+  content2,
+  name,
+  setIsModal,
+  isModal,
+  onClick,
+}) => {
   const handleModal = () => {
-    setMoadlOn(!modalOn);
-  };
-  const navigate = useNavigate();
-  const moveLogin = () => {
-    navigate('/login');
+    setIsModal((isModal) => !isModal);
   };
 
-  // 모달 함수 전달
   return (
     <div>
-      {/* 모달 확인하기 위해 / 실제로 사용할때는 닫기 버튼만 사용함*/}
-      {/* <button onClick={handleModal}>토글 버튼</button> */}
       <ModalPortal>
-        {modalOn && (
+        {isModal && (
           <Modal
             onClose={handleModal}
-            content={content}
-            moveLogin={moveLogin}
+            content1={content1}
+            content2={content2}
+            onClick={onClick}
             name={name}
+            //
           />
         )}
       </ModalPortal>
