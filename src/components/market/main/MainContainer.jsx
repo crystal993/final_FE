@@ -142,10 +142,17 @@ const MainContainer = () => {
     doubleList,
   ]);
 
+  const [mainTitle, setMainTitle] = useState("멍냥마켓");
+  useEffect(() => {
+    if (itemCategory) {
+      setMainTitle(itemCategory);
+    }
+  }, [itemCategory]);
+
   return (
     <Wrapper>
       <STsection>
-        <STh1>멍냥마켓</STh1>
+        <STh1>{mainTitle}</STh1>
         <div className="button">
           <Select
             optionDatas={option}
