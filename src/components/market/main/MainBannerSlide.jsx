@@ -27,8 +27,17 @@ const MainBannerSlide = ({
   };
   return (
     <StyledSlider {...settings}>
-      <Img1 />
-      <Img2 />
+      <div>
+        <Img1 />
+      </div>
+      <div>
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSdQmDBPY5XP8trO2Qb8CHnyPYV-sygFJHA5Jf-ifAntaBo9eA/viewform"
+          target="_blank"
+        >
+          <Img2 />
+        </a>
+      </div>
     </StyledSlider>
   );
 };
