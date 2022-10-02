@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -31,9 +31,11 @@ const LoginForm = () => {
     console.log(error);
   };
 
-  if (success) {
-    navigate("/");
-  }
+  useEffect(() => {
+    if (success) {
+      navigate("/");
+    }
+  }, [success, navigate]);
 
   return (
     <>
@@ -302,6 +304,7 @@ const ButtonsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 0.8rem;
+  margin-top: 0.5rem;
   @media (min-width: 1280px) {
     /* Desktop */
     margin-bottom: 5rem;
@@ -329,4 +332,5 @@ const SignUpLink = styled.a`
   font-size: 1.1rem;
   line-height: 2.3rem;
   text-decoration-line: underline;
+  cursor: pointer;
 `;
