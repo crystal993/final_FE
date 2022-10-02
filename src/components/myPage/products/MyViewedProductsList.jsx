@@ -24,27 +24,24 @@ const MyViewedProductsList = () => {
 
 const MyViewedProductsListWrapper = styled.div`
   margin: 1.6rem auto;
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  align-items: center;
-  border-collapse: collapse;
   flex-wrap: wrap;
   transition: all 0.3s;
-  row-gap: 0.3rem;
-  column-gap: 0.3rem;
   padding-left: 0.6rem;
+  display: grid;
   @media (min-width: 1280px) {
     /* Desktop */
-    width: 70rem;
+    width: 71rem;
+    grid-template-columns: repeat(5, 1fr);
   }
   @media (min-width: 768px) and (max-width: 1280px) {
     /* Tablet */
     width: 42rem;
+    grid-template-columns: repeat(3, 1fr);
   }
   @media (max-width: 767px) {
     /* Mobile */
     width: 28rem;
+    grid-template-columns: repeat(2, 1fr);
   }
 `;
 
