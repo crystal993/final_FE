@@ -102,8 +102,9 @@ const ItemInfoWrapper = styled.div`
 `;
 
 const Price = styled.h1`
-  font-size: 1.6rem;
+  font-size: 1.3rem;
   color: ${({ theme }) => theme.mainColor};
+  width: 7.5rem;
   word-break: break-all;
 `;
 
