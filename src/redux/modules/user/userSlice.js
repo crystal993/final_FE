@@ -26,7 +26,7 @@ const initialState = {
   idSuccess: true, // 중복 감지 체크
   nickSuccess: true, // 닉네임 중복체크 메시지
   nickErrorMsg: null, // 닉네임 중복체크 에러 메시지
-  duplicateNickSuccess: false, // 닉네임 중복 감지 체크
+  duplicateNickSuccess: true, // 닉네임 중복 감지 체크
   loginSuccess: false,
   profileImg: '',
   kakaoToken: localStorage.getItem('kakao-token')
@@ -70,7 +70,7 @@ const userSlice = createSlice({
     },
     [registerUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.registerSuccess = true; // registration successful
+      state.registerSuccess = payload.success; // registration successful
     },
     [registerUser.rejected]: (state, { payload }) => {
       state.loading = false;
@@ -121,9 +121,7 @@ const userSlice = createSlice({
     [kakaoLogin.fulfilled]: (state, { payload }) => {
       state.loading = false;
       state.userInfo = payload.data;
-      state.profileImg = payload.data.profileImg;
-      localStorage.setItem('user-profile', payload.data.profileImg);
-      localStorage.setItem('user-info', payload.data);
+      localStorage.setItem("user-info", JSON.stringify(payload.data));
       state.userToken = payload.headers.authorization;
     },
     [kakaoLogin.rejected]: (state, { payload }) => {

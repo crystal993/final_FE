@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,20 +14,24 @@ import InputResetButton from "../elements/buttons/InputResetButton";
 
 const SignupForm = () => {
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   // react-hook-form
   // 실시간 유효성 검사
 
-  //아이디 중복확인 상태
+  //아이디 중복확인 모달
   const [idDuplicate, onIdDuplicate] = useState(false);
-  //닉네임 중복확인 상태
+  //닉네임 중복확인 모달
   const [nickDuplicate, onNickDuplicate] = useState(false);
+  const [isRegister, onIsRegister] = useState(false);
 
   const idSuccess = useSelector((state) => state.user.idSuccess);
   const nickSuccess = useSelector((state) => state.user.nickSuccess);
   const registerSuccess = useSelector((state) => state.user.registerSuccess);
+
+  const [idDoubleCheck, onIdDoubleCheck] = useState(false);
+  const [nickDoubleCheck, onNickDoubleCheck] = useState(false);
+  const [SignUpOnClick, onSignUpOnClick] = useState(false);
 
   const {
     register,
@@ -35,8 +39,9 @@ const SignupForm = () => {
     watch,
     reset,
     setValue,
+    control,
     formState: { isDirty, errors },
-  } = useForm({ mode: "onChange" });
+  } = useForm({ mode: "onChange", userId: "test" });
 
   const onSubmit = (event) => {
     if (watch().password !== watch().passwordConfirm) {
@@ -50,45 +55,111 @@ const SignupForm = () => {
       password: watch().password,
       passwordConfirm: watch().passwordConfirm,
     };
-
-    dispatch(registerUser(body));
+    if (idDoubleCheck && nickDoubleCheck) {
+      dispatch(registerUser(body));
+    }
   };
 
   const onReset = () => {
     setValue("userId", "");
   };
 
+  function email_check(email) {
+    var regex =
+      /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    return email.trim() != "" && email != "undefined" && regex.test(email);
+  }
+
+  function nickname_check(nicknames) {
+    return nicknames.trim() != "" && nicknames != "undefined";
+  }
+  const userId = useWatch({
+    control,
+    name: "userId",
+  });
+  const nicknames = useWatch({
+    control,
+    name: "nickname",
+  });
   const onDuplicateUserId = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    dispatch(existMemberId({ email: watch().userId }));
+    if (email_check(userId)) {
+      dispatch(existMemberId({ email: userId }));
+      onIdDuplicate(false);
+    } else {
+      onIdDuplicate(true);
+    }
   };
 
   const onDuplicateUserNickname = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    dispatch(existMemberNickname({ nickname: watch().nickname }));
+    if (nickname_check(nicknames)) {
+      dispatch(existMemberNickname({ nickname: nicknames }));
+      onIdDuplicate(false);
+    } else {
+      onNickDuplicate(true);
+    }
   };
 
   const onError = (error) => {
     console.log(error);
   };
 
-  const goBack = () => {
-    navigate("/");
-  };
+  useEffect(() => {
+    onSignUpOnClick(SignUpOnClick);
+    onNickDuplicate(nickDoubleCheck);
+    onIdDuplicate(idDuplicate);
+  }, [
+    onSignUpOnClick,
+    SignUpOnClick,
+    onNickDuplicate,
+    nickDoubleCheck,
+    onIdDuplicate,
+    idDuplicate,
+  ]);
 
-  if (registerSuccess) {
-    navigate("/login");
-  }
+  useEffect(() => {
+    if (registerSuccess) {
+      navigate("/login");
+    } else {
+    }
+  }, [registerSuccess, navigate]);
 
+  // useEffect(() => {}, [idSuccess, nickSuccess]);
   return (
     <>
-      {idSuccess === true ? null : (
-        <GlobalModal content={`아이디 중복확인 하세요`} />
+      {!registerSuccess && (
+        <GlobalModal
+          content1={`아이디 혹은 닉네임 중복확인 바랍니다.`}
+          isModal={idDuplicate}
+          setIsModal={onIdDuplicate}
+        />
       )}
-      {nickSuccess === true ? null : (
-        <GlobalModal content={`닉네임 중복확인 하세요`} />
+      {idDuplicate && !nickDuplicate && idSuccess && (
+        <GlobalModal
+          content1={`사용 가능한 아이디 입니다.`}
+          isModal={idDuplicate}
+          setIsModal={onIdDuplicate}
+        />
+      )}
+      {idDuplicate && !nickDuplicate && !idSuccess && (
+        <GlobalModal
+          content1={`이미 존재하는 아이디 입니다.`}
+          isModal={idDuplicate}
+          setIsModal={onIdDuplicate}
+        />
+      )}
+      {!idDuplicate && nickDuplicate && nickSuccess && (
+        <GlobalModal
+          content1={`사용 가능한 닉네임 입니다.`}
+          isModal={nickDuplicate}
+          setIsModal={onNickDuplicate}
+        />
+      )}
+      {!idDuplicate && nickDuplicate && !nickSuccess && (
+        <GlobalModal
+          content1={`이미 존재하는 닉네임 입니다.`}
+          isModal={nickDuplicate}
+          setIsModal={onNickDuplicate}
+        />
       )}
       <FormWrapper>
         <Form
@@ -105,6 +176,7 @@ const SignupForm = () => {
                 type="text"
                 tabIndex="2"
                 className="input"
+                onChange={() => onIdDuplicate(false)}
                 {...register("userId", {
                   required: "아이디는 이메일 형식으로 적어주세요.",
                   pattern: {
@@ -124,7 +196,13 @@ const SignupForm = () => {
                 <Button
                   content={"중복체크"}
                   className="nickcheck-btn"
-                  onClick={onDuplicateUserId}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    onDuplicateUserId();
+                    onIdDuplicate((prev) => !prev);
+                    onIdDoubleCheck(true);
+                  }}
                   mobileWidth={"4.5rem"}
                   width={"5rem"}
                   height={"2.3rem"}
@@ -134,7 +212,7 @@ const SignupForm = () => {
                 ></Button>
               </ButtonWrapper>
               {errors.userId && (
-                <HelperText>{errors?.userId?.message}</HelperText>
+                <HelperText2>{errors?.userId?.message}</HelperText2>
               )}
               {!errors.userId && (
                 <HelperText>아이디는 이메일 형식으로 적어주세요.</HelperText>
@@ -160,7 +238,7 @@ const SignupForm = () => {
                 name="password"
               />
               {errors.password && (
-                <HelperText>{errors?.password?.message}</HelperText>
+                <HelperText2>{errors?.password?.message}</HelperText2>
               )}
 
               {!errors.password && (
@@ -193,7 +271,7 @@ const SignupForm = () => {
                 name="passwordConfirm"
               />
               {errors.passwordConfirm && (
-                <HelperText>{errors?.passwordConfirm?.message}</HelperText>
+                <HelperText2>{errors?.passwordConfirm?.message}</HelperText2>
               )}
               {!errors.passwordConfirm && (
                 <HelperText>
@@ -208,6 +286,7 @@ const SignupForm = () => {
                 type="text"
                 className="input"
                 tabIndex="2"
+                onChange={() => onNickDuplicate(false)}
                 {...register("nickname", {
                   required: "멍냥마켓에서 사용할 닉네임을 적어주세요.",
                 })}
@@ -220,7 +299,13 @@ const SignupForm = () => {
                 <Button
                   content={"중복체크"}
                   className="nickcheck-btn"
-                  onClick={onDuplicateUserNickname}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    onDuplicateUserNickname();
+                    onNickDuplicate((prev) => !prev);
+                    onNickDoubleCheck(true);
+                  }}
                   mobileWidth={"4.5rem"}
                   width={"5rem"}
                   height={"2.3rem"}
@@ -230,7 +315,7 @@ const SignupForm = () => {
                 ></Button>
               </ButtonWrapper>
               {errors.nickname && (
-                <HelperText>{errors?.nickname?.message}</HelperText>
+                <HelperText2>{errors?.nickname?.message}</HelperText2>
               )}
               {!errors.nickname && (
                 <HelperText>
@@ -436,6 +521,12 @@ const HelperText = styled.p`
   margin-top: 0.3rem;
   font-size: 1rem;
   color: #cbcbcb;
+`;
+
+const HelperText2 = styled.p`
+  margin-top: 0.3rem;
+  font-size: 1rem;
+  color: ${({ theme }) => theme.mainColor};
 `;
 
 const ButtonsWrapper = styled.div`
