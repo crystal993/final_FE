@@ -19,6 +19,7 @@ import EditIcon from "../../../assets/icons/edit_document2.svg";
 import DeleteIcon from "../../../assets/icons/delete.svg";
 import CheckIcon from "../../../assets/icons/check_circle.svg";
 import Accordian from "../../elements/GlobalAccordian";
+import { useRef } from "react";
 
 const DetailInfo = () => {
   const dispatch = useDispatch();
@@ -41,10 +42,11 @@ const DetailInfo = () => {
 
   const moveChat = () => {
     navigate(`/chatRoom/${id}`);
-    console.log(id);
   };
 
+  const divRef = useRef();
   useEffect(() => {
+    divRef.current.scrollIntoView();
     dispatch(__getSinglePost({ id: id }));
   }, []);
 
@@ -142,7 +144,9 @@ const DetailInfo = () => {
           onClick={onDeleteHandler}
         />
       )}
+
       <span ref={divRef}></span>
+
       <DetailInfoWrapper>
         {isModal ? (
           <GlobalModal content={"로그인 하세요"} name={"로그인"} />
