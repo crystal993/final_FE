@@ -218,6 +218,12 @@ const DetailInfo = () => {
           )}
         </DetailWrapper>
       </DetailInfoWrapper>
+      {!item.isMine && (
+        <FixButton
+          content={"채팅으로 거래하기"}
+          onClick={() => setIsServiceModal((prev) => !prev)}
+        ></FixButton>
+      )}
     </>
   );
 };
@@ -226,6 +232,7 @@ const DetailInfoWrapper = styled.div`
   padding-top: 4.9rem;
   margin: 0 auto;
   width: 50.6rem;
+
   @media (max-width: 767px) {
     /* Mobile */
     width: 26rem;
@@ -274,13 +281,14 @@ const StWrapper = styled.div`
 
 const Title = styled.p`
   display: block;
-  width: 100%;
   text-overflow: ellipsis;
   font-size: 2.4rem;
+  width: 50.6rem;
   word-break: break-all;
   @media (max-width: 767px) {
     /* Mobile */
     font-size: 2rem;
+    width: 24rem;
   }
 `;
 
@@ -357,6 +365,7 @@ const StShareIcon = styled(ShareIcon)`
 const UserInfoTxt = styled.div``;
 
 const Content = styled.h1`
+  display: block;
   font-weight: 400;
   word-break: break-all;
   @media (min-width: 768px) {
