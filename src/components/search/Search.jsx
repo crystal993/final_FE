@@ -11,12 +11,15 @@ import GlobalToggle from "../elements/GlobalToggle";
 import PopularSearchList from "./popular/PopularSearchList";
 import RecentSearchList from "./recent/RecentSearchList";
 import { apis } from "../../shared/axios";
+import { useNavigate } from "react-router-dom";
+import GlobalModal from "../elements/GlobalModal";
 
 const Search = () => {
   const dispatch = useDispatch();
+  const isLogin = useSelector((state) => state.user.userToken);
   const autoSaveState = useSelector((state) => state.search.toggle);
   const [isToggled, setIsToggled] = useState(autoSaveState);
-
+  const navigate = useNavigate();
   useEffect(() => {
     setIsToggled(autoSaveState);
   }, [autoSaveState]);
@@ -36,32 +39,64 @@ const Search = () => {
   };
 
   const onAllRecentDeleteHandler = () => {
-    console.log("전체 삭제");
     dispatch(__deleteAllRecentKeywords());
   };
 
+  const moveLogin = () => {
+    navigate("/login");
+  };
+  const [isModal, setIsModal] = useState(false);
+
   return (
-    <SearchWrapper>
-      <PopularSearchWrapper>
-        <Title>인기 검색어</Title>
-        <PopularSearchList></PopularSearchList>
-      </PopularSearchWrapper>
-      <RecentSearchWrapper>
-        <TitleWrapper>
-          <Title>최근 검색어</Title>
-          <ButtonsWrapper>
-            <ToggleWrapper>
-              <ToggleLabel>자동저장</ToggleLabel>
-              <GlobalToggle isToggled={isToggled} onToggle={onToggleHandler} />
-            </ToggleWrapper>
-            <AllDeleteButton onClick={() => onAllRecentDeleteHandler()}>
-              모두지우기
-            </AllDeleteButton>
-          </ButtonsWrapper>
-        </TitleWrapper>
-        {isToggled && <RecentSearchList></RecentSearchList>}
-      </RecentSearchWrapper>
-    </SearchWrapper>
+    <>
+      {isModal && (
+        <GlobalModal
+          name={"로그인"}
+          content1={"로그인이 필요한 서비스입니다."}
+          content2={"로그인 하시겠습니까?"}
+          isModal={isModal}
+          setIsModal={setIsModal}
+          onClick={moveLogin}
+        />
+      )}
+      <SearchWrapper>
+        <PopularSearchWrapper>
+          <Title>인기 검색어</Title>
+          <PopularSearchList></PopularSearchList>
+        </PopularSearchWrapper>
+        <RecentSearchWrapper>
+          <TitleWrapper>
+            <Title>최근 검색어</Title>
+            <ButtonsWrapper>
+              <ToggleWrapper>
+                <ToggleLabel>자동저장</ToggleLabel>
+                {isLogin ? (
+                  <GlobalToggle
+                    isToggled={isToggled}
+                    onToggle={onToggleHandler}
+                  />
+                ) : (
+                  <GlobalToggle
+                    isToggled={false}
+                    onToggle={() => setIsModal((prev) => !prev)}
+                  />
+                )}
+              </ToggleWrapper>
+              {isLogin ? (
+                <AllDeleteButton onClick={() => onAllRecentDeleteHandler()}>
+                  모두지우기
+                </AllDeleteButton>
+              ) : (
+                <AllDeleteButton onClick={() => setIsModal((prev) => !prev)}>
+                  모두지우기
+                </AllDeleteButton>
+              )}
+            </ButtonsWrapper>
+          </TitleWrapper>
+          {isToggled && <RecentSearchList></RecentSearchList>}
+        </RecentSearchWrapper>
+      </SearchWrapper>
+    </>
   );
 };
 
