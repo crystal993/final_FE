@@ -80,6 +80,7 @@ const Toggle = styled.input`
   width: 4.2rem;
   height: 2.1rem;
   border: none;
+  visibility: hidden;
   &:checked + ${ToggleLabel} {
     background: ${({ theme }) => theme.mainColor};
     &::after {
