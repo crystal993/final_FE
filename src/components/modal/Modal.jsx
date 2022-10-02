@@ -10,21 +10,33 @@ const Modal = ({ onClose, content1, content2, onClick, name }) => {
         <p className="content">{content1}</p>
         <p className="content">{content2}</p>
         <section className="modal-btn">
-          <Button
-            content={"취소"}
-            onClick={onClose}
-            mobileWidth={"12rem"}
-            width={"12rem"}
-            height={"4rem"}
-            color={"gray"}
-          ></Button>
-          <Button
-            content={name}
-            onClick={onClick}
-            mobileWidth={"12rem"}
-            width={"12rem"}
-            height={"4rem"}
-          ></Button>
+          {name ? (
+            <>
+              <Button
+                content={"취소"}
+                onClick={onClose}
+                mobileWidth={"12rem"}
+                width={"12rem"}
+                height={"4rem"}
+                color={"gray"}
+              ></Button>
+              <Button
+                content={name}
+                onClick={onClick}
+                mobileWidth={"12rem"}
+                width={"12rem"}
+                height={"4rem"}
+              ></Button>
+            </>
+          ) : (
+            <Button
+              content={"닫기"}
+              onClick={onClose}
+              mobileWidth={"12rem"}
+              width={"12rem"}
+              height={"4rem"}
+            ></Button>
+          )}
         </section>
       </div>
     </Wrapper>

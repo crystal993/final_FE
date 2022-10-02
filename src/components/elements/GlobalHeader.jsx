@@ -5,6 +5,7 @@ import Burger from "./header/Burger";
 import Menu from "./header/Menu";
 import { ReactComponent as ChatIcon } from "../../assets/icons/comment.svg";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
+import GlobalModal from "./GlobalModal";
 
 const GlobalHeader = () => {
   const navigate = useNavigate();
@@ -34,25 +35,53 @@ const GlobalHeader = () => {
   };
 
   useOnClickOutside(node, () => setOpen(false));
+  const [isServiceModal, setIsServiceModal] = useState(false);
+
+  const divRef = useRef();
+  // useEffect(() => {
+  //   divRef.current.scrollIntoView();
+  // }, []);
+
+  const onScrollTop = () => {
+    divRef.current.scrollIntoView(0);
+  };
+
   return (
-    <NavbarWrapper>
-      <Navbar>
-        <NavItem ref={node}>
-          <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
-          <Menu open={open} setOpen={setOpen} id={menuId} />
-        </NavItem>
-        <NavItem onClick={() => onPathHandler("/")}>
-          <Logo
-            src={process.env.PUBLIC_URL + "/img/logo_gnb2@2x.png"}
-            alt="멍냥마켓 로고"
-          ></Logo>
-        </NavItem>
-        <NavItem>
-          <SearchIcon onClick={() => onPathHandler("/search")} />
-          <ChatIcon />
-        </NavItem>
-      </Navbar>
-    </NavbarWrapper>
+    <>
+      {isServiceModal && (
+        <GlobalModal
+          content1={"서비스 준비 중 입니다."}
+          content2={"이용에 불편을 드려 죄송합니다."}
+          isModal={isServiceModal}
+          setIsModal={setIsServiceModal}
+        />
+      )}
+      <NavbarWrapper>
+        <span ref={divRef}></span>
+        <Navbar>
+          <NavItem ref={node}>
+            <Burger open={open} setOpen={setOpen} aria-controls={menuId} />
+            <Menu open={open} setOpen={setOpen} id={menuId} />
+          </NavItem>
+          <NavItem
+            onClick={() => {
+              onPathHandler("/");
+              window.localStorage.removeItem("petCategory");
+              window.localStorage.removeItem("itemCategory");
+            }}
+          >
+            <Logo
+              src={process.env.PUBLIC_URL + "/img/logo_gnb2@2x.png"}
+              alt="멍냥마켓 로고"
+            ></Logo>
+          </NavItem>
+          <NavItem>
+            <SearchIcon onClick={() => onPathHandler("/search")} />
+            <ChatIcon onClick={() => setIsServiceModal((prev) => !prev)} />
+          </NavItem>
+        </Navbar>
+      </NavbarWrapper>
+    </>
   );
 };
 
