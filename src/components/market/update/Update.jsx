@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import {
@@ -138,8 +138,13 @@ function Update() {
     return setValue(inputId, value);
   };
 
+  const divRef = useRef();
+  useEffect(() => {
+    divRef.current.scrollIntoView();
+  }, []);
   return (
     <>
+      <span ref={divRef}></span>
       <FormWrapper>
         <Form onSubmit={handleSubmit(onUpdateHandler)}>
           <TitleWrapper>

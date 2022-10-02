@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux/es/exports";
 import { __addPost } from "../../../redux/modules/market/postSlice";
@@ -23,6 +23,11 @@ function Create() {
 
   const [petCategory, setPetCategory] = useState(PetOption[0].value);
   const [itemCategory, setItemCategory] = useState(ItemOption[0].value);
+
+  const divRef = useRef();
+  useEffect(() => {
+    divRef.current.scrollIntoView();
+  }, []);
 
   useEffect(() => {
     setPetCategory(petCategory);
@@ -119,6 +124,7 @@ function Create() {
 
   return (
     <>
+      <span ref={divRef}></span>
       <FormWrapper>
         <Form onSubmit={handleSubmit(onSubmitHandler)}>
           <TitleWrapper>
