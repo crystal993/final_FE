@@ -94,10 +94,12 @@ export default function PriceChart({
 }
 
 const StBarChartWrapper = styled.div`
+  width: max-content;
   min-width: 26rem;
   height: 30rem;
   margin: 0 auto;
   font-size: 1.2rem;
+  outline: none;
   @media (min-width: 768px) {
     /* Tablet */ /* Desktop */
     width: 44.6rem;
@@ -111,8 +113,12 @@ const StBarChartWrapper = styled.div`
 const StCustomToolTip = styled.div`
   border: 1px solid #ffffff;
   padding: 0.8rem;
-  width: 10rem;
+  width: max-content;
+  min-width: 10rem;
   opacity: 0.8;
+  outline: none;
+  box-shadow: 0px;
+  border: none;
   text-align: center;
   background-color: #f7f2f2;
 `;
