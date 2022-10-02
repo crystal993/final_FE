@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import MyPageChart from "./MyPageChart";
 import Profile from "./Profile";
 import styled from "styled-components";
 
 const MyPage = () => {
+  const divRef = useRef();
+  useEffect(() => {
+    divRef.current.scrollIntoView();
+  }, []);
   return (
     <>
+      <span ref={divRef}></span>
       <MyPageBackgroundWrapper>
         <MyPageWrapper>
           <Profile></Profile>
