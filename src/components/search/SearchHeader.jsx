@@ -17,7 +17,6 @@ const SearchHeader = () => {
   const dispatch = useDispatch();
   const toggleState = useSelector((state) => state.search.toggle);
   const { keyword } = useParams();
-
   const [keywordValue, setKeywordValue] = useState(keyword);
 
   const searchInput = useRef();
@@ -39,8 +38,17 @@ const SearchHeader = () => {
   }, [searchInput]);
 
   const onSearchResultHandler = () => {
-    dispatch(__itemSearch({ keyword: keywordValue, toggleState: toggleState }));
-    navigate(`/search/result/${keywordValue}`);
+    if (
+      typeof keywordValue == "undefined" ||
+      keywordValue == null ||
+      keywordValue == ""
+    ) {
+    } else {
+      dispatch(
+        __itemSearch({ keyword: keywordValue, toggleState: toggleState })
+      );
+      navigate(`/search/result/${keywordValue}`);
+    }
     setAutoComplete(false);
   };
 
@@ -66,8 +74,11 @@ const SearchHeader = () => {
   };
 
   const onAutoCompleteSearchResultHandler = (keyword) => {
-    dispatch(__itemSearch({ keyword: keyword, toggleState: toggleState }));
-    navigate(`/search/result/${keyword}`);
+    if (typeof keyword == "undefined" || keyword == null || keyword == "") {
+    } else {
+      dispatch(__itemSearch({ keyword: keyword, toggleState: toggleState }));
+      navigate(`/search/result/${keyword}`);
+    }
   };
 
   const inputResetHandler = () => {
@@ -83,15 +94,16 @@ const SearchHeader = () => {
             <StArrowBackIcon onClick={() => navigate("/")} />
           </NavItem>
           <NavItem ref={searchInput}>
-            {keyword !== undefined ? (
+            {keyword !== "undefined" ? (
               <InputWrapper>
                 <SearchInput
                   id="keyword"
-                  placeholder="검색어를 입력해주세요."
+                  placeholder="검색어를 2글자 이상 입력해주세요."
                   type="text"
                   name="keyword"
                   value={keywordValue}
                   required
+                  minLength={2}
                   onChange={(e) => {
                     setKeywordValue(e.target.value);
                     setAutoComplete(true);

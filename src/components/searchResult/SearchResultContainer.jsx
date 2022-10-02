@@ -31,7 +31,7 @@ const SearchResultContainer = () => {
   return (
     <>
       <Wrapper>
-        {searchResultList?.length > 0 ? (
+        {searchResultList?.length > 0 && keyword != "undefined" ? (
           <>
             <SectionWrapper>
               <SearchResultTitle>'{keyword}' 검색결과</SearchResultTitle>
