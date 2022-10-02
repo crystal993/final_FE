@@ -106,17 +106,43 @@ const DetailInfo = () => {
   const [isMessage, setMessage] = useState(null);
   const onDeleteHandler = (event) => {
     event.stopPropagation();
-    // TODO:  추후에 모달로 바꿀 예정
-    // 모달 중에 예 아니요 선택하는 모달도 필요할 듯
-    const result = window.confirm("게시글을 삭제하겠습니까?");
-    if (result) {
-      return deleteHandler(id);
-    } else {
-      return;
-    }
+    return deleteHandler(id);
   };
+  const moveLogin = () => {
+    navigate("/login");
+  };
+  const [isServiceModal, setIsServiceModal] = useState(false);
+  const [isDealServiceModal, setIsDealServiceModal] = useState(false);
+  const [isRemoveModal, setIsRemoveModal] = useState(false);
   return (
     <>
+      {isServiceModal && (
+        <GlobalModal
+          content1={"서비스 준비 중 입니다."}
+          content2={"이용에 불편을 드려 죄송합니다."}
+          isModal={isServiceModal}
+          setIsModal={setIsServiceModal}
+        />
+      )}
+      {isDealServiceModal && (
+        <GlobalModal
+          content1={"서비스 준비 중 입니다."}
+          content2={"이용에 불편을 드려 죄송합니다."}
+          isModal={isDealServiceModal}
+          setIsModal={setIsDealServiceModal}
+        />
+      )}
+      {isRemoveModal && (
+        <GlobalModal
+          name={"삭제"}
+          content1={"게시물을 정말 삭제하시겠습니까?"}
+          content2={"삭제한 게시물은 복구할 수 없습니다."}
+          isModal={isRemoveModal}
+          setIsModal={setIsRemoveModal}
+          onClick={onDeleteHandler}
+        />
+      )}
+      <span ref={divRef}></span>
       <DetailInfoWrapper>
         {isModal ? (
           <GlobalModal content={"로그인 하세요"} name={"로그인"} />
@@ -172,15 +198,14 @@ const DetailInfo = () => {
             }
           />
           <Comment id={id} />
-          {!item.isMine && (
-            <FixButton content={"채팅으로 거래하기"}></FixButton>
-          )}
+
           {item.isMine && (
             <FixThreeButton
               content1={"삭제하기"}
               content2={"거래완료"}
               content3={"수정하기"}
-              onClick1={onDeleteHandler}
+              onClick1={() => setIsRemoveModal((prev) => !prev)}
+              onClick2={() => setIsDealServiceModal((prev) => !prev)}
               onClick3={onEditHandler}
               icon1={DeleteIcon}
               icon2={CheckIcon}

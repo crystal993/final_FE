@@ -9,8 +9,12 @@ import {
 } from "../../../redux/modules/market/commentSlice";
 import GlobalButton from "./../../elements/GlobalButton";
 import { ReactComponent as ProfileIcon } from "../../../assets/icons/profile_img_sm.svg";
+import GlobalModal from "../../elements/GlobalModal";
+
 const Comment = ({ id }) => {
+  const isLogin = useSelector((state) => state.user.userToken);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const state = useSelector((state) => state.comment.comment);
   const comment_data = state;
   const [input, setInput] = useState("");
@@ -57,8 +61,24 @@ const Comment = ({ id }) => {
     setUpdateInput(updateInput);
   }, [setUpdateInput, updateInput]);
 
+  const moveLogin = () => {
+    navigate("/login");
+  };
+  const [isModal, setIsModal] = useState(false);
+
   return (
     <>
+      {isModal && (
+        <GlobalModal
+          name={"로그인"}
+          content1={"로그인이 필요한 서비스입니다."}
+          content2={"로그인 하시겠습니까?"}
+          isModal={isModal}
+          setIsModal={setIsModal}
+          onClick={moveLogin}
+        />
+      )}
+
       <Wrapper>
         <Label>
           <Input
