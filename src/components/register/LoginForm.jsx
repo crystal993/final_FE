@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../../redux/modules/user/userActions";
 import Button from "../elements/GlobalButton";
+import KakaoLogin from "./socialLogin/KakaoLogin";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -86,26 +87,23 @@ const LoginForm = () => {
               )}
             </InputWrapper>
           </Container>
-          <ButtonsWrapper>
-            <Button
-              content={"로그인"}
-              mobileWidth={"25rem"}
-              width={"38rem"}
-              fontSize={"1.3rem"}
-            />
-            <Button
-              content={"카카오 로그인"}
-              mobileWidth={"25rem"}
-              width={"38rem"}
-              fontSize={"1.3rem"}
-              color={"subColor"}
-            />
-          </ButtonsWrapper>
+          <Button
+            content={"로그인"}
+            mobileWidth={"25rem"}
+            width={"38rem"}
+            fontSize={"1.8rem"}
+            mobileFontSize={"1.3rem"}
+            height={"5rem"}
+            mobileHeight={"3.6rem"}
+          />
         </Form>
+        <ButtonsWrapper>
+          <KakaoLogin />
+        </ButtonsWrapper>
         <SignUpHelperTxt>아직 멍냥마켓 회원이 아니신가요?</SignUpHelperTxt>
         <SignUpLink
           onClick={() => {
-            navigate("/signup");
+            navigate("../signup");
           }}
         >
           회원가입
