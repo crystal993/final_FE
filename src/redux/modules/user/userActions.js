@@ -84,14 +84,16 @@ export const logoutUser = createAsyncThunk(
 
 // 백엔드로 인가코드 보내기
 export const kakaoLogin = createAsyncThunk(
-  'user/kakaoLogin',
-  async (payload, { rejectWithValue }) => {
-    console.log(payload);
+  "user/kakaoLogin",
+  async (payload, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const response = await axios.get(`http://{서버주소}?code=${payload}`);
-      console.log(response); // 토큰을 넘겨받음
-      const ACCESS_TOKEN = response.data.accessToken;
-      localStorage.setItem('kakao-token', ACCESS_TOKEN);
+      const response = await axios.get(
+        `https://fabius-bk.shop/members/kakao/callback?code=${payload}`
+      );
+      const ACCESS_TOKEN = response.headers.authorization;
+      localStorage.setItem("access-token", ACCESS_TOKEN);
+      localStorage.setItem("refresh-token", response.headers.refreshtoken);
+      return fulfillWithValue(response);
     } catch (error) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
