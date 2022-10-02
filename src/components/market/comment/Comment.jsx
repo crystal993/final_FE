@@ -9,6 +9,7 @@ import {
 } from "../../../redux/modules/market/commentSlice";
 import GlobalButton from "./../../elements/GlobalButton";
 import { ReactComponent as ProfileIcon } from "../../../assets/icons/profile_img_sm.svg";
+import { useNavigate } from "react-router-dom";
 import GlobalModal from "../../elements/GlobalModal";
 
 const Comment = ({ id }) => {
@@ -42,6 +43,8 @@ const Comment = ({ id }) => {
 
   const [isUpdateInput, setIsUpdateInput] = useState(false);
   const [updateInput, setUpdateInput] = useState();
+  const [updateInputId, setUpdateInputId] = useState();
+  const [updatecurrentInput, setupdatecurrentInput] = useState(false);
   const onUpdateHandler = (commtentId) => {
     dispatch(
       putCommentData({
@@ -81,15 +84,30 @@ const Comment = ({ id }) => {
 
       <Wrapper>
         <Label>
-          <Input
-            placeholder="댓글을 입력해 주세요"
-            name="input"
-            value={input}
-            onChange={onChangeHandler}
-          />
-          <button onClick={onPostHandler}>
-            <span>등록</span>
-          </button>
+          {isLogin ? (
+            <>
+              <Input
+                placeholder="댓글을 입력해 주세요"
+                name="input"
+                value={input}
+                onChange={onChangeHandler}
+              />
+              <button onClick={onPostHandler}>
+                <span>등록</span>
+              </button>
+            </>
+          ) : (
+            <>
+              <Input
+                placeholder="댓글을 입력해 주세요"
+                name="input"
+                onClick={() => setIsModal((prev) => !prev)}
+              />
+              <button onClick={() => setIsModal((prev) => !prev)}>
+                <span>등록</span>
+              </button>
+            </>
+          )}
         </Label>
         {comment_data.length === 0 ? (
           <section className="no-comment">
@@ -105,60 +123,76 @@ const Comment = ({ id }) => {
                   <StProfileIcon />
                 </UserImgBox>
                 <UserInfoTxt>
-                  <H3>{item.nickname}</H3>
-                  {!isUpdateInput && <P>{item.content}</P>}
-                  {isUpdateInput && (
-                    <>
-                      <UpdateWrapper>
-                        <UpdateInput
-                          name="updateInput"
-                          value={updateInput}
-                          onChange={onUpdateChangeHandler}
-                        />
-                        <UpdateButtonsWrapper>
-                          <button
-                            onClick={() => {
-                              onUpdateHandler(item.commentId);
-                            }}
-                          >
-                            수정
-                          </button>
-                          <button onClick={() => setIsUpdateInput(false)}>
-                            취소
-                          </button>
-                        </UpdateButtonsWrapper>
-                      </UpdateWrapper>
-                    </>
-                  )}
+                  <UserInfoFirstRow>
+                    <H3>{item.nickname}</H3>
+                    <ButtonsWrapper>
+                      {nickname === item.nickname &&
+                        (!isUpdateInput ||
+                          updateInputId !== item.commentId) && (
+                          <>
+                            <button
+                              content={"수정"}
+                              onClick={() => {
+                                setIsUpdateInput(true);
+                                setUpdateInput(item.content);
+                                setUpdateInputId(item.commentId);
+                              }}
+                            >
+                              수정
+                            </button>
+                            <button
+                              onClick={() => {
+                                dispatch(
+                                  deleteCommentData({
+                                    itemId: id,
+                                    commentId: item.commentId,
+                                  })
+                                );
+                              }}
+                            >
+                              삭제
+                            </button>
+                          </>
+                        )}
+                    </ButtonsWrapper>
+                  </UserInfoFirstRow>
+                  <ContentWrapper>
+                    {isUpdateInput &&
+                    nickname === item.nickname &&
+                    updateInputId === item.commentId ? (
+                      <>
+                        <UpdateWrapper>
+                          <UpdateInput
+                            name="updateInput"
+                            value={updateInput}
+                            onChange={onUpdateChangeHandler}
+                          />
+                          <UpdateButtonsWrapper>
+                            <button
+                              onClick={() => {
+                                onUpdateHandler(item.commentId);
+                                setUpdateInputId("");
+                              }}
+                            >
+                              수정
+                            </button>
+                            <button
+                              onClick={() => {
+                                setIsUpdateInput(false);
+                                setUpdateInputId("");
+                              }}
+                            >
+                              취소
+                            </button>
+                          </UpdateButtonsWrapper>
+                        </UpdateWrapper>
+                      </>
+                    ) : (
+                      <P>{item.content}</P>
+                    )}
+                  </ContentWrapper>
                 </UserInfoTxt>
               </StUserBox>
-              <ButtonsWrapper>
-                {!isUpdateInput && nickname === item.nickname && (
-                  <>
-                    <button
-                      content={"수정"}
-                      onClick={() => {
-                        setIsUpdateInput(true);
-                        setUpdateInput(item.content);
-                      }}
-                    >
-                      수정
-                    </button>
-                    <button
-                      onClick={() => {
-                        dispatch(
-                          deleteCommentData({
-                            itemId: id,
-                            commentId: item.commentId,
-                          })
-                        );
-                      }}
-                    >
-                      삭제
-                    </button>
-                  </>
-                )}
-              </ButtonsWrapper>
             </section>
           ))
         )}
@@ -186,7 +220,6 @@ const Wrapper = styled.div`
     width: 36rem;
     padding: 1.4rem 1.8rem;
     gap: 1rem;
-
     button {
       cursor: pointer;
     }
@@ -197,7 +230,8 @@ const Wrapper = styled.div`
     @media (max-width: 767px) {
       /* Mobile */
       padding: 0.5rem 2.2rem;
-      width: 25rem;
+      width: 24rem;
+      gap: 0.7rem;
     }
   }
 
@@ -244,6 +278,7 @@ const Input = styled.input`
   margin-right: 1.6rem;
   font-size: 1.4rem;
   padding: 0.5rem;
+  padding-right: 6.5rem;
   outline: none;
   &:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px white inset;
@@ -337,8 +372,8 @@ const UserImgBox = styled.div`
 `;
 
 const StProfileIcon = styled(ProfileIcon)`
-  width: 100%;
-  height: 100%;
+  width: 4rem;
+  height: 4rem;
   object-fit: cover;
   path {
     fill: white;
@@ -347,16 +382,23 @@ const StProfileIcon = styled(ProfileIcon)`
   circle {
     fill: #6b6b6b;
   }
+
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 `;
 
 const UserInfoTxt = styled.div`
-  margin-top: -0.8rem;
+  margin-top: 0rem;
   display: flex;
   flex-direction: column;
   row-gap: 0.3rem;
 `;
 
 const P = styled.p`
+  display: block;
   word-break: break-all;
   font-size: 1.2rem;
   @media (max-width: 767px) {
@@ -375,15 +417,18 @@ const H3 = styled.p`
 `;
 
 const ButtonsWrapper = styled.div`
-  margin-top: -5rem;
   display: flex;
   flex-direction: row;
-  column-gap: 0.5rem;
-
+  column-gap: 2rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    column-gap: 0.5rem;
+  }
   button {
     border: none;
     font-size: 1rem;
     color: ${({ theme }) => theme.darkgray};
+    font-size: 1rem;
     @media (max-width: 767px) {
       /* Mobile */
       font-size: 0.8rem;
@@ -393,11 +438,11 @@ const ButtonsWrapper = styled.div`
 
 const UpdateInput = styled.input`
   width: 22rem;
-  height: 2rem;
+  height: 2.3rem;
   border: 0.1rem solid #cbcbcb;
   border-radius: 0.4rem;
   font-size: 1.4rem;
-  padding: 0.5rem;
+  padding: 1rem;
   outline: none;
   &:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px white inset;
@@ -436,4 +481,21 @@ const UpdateButtonsWrapper = styled.div`
       height: 1.7rem;
     }
   }
+`;
+
+const ContentWrapper = styled.div`
+  width: 29rem;
+  gap: 1rem;
+  min-height: 4rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 15rem;
+    min-height: 3rem;
+  }
+`;
+
+const UserInfoFirstRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
