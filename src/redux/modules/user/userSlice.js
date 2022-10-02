@@ -82,10 +82,9 @@ const userSlice = createSlice({
       state.error = null;
     },
     [logoutUser.fulfilled]: (state, { payload }) => {
-      localStorage.removeItem('access-token');
-      localStorage.removeItem('refresh-token');
-      localStorage.removeItem('kakao-token');
-      localStorage.removeItem('user-info');
+      localStorage.removeItem("access-token");
+      localStorage.removeItem("refresh-token");
+      localStorage.removeItem("user-info");
       state.loading = false;
       state.logoutInfo = payload;
       state.userToken = null;
@@ -102,7 +101,6 @@ const userSlice = createSlice({
     },
     [existMemberId.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      console.log(payload);
       state.idMsg = payload.data.data;
       if (payload.data.data === null) {
         state.idErrorMsg = payload.data.error.message;
