@@ -273,6 +273,7 @@ const Title = styled.p`
   width: 100%;
   text-overflow: ellipsis;
   font-size: 2.4rem;
+  word-break: break-all;
   @media (max-width: 767px) {
     /* Mobile */
     font-size: 2rem;
@@ -353,6 +354,7 @@ const UserInfoTxt = styled.div``;
 
 const Content = styled.h1`
   font-weight: 400;
+  word-break: break-all;
   @media (min-width: 768px) {
     /* Tablet */ /* Desktop */
     font-size: 1.6rem;

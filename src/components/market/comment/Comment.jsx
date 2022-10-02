@@ -357,6 +357,7 @@ const UserInfoTxt = styled.div`
 `;
 
 const P = styled.p`
+  word-break: break-all;
   font-size: 1.2rem;
   @media (max-width: 767px) {
     /* Mobile */

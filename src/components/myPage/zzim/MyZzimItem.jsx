@@ -104,6 +104,7 @@ const ItemInfoWrapper = styled.div`
 const Price = styled.h1`
   font-size: 1.6rem;
   color: ${({ theme }) => theme.mainColor};
+  word-break: break-all;
 `;
 
 const PriceIconWrapper = styled.div`
