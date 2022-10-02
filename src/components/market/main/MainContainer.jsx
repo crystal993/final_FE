@@ -64,8 +64,11 @@ const MainContainer = () => {
     });
   };
 
-  const itemCategory = localStorage.getItem("itemCategory");
+  const itemCategoryObj = JSON.parse(localStorage.getItem("itemCategory"));
+  const itemCategory = itemCategoryObj ? itemCategoryObj.itemCategory : null;
   const petCategory = localStorage.getItem("petCategory");
+
+  useEffect(() => {}, [itemCategoryObj]);
 
   useEffect(() => {
     if (petCategory === null && itemCategory === null) {
@@ -142,17 +145,10 @@ const MainContainer = () => {
     doubleList,
   ]);
 
-  const [mainTitle, setMainTitle] = useState("멍냥마켓");
-  useEffect(() => {
-    if (itemCategory) {
-      setMainTitle(itemCategory);
-    }
-  }, [itemCategory]);
-
   return (
     <Wrapper>
       <STsection>
-        <STh1>{mainTitle}</STh1>
+        <STh1>{itemCategory ? itemCategory : "멍냥마켓"}</STh1>
         <div className="button">
           <Select
             optionDatas={option}
