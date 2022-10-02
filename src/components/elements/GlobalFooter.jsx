@@ -6,9 +6,13 @@ const GlobalFooter = () => {
     <>
       <Footer>
         <FooterContentsWrapper>
-          Footer영역 Copoyright.2022 <br></br>
-          팀원 이름 이메일 등등 이용약관 적던지<br></br> 모바일 사이즈 최적화
-          어쩌구 적어야되나
+          <p>
+            Copyright 2022. 멍냥마켓. All Rights Reserved. <br></br>
+            <br></br>
+            FE_김수정_ggg7152@gmail.com 김주형_wnguddl9632@daum.net
+            UI/UX_양명현_and2288@naver.com<br></br> BE_이회섭_5chips17@gmail.com
+            한종혁_B1gDD@naver.com 김재영_jy0511_@naver.com
+          </p>
         </FooterContentsWrapper>
       </Footer>
     </>
