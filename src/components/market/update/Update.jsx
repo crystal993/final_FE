@@ -1,32 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import {
   __updatePost,
   __getSinglePost,
 } from "../../../redux/modules/market/postSlice";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Button from "../../elements/GlobalButton";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import ImgView from "../../elements/ImgView";
-import RESP from "../../../server/response";
+import ImgSlider from "../../elements/GlobalImgSlider";
 import axios from "axios";
 import { IoIosLocate } from "react-icons/io";
 import InputResetButton from "../../elements/buttons/InputResetButton";
 import FixButton from "../../elements/buttons/FixButton";
+import Select from "../../elements/GlobalSelect";
+import PetOption from "../options/PetOption";
+import ItemOption from "../options/ItemOption";
 
 function Update() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-
   const { state } = useLocation();
-  console.log(state);
+  const items = useSelector((state) => state.marketPost.singlePost);
+  const [petCategory, setPetCategory] = useState(state.petCategory);
+  const [itemCategory, setItemCategory] = useState(state.itemCategory);
+  const [item, setItem] = useState(items);
+  useEffect(() => {
+    setItem(items);
+  }, [setItem, items]);
 
   useEffect(() => {
-    setValue("itemCategory", state.itemCategory);
-    setValue("petCategory", state.petCategory);
     setValue("title", state.title);
     setValue("content", state.content);
     setValue("location", state.location);
@@ -34,37 +37,36 @@ function Update() {
     setValue("sellingPrice", state.sellingPrice);
   }, []);
 
+  useEffect(() => {
+    dispatch(__getSinglePost({ id: id }));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    setPetCategory(petCategory);
+    setItemCategory(itemCategory);
+  }, [setPetCategory, setItemCategory, petCategory, itemCategory]);
+
   const {
     register,
     handleSubmit,
-    setFocus,
     setValue,
-    reset,
-    watch,
     formState: { errors },
   } = useForm({
     mode: "onChange",
   });
 
-  const handleClick = (e) => {
-    let myInput = document.getElementById("fileInput");
-    myInput.click();
-  };
-
   const onUpdateHandler = (formData, e) => {
-    console.log(formData);
     const files = formData.files;
     const data = {
-      itemCategory: formData.itemCategory,
-      petCategory: formData.petCategory,
       title: formData.title,
       content: formData.content,
       location: formData.location,
       purchasePrice: formData.purchasePrice,
       sellingPrice: formData.sellingPrice,
     };
-    dispatch(__updatePost({ id, data, files }));
-    navigate(`/market/detail/${id}`);
+    dispatch(__updatePost({ id, data, itemCategory, petCategory, files }));
+    console.log(items);
+    navigate(`/market/detail/${id}`, { items });
   };
 
   //다중 이미지 preview
@@ -79,7 +81,6 @@ function Update() {
     const urlList = fileList.map((file) => URL.createObjectURL(file));
 
     setItemImgs([...urlList]);
-    console.log(itemImgs);
     if (files.length !== 0) {
       setIsLoading(false);
     }
@@ -104,7 +105,7 @@ function Update() {
               `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lon}&y=${lat}&input_coord=WGS84`,
               {
                 headers: {
-                  Authorization: `KakaoAK ${"91547d16c147d3035a5b8ea1bf701e74"}`,
+                  Authorization: `KakaoAK ${URI.KAKAO_REST_API}`,
                 },
               }
             )
@@ -133,49 +134,70 @@ function Update() {
   }
   getLocation(); //호출
 
-  useEffect(() => {
-    dispatch(__getSinglePost({ itemId: id }));
-  }, [dispatch]);
-
   const inputResetHandler = (inputId) => {
     setValue(inputId, " ");
   };
 
   const inputOnlyNumHandler = (value, inputId) => {
-    const onlyNumber = value.replace(/[^0-9]/g, "");
-    return setValue(inputId, onlyNumber);
+    // const onlyNumber = value.replace(/[^0-9]/g, "");
+    return setValue(inputId, value);
   };
 
+  const divRef = useRef();
+  useEffect(() => {
+    divRef.current.scrollIntoView();
+  }, []);
   return (
     <>
+      <span ref={divRef}></span>
       <FormWrapper>
-        <TitleWrapper>
-          <Title>게시글 수정</Title>
-        </TitleWrapper>
         <Form onSubmit={handleSubmit(onUpdateHandler)}>
+          <TitleWrapper>
+            <Title>게시글 수정</Title>
+          </TitleWrapper>
           <Container>
             <SelectWrapper>
-              <Select name="petCategory" {...register("petCategory")}>
-                <Option value="">동물 종류</Option>
-                <Option value="강아지">강아지</Option>
-                <Option value="고양이">고양이</Option>
-              </Select>
-
-              <Select name="itemCategory" {...register("itemCategory")}>
-                <Option value="">카테고리</Option>
-                <Option value="사료">사료</Option>
-                <Option value="간식">간식</Option>
-                <Option value="의류">의류</Option>
-                <Option value="미용">미용</Option>
-                <Option value="장난감">장난감</Option>
-                <Option value="기타용품">기타용품</Option>
-              </Select>
+              <Select
+                optionDatas={PetOption}
+                color={"gray"}
+                width={"36%"}
+                height={"3.1rem"}
+                optionsWidth={"115%"}
+                setSelected={setPetCategory}
+                initialValue={petCategory}
+              />
+              <Select
+                optionDatas={ItemOption}
+                color={"gray"}
+                width={"60%"}
+                height={"3.1rem"}
+                optionsWidth={"108.5%"}
+                setSelected={setItemCategory}
+                initialValue={itemCategory}
+              />
             </SelectWrapper>
 
             <Label>제목</Label>
 
             <InputWrapper>
-              <Input type="text" name="title" required {...register("title")} />
+              <Input
+                type="text"
+                name="title"
+                maxLength={"26"}
+                {...register("title", {
+                  required: "",
+                  maxLength: {
+                    value: 20,
+                    message: "제목은 20자 이내로 적어주세요.",
+                  },
+                })}
+              />
+              {errors.title == null ? (
+                <HelperText>제목은 20자 이내로 적어주세요.</HelperText>
+              ) : null}
+              {errors.title ? (
+                <HelperText2>{errors.title.message} </HelperText2>
+              ) : null}
               <InputResetButton onClick={() => inputResetHandler("title")} />
             </InputWrapper>
 
@@ -185,19 +207,35 @@ function Update() {
               <Input
                 type="number"
                 name="purchasePrice"
-                required
+                maxLength={10}
                 {...register("purchasePrice", {
+                  required: "구매했을 당시 해당 물품의 가격을 적어주세요.",
+                  minLength: {
+                    value: 0,
+                    message: " 구매했을 당시 해당 물품의 가격을 적어주세요.",
+                  },
+                  maxLength: {
+                    value: 7,
+                    message: "가격은 100만원대까지만 입력 가능합니다. ",
+                  },
                   validate: (value) => {
                     inputOnlyNumHandler(value, "purchasePrice");
                   },
                 })}
+                onWheel={(e) => e.target.blur()}
               />
+              {errors.purchasePrice == null ? (
+                <HelperText>
+                  구매했을 당시 해당 물품의 가격을 적어주세요.
+                </HelperText>
+              ) : null}
+
+              {errors.purchasePrice ? (
+                <HelperText2>{errors.purchasePrice.message} </HelperText2>
+              ) : null}
               <InputResetButton
                 onClick={() => inputResetHandler("purchasePrice")}
               />
-              <HelperText>
-                구매했을 당시 해당 물품의 가격을 적어주세요.
-              </HelperText>
             </InputWrapper>
             <Label>판매 가격</Label>
 
@@ -205,17 +243,29 @@ function Update() {
               <Input
                 type="number"
                 name="sellingPrice"
-                required
+                maxLength={10}
                 {...register("sellingPrice", {
+                  minLength: {
+                    value: 0,
+                    message: "물품을 판매할 가격을 적어주세요.",
+                  },
+                  maxLength: {
+                    value: 7,
+                    message: "가격은 100만원대까지만 입력 가능합니다. ",
+                  },
                   validate: (value) => {
                     inputOnlyNumHandler(value, "sellingPrice");
                   },
                 })}
+                onWheel={(e) => e.target.blur()}
               />
-              <InputResetButton
-                onClick={() => inputResetHandler("sellingPrice")}
-              />
-              <HelperText>물품을 판매할 가격을 적어주세요.</HelperText>
+              {errors.sellingPrice == null ? (
+                <HelperText>물품을 판매할 가격을 적어주세요.</HelperText>
+              ) : null}
+
+              {errors.sellingPrice ? (
+                <HelperText2>{errors.sellingPrice.message} </HelperText2>
+              ) : null}
             </InputWrapper>
             <Label>내용</Label>
 
@@ -224,6 +274,7 @@ function Update() {
               textAlign="top"
               placeholder={"제품에 대한 설명을 입력해 주세요."}
               name="content"
+              required
               {...register("content")}
             />
 
@@ -245,9 +296,10 @@ function Update() {
               // style={{ display: "none" }}
             />
             <ImgWrapper>
-              {!isLoading && <ImgView imgUrls={itemImgs} />}
+              {!isLoading && <ImgSlider imgUrls={itemImgs} />}
+              {isLoading && <ImgSlider imgUrls={state.itemImgs} />}
             </ImgWrapper>
-            <FixButton content={"게시글 수정하기"} version={2} />
+            <FixButton content={"게시글 수정하기"} />
           </Container>
         </Form>
       </FormWrapper>
@@ -256,25 +308,31 @@ function Update() {
 }
 
 const FormWrapper = styled.div`
-  width: 100%;
-  /* border-radius: 10px; */
-  border: 1px solid #eee;
-  margin: auto;
+  padding-top: 9rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-content: center;
   align-items: center;
   border-collapse: collapse;
 `;
 
 const Form = styled.form`
-  width: 100%;
-  padding: 30px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  margin-bottom: 20rem;
+  margin-left: 11.5rem;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    width: 50rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    width: 50rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 36rem;
+  }
 `;
 
 const TitleWrapper = styled.div`
@@ -283,27 +341,35 @@ const TitleWrapper = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
-  margin: 1.6rem 0 0 0;
-  font-size: 1.3rem;
-  @media screen and (min-width: 1024px) {
+  margin: 1.6rem 0 4rem 0;
+  @media (min-width: 1280px) {
     /* Desktop */
-    width: 40rem;
+    margin-bottom: 6rem;
   }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: 768px) and (max-width: 1280px) {
     /* Tablet */
-    width: 35rem;
+    margin-bottom: 6rem;
   }
-
   @media (max-width: 767px) {
     /* Mobile */
-
-    width: 32.8rem;
+    margin-bottom: 4rem;
   }
 `;
 
 const Title = styled.h1`
   text-align: left;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    font-size: 3.6rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    font-size: 3.6rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 2.4rem;
+  }
 `;
 
 const Container = styled.div`
@@ -316,7 +382,7 @@ const Container = styled.div`
 const Label = styled.label`
   font-weight: 500;
   font-size: 1.4rem;
-  margin: 0.5rem 0.5rem;
+  margin: 0.5rem 0rem;
   line-height: 20px;
   display: flex;
   flex-direction: row;
@@ -331,7 +397,6 @@ const InputWrapper = styled.div`
 
 const Input = styled.input`
   box-sizing: border-box;
-
   padding: 0;
   position: relative;
   display: inline-block;
@@ -340,12 +405,15 @@ const Input = styled.input`
   color: rgba(0, 0, 0, 0.85);
   font-size: 1.4rem;
   background-color: #fff;
-  border: 1px solid #d9d9d9;
+  border: 2px solid #d9d9d9;
   border-left-width: 0;
   border-right-width: 0;
   border-top-width: 0;
-  border-bottom-width: 3;
+  border-bottom-width: 2px;
   transition: all 0.3s;
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset;
+  }
   &:hover {
     border-color: ${({ theme }) => theme.mainColor};
   }
@@ -374,20 +442,22 @@ const Input = styled.input`
   &[type="file"]::file-selector-button:hover {
     background-color: #dadae1;
   }
-
-  @media screen and (min-width: 1024px) {
+  &[type="number"]::-webkit-outer-spin-button,
+  &[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  @media (min-width: 1280px) {
     /* Desktop */
-    width: 40rem;
+    width: 38rem;
   }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: 768px) and (max-width: 1280px) {
     /* Tablet */
-    width: 35rem;
+    width: 38rem;
   }
-
   @media (max-width: 767px) {
     /* Mobile */
-    width: 32.8rem;
+    width: 25rem;
   }
 `;
 
@@ -399,79 +469,30 @@ const HelperText = styled.p`
 
 const SelectWrapper = styled.div`
   margin-bottom: 3.5rem;
-  @media screen and (min-width: 1024px) {
-    /* Desktop */
-    width: 40rem;
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Tablet */
-    width: 35rem;
-  }
-
-  @media (max-width: 767px) {
-    /* Mobile */
-    width: 32.8rem;
-  }
-`;
-
-const Select = styled.select`
-  box-sizing: border-box;
-  margin: 5px;
-  padding: 0;
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  padding: 0.4rem 1.1rem;
-  color: rgba(0, 0, 0, 0.85);
-  font-size: 1.4rem;
-  background-color: #fff;
-  border: 1px solid #d9d9d9;
-  border-radius: 0.4rem;
-  transition: all 0.3s;
-  font-size: 1.4rem;
-  &:hover {
-    border-color: #40a9ff;
-    border-right-width: 1px;
-  }
-  &:focus {
-    outline: none;
-  }
-
-  @media screen and (min-width: 1024px) {
-    /* Desktop */
-    width: 18.5rem;
-  }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Tablet */
-    width: 16.5rem;
-  }
-
-  @media (max-width: 767px) {
-    /* Mobile */
-    width: 15.5rem;
-  }
-`;
-
-const Option = styled.option`
-  color: rgba(0, 0, 0, 0.85);
-  font-size: 1.4rem;
-`;
-
-const ButtonWrapper = styled.div`
-  width: 50%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 5px;
+  gap: 1rem;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    width: 38rem;
+    margin-bottom: 5rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    width: 38rem;
+    margin-bottom: 5rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 25rem;
+    margin-bottom: 3.5rem;
+  }
 `;
 
 const TextArea = styled.textarea`
   width: 32.8rem;
   height: 20rem;
-  border: 1px solid #d5d0d0;
+  border: 2px solid #d5d0d0;
   background-color: ${({ theme }) => theme.whiteColor};
   margin: 15px 0px;
   border-radius: 4px;
@@ -491,19 +512,17 @@ const TextArea = styled.textarea`
     color: #eae0e0;
   }
 
-  @media screen and (min-width: 1024px) {
+  @media (min-width: 1280px) {
     /* Desktop */
     width: 38rem;
   }
-
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: 768px) and (max-width: 1280px) {
     /* Tablet */
-    width: 35rem;
+    width: 38rem;
   }
-
   @media (max-width: 767px) {
     /* Mobile */
-    width: 32.8rem;
+    width: 25rem;
   }
 `;
 
@@ -524,7 +543,11 @@ const LocationInput = styled.input`
   background-color: transparent;
 `;
 
-const ImgWrapper = styled.div``;
+const ImgWrapper = styled.div`
+  width: 100%;
+  height: 16rem;
+  margin-top: 5rem;
+`;
 
 const LocationWrapper = styled.div`
   font-size: 1.4rem;
@@ -534,6 +557,12 @@ const LocationWrapper = styled.div`
   padding: 0.1rem 0.5rem;
   margin-bottom: 4.7rem;
   background-color: ${({ theme }) => theme.darkgray};
+`;
+
+const HelperText2 = styled.p`
+  margin-top: 0.3rem;
+  font-size: 1.2rem;
+  color: ${({ theme }) => theme.mainColor};
 `;
 
 export default Update;

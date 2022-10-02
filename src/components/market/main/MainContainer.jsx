@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import ItemList from '../../market/main/ItemList';
-import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect, useRef } from "react";
+import ItemList from "../../market/main/ItemList";
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getData,
   __getPost,
@@ -9,8 +9,9 @@ import {
   __getItemCategories,
   addPage,
   doubleListToZero,
-} from '../../../redux/modules/market/postSlice';
-import option from './Option';
+} from "../../../redux/modules/market/postSlice";
+import option from "./Option";
+import Select from "../../elements/GlobalSelect";
 
 const MainContainer = () => {
   const dispatch = useDispatch();
@@ -29,30 +30,32 @@ const MainContainer = () => {
   const categoryPage = useSelector((state) => state.marketPost.page);
 
   console.log(doubleList);
-  const [state, setState] = useState('');
+  const [state, setState] = useState("");
   const [page, setPage] = useState(0);
   const lastIntersectingData = useRef(null);
 
-  const itemCategory = localStorage.getItem('itemCategory');
-  const petCategory = localStorage.getItem('petCategory');
-
-  console.log('categoryPage', categoryPage);
-  const handleChange = (event) => {
-    setState(event.target.value);
-    let e = document.getElementById('selectElementID');
-    let text = e.options[e.selectedIndex].text;
-    localStorage.setItem('petCategory', `${text}`);
-    setPage(0);
-    dispatch(doubleListToZero());
-  };
-
-  console.log(doubleList);
+  const [Selected, setSelected] = useState("모두");
+  useEffect(() => {
+    if (Selected === "all") {
+      localStorage.setItem("petCategory", "모두");
+      setPage(0);
+      dispatch(doubleListToZero());
+    } else if (Selected === "cat") {
+      localStorage.setItem("petCategory", "고양이");
+      setPage(0);
+      dispatch(doubleListToZero());
+    } else if (Selected === "dog") {
+      localStorage.setItem("petCategory", "강아지");
+      setPage(0);
+      dispatch(doubleListToZero());
+    }
+  }, [Selected]);
 
   //observe 콜백 함수
   const onIntersect = (entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        console.log('!?!?!?');
+        console.log("!?!?!?");
         setPage((page) => page + 1);
         dispatch(addPage());
         // 현재 타겟을 observe한다.
@@ -61,26 +64,36 @@ const MainContainer = () => {
     });
   };
 
-  // 컴포넌트 마운트 할 때
+  const itemCategoryObj = JSON.parse(localStorage.getItem("itemCategory"));
+  const itemCategory = itemCategoryObj ? itemCategoryObj.itemCategory : null;
+  const petCategory = localStorage.getItem("petCategory");
+
+  useEffect(() => {}, [itemCategoryObj]);
+
   useEffect(() => {
-    console.log('page?', page);
     if (petCategory === null && itemCategory === null) {
       dispatch(__getPost({ page: page }));
     }
-    if (petCategory === '강아지' && itemCategory === null) {
-      dispatch(getData({ state: '강아지', page: page }));
+    if (petCategory === "강아지" && itemCategory === null) {
+      dispatch(getData({ state: "강아지", page: page }));
     }
-    if (petCategory === '고양이' && itemCategory === null) {
-      dispatch(getData({ state: '고양이', page: page }));
+    if (petCategory === "고양이" && itemCategory === null) {
+      dispatch(getData({ state: "고양이", page: page }));
     }
-    if (petCategory === '모두' && itemCategory === null) {
+    if (petCategory === "모두" && itemCategory === null) {
       dispatch(__getPost({ page: page }));
     }
     if (petCategory === null && itemCategory !== null) {
       dispatch(__getItemCategories({ itemCategory: itemCategory, page: page }));
     }
     if (petCategory !== null && itemCategory !== null) {
-      console.log('mainContainer');
+      console.log("mainContainer");
+      if (petCategory === "모두") {
+        dispatch(
+          __getItemCategories({ itemCategory: itemCategory, page: page })
+        );
+      }
+
       dispatch(
         getTwoCategory({
           itemCategory: itemCategory,
@@ -133,26 +146,17 @@ const MainContainer = () => {
   ]);
 
   return (
-    <>
+    <Wrapper>
       <STsection>
-        <STh1>멍냥마켓</STh1>
-        <div className='button'>
-          <select
-            name='choice'
-            onChange={handleChange}
-            defaultValue={option[2].value}
-            id='selectElementID'
-          >
-            {option.map((option) => (
-              <option
-                key={option.value}
-                value={option.value}
-                name={option.name}
-              >
-                {option.name}
-              </option>
-            ))}
-          </select>
+        <STh1>{itemCategory ? itemCategory : "멍냥마켓"}</STh1>
+        <div className="button">
+          <Select
+            optionDatas={option}
+            setSelected={setSelected}
+            width={"8.8rem"}
+            height={"3.2rem"}
+            optionWidth={"8.5rem"}
+          />
         </div>
       </STsection>
       <ItemList
@@ -179,7 +183,7 @@ const MainContainer = () => {
         (doubleList !== null && doubleList.length !== 0)) && (
         <div ref={lastIntersectingData}>.</div>
       )}
-    </>
+    </Wrapper>
   );
 };
 
@@ -189,7 +193,7 @@ const STsection = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1rem;
+  padding-top: 5rem;
   margin-bottom: 1rem;
   .button {
     display: flex;
@@ -201,7 +205,58 @@ const STsection = styled.section`
 `;
 
 const STh1 = styled.h1`
-  font-size: 2.4rem;
-  margin: 0 2.4rem;
   font-weight: 700;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    font-size: 2.4rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    font-size: 2.3rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 2.1rem;
+  }
+`;
+
+const STselect = styled.select`
+  position: relative;
+  width: 8.8rem;
+  height: 3.2rem;
+  border-radius: 0.6rem;
+  text-align: center;
+  color: ${({ theme }) => theme.mainColor};
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 20rem;
+  align-self: center;
+  border: 2px solid ${({ theme }) => theme.mainColor};
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.5rem 0 0 2.3rem;
+  transition: background-color 0.2s ease-in;
+
+  .option {
+    margin-right: 1rem;
+  }
+`;
+
+const Wrapper = styled.div`
+  height: auto;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    min-height: 77vh;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    min-height: 77vh;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    min-height: 86.4vh;
+  }
 `;

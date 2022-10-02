@@ -16,6 +16,7 @@ const StInputResetButton = styled.span`
   height: 2rem;
   border: none;
   position: absolute;
+  top: 0.4rem;
   right: 0.5rem;
   text-align: center;
   cursor: pointer;

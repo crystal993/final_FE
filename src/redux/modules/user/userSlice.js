@@ -23,16 +23,17 @@ const initialState = {
   success: false,
   idMsg: null, // 중복체크 메시지
   idErrorMsg: null, // 중복체크 아이디 메시지
-  duplicateSuccess: false, // 중복 감지 체크 (감지이면 true 아니면 false)
-  nickMsg: null, // 닉네임 중복체크 메시지
+  idSuccess: true, // 중복 감지 체크
+  nickSuccess: true, // 닉네임 중복체크 메시지
   nickErrorMsg: null, // 닉네임 중복체크 에러 메시지
-  duplicateNickSuccess: false, // 닉네임 중복 감지 체크
+  duplicateNickSuccess: true, // 닉네임 중복 감지 체크
   loginSuccess: false,
   profileImg: '',
   kakaoToken: localStorage.getItem('kakao-token')
     ? localStorage.getItem('kakao-token')
     : null,
   logoutInfo: {},
+  registerSuccess: false,
 };
 
 const userSlice = createSlice({
@@ -69,7 +70,7 @@ const userSlice = createSlice({
     },
     [registerUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.success = true; // registration successful
+      state.registerSuccess = payload.success; // registration successful
     },
     [registerUser.rejected]: (state, { payload }) => {
       state.loading = false;
@@ -81,10 +82,9 @@ const userSlice = createSlice({
       state.error = null;
     },
     [logoutUser.fulfilled]: (state, { payload }) => {
-      localStorage.removeItem('access-token');
-      localStorage.removeItem('refresh-token');
-      localStorage.removeItem('kakao-token');
-      localStorage.removeItem('user-info');
+      localStorage.removeItem("access-token");
+      localStorage.removeItem("refresh-token");
+      localStorage.removeItem("user-info");
       state.loading = false;
       state.logoutInfo = payload;
       state.userToken = null;
@@ -101,12 +101,11 @@ const userSlice = createSlice({
     },
     [existMemberId.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      console.log(payload);
       state.idMsg = payload.data.data;
       if (payload.data.data === null) {
         state.idErrorMsg = payload.data.error.message;
       }
-      state.duplicateSuccess = payload.data.success;
+      state.idSuccess = payload.data.success;
     },
     [existMemberId.rejected]: (state, { payload }) => {
       state.loading = false;
@@ -118,12 +117,9 @@ const userSlice = createSlice({
       state.error = null;
     },
     [kakaoLogin.fulfilled]: (state, { payload }) => {
-      console.log(payload);
       state.loading = false;
       state.userInfo = payload.data;
-      state.profileImg = payload.data.profileImg;
-      localStorage.setItem('user-profile', payload.data.profileImg);
-      localStorage.setItem('user-info', payload.data);
+      localStorage.setItem("user-info", JSON.stringify(payload.data));
       state.userToken = payload.headers.authorization;
     },
     [kakaoLogin.rejected]: (state, { payload }) => {
@@ -136,12 +132,11 @@ const userSlice = createSlice({
     },
     [existMemberNickname.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      console.log(payload);
       state.nickMsg = payload.data.data;
       if (payload.data.data === null) {
         state.nickErrorMsg = payload.data.error.message;
       }
-      state.duplicateSuccess = payload.data.success;
+      state.nickSuccess = payload.data.success;
     },
     [existMemberNickname.rejected]: (state, { payload }) => {
       state.loading = false;

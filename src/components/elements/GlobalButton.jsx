@@ -1,17 +1,21 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 function GlobalButton({
   content,
   icon,
   size,
   onClick,
+  mobileWidth,
   width,
+  mobileHeight,
   height,
-  fontSize,
   fontWeight,
+  fontSize,
+  mobileFontSize,
   color,
+  padding = "1rem",
 }) {
   return (
     <Wrapper onClick={onClick}>
@@ -19,11 +23,15 @@ function GlobalButton({
       {content && (
         <Btn
           size={size}
-          fontSize={fontSize}
           fontWeight={fontWeight}
           width={width}
+          mobileWidth={mobileWidth}
           height={height}
+          mobileHeight={mobileHeight}
+          fontSize={fontSize}
+          mobileFontSize={mobileFontSize}
           color={color}
+          padding={padding}
         >
           {content}
         </Btn>
@@ -45,31 +53,30 @@ const Btn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: ${(props) => props.padding};
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   font-weight: ${(props) => props.fontWeight};
   color: ${(props) =>
     props.color === "subColor" ? props.theme.mainColor : props.theme.white};
-  border-radius: ${(props) => props.theme.buttonRadius};
+  border-radius: 0.5rem;
   transition: ${(props) => props.theme.transition};
   border: ${(props) =>
     props.color === "subColor" ? `1px solid ${props.theme.mainColor}` : "none"};
   background-color: ${(props) =>
-    props.color === "subColor" ? props.theme.white : props.theme.mainColor};
+    props.color === "subColor"
+      ? props.theme.white
+      : props.color === "gray"
+      ? props.theme.gray
+      : props.theme.mainColor};
   font-size: ${(props) => props.fontSize};
-  &:hover {
-    cursor: pointer;
-    background-color: ${(props) =>
-      props.color === "subColor" ? props.theme.mainColor : props.theme.white};
-    box-shadow: ${(props) =>
-      props.color === "subColor" ? `none` : `inset 0px 0px 4px 0px #b6b7b9`};
-    color: ${(props) =>
-      props.color === "subColor" ? props.theme.white : props.theme.mainColor};
-    border: ${(props) =>
-      props.color === "subColor"
-        ? "none"
-        : `1px solid ${props.theme.mainColor}`};
+  cursor: pointer;
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: ${(props) => props.mobileWidth};
+    height: ${(props) => props.mobileHeight};
+    border-radius: 0.5rem;
+    font-size: ${(props) => props.mobileFontSize};
   }
 `;
 

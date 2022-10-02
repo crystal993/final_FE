@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import RESP from "../../../server/response";
 import { apis } from "../../../shared/axios";
+import { setCookie } from "../../../shared/cookie";
 
 const initialState = {
   list: [],
@@ -26,15 +27,14 @@ export const getData = createAsyncThunk(
   async (payload, thunkApi) => {
     try {
       const response = await axios.get(
-        `http://43.200.1.214/items/petcategory?petCategory=${payload.state}&page=${payload.page}&size=10`
+        `https://fabius-bk.shop/items?petCategory=${payload.state}&page=${payload.page}`
       );
-      console.log(response);
+
       if (!response.data) {
         return;
       }
       return thunkApi.fulfillWithValue(response.data);
     } catch (error) {
-      console.log(error);
       return thunkApi.rejectWithValue(error);
     }
   }
@@ -46,12 +46,11 @@ export const __getPost = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await axios.get(
-        `http://43.200.1.214/items?page=${arg.page}&size=10`
+        `https://fabius-bk.shop/items?page=${arg.page}`
       );
       if (!data) {
         return;
       }
-      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -64,13 +63,14 @@ export const __getItemCategories = createAsyncThunk(
   "category/__getItemCategories",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await axios.get(
-        `http://43.200.1.214/items/itemcategory?itemCategory=${arg.itemCategory}&page=${arg.page}&size=10`
+      const res = await axios.get(
+        `https://fabius-bk.shop/items?itemCategory=${arg.itemCategory}&page=${arg.page}`
       );
-      if (!data) {
+      console.log(res);
+      if (!res.data) {
         return;
       }
-      return thunkAPI.fulfillWithValue(data);
+      return thunkAPI.fulfillWithValue(res.data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
     }
@@ -79,19 +79,17 @@ export const __getItemCategories = createAsyncThunk(
 
 // 중복 카테고리 필터링
 export const getTwoCategory = createAsyncThunk(
-  'category/getTwoCategories',
+  "category/getTwoCategories",
   async (arg, thunkAPI) => {
     try {
       const response = await axios.get(
-        `http://43.200.1.214/items/twocategory?petCategory=${arg.petCategory}&itemCategory=${arg.itemCategory}&page=${arg.page}`
+        `https://fabius-bk.shop/items?petCategory=${arg.petCategory}&itemCategory=${arg.itemCategory}&page=${arg.page}`
       );
-      console.log(response.data);
       // localStorage.removeItem('petCategory');
       // localStorage.removeItem('itemCategory');
       if (response.data.length === 0) {
-        console.log('remove');
-        localStorage.removeItem('petCategory');
-        localStorage.removeItem('itemCategory');
+        localStorage.removeItem("petCategory");
+        localStorage.removeItem("itemCategory");
         return;
       }
       return thunkAPI.fulfillWithValue(response.data);
@@ -105,10 +103,9 @@ export const __getSinglePost = createAsyncThunk(
   "post/__getSinglePost",
   async (arg, thunkAPI) => {
     try {
-      console.log(arg.id);
-      const { data } = await apis.get_market_post(arg.id);
-      const datas = { ...data, imgLength: data.itemImgs.length };
-      return thunkAPI.fulfillWithValue(datas);
+      const response = await apis.get_market_post(arg.id);
+      setCookie(`itemId${arg.id}`, `${arg.id}`);
+      return thunkAPI.fulfillWithValue(response);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -119,7 +116,12 @@ export const __addPost = createAsyncThunk(
   "post/__addPost",
   async (arg, thunkAPI) => {
     try {
-      const { data } = await apis.create_market_post(arg.data, arg.files);
+      const { data } = await apis.create_market_post(
+        arg.data,
+        arg.petCategory,
+        arg.itemCategory,
+        arg.files
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e);
@@ -142,10 +144,14 @@ export const __deletePost = createAsyncThunk(
 export const __updatePost = createAsyncThunk(
   "post/__updatePost",
   async (arg, thunkAPI) => {
-    console.log(arg);
     try {
-      const { data } = await apis.edit_market_post(arg.id, arg.data, arg.files);
-      console.log(data);
+      const { data } = await apis.edit_market_post(
+        arg.id,
+        arg.data,
+        arg.petCategory,
+        arg.itemCategory,
+        arg.files
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
@@ -182,11 +188,11 @@ export const postSlice = createSlice({
     [getData.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.list = [];
-      if (action.payload[0].petCategory.includes('강아지')) {
+      if (action.payload[0].petCategory.includes("강아지")) {
         state.catList = [];
         state.dogList = state.dogList.concat(action.payload);
       }
-      if (action.payload[0].petCategory.includes('고양이')) {
+      if (action.payload[0].petCategory.includes("고양이")) {
         state.dogList = [];
         state.catList = state.catList.concat(action.payload);
       }
@@ -215,7 +221,7 @@ export const postSlice = createSlice({
     },
     [__getSinglePost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.singlePost = action.payload;
+      state.singlePost = action.payload.data;
     },
     [__getSinglePost.rejected]: (state, action) => {
       state.isLoading = false;
@@ -226,7 +232,7 @@ export const postSlice = createSlice({
       state.isLoading = true;
     },
     [__addPost.fulfilled]: (state, action) => {
-      state.list.push(action.payload);
+      state.list.unshift(action.payload);
     },
     [__addPost.rejected]: (state, action) => {
       state.isLoading = false;
@@ -239,7 +245,7 @@ export const postSlice = createSlice({
     [__deletePost.fulfilled]: (state, action) => {
       state.isLoading = false;
       const target = state.list.findIndex(
-        (post) => post.itemId === action.payload
+        (post) => post.id == action.payload.id
       );
       state.list.splice(target, 1);
     },
@@ -265,9 +271,8 @@ export const postSlice = createSlice({
     },
     [__getItemCategories.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
       state.itemCategory = action.payload[0].itemCategory;
-      if (state.itemCategory === '사료' && action.payload !== []) {
+      if (state.itemCategory === "사료" && action.payload !== []) {
         state.list = [];
         state.snackList = [];
         state.clothesList = [];
@@ -276,7 +281,7 @@ export const postSlice = createSlice({
         state.etcList = [];
         state.foodList = state.foodList.concat(action.payload);
       }
-      if (state.itemCategory === '간식' && action.payload !== []) {
+      if (state.itemCategory === "간식" && action.payload !== []) {
         state.list = [];
         state.foodList = [];
         state.clothesList = [];
@@ -285,7 +290,7 @@ export const postSlice = createSlice({
         state.etcList = [];
         state.snackList = state.snackList.concat(action.payload);
       }
-      if (state.itemCategory === '의류' && action.payload !== []) {
+      if (state.itemCategory === "의류" && action.payload !== []) {
         state.list = [];
         state.foodList = [];
         state.snackList = [];
@@ -294,7 +299,7 @@ export const postSlice = createSlice({
         state.etcList = [];
         state.clothesList = state.clothesList.concat(action.payload);
       }
-      if (state.itemCategory === '미용' && action.payload !== []) {
+      if (state.itemCategory === "미용" && action.payload !== []) {
         state.list = [];
         state.foodList = [];
         state.snackList = [];
@@ -303,7 +308,7 @@ export const postSlice = createSlice({
         state.etcList = [];
         state.beautyList = state.beautyList.concat(action.payload);
       }
-      if (state.itemCategory === '장난감' && action.payload !== []) {
+      if (state.itemCategory === "장난감" && action.payload !== []) {
         state.list = [];
         state.foodList = [];
         state.snackList = [];
@@ -312,7 +317,7 @@ export const postSlice = createSlice({
         state.etcList = [];
         state.toyList = state.toyList.concat(action.payload);
       }
-      if (state.itemCategory === '기타용품' && action.payload !== []) {
+      if (state.itemCategory === "기타용품" && action.payload !== []) {
         state.list = [];
         state.foodList = [];
         state.snackList = [];

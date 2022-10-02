@@ -1,64 +1,61 @@
-import React, { useState, useEffect } from 'react';
-import { bool } from 'prop-types';
-import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import GlobalButton from '../GlobalButton';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { bool } from "prop-types";
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import GlobalButton from "../GlobalButton";
+import { useNavigate } from "react-router-dom";
 import {
   __getItemCategories,
   getTwoCategory,
   addPage,
   pageToZero,
   doubleListToZero,
-} from '../../../redux/modules/market/postSlice';
+} from "../../../redux/modules/market/postSlice";
 import { ReactComponent as ProfileIcon } from "../../../assets/icons/profile_img_sm.svg";
+import { ReactComponent as CateSnackIcon } from "../../../assets/icons/cate_snack.svg";
+import { ReactComponent as CateMealIcon } from "../../../assets/icons/cate_meal.svg";
+import { ReactComponent as CateClothesIcon } from "../../../assets/icons/cate_clothes.svg";
+import { ReactComponent as CateBeautyIcon } from "../../../assets/icons/cate_beauty.svg";
+import { ReactComponent as CateToyIcon } from "../../../assets/icons/cate_toy.svg";
+import { ReactComponent as CateBoxIcon } from "../../../assets/icons/cate_box.svg";
 
-
-const Menu = ({ open, ...props }) => {
+const Menu = ({ open, setOpen, ...props }) => {
   const isHidden = open ? true : false;
   const tabIndex = isHidden ? 0 : -1;
   const isLogin = useSelector((state) => state.user.userToken);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [state, setState] = useState('');
+  const [state, setState] = useState("");
   const categoryPage = useSelector((state) => state.marketPost.page);
   // const [page, setPage] = useState(categoryPage);
   const onPathHandler = () => {
     navigate(`/login`);
   };
 
-  const item = localStorage.getItem('itemCategory');
-  const petCategory = localStorage.getItem('petCategory');
+  const item = localStorage.getItem("itemCategory");
+  const petCategory = localStorage.getItem("petCategory");
   const onRequestHandler = (itemCategory) => {
-    localStorage.setItem('itemCategory', itemCategory);
+    navigate("/");
+    const currentDate = new Date(Date.now());
+    const itemCategoryObj = {
+      itemCategory: itemCategory,
+      expire: currentDate.setMinutes(currentDate.getMinutes() + 1),
+    };
+    localStorage.setItem("itemCategory", JSON.stringify(itemCategoryObj));
     dispatch(pageToZero());
     dispatch(doubleListToZero());
     setState(itemCategory);
+    setOpen(false);
   };
 
-
   const user = JSON.parse(localStorage.getItem("user-info"));
+
   const nickname = user?.nickname;
 
   useEffect(() => {
     if (item === state && petCategory === null) {
-      console.log(petCategory);
-      console.log(item);
-      console.log('menu');
-      dispatch(__getItemCategories({ itemCategory: item, page: categoryPage }));
+      // dispatch(__getItemCategories({ itemCategory: item, page: categoryPage }));
     }
-    // if (item === state && petCategory !== null) {
-    //   console.log(item);
-    //   console.log(petCategory);
-    //   console.log('menu');
-    //   dispatch(
-    //     getTwoCategory({
-    //       itemCategory: state,
-    //       petCategory: petCategory,
-    //       page: categoryPage,
-    //     })
-    //   );
-    // }
   }, [dispatch, item, state, petCategory, categoryPage]);
 
   return (
@@ -67,16 +64,16 @@ const Menu = ({ open, ...props }) => {
         <>
           <StBtnWrapper>
             <GlobalButton
-              content={'로그인'}
-              fontSize={'1.4rem'}
+              content={"로그인"}
+              fontSize={"1.4rem"}
               fontWeight={900}
-              width={"18rem"}
+              width={"15.5rem"}
               height={"5rem"}
               onClick={onPathHandler}
             />
           </StBtnWrapper>
-          <StLink href='/signup' tabIndex={tabIndex}>
-            <span aria-hidden='true'></span>
+          <StLink href="/signup" tabIndex={tabIndex}>
+            <span aria-hidden="true"></span>
             <StText>회원가입</StText>
           </StLink>
         </>
@@ -103,50 +100,44 @@ const Menu = ({ open, ...props }) => {
           <StCategoryBtn
             tabIndex={tabIndex}
             onClick={() => {
-              onRequestHandler('사료');
+              onRequestHandler("사료");
             }}
           >
-            <span aria-hidden='true'></span>
-            사료
+            <CateMealIcon />
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
             onClick={() => {
-              onRequestHandler('간식');
+              onRequestHandler("간식");
             }}
           >
-            <span aria-hidden='true'></span>
-            간식
+            <CateSnackIcon />
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
             onClick={() => {
-              onRequestHandler('의류');
+              onRequestHandler("의류");
             }}
           >
-            <span aria-hidden='true'></span>
-            의류
+            <CateClothesIcon />
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
-            onClick={() => onRequestHandler('미용')}
+            onClick={() => onRequestHandler("미용")}
           >
-            <span aria-hidden='true'></span>
-            미용
+            <CateBeautyIcon />
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
-            onClick={() => onRequestHandler('장난감')}
+            onClick={() => onRequestHandler("장난감")}
           >
-            <span aria-hidden='true'></span>
-            장난감
+            <CateToyIcon />
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
-            onClick={() => onRequestHandler('기타용품')}
+            onClick={() => onRequestHandler("기타용품")}
           >
-            <span aria-hidden='true'></span>
-            기타용품
+            <CateBoxIcon />
           </StCategoryBtn>
         </StCategoryBtnWrapper>
       </StCategoryWrapper>
@@ -161,13 +152,14 @@ Menu.propTypes = {
 const StUserWrapper = styled.div``;
 
 const StMenu = styled.nav`
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   background: ${({ theme }) => theme.white};
-  transform: ${({ open }) => (open ? 'translateX(17%)' : 'translateX(100%)')};
-  height: 100%;
+  transform: ${({ open }) => (open ? "translateX(17%)" : "translateX(100%)")};
+  height: 100vh;
   text-align: left;
 
   position: absolute;
@@ -175,7 +167,7 @@ const StMenu = styled.nav`
   left: 0;
   color: ${({ theme }) => theme.black};
   transition: transform 0.3s ease-in-out;
-  z-index: 100;
+  z-index: 99998;
   box-shadow: ${({ open }) => (open ? " rgba(0, 0, 0, 0.5) 0 0 0 9999px" : "")};
   @media screen and (min-width: 1024px) {
     /* Desktop */
@@ -270,13 +262,13 @@ const StCategoryBtn = styled.button`
   height: 8rem;
   font-weight: 100;
   color: ${({ theme }) => theme.white};
-  background-color: ${({ theme }) => theme.gray};
+  background-color: ${({ theme }) => theme.white};
   border-radius: 1rem;
   text-decoration: none;
   transition: color 0.3s linear;
   border: none;
   cursor: pointer;
-
+  border: 2px solid ${({ theme }) => theme.mainColor};
   text-align: center;
   display: flex;
   align-items: center;

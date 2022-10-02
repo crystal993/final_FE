@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 // const userToken = localStorage.getItem('access-token')
 //   ? localStorage.getItem('access-token')
@@ -13,15 +13,16 @@ const initialState = {
   comment: [],
   isLoading: false,
   error: null,
-  userToken: localStorage.getItem('access-token')
-    ? localStorage.getItem('access-token')
+  userToken: localStorage.getItem("access-token")
+    ? localStorage.getItem("access-token")
     : null,
-  refreshToken: localStorage.getItem('refresh-token')
-    ? localStorage.getItem('refresh-token')
+  refreshToken: localStorage.getItem("refresh-token")
+    ? localStorage.getItem("refresh-token")
     : null,
 };
 
-const api = 'http://43.200.179.217:8080';
+const api = "https://fabius-bk.shop";
+// const api = 'http://3.35.47.137';
 
 // postId -> 메인글의 id => useParams의 값
 // id -> 댓글의 순번 , 댓글 리스트의 id
@@ -29,12 +30,13 @@ const api = 'http://43.200.179.217:8080';
 // 메인페이지 글에 해당하는 댓글 가져오기
 // payload -> postId
 export const getCommentData = createAsyncThunk(
-  'comment/getData',
+  "comment/getData",
   async (payload, thunkApi) => {
     try {
-      const response = await axios.get(`${api}/api/comment/${payload}`);
-      console.log(response);
-      return thunkApi.fulfillWithValue(response.data);
+      const response = await axios.get(
+        `${api}/items/detail/comments/${payload.itemId}`
+      );
+      return thunkApi.fulfillWithValue(response.data.comments);
     } catch (error) {
       console.log(error);
       return thunkApi.rejectWithValue(error);
@@ -45,22 +47,21 @@ export const getCommentData = createAsyncThunk(
 // 댓글 등록
 // payload -> comment,postId,Id
 export const postCommentData = createAsyncThunk(
-  'comment/postData',
+  "comment/postData",
   async (payload, { getState, rejectWithValue }) => {
     const { user } = getState();
     try {
       const response = await axios.post(
-        `${api}/api/comment/${payload.postId}`,
-        payload,
+        `${api}/items/detail/comments/${payload.itemId}`,
+        { content: payload.content },
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: user.userToken,
             RefreshToken: user.refreshToken,
           },
         }
       );
-      console.log(response);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -72,27 +73,23 @@ export const postCommentData = createAsyncThunk(
 // 댓글 수정
 // payload -> 수정할 comment,commentId
 export const putCommentData = createAsyncThunk(
-  'comment/putData',
-  async ({ id, content }, { getState, rejectWithValue }) => {
+  "comment/putData",
+  async ({ itemId, commentId, content }, { getState, rejectWithValue }) => {
     const { user } = getState();
     try {
       const response = await axios.put(
-        `${api}/api/comment/${id}`,
-        {
-          content,
-        },
+        `${api}/items/detail/comments/${itemId}/${commentId}`,
+        { content: content },
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: user.userToken,
             RefreshToken: user.refreshToken,
           },
         }
       );
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error);
     }
   }
@@ -101,29 +98,29 @@ export const putCommentData = createAsyncThunk(
 // 댓글 삭제
 // payload-> 수정할 commentId -> id
 export const deleteCommentData = createAsyncThunk(
-  'comment/deleteData',
+  "comment/deleteData",
   async (arg, { getState, rejectWithValue }) => {
     const { user } = getState();
     try {
-      const response = await axios.delete(`${api}/api/comment/${arg}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: user.userToken,
-          RefreshToken: user.refreshToken,
-        },
-      });
-      console.log(response);
-      console.log(arg);
+      const response = await axios.delete(
+        `${api}/items/detail/comments/${arg.itemId}/${arg.commentId}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: user.userToken,
+            RefreshToken: user.refreshToken,
+          },
+        }
+      );
       return arg;
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error);
     }
   }
 );
 
 export const commentSlice = createSlice({
-  name: 'comment',
+  name: "comment",
   initialState,
   reducers: {},
   extraReducers: {
@@ -155,10 +152,10 @@ export const commentSlice = createSlice({
     [putCommentData.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.comment = state.comment.map((item) =>
-        item.id === action.payload.id
+        item.commentId === action.payload.commentId
           ? {
               ...item,
-              content: action.payload.comment,
+              content: action.payload.content,
             }
           : item
       );
@@ -173,7 +170,7 @@ export const commentSlice = createSlice({
     [deleteCommentData.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.comment = state.comment.filter(
-        (item) => item.id !== action.payload
+        (item) => item.commentId !== action.payload.commentId
       );
     },
     [deleteCommentData.rejected]: (state, action) => {

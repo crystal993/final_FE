@@ -6,6 +6,10 @@ export const lightTheme = {
   // sub
   subColor: "#FFE47A",
 
+  //header
+  headerMainColor: "#ffffff",
+  headerTxtColor: "#B192F3",
+
   // achromatic color
   white: "#ffffff",
   lightgray: "#F0F0F0",
@@ -15,7 +19,7 @@ export const lightTheme = {
 
   // button
   InputResetButtonColor: "#D9D9D9",
-  buttonRadius: "1rem",
+  buttonRadius: "10px",
 
   // transition
   transition: "all 0.3s",

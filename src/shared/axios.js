@@ -1,12 +1,12 @@
 import axios from "axios";
 
 const base = {
-  server_http: "http://43.200.1.214",
+  server_http: process.env.REACT_APP_HTTP_URI,
   server_https: process.env.REACT_APP_HTTPS_URI,
 };
 
 const api = axios.create({
-  baseURL: base.server_http,
+  baseURL: base.server_https,
   headers: {
     "content-type": "application/json; charset=UTF-8",
     accept: "application/json,",
@@ -23,15 +23,37 @@ api.interceptors.request.use(function (config) {
   return config;
 });
 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const auth = localStorage.getItem("access-token");
+    const auth2 = localStorage.getItem("refresh-token");
+    if (error.response && error.response.status === 403) {
+      return api
+        .post(`/members/logout`, {
+          headers: {
+            Authorization: auth,
+            RefreshToken: auth2,
+          },
+        })
+        .then((res) => {
+          if (res.data.success) {
+            window.location.href = "/";
+          }
+        });
+    }
+  }
+);
+
 export const apis = {
   // market : CRUD
-  create_market_post: (form, files) => {
+  create_market_post: (form, petCategory, itemCategory, files) => {
     const formData = new FormData();
     formData.append("title", form.title);
     formData.append("content", form.content);
     formData.append("nickname", form.nickname);
-    formData.append("petCategory", form.petCategory);
-    formData.append("itemCategory", form.itemCategory);
+    formData.append("petCategory", petCategory);
+    formData.append("itemCategory", itemCategory);
     formData.append("location", form.location);
     formData.append("purchasePrice", form.purchasePrice);
     formData.append("sellingPrice", form.sellingPrice);
@@ -47,14 +69,19 @@ export const apis = {
   },
   // pageNum, pageLimit
   // get_market_posts: () => api.get(`/items?page=0&size=10`),
-  get_market_post: (id) => api.get(`/items/detail/${id}`),
-  edit_market_post: (id, form, files) => {
+  get_market_post: (id) =>
+    api.get(`/items/detail/${id}`, {
+      headers: {
+        withCredentials: true,
+      },
+    }),
+  edit_market_post: (id, form, petCategory, itemCategory, files) => {
     const formData = new FormData();
     formData.append("title", form.title);
     formData.append("content", form.content);
     formData.append("nickname", form.nickname);
-    formData.append("petCategory", form.petCategory);
-    formData.append("itemCategory", form.itemCategory);
+    formData.append("petCategory", petCategory);
+    formData.append("itemCategory", itemCategory);
     formData.append("location", form.location);
     formData.append("purchasePrice", form.purchasePrice);
     formData.append("sellingPrice", form.sellingPrice);
@@ -77,10 +104,33 @@ export const apis = {
   logout: () => api.post(`/members/logout`),
 
   //search
-  item_search: (keyword) => api.post(`/items/search?keyword=${keyword}`),
+  item_search: (keyword, toggleState) =>
+    api.post(`/items/search?keyword=${keyword}&toggle=${toggleState}`),
+  item_search_sort_by_popular: (keyword, toggleState) =>
+    api.post(
+      `/items/search/popularity?keyword=${keyword}&toggle=${toggleState}`
+    ),
   get_popular_keywords: () => api.get(`/items/search/popularity`),
   get_recent_keywords: () => api.get(`/items/search`),
   delete_all_keywords: () => api.delete(`/items/search/all`),
   delete_keyword: (searchWord) =>
     api.delete(`/items/search/?searchWord=${searchWord}`),
+  get_toggle_state: () => api.get("/items/search/toggle"),
+  put_toggle_state: () => api.put("/items/search/toggle"),
+  get_auto_complete: (keyword) =>
+    api.get(`/items/search/auto?keyword=${keyword}`),
+
+  // mypage chart
+  my_page_chart: () => api.get(`/items/mypage/charts`),
+
+  // mypage
+  get_my_writings: () => api.get(`/items/mypage`),
+  get_my_zzims: () => api.get(`/items/mypage/zzim`),
+  get_my_viewed_products: (cookies) =>
+    api.get(`/items/mypage/list`, {
+      headers: { cookies },
+    }),
+
+  // reissue
+  post_reissue: () => api.post(`/members/reissue`),
 };

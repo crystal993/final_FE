@@ -7,17 +7,17 @@ import {
   deleteCommentData,
   putCommentData,
 } from "../../../redux/modules/market/commentSlice";
-import DetailButton from "../../elements/buttons/DetailButton";
+import GlobalButton from "./../../elements/GlobalButton";
+import { ReactComponent as ProfileIcon } from "../../../assets/icons/profile_img_sm.svg";
+import { useNavigate } from "react-router-dom";
+import GlobalModal from "../../elements/GlobalModal";
 
 const Comment = ({ id }) => {
+  const isLogin = useSelector((state) => state.user.userToken);
   const dispatch = useDispatch();
-
-  //    댓글 리덕스 상태 조회
+  const navigate = useNavigate();
   const state = useSelector((state) => state.comment.comment);
-  //   댓글 comment_data
-  const comment_data = state.data;
-  console.log(comment_data);
-  //   입력받은 값
+  const comment_data = state;
   const [input, setInput] = useState("");
 
   const onChangeHandler = (event) => {
@@ -26,62 +26,178 @@ const Comment = ({ id }) => {
 
   const onPostHandler = (event) => {
     event.preventDefault();
-    // postId 와 content를 같이 보냄
     let body = {
-      postId: id,
+      itemId: id,
       content: input,
     };
     dispatch(postCommentData(body));
+    setInput("");
   };
 
-  //   컴포넌트 마운트 시에 id에 해당하는 댓글을 가져옴
   useEffect(() => {
-    dispatch(getCommentData(id));
+    dispatch(getCommentData({ itemId: id }));
   }, []);
 
+  const user = JSON.parse(localStorage.getItem("user-info"));
+  const nickname = user?.nickname;
+
+  const [isUpdateInput, setIsUpdateInput] = useState(false);
+  const [updateInput, setUpdateInput] = useState();
+  const [updateInputId, setUpdateInputId] = useState();
+  const [updatecurrentInput, setupdatecurrentInput] = useState(false);
+  const onUpdateHandler = (commtentId) => {
+    dispatch(
+      putCommentData({
+        itemId: id,
+        content: updateInput,
+        commentId: commtentId,
+      })
+    );
+    setUpdateInput("");
+    setIsUpdateInput(false);
+  };
+  const onUpdateChangeHandler = (event) => {
+    setUpdateInput(event.target.value);
+  };
+
+  useEffect(() => {
+    setUpdateInput(updateInput);
+  }, [setUpdateInput, updateInput]);
+
+  const moveLogin = () => {
+    navigate("/login");
+  };
+  const [isModal, setIsModal] = useState(false);
+
   return (
-    <Wrapper>
-      <Label>
-        <Input
-          placeholder="댓글을 입력해 주세요"
-          name="input"
-          value={input}
-          onChange={onChangeHandler}
+    <>
+      {isModal && (
+        <GlobalModal
+          name={"로그인"}
+          content1={"로그인이 필요한 서비스입니다."}
+          content2={"로그인 하시겠습니까?"}
+          isModal={isModal}
+          setIsModal={setIsModal}
+          onClick={moveLogin}
         />
-        <button onClick={onPostHandler}>
-          <span>등록</span>
-        </button>
-      </Label>
-      {comment_data === undefined ? (
-        <section className="no-comment">
-          <p>아직 댓글이 없어요</p>
-          <p>가장 먼저 댓글을 남겨 보세요.</p>
-        </section>
-      ) : (
-        comment_data &&
-        comment_data.map((item) => (
-          <section key={item.id}>
-            <h2>{item.nickname}</h2>
-            <p>{item.content}</p>
-            {/* ismine인지 확인하여 버튼 조건부 랜더링 */}
-            {/* <button
-              onClick={() => {
-                dispatch(putCommentData({ id: item.id, content: input }));
-              }}
-            >
-              수정
-            </button> */}
-            {/* <button
-              onClick={() => {
-                dispatch(deleteCommentData(item.id));
-              }}
-            >
-              삭제
-            </button> */}
-          </section>
-        ))
       )}
-    </Wrapper>
+
+      <Wrapper>
+        <Label>
+          {isLogin ? (
+            <>
+              <Input
+                placeholder="댓글을 입력해 주세요"
+                name="input"
+                value={input}
+                onChange={onChangeHandler}
+              />
+              <button onClick={onPostHandler}>
+                <span>등록</span>
+              </button>
+            </>
+          ) : (
+            <>
+              <Input
+                placeholder="댓글을 입력해 주세요"
+                name="input"
+                onClick={() => setIsModal((prev) => !prev)}
+              />
+              <button onClick={() => setIsModal((prev) => !prev)}>
+                <span>등록</span>
+              </button>
+            </>
+          )}
+        </Label>
+        {comment_data.length === 0 ? (
+          <section className="no-comment">
+            <p>아직 댓글이 없어요</p>
+            <p>가장 먼저 댓글을 남겨 보세요.</p>
+          </section>
+        ) : (
+          comment_data &&
+          comment_data.map((item, index) => (
+            <section key={index} className="comment-section">
+              <StUserBox>
+                <UserImgBox>
+                  <StProfileIcon />
+                </UserImgBox>
+                <UserInfoTxt>
+                  <UserInfoFirstRow>
+                    <H3>{item.nickname}</H3>
+                    <ButtonsWrapper>
+                      {nickname === item.nickname &&
+                        (!isUpdateInput ||
+                          updateInputId !== item.commentId) && (
+                          <>
+                            <button
+                              content={"수정"}
+                              onClick={() => {
+                                setIsUpdateInput(true);
+                                setUpdateInput(item.content);
+                                setUpdateInputId(item.commentId);
+                              }}
+                            >
+                              수정
+                            </button>
+                            <button
+                              onClick={() => {
+                                dispatch(
+                                  deleteCommentData({
+                                    itemId: id,
+                                    commentId: item.commentId,
+                                  })
+                                );
+                              }}
+                            >
+                              삭제
+                            </button>
+                          </>
+                        )}
+                    </ButtonsWrapper>
+                  </UserInfoFirstRow>
+                  <ContentWrapper>
+                    {isUpdateInput &&
+                    nickname === item.nickname &&
+                    updateInputId === item.commentId ? (
+                      <>
+                        <UpdateWrapper>
+                          <UpdateInput
+                            name="updateInput"
+                            value={updateInput}
+                            onChange={onUpdateChangeHandler}
+                          />
+                          <UpdateButtonsWrapper>
+                            <button
+                              onClick={() => {
+                                onUpdateHandler(item.commentId);
+                                setUpdateInputId("");
+                              }}
+                            >
+                              수정
+                            </button>
+                            <button
+                              onClick={() => {
+                                setIsUpdateInput(false);
+                                setUpdateInputId("");
+                              }}
+                            >
+                              취소
+                            </button>
+                          </UpdateButtonsWrapper>
+                        </UpdateWrapper>
+                      </>
+                    ) : (
+                      <P>{item.content}</P>
+                    )}
+                  </ContentWrapper>
+                </UserInfoTxt>
+              </StUserBox>
+            </section>
+          ))
+        )}
+      </Wrapper>
+    </>
   );
 };
 
@@ -89,12 +205,35 @@ export default Comment;
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 24.5rem;
+  min-height: 24.5rem;
   background: #f0f0f0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-bottom: 8rem;
+  margin: 0 auto;
+  .comment-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 36rem;
+    padding: 1.4rem 1.8rem;
+    gap: 1rem;
+    button {
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #f0f0f0;
+    }
+    @media (max-width: 767px) {
+      /* Mobile */
+      padding: 0.5rem 2.2rem;
+      width: 24rem;
+      gap: 0.7rem;
+    }
+  }
 
   .no-comment {
     font-weight: 500;
@@ -110,22 +249,10 @@ const Wrapper = styled.div`
     bottom: 0;
     left: 0;
     right: 0;
-    @media screen and (min-width: 1024px) {
-      /* Desktop */
-      width: 90%;
-    }
-    @media screen and (min-width: 768px) and (max-width: 1023px) {
-      /* Tablet */
-      width: 95%;
-    }
-
-    @media screen and (max-width: 767px) {
-      /* Mobile */
-      width: 98%;
-    }
     margin: 0 auto;
     background: #b63eff;
     padding: 1rem;
+
     span {
       font-weight: 700;
       font-size: 1.6rem;
@@ -150,11 +277,29 @@ const Input = styled.input`
   margin-left: 1.6rem;
   margin-right: 1.6rem;
   font-size: 1.4rem;
+  padding: 0.5rem;
+  padding-right: 6.5rem;
+  outline: none;
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    margin-top: 3.4rem;
+    padding: 0.8rem;
+    font-size: 1.1rem;
+    width: 21rem;
+    height: 3rem;
+  }
 `;
 
 const Label = styled.label`
   position: relative;
-
+  margin-bottom: 5rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    margin-bottom: 4rem;
+  }
   button {
     position: absolute;
     top: 50%;
@@ -170,10 +315,187 @@ const Label = styled.label`
     span {
       color: #ffffff;
     }
+    @media (max-width: 767px) {
+      /* Mobile */
+      top: 61%;
+      right: 1%;
+      width: 4rem;
+      height: 2rem;
+    }
   }
 
   button:hover {
     cursor: pointer;
     background-color: lightgray;
   }
+`;
+
+const StUserBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: flex-start;
+  column-gap: 1.2rem;
+  row-gap: 1.2rem;
+  margin-bottom: 3rem;
+  @media screen and (min-width: 1024px) {
+    /* Desktop */
+    display: flex;
+    align-content: center;
+    justify-content: center;
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Tablet */
+    display: flex;
+    align-content: center;
+    justify-content: center;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    display: flex;
+    align-content: center;
+    justify-content: center;
+  }
+`;
+
+const UserImgBox = styled.div`
+  border-radius: 70%;
+  overflow: hidden;
+  width: 4rem;
+  height: 4rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+`;
+
+const StProfileIcon = styled(ProfileIcon)`
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+  path {
+    fill: white;
+    background-color: #6b6b6b;
+  }
+  circle {
+    fill: #6b6b6b;
+  }
+
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+`;
+
+const UserInfoTxt = styled.div`
+  margin-top: 0rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.3rem;
+`;
+
+const P = styled.p`
+  display: block;
+  word-break: break-all;
+  font-size: 1.2rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 1rem;
+  }
+`;
+
+const H3 = styled.p`
+  font-weight: bold;
+  font-size: 1.6rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 1.2rem;
+  }
+`;
+
+const ButtonsWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  column-gap: 2rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    column-gap: 0.5rem;
+  }
+  button {
+    border: none;
+    font-size: 1rem;
+    color: ${({ theme }) => theme.darkgray};
+    font-size: 1rem;
+    @media (max-width: 767px) {
+      /* Mobile */
+      font-size: 0.8rem;
+    }
+  }
+`;
+
+const UpdateInput = styled.input`
+  width: 22rem;
+  height: 2.3rem;
+  border: 0.1rem solid #cbcbcb;
+  border-radius: 0.4rem;
+  font-size: 1.4rem;
+  padding: 1rem;
+  outline: none;
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    padding: 0.8rem;
+    font-size: 1.1rem;
+    width: 12rem;
+    height: 1.5rem;
+  }
+`;
+
+const UpdateWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  column-gap: 0.5rem;
+`;
+
+const UpdateButtonsWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  column-gap: 0.2rem;
+  button {
+    border: none;
+    background: #cbcbcb;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    width: 3rem;
+    height: 2rem;
+    color: white;
+    @media (max-width: 767px) {
+      /* Mobile */
+      font-size: 0.6rem;
+      width: 2.2rem;
+      height: 1.7rem;
+    }
+  }
+`;
+
+const ContentWrapper = styled.div`
+  width: 29rem;
+  gap: 1rem;
+  min-height: 4rem;
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 15rem;
+    min-height: 3rem;
+  }
+`;
+
+const UserInfoFirstRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;

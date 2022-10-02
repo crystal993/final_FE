@@ -42,6 +42,35 @@ const ToggleLabel = styled.label`
     background: #ffffff;
     box-shadow: 1px 3px 3px 1px rgba(0, 0, 0, 0.2);
     transition: ${({ theme }) => theme.transition};
+    @media (max-width: 374px) {
+      /* Mobile */
+      width: 1.2rem;
+      height: 1.2rem;
+      background: #ffffff;
+      margin: 0.25rem;
+    }
+  }
+  @media screen and (min-width: 1024px) {
+    /* Desktop */
+    width: 4.2rem;
+    height: 2.1rem;
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Tablet */
+    width: 4.2rem;
+    height: 2.1rem;
+  }
+
+  @media (max-width: 767px) {
+    /* Mobile */
+    width: 4.2rem;
+    height: 2.1rem;
+  }
+  @media (max-width: 374px) {
+    /* Mobile */
+    width: 3.4rem;
+    height: 1.75rem;
   }
 `;
 
@@ -50,6 +79,8 @@ const Toggle = styled.input`
   border-radius: 2rem;
   width: 4.2rem;
   height: 2.1rem;
+  border: none;
+  visibility: hidden;
   &:checked + ${ToggleLabel} {
     background: ${({ theme }) => theme.mainColor};
     &::after {
@@ -59,8 +90,19 @@ const Toggle = styled.input`
       width: 18px;
       height: 18px;
       margin-left: 2.5rem;
-
+      border: none;
       transition: ${({ theme }) => theme.transition};
+      @media (max-width: 374px) {
+        /* Mobile */
+        width: 1.2rem;
+        height: 1.2rem;
+        margin-left: 1.8rem;
+      }
     }
+  }
+  @media (max-width: 374px) {
+    /* Mobile */
+    width: 3.5rem;
+    height: 1.75rem;
   }
 `;
