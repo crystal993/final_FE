@@ -12,6 +12,12 @@ import {
   doubleListToZero,
 } from "../../../redux/modules/market/postSlice";
 import { ReactComponent as ProfileIcon } from "../../../assets/icons/profile_img_sm.svg";
+import { ReactComponent as CateSnackIcon } from "../../../assets/icons/cate_snack.svg";
+import { ReactComponent as CateMealIcon } from "../../../assets/icons/cate_meal.svg";
+import { ReactComponent as CateClothesIcon } from "../../../assets/icons/cate_clothes.svg";
+import { ReactComponent as CateBeautyIcon } from "../../../assets/icons/cate_beauty.svg";
+import { ReactComponent as CateToyIcon } from "../../../assets/icons/cate_toy.svg";
+import { ReactComponent as CateBoxIcon } from "../../../assets/icons/cate_box.svg";
 
 const Menu = ({ open, setOpen, ...props }) => {
   const isHidden = open ? true : false;
@@ -29,7 +35,13 @@ const Menu = ({ open, setOpen, ...props }) => {
   const item = localStorage.getItem("itemCategory");
   const petCategory = localStorage.getItem("petCategory");
   const onRequestHandler = (itemCategory) => {
-    localStorage.setItem("itemCategory", itemCategory);
+    navigate("/");
+    const currentDate = new Date(Date.now());
+    const itemCategoryObj = {
+      itemCategory: itemCategory,
+      expire: currentDate.setMinutes(currentDate.getMinutes() + 1),
+    };
+    localStorage.setItem("itemCategory", JSON.stringify(itemCategoryObj));
     dispatch(pageToZero());
     dispatch(doubleListToZero());
     setState(itemCategory);
@@ -42,9 +54,6 @@ const Menu = ({ open, setOpen, ...props }) => {
 
   useEffect(() => {
     if (item === state && petCategory === null) {
-      console.log(petCategory);
-      console.log(item);
-      console.log("menu");
       // dispatch(__getItemCategories({ itemCategory: item, page: categoryPage }));
     }
   }, [dispatch, item, state, petCategory, categoryPage]);
@@ -94,8 +103,7 @@ const Menu = ({ open, setOpen, ...props }) => {
               onRequestHandler("사료");
             }}
           >
-            <span aria-hidden="true"></span>
-            사료
+            <CateMealIcon />
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
@@ -103,8 +111,7 @@ const Menu = ({ open, setOpen, ...props }) => {
               onRequestHandler("간식");
             }}
           >
-            <span aria-hidden="true"></span>
-            간식
+            <CateSnackIcon />
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
@@ -112,29 +119,25 @@ const Menu = ({ open, setOpen, ...props }) => {
               onRequestHandler("의류");
             }}
           >
-            <span aria-hidden="true"></span>
-            의류
+            <CateClothesIcon />
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
             onClick={() => onRequestHandler("미용")}
           >
-            <span aria-hidden="true"></span>
-            미용
+            <CateBeautyIcon />
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
             onClick={() => onRequestHandler("장난감")}
           >
-            <span aria-hidden="true"></span>
-            장난감
+            <CateToyIcon />
           </StCategoryBtn>
           <StCategoryBtn
             tabIndex={tabIndex}
             onClick={() => onRequestHandler("기타용품")}
           >
-            <span aria-hidden="true"></span>
-            기타용품
+            <CateBoxIcon />
           </StCategoryBtn>
         </StCategoryBtnWrapper>
       </StCategoryWrapper>
@@ -259,13 +262,13 @@ const StCategoryBtn = styled.button`
   height: 8rem;
   font-weight: 100;
   color: ${({ theme }) => theme.white};
-  background-color: ${({ theme }) => theme.gray};
+  background-color: ${({ theme }) => theme.white};
   border-radius: 1rem;
   text-decoration: none;
   transition: color 0.3s linear;
   border: none;
   cursor: pointer;
-
+  border: 2px solid ${({ theme }) => theme.mainColor};
   text-align: center;
   display: flex;
   align-items: center;
