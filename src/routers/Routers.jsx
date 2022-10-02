@@ -26,7 +26,6 @@ const Routers = () => {
         <Route path="/market/detail/:id" element={<MarketDetail />} />
         <Route path="/market/post" element={<MarketPosting />} />
         <Route path="/market/post/:id" element={<MarketPostingUpdate />} />
-        <Route path="/kakao" element={<Kakao />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/search" element={<Search />} />
@@ -37,6 +36,7 @@ const Routers = () => {
         <Route path="/mypage/zzims" element={<MyZzim />} />
         <Route path="/mypage/writings" element={<MyWritings />} />
         <Route path="/mypage/products" element={<MyViewedProucts />} />
+        <Route path="/members/kakao/callback" element={<Kakao />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
