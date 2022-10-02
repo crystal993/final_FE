@@ -23,6 +23,28 @@ api.interceptors.request.use(function (config) {
   return config;
 });
 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const auth = localStorage.getItem("access-token");
+    const auth2 = localStorage.getItem("refresh-token");
+    if (error.response && error.response.status === 403) {
+      return api
+        .post(`/members/logout`, {
+          headers: {
+            Authorization: auth,
+            RefreshToken: auth2,
+          },
+        })
+        .then((res) => {
+          if (res.data.success) {
+            window.location.href = "/";
+          }
+        });
+    }
+  }
+);
+
 export const apis = {
   // market : CRUD
   create_market_post: (form, petCategory, itemCategory, files) => {
@@ -108,4 +130,7 @@ export const apis = {
     api.get(`/items/mypage/list`, {
       headers: { cookies },
     }),
+
+  // reissue
+  post_reissue: () => api.post(`/members/reissue`),
 };
