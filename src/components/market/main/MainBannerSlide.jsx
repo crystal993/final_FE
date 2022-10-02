@@ -80,6 +80,7 @@ const Img2 = styled.div`
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 50% 50%;
+  cursor: pointer;
   @media screen and (min-width: 1024px) {
     /* Desktop */
     background-image: url(${process.env.PUBLIC_URL}/img/설문배너_PC.png);
