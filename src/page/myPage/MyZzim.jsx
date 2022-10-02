@@ -8,7 +8,7 @@ const MyZzim = () => {
   return (
     <>
       <Wrapper>
-        <Header />
+        <Header IconType={"ArrowBack"} />
         <MyPageZzimContainer />
         <Footer />
       </Wrapper>

@@ -1,16 +1,30 @@
-import React from 'react';
-import styled from 'styled-components';
-import Button from '../elements/GlobalButton';
+import React from "react";
+import styled from "styled-components";
+import Button from "../elements/GlobalButton";
 
-const Modal = ({ onClose, content, moveLogin, name }) => {
+const Modal = ({ onClose, content1, content2, onClick, name }) => {
   return (
-    <Wrapper className='modal'>
+    <Wrapper className="modal">
       {/* Modal content */}
-      <div className='modal-content'>
-        <p className='content'>{content}</p>
-        <section className='modal-btn'>
-          <Button content={name} onClick={moveLogin}></Button>
-          <Button content={'닫기'} onClick={onClose}></Button>
+      <div className="modal-content">
+        <p className="content">{content1}</p>
+        <p className="content">{content2}</p>
+        <section className="modal-btn">
+          <Button
+            content={"취소"}
+            onClick={onClose}
+            mobileWidth={"12rem"}
+            width={"12rem"}
+            height={"4rem"}
+            color={"gray"}
+          ></Button>
+          <Button
+            content={name}
+            onClick={onClick}
+            mobileWidth={"12rem"}
+            width={"12rem"}
+            height={"4rem"}
+          ></Button>
         </section>
       </div>
     </Wrapper>
@@ -20,8 +34,8 @@ const Modal = ({ onClose, content, moveLogin, name }) => {
 export default Modal;
 
 const Wrapper = styled.div`
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  position: fixed;
+  z-index: 1000;
   left: 0;
   top: 20%;
   width: 100%;
@@ -29,26 +43,35 @@ const Wrapper = styled.div`
 
   .modal-content {
     background-color: #fefefe;
-    margin: 0 auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
+    margin: 5rem auto;
+    padding: 3.8rem 2rem;
+    border: none;
     border-radius: 20px;
-    width: 30%; /* Could be more or less, depending on screen size */
-    @media (max-width: 768px) {
-      width: 18rem;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 0 0 9999px;
+    @media (min-width: 1280px) {
+      /* Desktop */
+      width: 32rem;
+      height: 20rem;
     }
-    @media (min-width: 769px) and (max-width: 1023px) {
-      width: 23rem;
+    @media (min-width: 768px) and (max-width: 1280px) {
+      /* Tablet */
+      width: 32rem;
+      height: 20rem;
     }
-    @media (min-width: 1024px) {
-      width: 28rem;
+    @media (max-width: 767px) {
+      /* Mobile */
+      width: 32rem;
+      height: 20rem;
     }
-    height: 200px;
+
     p {
+      font-weight: 500;
+      font-size: 1.5rem;
+      line-height: 2.6rem;
       text-align: center;
     }
     Button {
-      margin-top: 5rem;
+      margin-top: 3rem;
     }
 
     .modal-btn {

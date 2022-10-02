@@ -34,26 +34,22 @@ const MainContainer = () => {
   const [page, setPage] = useState(0);
   const lastIntersectingData = useRef(null);
 
-  const handleChange = (event) => {
-    setState(event.target.value);
-    let e = document.getElementById("selectElementID");
-    let text = e.options[e.selectedIndex].text;
-    localStorage.setItem("petCategory", `${text}`);
-    setPage(0);
-    dispatch(doubleListToZero());
-  };
-
-  // const [selected, setSelected] = useState('');
-
-  // useEffect(() => {
-  //   if (selected === 'dog') {
-  //     localStorage.setItem('petCategory', `강아지`);
-  //   } else if (selected === 'cat') {
-  //     localStorage.setItem('petCategory', `고양이`);
-  //   } else if (selected === 'all') {
-  //     localStorage.setItem('petCategory', '모두');
-  //   }
-  // }, [selected]);
+  const [Selected, setSelected] = useState("모두");
+  useEffect(() => {
+    if (Selected === "all") {
+      localStorage.setItem("petCategory", "모두");
+      setPage(0);
+      dispatch(doubleListToZero());
+    } else if (Selected === "cat") {
+      localStorage.setItem("petCategory", "고양이");
+      setPage(0);
+      dispatch(doubleListToZero());
+    } else if (Selected === "dog") {
+      localStorage.setItem("petCategory", "강아지");
+      setPage(0);
+      dispatch(doubleListToZero());
+    }
+  }, [Selected]);
 
   //observe 콜백 함수
   const onIntersect = (entries, observer) => {
@@ -146,29 +142,25 @@ const MainContainer = () => {
     doubleList,
   ]);
 
+  const [mainTitle, setMainTitle] = useState("멍냥마켓");
+  useEffect(() => {
+    if (itemCategory) {
+      setMainTitle(itemCategory);
+    }
+  }, [itemCategory]);
+
   return (
     <Wrapper>
       <STsection>
-        <STh1>멍냥마켓</STh1>
+        <STh1>{mainTitle}</STh1>
         <div className="button">
-          <STselect
-            name="choice"
-            onChange={handleChange}
-            defaultValue={option[2].value}
-            id="selectElementID"
-          >
-            {option.map((option) => (
-              <option
-                className="option"
-                key={option.value}
-                value={option.value}
-                name={option.name}
-              >
-                {option.name}
-              </option>
-            ))}
-          </STselect>
-          {/* <Select optionDatas={option} setSelected={setSelected} /> */}
+          <Select
+            optionDatas={option}
+            setSelected={setSelected}
+            width={"8.8rem"}
+            height={"3.2rem"}
+            optionWidth={"8.5rem"}
+          />
         </div>
       </STsection>
       <ItemList
@@ -217,8 +209,19 @@ const STsection = styled.section`
 `;
 
 const STh1 = styled.h1`
-  font-size: 2.4rem;
   font-weight: 700;
+  @media (min-width: 1280px) {
+    /* Desktop */
+    font-size: 2.4rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    font-size: 2.3rem;
+  }
+  @media (max-width: 767px) {
+    /* Mobile */
+    font-size: 2.1rem;
+  }
 `;
 
 const STselect = styled.select`

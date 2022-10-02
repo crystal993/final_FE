@@ -5,15 +5,13 @@ import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { apis } from "../../../shared/axios";
 import GlobalModal from "../GlobalModal";
+import { useNavigate } from "react-router-dom";
 
 const ItemZzimButton = ({ isZzim, isLogin, postId }) => {
   const [isZzimed, setZzimed] = useState(isZzim);
-  const [isModal, setModal] = useState(false);
+  const [isModal, setIsModal] = useState(false);
   const [isMessage, setMessage] = useState(null);
-
-  useEffect(() => {
-    setModal(false);
-  }, []);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setZzimed(isZzim);
@@ -21,7 +19,7 @@ const ItemZzimButton = ({ isZzim, isLogin, postId }) => {
 
   const toggleLike = async () => {
     if (!isLogin) {
-      setModal(true);
+      setIsModal((prev) => !prev);
       setMessage("로그인을 해주세요!");
       return;
     }
@@ -35,9 +33,22 @@ const ItemZzimButton = ({ isZzim, isLogin, postId }) => {
     }
   };
 
+  const moveLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <>
-      {isModal ? <GlobalModal content={isMessage} /> : null}
+      {isModal && (
+        <GlobalModal
+          name={"로그인"}
+          content1={"로그인이 필요한 서비스입니다."}
+          content2={"로그인 하시겠습니까?"}
+          isModal={isModal}
+          setIsModal={setIsModal}
+          onClick={moveLogin}
+        />
+      )}
       {!isZzimed ? (
         <LikeWrapper>
           <HeartIconFalse icon={regularHeart} onClick={toggleLike} />

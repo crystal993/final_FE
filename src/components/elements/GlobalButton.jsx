@@ -1,13 +1,13 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 function GlobalButton({
   content,
   icon,
   size,
   onClick,
-  mogileWidth,
+  mobileWidth,
   width,
   mobileHeight,
   height,
@@ -15,6 +15,7 @@ function GlobalButton({
   fontSize,
   mobileFontSize,
   color,
+  padding = "1rem",
 }) {
   return (
     <Wrapper onClick={onClick}>
@@ -24,12 +25,13 @@ function GlobalButton({
           size={size}
           fontWeight={fontWeight}
           width={width}
-          mogileWidth={mogileWidth}
+          mobileWidth={mobileWidth}
           height={height}
           mobileHeight={mobileHeight}
           fontSize={fontSize}
           mobileFontSize={mobileFontSize}
           color={color}
+          padding={padding}
         >
           {content}
         </Btn>
@@ -51,23 +53,27 @@ const Btn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: ${(props) => props.padding};
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   font-weight: ${(props) => props.fontWeight};
   color: ${(props) =>
     props.color === "subColor" ? props.theme.mainColor : props.theme.white};
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   transition: ${(props) => props.theme.transition};
   border: ${(props) =>
     props.color === "subColor" ? `1px solid ${props.theme.mainColor}` : "none"};
   background-color: ${(props) =>
-    props.color === "subColor" ? props.theme.white : props.theme.mainColor};
+    props.color === "subColor"
+      ? props.theme.white
+      : props.color === "gray"
+      ? props.theme.gray
+      : props.theme.mainColor};
   font-size: ${(props) => props.fontSize};
   cursor: pointer;
   @media (max-width: 767px) {
     /* Mobile */
-    width: ${(props) => props.mogileWidth};
+    width: ${(props) => props.mobileWidth};
     height: ${(props) => props.mobileHeight};
     border-radius: 0.5rem;
     font-size: ${(props) => props.mobileFontSize};

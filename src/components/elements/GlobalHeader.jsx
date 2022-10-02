@@ -42,7 +42,10 @@ const GlobalHeader = () => {
           <Menu open={open} setOpen={setOpen} id={menuId} />
         </NavItem>
         <NavItem onClick={() => onPathHandler("/")}>
-          <Logo src="img/logo_gnb2@2x.png" alt="멍냥마켓 로고"></Logo>
+          <Logo
+            src={process.env.PUBLIC_URL + "/img/logo_gnb2@2x.png"}
+            alt="멍냥마켓 로고"
+          ></Logo>
         </NavItem>
         <NavItem>
           <SearchIcon onClick={() => onPathHandler("/search")} />
@@ -94,20 +97,20 @@ const Logo = styled.img`
   @media (min-width: 1280px) {
     /* Desktop */
     margin-left: 3rem;
-    width: 10.3rem;
-    height: 2.9rem;
+    width: 9.3rem;
+    height: 2.3rem;
   }
   @media (min-width: 768px) and (max-width: 1280px) {
     /* Tablet */
     margin-left: 3.5rem;
-    width: 10rem;
-    height: 2.7rem;
+    width: 9.3rem;
+    height: 2.3rem;
   }
   @media (min-width: 361px) and (max-width: 767px) {
     /* Mobile */
     margin-left: 2.3rem;
     width: 9rem;
-    height: 2.4rem;
+    height: 2.3rem;
   }
   @media (max-width: 360px) {
     /* Mobile */

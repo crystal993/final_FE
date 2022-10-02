@@ -107,7 +107,7 @@ const Profile = () => {
             width={"10rem"}
             height={"5rem"}
             fontSize={"1.4rem"}
-            mogileWidth={"5.6rem"}
+            mobileWidth={"5.6rem"}
             mobileHeight={"2.8rem"}
             mobileFontSize={"0.8rem"}
             content={"로그아웃"}

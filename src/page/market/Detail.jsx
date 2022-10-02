@@ -5,7 +5,7 @@ import DetailInfo from "../../components/market/detail/DetailInfo";
 const Detail = () => {
   return (
     <>
-      <Header />
+      <Header IconType={"ArrowBack"} />
       <DetailInfo />
     </>
   );

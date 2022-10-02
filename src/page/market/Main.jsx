@@ -18,12 +18,23 @@ const Main = () => {
   const onPathHandler = () => {
     navigate("/market/post");
   };
-
+  const moveLogin = () => {
+    navigate("/login");
+  };
   const [isModal, setIsModal] = useState(false);
 
   return (
     <>
-      {isModal && <GlobalModal content={"로그인이 필요합니다."} />}
+      {isModal && (
+        <GlobalModal
+          name={"로그인"}
+          content1={"로그인이 필요한 서비스입니다."}
+          content2={"로그인 하시겠습니까?"}
+          isModal={isModal}
+          setIsModal={setIsModal}
+          onClick={moveLogin}
+        />
+      )}
       <Header />
       <Wrapper>
         <Layout>

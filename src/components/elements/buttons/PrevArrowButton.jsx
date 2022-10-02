@@ -29,22 +29,21 @@ const Button = styled.div`
   font-size: 2rem;
   @media screen and (min-width: 1024px) {
     /* Desktop */
-    width: 4rem;
-    height: 5rem;
-    font-size: 4rem;
-    top: 14rem;
+    width: 2.5rem;
+    height: 3.5rem;
+    font-size: 2.5rem;
+    top: 10rem;
     left: 1rem;
   }
 
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     /* Tablet */
-    width: 3rem;
-    height: 4rem;
-    font-size: 3rem;
-    top: 9rem;
+    width: 2.5rem;
+    height: 3.5rem;
+    font-size: 2.5rem;
+    top: 8rem;
     left: 1rem;
   }
-
   @media (max-width: 767px) {
     /* Mobile */
     top: 5rem;

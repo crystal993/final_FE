@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { ReactComponent as ArrowBackIcon } from "../../assets/icons/arrow_back_ios.svg";
+import { ReactComponent as HomeIcon } from "../../assets/icons/home.svg";
 
-const GlobalHeader2 = () => {
+const GlobalHeader2 = ({ IconType = "Home" }) => {
   const navigate = useNavigate();
-
   const onPathHandler = (paths) => {
     navigate(paths);
   };
@@ -14,10 +14,16 @@ const GlobalHeader2 = () => {
     <NavbarWrapper>
       <Navbar>
         <NavItem>
-          <ArrowBackIcon onClick={() => navigate(-1)} />
+          {IconType === "ArrowBack" && (
+            <ArrowBackIcon onClick={() => navigate(-1)} />
+          )}
+          {IconType === "Home" && <HomeIcon onClick={() => navigate("/")} />}
         </NavItem>
         <NavItem onClick={() => onPathHandler("/")}>
-          <span style={{ marginRight: "-1.5rem" }}>LOGO</span>
+          <Logo
+            src={process.env.PUBLIC_URL + "/img/logo_gnb2@2x.png"}
+            alt="멍냥마켓 로고"
+          ></Logo>
         </NavItem>
         <NavItem></NavItem>
       </Navbar>
@@ -59,4 +65,31 @@ const NavItem = styled.div`
   gap: 2rem;
   cursor: pointer;
   width: fit-content;
+`;
+
+const Logo = styled.img`
+  @media (min-width: 1280px) {
+    /* Desktop */
+    margin-left: -3rem;
+    width: 9.3rem;
+    height: 2.3rem;
+  }
+  @media (min-width: 768px) and (max-width: 1280px) {
+    /* Tablet */
+    margin-left: -2rem;
+    width: 9.3rem;
+    height: 2.3rem;
+  }
+  @media (min-width: 361px) and (max-width: 767px) {
+    /* Mobile */
+    margin-left: -2rem;
+    width: 9rem;
+    height: 2.3rem;
+  }
+  @media (max-width: 360px) {
+    /* Mobile */
+    margin-left: -2.6rem;
+    width: 8rem;
+    height: 2.1rem;
+  }
 `;

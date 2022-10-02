@@ -39,6 +39,7 @@ const GlobalImgSlider2 = ({
         itemImgs.map((url, idx) => (
           <Img
             src={url}
+            // srcSet={`${mobileImgs[idx]} 328w, ${tabletImgs[idx]} 764w, ${desktopImgs[idx]} 1280w`}
             key={uuidv4()}
             alt={idx + 1}
             mobileWidth={mobileWidth}
@@ -55,13 +56,13 @@ const GlobalImgSlider2 = ({
 
 const StyledSlider = styled(Slider)`
   width: ${({ width }) => width};
-  margin-bottom: 1.9rem;
+  margin-bottom: 0.8rem;
   position: relative;
 `;
 
 const Img = styled.img`
-  object-fit: fill;
-  background-color: ${({ theme }) => theme.lightgray};
+  object-fit: contain;
+  background-color: #fafafa;
   @media screen and (min-width: 1024px) {
     /* Desktop */
     width: ${({ desktopWidth }) => desktopWidth};
@@ -80,5 +81,7 @@ const Img = styled.img`
     height: ${({ mobileHeight }) => mobileHeight};
   }
 `;
+
+const Source = styled.source``;
 
 export default GlobalImgSlider2;
