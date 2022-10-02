@@ -46,7 +46,12 @@ function Update() {
     setItemCategory(itemCategory);
   }, [setPetCategory, setItemCategory, petCategory, itemCategory]);
 
-  const { register, handleSubmit, setValue } = useForm({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
     mode: "onChange",
   });
 
@@ -175,7 +180,24 @@ function Update() {
             <Label>제목</Label>
 
             <InputWrapper>
-              <Input type="text" name="title" required {...register("title")} />
+              <Input
+                type="text"
+                name="title"
+                maxLength={"26"}
+                {...register("title", {
+                  required: "",
+                  maxLength: {
+                    value: 20,
+                    message: "제목은 20자 이내로 적어주세요.",
+                  },
+                })}
+              />
+              {errors.title == null ? (
+                <HelperText>제목은 20자 이내로 적어주세요.</HelperText>
+              ) : null}
+              {errors.title ? (
+                <HelperText2>{errors.title.message} </HelperText2>
+              ) : null}
               <InputResetButton onClick={() => inputResetHandler("title")} />
             </InputWrapper>
 
@@ -185,20 +207,35 @@ function Update() {
               <Input
                 type="number"
                 name="purchasePrice"
-                required
+                maxLength={10}
                 {...register("purchasePrice", {
+                  required: "구매했을 당시 해당 물품의 가격을 적어주세요.",
+                  minLength: {
+                    value: 0,
+                    message: " 구매했을 당시 해당 물품의 가격을 적어주세요.",
+                  },
+                  maxLength: {
+                    value: 7,
+                    message: "가격은 100만원대까지만 입력 가능합니다. ",
+                  },
                   validate: (value) => {
                     inputOnlyNumHandler(value, "purchasePrice");
                   },
                 })}
                 onWheel={(e) => e.target.blur()}
               />
+              {errors.purchasePrice == null ? (
+                <HelperText>
+                  구매했을 당시 해당 물품의 가격을 적어주세요.
+                </HelperText>
+              ) : null}
+
+              {errors.purchasePrice ? (
+                <HelperText2>{errors.purchasePrice.message} </HelperText2>
+              ) : null}
               <InputResetButton
                 onClick={() => inputResetHandler("purchasePrice")}
               />
-              <HelperText>
-                구매했을 당시 해당 물품의 가격을 적어주세요.
-              </HelperText>
             </InputWrapper>
             <Label>판매 가격</Label>
 
@@ -206,18 +243,29 @@ function Update() {
               <Input
                 type="number"
                 name="sellingPrice"
-                required
+                maxLength={10}
                 {...register("sellingPrice", {
+                  minLength: {
+                    value: 0,
+                    message: "물품을 판매할 가격을 적어주세요.",
+                  },
+                  maxLength: {
+                    value: 7,
+                    message: "가격은 100만원대까지만 입력 가능합니다. ",
+                  },
                   validate: (value) => {
                     inputOnlyNumHandler(value, "sellingPrice");
                   },
                 })}
                 onWheel={(e) => e.target.blur()}
               />
-              <InputResetButton
-                onClick={() => inputResetHandler("sellingPrice")}
-              />
-              <HelperText>물품을 판매할 가격을 적어주세요.</HelperText>
+              {errors.sellingPrice == null ? (
+                <HelperText>물품을 판매할 가격을 적어주세요.</HelperText>
+              ) : null}
+
+              {errors.sellingPrice ? (
+                <HelperText2>{errors.sellingPrice.message} </HelperText2>
+              ) : null}
             </InputWrapper>
             <Label>내용</Label>
 
@@ -509,6 +557,12 @@ const LocationWrapper = styled.div`
   padding: 0.1rem 0.5rem;
   margin-bottom: 4.7rem;
   background-color: ${({ theme }) => theme.darkgray};
+`;
+
+const HelperText2 = styled.p`
+  margin-top: 0.3rem;
+  font-size: 1.2rem;
+  color: ${({ theme }) => theme.mainColor};
 `;
 
 export default Update;
