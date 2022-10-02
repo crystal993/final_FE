@@ -122,6 +122,7 @@ const ItemInfoTxt = styled.p`
 const Price = styled.h1`
   font-size: 1.6rem;
   color: #6b6b6b;
+  word-break: break-all;
 `;
 
 const IconWrapper = styled.div`
