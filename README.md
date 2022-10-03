@@ -71,7 +71,7 @@
 
 ## 🗺 API 설계 
 
-### [API 바로가기](https://heather-warbler-33c.notion.site/API-fb817bdee95f4d03bf54e69108d0dfa8)
+### [API 설계 보러가기](https://heather-warbler-33c.notion.site/API-fb817bdee95f4d03bf54e69108d0dfa8)
 
 <br>
 <hr>
