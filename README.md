@@ -17,14 +17,12 @@
 <br>
 
 ## 📅 프로젝트 기간   
-![image](https://user-images.githubusercontent.com/72599761/193501534-683c0049-c673-4105-af83-a86e8aee8965.png)
 
 <br><br>
 <hr>
 <br>
 
 ## 👨‍👩‍👧 팀원 소개  
-![image](https://user-images.githubusercontent.com/72599761/193501534-683c0049-c673-4105-af83-a86e8aee8965.png)
 
 |이름|깃허브 주소|포지션|제목 셀4|
 |---|---|---|---|
