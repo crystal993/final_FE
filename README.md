@@ -53,7 +53,8 @@
   <img src="https://img.shields.io/badge/aws_cloud_front-FF9900?style=for-the-badge&logo=awsfargate&logoColor=white"> 
   <img src="https://img.shields.io/badge/amazon_S3-569A31?style=for-the-badge&logo=amazons3&logoColor=white"> 
   
-  <br>
+  <br> 
+  <img src="https://img.shields.io/badge/vs_code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white">
   <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
   <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 </div>
