@@ -24,14 +24,14 @@
 
 ## 👨‍👩‍👧 팀원 소개  
 
-|이름|깃허브 주소|포지션|제목 셀4|
-|---|---|---|---|
-|김수정|내용 2|내용 3|내용 4|
-|김주형|내용 6|내용 7|내용 8|
-|이회섭|내용 10|내용 11|내용 12|
-|김재영|내용 10|내용 11|내용 12|
-|한종혁|내용 10|내용 11|내용 12|
-|한종혁|내용 10|내용 11|내용 12|
+|이름|깃허브 주소|포지션|
+|---|---|---|
+|김수정|[crystal993의 github](https://github.com/crystal993)|Frontend|
+|김주형|[KoreanCodingMachine의 github](https://github.com/KoreanCodingMachine)|Frontend|
+|이회섭|[HoisubLee의 github](https://github.com/HoisubLee)|Backend|
+|김재영|[fabius96의 github](https://github.com/fabius96)|Backend|
+|한종혁|[1argeD의 github](https://github.com/1argeD)|Backend|
+|양명현|[thisLife-hyeon의 github](https://github.com/thisLife-hyeon)|UI/UX|
 
 
 <br><br>
