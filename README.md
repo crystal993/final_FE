@@ -45,7 +45,7 @@
   <img src="https://img.shields.io/badge/styled_components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"> 
   <br>
   
-    <img src="https://img.shields.io/badge/vs_code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white">
+  <img src="https://img.shields.io/badge/vs_code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white">
   <img src="https://img.shields.io/badge/yarn-2C8EBB?style=for-the-badge&logo=yarn&logoColor=white">
   <img src="https://img.shields.io/badge/react_hook_form-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white">
   <img src="https://img.shields.io/badge/react_router_dom-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white">
@@ -110,6 +110,10 @@
 - react-slick, slick-carousel : 메인 배너 슬라이드, 상세 페이지 이미지 뷰 
 - axios : 서버와 비동기 통신
 - dotenv : 환경변수 설정
+
+<br>
+<hr>
+<br>
 
 ## 👨‍👩‍👧 팀원 소개  
 
