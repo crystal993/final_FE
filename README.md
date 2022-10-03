@@ -100,17 +100,17 @@
 <details>
 <summary>사용한 패키지 간략한 설명</summary>
 <div markdown="1">
-- redux, redux-toolkit : 리덕스 툴킷 사용  
-- styled-components : 스타일 적용 
-- axios : 서버와 비동기 통신
-- react-hook-form : 폼 유효성 
-- dotenv : 환경변수 설정
-- recharts : 차트 라이브러리 이용 
-- sockjs-client, stompjs: 채팅 
-- swiper : 인기 검색어 스와이퍼 기능
-- uuidv4 : 랜덤 아이디값 부여 
-- react-slick, slick-carousel : 메인 배너 슬라이드, 상세 페이지 이미지 뷰 
-- jwt-decode: 토큰 디코딩 
+- redux, redux-toolkit : 리덕스 툴킷 사용<br>  
+- styled-components : 스타일 적용<br>
+- axios : 서버와 비동기 통신<br>
+- react-hook-form : 폼 유효성<br>
+- dotenv : 환경변수 설정<br>
+- recharts : 차트 라이브러리 이용<br>
+- sockjs-client, stompjs: 채팅<br>
+- swiper : 인기 검색어 스와이퍼 기능<br>
+- uuidv4 : 랜덤 아이디값 부여<br>
+- react-slick, slick-carousel : 메인 배너 슬라이드, 상세 페이지 이미지 뷰<br>
+- jwt-decode: 토큰 디코딩<br>
 </div>
 </details>
 
