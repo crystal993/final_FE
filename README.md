@@ -45,9 +45,15 @@
   <br>
   
   <img src="https://img.shields.io/badge/fontawesome-339AF0?style=for-the-badge&logo=fontawesome&logoColor=white">
+  <img src="https://img.shields.io/badge/react_hook_form-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white">
+  <img src="https://img.shields.io/badge/react_router_dom-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white">
   <br>
   
+  <img src="https://img.shields.io/badge/aws_route53-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> 
+  <img src="https://img.shields.io/badge/aws_cloud_front-FF9900?style=for-the-badge&logo=awsfargate&logoColor=white"> 
   <img src="https://img.shields.io/badge/amazon_S3-569A31?style=for-the-badge&logo=amazons3&logoColor=white"> 
+  
+  <br>
   <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
   <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 </div>
