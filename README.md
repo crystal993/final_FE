@@ -181,9 +181,9 @@
 
 #### [[유저 피드백 1] 콘솔 로그 지우기](https://github.com/Hanhae99-final-3team/final_FE/issues/168)
 #### [[유저 피드백 2] 제목, 댓글 글씨 영역을 벗어나는 에러](https://github.com/Hanhae99-final-3team/final_FE/issues/169)
-#### [[유저 피드백 3] 스크롤바가 유지되는 에러 수정](https://github.com/Hanhae99-final-3team/final_FE/issues/170)
-#### [[유저 피드백 5] 검색 기능에서 빈 값을 검색할 때 undefined가 나오는 현상](https://github.com/Hanhae99-final-3team/final_FE/issues/186)
-#### [[유저 피드백 6] 메인 로고 눌렀을 때 초기화 및 메인 텍스트 변경](https://github.com/Hanhae99-final-3team/final_FE/issues/190)
+#### [⭐ [유저 피드백 3] 스크롤바가 유지되는 에러 수정](https://github.com/Hanhae99-final-3team/final_FE/issues/170)
+#### [⭐ [유저 피드백 5] 검색 기능에서 빈 값을 검색할 때 undefined가 나오는 현상](https://github.com/Hanhae99-final-3team/final_FE/issues/186)
+#### [⭐ [유저 피드백 6] 메인 로고 눌렀을 때 초기화 및 메인 텍스트 변경](https://github.com/Hanhae99-final-3team/final_FE/issues/190)
 #### [[유저 피드백 7] 게시글 정렬이 맞지 않는 에러](https://github.com/Hanhae99-final-3team/final_FE/issues/192) 
 <br>
 <hr>
