@@ -12,7 +12,7 @@ const currentRoomSlice = createSlice({
   initialState,
   reducers: {
     connectRoom: (state, action) => {
-      state.roomPic = action.payload.roomPic;
+      // state.roomPic = action.payload.roomPic;
       state.roomTitle = action.payload.roomName;
     },
   },

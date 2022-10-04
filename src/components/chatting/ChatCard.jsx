@@ -3,14 +3,25 @@ import styled, { css } from 'styled-components';
 import image from '../../assets/images/KakaoTalk_logo.svg';
 
 // 채팅 메시지 컴포넌트
-const ChatCard = () => {
+const ChatCard = (frame) => {
+  const author = frame.author
+  const nickname = frame.nickname
+  const createdAt = frame.createdAt
+  const body = frame.body
+  
   return (
     <STchatCardWrapper>
-      <img src={image} alt='카카오톡 이미지'></img>
-      <STcontentWrapper>
-        <h3>닉네임</h3>
-        <STchatCard>오늘 뭐먹지</STchatCard>
+      {author === "friend" && <img src={image} alt='카카오톡 이미지'></img>}
+      {author === "me" && (
+        <span>{createdAt}</span>
+      )}
+      <STcontentWrapper author={author}>
+        {author === "friend" && <h3>{nickname}</h3>}
+        <STchatCard author={author}>{body}</STchatCard>
       </STcontentWrapper>
+      {author === "friend" && (
+        <span>{createdAt}</span>
+      )}
     </STchatCardWrapper>
   );
 };
@@ -33,6 +44,9 @@ const STchatCardWrapper = styled.div`
   align-items: center;
 `;
 
+// display: flex;
+// flex-direction: column-reverse;
+
 const STcontentWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -49,32 +63,4 @@ const STchatCard = styled.div`
   font-size: 1.3rem;
   border-radius: 0.4rem;
   padding: 0.5rem;
-  ${({ author }) => {
-    switch (author === 'me') {
-      case true:
-        return css`
-          align-self: flex-end;
-          background-color: #ffeb33;
-          ::after {
-            position: absolute;
-            right: -0.3rem;
-            color: #ffeb33;
-            font-size: 1.8rem;
-            transform: rotate(30deg);
-          }
-        `;
-      default:
-        return css`
-          background-color: #fff;
-          ::before {
-            position: absolute;
-            left: 6rem;
-            color: #fff;
-            font-size: 1.8rem;
-            top: 2.5rem;
-            transform: rotate(30deg);
-          }
-        `;
-    }
-  }}
 `;

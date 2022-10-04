@@ -20,6 +20,8 @@ import DeleteIcon from "../../../assets/icons/delete.svg";
 import CheckIcon from "../../../assets/icons/check_circle.svg";
 import Accordian from "../../elements/GlobalAccordian";
 import { useRef } from "react";
+import DetailButton from "../../elements/buttons/DetailButton";
+
 
 const DetailInfo = () => {
   const dispatch = useDispatch();
@@ -33,12 +35,6 @@ const DetailInfo = () => {
 
   const isLogin = useSelector((state) => state.user.userToken);
   const itemImgs = item.itemImgs;
-
-  useEffect(() => {
-    localStorage.setItem("itemMemberId", item.memberId);
-    localStorage.setItem("itemId", item.id);
-    localStorage.setItem("itemNickname", item.nickname);
-  }, []);
 
   const moveChat = () => {
     navigate(`/chatRoom/${id}`);
@@ -110,12 +106,21 @@ const DetailInfo = () => {
     event.stopPropagation();
     return deleteHandler(id);
   };
+
   const moveLogin = () => {
     navigate("/login");
   };
   const [isServiceModal, setIsServiceModal] = useState(false);
   const [isDealServiceModal, setIsDealServiceModal] = useState(false);
   const [isRemoveModal, setIsRemoveModal] = useState(false);
+  
+  setTimeout(() => {
+    localStorage.setItem("itemMemberId", item.memberId);
+    localStorage.setItem("itemId", item.id);
+    localStorage.setItem("itemNickname", item.nickname);
+    localStorage.setItem("title", item.title);
+  }, [], 1000)
+
   return (
     <>
       {isServiceModal && (
@@ -202,6 +207,11 @@ const DetailInfo = () => {
             }
           />
           <Comment id={id} />
+
+
+          {!item.isMine && (
+            <DetailButton></DetailButton>
+          )}
 
           {item.isMine && (
             <FixThreeButton
