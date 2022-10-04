@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
-import SockJS from 'sockjs-client';
-import webstomp from 'webstomp-client';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from "react";
+import styled from "styled-components";
+import SockJS from "sockjs-client";
+import webstomp from "webstomp-client";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 const DetailButton = ({ memberId, nickName, roomId }) => {
-  const sock = new SockJS('http://localhost:8080/ws');
+  const sock = new SockJS("http://3.35.47.137/ws");
   const ws = webstomp.over(sock);
-  const token = localStorage.getItem('access-token');
+  const token = localStorage.getItem("access-token");
   const navigate = useNavigate();
 
-  const member = localStorage.getItem('user-info');
+  const member = localStorage.getItem("user-info");
   const obj = JSON.parse(member);
   const loginMemberId = obj.memberId;
 
@@ -51,7 +51,7 @@ const DetailButton = ({ memberId, nickName, roomId }) => {
     try {
       ws.disconnect(
         () => {
-          ws.unsubscribe('sub-0');
+          ws.unsubscribe("sub-0");
         },
         { token: token }
       );
@@ -81,8 +81,8 @@ const DetailButton = ({ memberId, nickName, roomId }) => {
     try {
       // token이 없으면 로그인 페이지로 이동
       if (!token) {
-        alert('토큰이 없습니다. 다시 로그인 해주세요.');
-        navigate('/login');
+        alert("토큰이 없습니다. 다시 로그인 해주세요.");
+        navigate("/login");
       }
       // // 보낼 data
       // const content = {
@@ -114,12 +114,12 @@ const DetailButton = ({ memberId, nickName, roomId }) => {
   }
 
   return (
-    <STbutton className='btn'>
+    <STbutton className="btn">
       <span
         onClick={() => {
           console.log(1);
           navigate(
-            `/chatroom/${localStorage.getItem('itemId')}/${loginMemberId}`,
+            `/chatroom/${localStorage.getItem("itemId")}/${loginMemberId}`,
             {
               memberId: memberId,
               nickName: nickName,

@@ -17,15 +17,18 @@ export default function PriceChart({
   sellingPrice,
   purchasePrice,
   averagePrice,
+  category,
 }) {
   const [pPrice, setPprice] = useState();
   const [sPrice, setSprice] = useState();
   const [aPrice, setAPrice] = useState();
+  const [cate, setCategory] = useState();
 
   useEffect(() => {
     setSprice(sellingPrice);
     setPprice(purchasePrice);
     setAPrice(averagePrice);
+    setCategory(category);
   }, [
     setPprice,
     setSprice,
@@ -33,6 +36,8 @@ export default function PriceChart({
     purchasePrice,
     sellingPrice,
     averagePrice,
+    setCategory,
+    category,
   ]);
 
   const data = [
@@ -50,13 +55,15 @@ export default function PriceChart({
     },
   ];
 
-  const CustomTooltip = ({ active, payload, label }) => {
+  const CustomTooltip = ({ active, payload, label, category }) => {
     if (active && payload && payload.length) {
       return (
         <StCustomToolTip style={{ border: "none" }}>
           <StLabel>{`${label}`}</StLabel>
           <StPrice>{`${payload[0].value.toLocaleString("ko-KR")}원`}</StPrice>
-          {/* <p className="desc">Anything you want can be displayed here.</p> */}
+          {label === "평균가격" && (
+            <p className="desc">{`${cate}의 평균가격입니다.`}</p>
+          )}
         </StCustomToolTip>
       );
     }

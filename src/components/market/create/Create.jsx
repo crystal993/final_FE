@@ -12,6 +12,7 @@ import FixButton from "../../elements/buttons/FixButton";
 import Select from "../../elements/GlobalSelect";
 import PetOption from "../options/PetOption";
 import ItemOption from "../options/ItemOption";
+import imageCompression from "browser-image-compression";
 
 function Create() {
   const dispatch = useDispatch();
