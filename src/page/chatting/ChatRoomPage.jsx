@@ -1,5 +1,5 @@
+import styled, { css } from 'styled-components';
 import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import webstomp from 'webstomp-client';
 import SockJS from 'sockjs-client';
@@ -9,26 +9,29 @@ import ChatCard from '../../components/chatting/ChatCard';
 import { __getinitialChatList } from '../../redux/modules/chattingSlice';
 import { postChat, clearChat } from '../../redux/modules/chattingSlice';
 import GlobalHeaderChat from '../../components/elements/GlobalHeaderChat';
+import { v4 as uuidv4 } from "uuid";
+import { set } from 'react-hook-form';
 
 function ChatRoomPage() {
   // 소켓 연결
-  const sock = new SockJS('http://3.35.47.137/ws');
+  const sock = new SockJS('http://localhost:8080/ws');
+  let subscription;
   const ws = webstomp.over(sock);
 
-  const navigate = useNavigate();
   // access-token
   const token = localStorage.getItem('access-token');
 
   const dispatch = useDispatch();
-
-  // 리스트 정보
-  const listRef = useRef();
+  const navigate = useNavigate();
 
   // stompClient
   const stompClient = useRef(null);
   //
   const prevDate = useRef(0);
   // 채팅 내역 리스트
+  const listRef = useRef();
+  const chatList = useSelector((state) => state.chatting.chatList)
+
 
   // 방
   const [room, setRoom] = useState();
@@ -37,9 +40,16 @@ function ChatRoomPage() {
   const obj = JSON.parse(member);
   const loginMemberId = obj.memberId;
 
+  const itemId = localStorage.getItem('itemId')
+
+  
+// useEffect(() => {
+//   setChatList2(chatList)
+// },[setChatList2, chatList])
+
   // 컴포넌트 마운트시에 소켓 연결 , 채팅방 생성
   useEffect(() => {
-    dispatch(__getinitialChatList);
+    dispatch(__getinitialChatList(itemId));
     waitForConnection(ws, wsConnectSubscribe());
     makeRoom();
     return () => {
@@ -47,12 +57,13 @@ function ChatRoomPage() {
     };
   }, []);
 
-  useEffect(() => {
-    listRef.current.scrollTop = listRef.current.scrollHeight;
-  }, []);
+  // useEffect(() => {
+  //   listRef.current.scrollTop = listRef.current.scrollHeight;
+  // }, [chatList]);
+
 
   // 웹소켓 연결, 구독
-  function wsConnectSubscribe() {
+  function wsConnectSubscribe() { 
     try {
       ws.connect(
         {
@@ -61,21 +72,47 @@ function ChatRoomPage() {
         () => {
           // 채팅방 만들기(memberId) -> 방 만드는 사람의 아이디(로그인한 사람의 아이디)
           // send랑 똑같은 멤버 아이디
-          ws.subscribe(
+          let num = 0
+          const chatroom = ws.subscribe(
             `/sub/room/founder/${loginMemberId}`,
-            function (greeting) {
-              console.log(greeting.body);
-              const data = JSON.parse(greeting.body);
-              console.log(data.roomInfoId);
-              setRoom(data.roomInfoId);
-              console.log('채팅방 생성');
+            function (frame) {
+              console.log(frame);
+              const data = JSON.parse(frame.body);
+              const roomId = data.roomInfoId
+              num = roomId
+              setRoom(num)
+              console.log(num);
+              console.log('채팅방 생성');  
             }
           );
-        }
-      );
+
+          setTimeout(() => {
+            chatroom.unsubscribe();
+            subscription = ws.subscribe(
+            `/sub/chat/room/${num}`,
+            function (frame) {
+              dispatch(postChat(JSON.parse(frame.body)));
+              console.log(frame)
+            },
+            {
+              token:token
+            },
+            function (payload) {
+              console.log(payload);
+              ws.disconnect();
+            },
+          )
+          return () => {
+            dispatch(clearChat());
+            prevDate.current = null;
+            const headers = { memberId: loginMemberId, room: room };
+            subscription.unsubscribe(headers);
+            ws.current.disconnect();
+          }
+        },500)},[dispatch])
     } catch (error) {
       console.log(error);
-    }
+    } 
   }
 
   // 연결해제, 구독해제
@@ -91,7 +128,7 @@ function ChatRoomPage() {
       console.log(error);
     }
   }
-
+  
   // 웹소켓이 연결될 때 까지 실행하는 함수
   function waitForConnection(ws, callback = () => {}) {
     setTimeout(
@@ -107,7 +144,7 @@ function ChatRoomPage() {
       1 // 밀리초 간격으로 실행
     );
   }
-
+  
   // 방 생성하기
   function makeRoom() {
     try {
@@ -126,6 +163,8 @@ function ChatRoomPage() {
           JSON.stringify({
             memberId: localStorage.getItem('itemMemberId'),
             nickname: localStorage.getItem('itemNickname'),
+            itemId : localStorage.getItem('itemId'),
+            title : localStorage.getItem('title'),
           }),
           {
             token: token,
@@ -135,26 +174,91 @@ function ChatRoomPage() {
         // ws.send(`/pub/room/15`, {}, { token: token });
         // console.log(ws.ws.readyState);
       });
-    } catch (error) {
-      console.log(error);
-      console.log(ws.ws.readyState);
-    }
+      } catch (error) {
+        console.log(error);
+        console.log(ws.ws.readyState);
+      }
+  }
+    useEffect(() => {
+      listRef.current.scrollTop = listRef.current.scrollHeight;
+    }, [chatList]);  
+    
+  return (
+      <>
+        <GlobalHeaderChat />
+        <StChatRoomPage>
+          <StChatListContainer ref={listRef} >
+            {chatList.map((chat) => {
+              const convertToDate = new Date(chat.createdAt);
+              // let options = { weekdy: "long" };
+              // const intl = new Intl.DateTimeFormat("ko-KR", options).format(
+              //   convertToDate
+              // );
+              if (
+                prevDate.current < convertToDate.getDate() ||
+                prevDate.current == null
+              ) {
+                prevDate.current = convertToDate.getDate();
+                return (
+                  // <>
+                  //   <p
+                  //     key={
+                  //       convertToDate.getFullYear() +
+                  //       "년" +
+                  //       convertToDate.getMonth() +
+                  //       "월" +
+                  //       convertToDate.getDate() +
+                  //       "."
+                  //     }
+                  //   >
+                  //     {convertToDate.getFullYear() +
+                  //     "년 " +
+                  //     convertToDate.getMonth() +
+                  //     "월 " +
+                  //     convertToDate.getDate() +
+                  //     "일 " +
+                  //     intl}
+                  //   </p>
+                  <ChatCardWrapper key={chat.chatId} author={chat.author}>
+                    <ChatCard 
+                      author={
+                        chat.memberId === parseInt(loginMemberId)
+                        ?"me"
+                        :"friend"
+                      }
+                      body={chat.content}
+                      createdAt={chat.createdAt}
+                      nickname={chat.nickname}
+                    />
+                    </ChatCardWrapper>
+                );
+              } else {
+                prevDate.current = convertToDate.getDate();
+                return(
+                  <ChatCardWrapper key={chat.chatId} author={chat.author}>
+                  <ChatCard 
+                  author={
+                    chat.memberId === parseInt(loginMemberId)
+                    ? "me"
+                    : "friend"
+                  }
+                  body={chat.content}
+                  createdAt={chat.createdAt}
+                  nickname={chat.nickname}
+                  />
+                  </ChatCardWrapper>);
+              }
+            })}
+          </StChatListContainer>
+          <ChatSubmitBox sock={sock} ws={ws} room={room} token={token} memberId={loginMemberId} />
+        </StChatRoomPage>
+      </>
+    );
   }
 
-  return (
-    <>
-      <GlobalHeaderChat />
-      <StChatRoomPage>
-        <StChatListContainer ref={listRef}></StChatListContainer>
-        <ChatCard />
-        <ChatCard />
-        <ChatCard />
-        <ChatCard />
-        <ChatSubmitBox sock={sock} ws={ws} room={room} token={token} />
-      </StChatRoomPage>
-    </>
-  );
-}
+
+
+
 
 const StChatRoomPage = styled.div`
   width: 100vw;
@@ -162,6 +266,64 @@ const StChatRoomPage = styled.div`
   background-color: #afc0cf;
 `;
 
-const StChatListContainer = styled.div``;
+// display: flex;
+// flex-direction: column-reverse;
+const StChatListContainer = styled.div`
+width: 100vw;
+padding: 0 10px;
+display: flex;
+overflow-y: scroll;
+flex-direction: column;
+height: calc(100vh - 177px);
+justify-content: flex-start;
+align-items: flex-start;
+p {
+  align-self: center;
+  margin-top: 20px;
+  width: 60%;
+  background-color: #ffffff88;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  padding: 2px 0;
+  letter-spacing: 0.2rem;
+  display: flex;
+}
+;`
+const ChatCardWrapper = styled.div`
+display:flex;
+flex-direction : column;
+width:100%;
 
+${({ author }) => {
+  switch (author === 'me') {
+    case true:
+      return css`
+        align-self: flex-end;
+        background-color: #ffeb33;
+        justify-content:flex-end;
+        ::after {
+          display:flex;
+          flex-direction : column;
+          right: -0.3rem;
+          color: #ffeb33;
+          font-size: 1.8rem;
+          transform: rotate(30deg);
+          }
+      `;
+    default:
+      return css`
+        background-color: #fff;
+        justify-content:flex-start;
+        ::before {
+          display:flex;
+          left: 6rem;
+          color: #fff;
+          font-size: 1.8rem;
+          top: 2.5rem;
+          transform: rotate(30deg);
+        }
+      `;
+  }
+}}
+`
 export default ChatRoomPage;

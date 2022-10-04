@@ -36,7 +36,7 @@ function ChatRoomList({ stompClient }) {
       listSubscription.unsubscribe();
     };
   }, []);
-
+// 1
   useEffect(() => {
     let invitedRoomSubscription;
     if (stompClient.connected) {

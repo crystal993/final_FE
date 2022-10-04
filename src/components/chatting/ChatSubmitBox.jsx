@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 
 // 채팅방 메시지 보내기 컴포넌트
-function ChatSubmitBox({ sock, ws, room, token }) {
+function ChatSubmitBox({ sock, room, ws, token, memberId }) {
   const [chatBody, setChatBody] = useState('');
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const createdAt = Date.now().toString();
     console.log(createdAt);
     const content = {
       content: chatBody,
-      memberId: 5,
+      memberId: memberId,
       createdAt: '2022-01-01',
+      roomInfoId: room,
     };
     //roomId에 해당하는 채팅방으로 구독하고
-    ws.subscribe(`sub/chat/room/${room}`, {}, { token: token });
+    // ws.subscribe(`sub/chat/room/${room}`, {}, { token: token });
     // 해당하는 채팅방에 메시지 보내기
     ws.send(`/pub/chat/room/${room}`, JSON.stringify(content), {
       token: token,

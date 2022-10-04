@@ -8,6 +8,8 @@ import comment from "./modules/market/commentSlice";
 import search from "./modules/searchSlice";
 import chart from "./modules/chartSlice";
 import myPage from "./modules/myPageSlice";
+import chatting from "./modules/chattingSlice";
+import currentRoomSlice from "./modules/currentRoomSlice";
 const middlewares = [thunk];
 
 // 리듀서 통합
@@ -19,6 +21,8 @@ const rootReducer = combineReducers({
   search,
   chart,
   myPage,
+  chatting,
+  currentRoomSlice,
 });
 
 // 스토어 연결

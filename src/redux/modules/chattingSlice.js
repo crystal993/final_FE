@@ -17,9 +17,9 @@ export const __getinitialChatList = createAsyncThunk(
   '/chat/__getinitialChatList',
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.get(`http://3.35.47.137/room/${payload}`, {
+      const response = await axios.get(`http://localhost:8080/room/${payload}`, {
         headers: {
-          Authorization: localStorage.getItem('accessToken'),
+          Authorization: localStorage.getItem('access-token'),
         },
       });
       return thunkAPI.fulfillWithValue(response.data);
@@ -34,7 +34,7 @@ const chatSlice = createSlice({
   initialState,
   reducers: {
     postChat: (state, action) => {
-      state.chatList.push(action.payload);
+      state.chatList.unshift(action.payload);
     },
     clearChat: (state, action) => {
       state.chatList = new Array(0);
