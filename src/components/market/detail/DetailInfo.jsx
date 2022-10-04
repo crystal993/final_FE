@@ -22,7 +22,6 @@ import Accordian from "../../elements/GlobalAccordian";
 import { useRef } from "react";
 import DetailButton from "../../elements/buttons/DetailButton";
 
-
 const DetailInfo = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -113,13 +112,17 @@ const DetailInfo = () => {
   const [isServiceModal, setIsServiceModal] = useState(false);
   const [isDealServiceModal, setIsDealServiceModal] = useState(false);
   const [isRemoveModal, setIsRemoveModal] = useState(false);
-  
-  setTimeout(() => {
-    localStorage.setItem("itemMemberId", item.memberId);
-    localStorage.setItem("itemId", item.id);
-    localStorage.setItem("itemNickname", item.nickname);
-    localStorage.setItem("title", item.title);
-  }, [], 1000)
+
+  setTimeout(
+    () => {
+      localStorage.setItem("itemMemberId", item.memberId);
+      localStorage.setItem("itemId", item.id);
+      localStorage.setItem("itemNickname", item.nickname);
+      localStorage.setItem("title", item.title);
+    },
+    [],
+    1000
+  );
 
   return (
     <>
@@ -203,15 +206,13 @@ const DetailInfo = () => {
                 purchasePrice={item.purchasePrice}
                 sellingPrice={item.sellingPrice}
                 averagePrice={item.averagePrice}
+                category={item.itemCategory}
               />
             }
           />
           <Comment id={id} />
 
-
-          {!item.isMine && (
-            <DetailButton></DetailButton>
-          )}
+          {!item.isMine && <DetailButton></DetailButton>}
 
           {item.isMine && (
             <FixThreeButton
@@ -228,12 +229,12 @@ const DetailInfo = () => {
           )}
         </DetailWrapper>
       </DetailInfoWrapper>
-      {!item.isMine && (
+      {/* {!item.isMine && (
         <FixButton
           content={"채팅으로 거래하기"}
           onClick={() => setIsServiceModal((prev) => !prev)}
         ></FixButton>
-      )}
+      )} */}
     </>
   );
 };
