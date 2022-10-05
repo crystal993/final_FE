@@ -44,9 +44,6 @@ const GlobalHeader = () => {
     divRef.current.scrollIntoView(0);
   };
 
-  const member = localStorage.getItem("user-info");
-  const obj = JSON.parse(member);
-  const loginMemberId = obj.memberId;
 
   return (
     <>
@@ -72,7 +69,7 @@ const GlobalHeader = () => {
           <NavItem>
             <SearchIcon onClick={() => onPathHandler("/search")} />
             <ChatIcon
-              onClick={() => onPathHandler(`/chatlist/${loginMemberId}`)}
+              onClick={() => onPathHandler(`/chatlist`)}
             />
           </NavItem>
         </Navbar>

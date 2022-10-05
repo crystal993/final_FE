@@ -31,7 +31,7 @@ const Routers = () => {
         <Route path="/search" element={<Search />} />
         <Route path="/search/result/:keyword" element={<SearchResult />} />
         <Route path="/chatroom/:itemId/:memberId" element={<ChatRoomPage />} />
-        <Route path="/chatlist/:roomId" element={<ChatListPage />} />
+        <Route path="/chatlist" element={<ChatListPage />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/zzims" element={<MyZzim />} />
         <Route path="/mypage/writings" element={<MyWritings />} />
