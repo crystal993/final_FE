@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux/es/exports";
 import { useEffect, useRef, useState } from "react";
 import SockJS from "sockjs-client";
 import webstomp from "webstomp-client";
@@ -9,7 +8,7 @@ import ChatRoomCard from "../../components/elements/chat/ChatRoomCard";
 function ChattingListPage({}) {
   // 소켓 연결
   const sock = new SockJS("http://3.35.47.137/ws");
-  const stompClient = webstomp.over(sock);
+  const ws = webstomp.over(sock);
 
   const member = localStorage.getItem("user-info");
   const obj = JSON.parse(member);
@@ -20,42 +19,60 @@ function ChattingListPage({}) {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    let listSubscription;
-    listSubscription = () => {
-      stompClient.subscribe(`/sub/room/${loginMemberId}`, function (frame) {
-        console.log(frame);
-        setRooms([...rooms, ...JSON.parse(frame.body)]);
-      });
-    };
-    stompClient.send(
-      `/pub/room/${loginMemberId}`,
-      {},
-      {
-        token: token,
-      }
-    );
+    try {
+      ws.connect(
+        {
+          token: token,
+        },
+        ()=>{
+        ws.subscribe(
+          `/sub/room/${loginMemberId}`, 
+            function (frame) {
+            console.log(frame);
+            setRooms([...rooms, ...JSON.parse(frame.body)]);
+          });
+        ws.send(
+          `/pub/room/${loginMemberId}`,
+          {
+            token: token,
+          }
+        );
+
+        setTimeout(
+          () => {
+            ws.subscribe(
+              `/sub/room/founder/${loginMemberId}`,
+              function (payload) {
+                console.log(JSON.parse(payload.body));
+                setRooms([...rooms, JSON.parse(payload.body)]);
+              },
+              {
+                token:token
+              }
+            );
+        },500)
+      },[rooms])
+    } catch (error) {
+      console.log(error);}
 
     return () => {
-      listSubscription.unsubscribe();
+      ws.unsubscribe();
     };
   }, []);
 
-  useEffect(() => {
-    let invitedRoomSubscription;
-    if (stompClient.connected) {
-      invitedRoomSubscription = stompClient.subscribe(
-        `/sub/room/founder/${loginMemberId}`,
-        function (payload) {
-          console.log(JSON.parse(payload.body));
-          setRooms([...rooms, JSON.parse(payload.body)]);
-        }
-      );
-    }
-    return () => {
-      invitedRoomSubscription.unsubscribe();
-    };
-  }, [rooms]);
-  console.log(stompClient);
+  // useEffect(() => {
+  //   try{ws.connect(
+  //     {
+  //       token:token
+  //     },
+  //     ()=>{
+  //     })} catch(error) 
+  //     {console.log(error)};
+  //   return () => {
+  //     ws.unsubscribe();
+  //   };
+  // }, [rooms]);
+  console.log(ws);
   return (
     <StChatRoomList>
       {rooms.length === 0 ? (
@@ -67,7 +84,7 @@ function ChattingListPage({}) {
               key={room.roomInfoId}
               roomId={room.roomInfoId}
               roomName={room.title}
-              stompClient={stompClient}
+              stompClient={ws}
             />
           );
         })

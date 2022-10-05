@@ -134,7 +134,7 @@ const Profile = () => {
               최근본상품
             </StTxt>
           </IconWrapper>
-          <IconWrapper onClick={() => onPathHandler("/chatlist/:roomId")}>
+          <IconWrapper onClick={() => onPathHandler("/chatlist")}>
             <StChatBubbleIcon />
             <StTxt mobileFontSize={"1rem"} fontSize={"1.5rem"} fontWeight={100}>
               채팅목록

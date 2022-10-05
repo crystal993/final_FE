@@ -17,7 +17,7 @@ export const __getinitialChatList = createAsyncThunk(
   '/chat/__getinitialChatList',
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.get(`http://localhost:8080/room/${payload}`, {
+      const response = await axios.get(`http://3.35.47.137/room/${payload}`, {
         headers: {
           Authorization: localStorage.getItem('access-token'),
         },
