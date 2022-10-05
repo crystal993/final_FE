@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
+import React, { useState } from "react";
+import styled, { css } from "styled-components";
+import { ReactComponent as SendIcon } from "../../assets/icons/send.svg";
 
 // 채팅방 메시지 보내기 컴포넌트
 function ChatSubmitBox({ sock, room, ws, token, memberId }) {
-  const [chatBody, setChatBody] = useState('');
+  const [chatBody, setChatBody] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     const createdAt = Date.now().toString();
@@ -11,7 +12,7 @@ function ChatSubmitBox({ sock, room, ws, token, memberId }) {
     const content = {
       content: chatBody,
       memberId: memberId,
-      createdAt: '2022-01-01',
+      createdAt: "2022-01-01",
       roomInfoId: room,
     };
     //roomId에 해당하는 채팅방으로 구독하고
@@ -20,24 +21,25 @@ function ChatSubmitBox({ sock, room, ws, token, memberId }) {
     ws.send(`/pub/chat/room/${room}`, JSON.stringify(content), {
       token: token,
     });
-    setChatBody('');
+    setChatBody("");
   };
 
   return (
     <StboxContainer>
       <StChatForm>
         <input
+          placeholder="메세지를 입력해주세요."
           onChange={(e) => {
             setChatBody(e.target.value);
           }}
           onKeyDown={(e) => {
-            if (e.key === 'Enter') {
+            if (e.key === "Enter") {
               handleSubmit(e);
             }
           }}
           value={chatBody}
         />
-        <button onClick={handleSubmit}>전송</button>
+        <StSendIcon onClick={handleSubmit} />
       </StChatForm>
     </StboxContainer>
   );
@@ -46,27 +48,34 @@ function ChatSubmitBox({ sock, room, ws, token, memberId }) {
 export default ChatSubmitBox;
 
 const StboxContainer = styled.div`
-  width: 100vw;
+  width: 100%;
   height: max-content;
-  background-color: #fff;
+  background-color: #9e9e9e;
 `;
 
 const StChatForm = styled.form`
   width: 100%;
-  height: 10%;
+  height: max-content;
+  background-color: #9e9e9e;
+  height: 4.8rem;
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   input {
-    width: 100%;
-    flex-grow: 1;
     overflow-y: hidden;
     text-align: justify;
     resize: none;
     border: none;
     font-size: 1.3rem;
+    padding-left: 1rem;
+    height: 3.4rem;
+    width: 36rem;
+    border-radius: 0.6rem;
     :focus {
       outline: none;
       text-decoration: none;
@@ -96,4 +105,12 @@ const StChatForm = styled.form`
       }
     }}
   }
+`;
+
+const StSendIcon = styled(SendIcon)`
+  position: absolute;
+  width: 1.9rem;
+  height: 1.6rem;
+  right: 2rem;
+  bottom: 1.4rem;
 `;

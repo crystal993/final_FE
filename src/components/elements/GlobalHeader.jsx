@@ -5,7 +5,6 @@ import Burger from "./header/Burger";
 import Menu from "./header/Menu";
 import { ReactComponent as ChatIcon } from "../../assets/icons/comment.svg";
 import { ReactComponent as SearchIcon } from "../../assets/icons/search.svg";
-import GlobalModal from "./GlobalModal";
 
 const GlobalHeader = () => {
   const navigate = useNavigate();
@@ -35,7 +34,6 @@ const GlobalHeader = () => {
   };
 
   useOnClickOutside(node, () => setOpen(false));
-  const [isServiceModal, setIsServiceModal] = useState(false);
 
   const divRef = useRef();
   // useEffect(() => {
@@ -46,16 +44,12 @@ const GlobalHeader = () => {
     divRef.current.scrollIntoView(0);
   };
 
+  const member = localStorage.getItem("user-info");
+  const obj = JSON.parse(member);
+  const loginMemberId = obj.memberId;
+
   return (
     <>
-      {isServiceModal && (
-        <GlobalModal
-          content1={"서비스 준비 중 입니다."}
-          content2={"이용에 불편을 드려 죄송합니다."}
-          isModal={isServiceModal}
-          setIsModal={setIsServiceModal}
-        />
-      )}
       <NavbarWrapper>
         <span ref={divRef}></span>
         <Navbar>
@@ -77,7 +71,9 @@ const GlobalHeader = () => {
           </NavItem>
           <NavItem>
             <SearchIcon onClick={() => onPathHandler("/search")} />
-            <ChatIcon onClick={() => setIsServiceModal((prev) => !prev)} />
+            <ChatIcon
+              onClick={() => onPathHandler(`/chatlist/${loginMemberId}`)}
+            />
           </NavItem>
         </Navbar>
       </NavbarWrapper>

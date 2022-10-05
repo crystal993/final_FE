@@ -1,25 +1,25 @@
-import styled, { css } from 'styled-components';
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import webstomp from 'webstomp-client';
-import SockJS from 'sockjs-client';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import ChatSubmitBox from '../../components/chatting/ChatSubmitBox';
-import ChatCard from '../../components/chatting/ChatCard';
-import { __getinitialChatList } from '../../redux/modules/chattingSlice';
-import { postChat, clearChat } from '../../redux/modules/chattingSlice';
-import GlobalHeaderChat from '../../components/elements/GlobalHeaderChat';
+import styled, { css } from "styled-components";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import webstomp from "webstomp-client";
+import SockJS from "sockjs-client";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+import ChatSubmitBox from "../../components/chatting/ChatSubmitBox";
+import ChatCard from "../../components/chatting/ChatCard";
+import { __getinitialChatList } from "../../redux/modules/chattingSlice";
+import { postChat, clearChat } from "../../redux/modules/chattingSlice";
+import GlobalHeaderChat from "../../components/elements/GlobalHeaderChat";
 import { v4 as uuidv4 } from "uuid";
-import { set } from 'react-hook-form';
+import { set } from "react-hook-form";
 
 function ChatRoomPage() {
   // 소켓 연결
-  const sock = new SockJS('http://localhost:8080/ws');
+  const sock = new SockJS("http://3.35.47.137/ws");
   let subscription;
   const ws = webstomp.over(sock);
 
   // access-token
-  const token = localStorage.getItem('access-token');
+  const token = localStorage.getItem("access-token");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,22 +30,20 @@ function ChatRoomPage() {
   const prevDate = useRef(0);
   // 채팅 내역 리스트
   const listRef = useRef();
-  const chatList = useSelector((state) => state.chatting.chatList)
-
+  const chatList = useSelector((state) => state.chatting.chatList);
 
   // 방
   const [room, setRoom] = useState();
 
-  const member = localStorage.getItem('user-info');
+  const member = localStorage.getItem("user-info");
   const obj = JSON.parse(member);
   const loginMemberId = obj.memberId;
 
-  const itemId = localStorage.getItem('itemId')
+  const itemId = localStorage.getItem("itemId");
 
-  
-// useEffect(() => {
-//   setChatList2(chatList)
-// },[setChatList2, chatList])
+  // useEffect(() => {
+  //   setChatList2(chatList)
+  // },[setChatList2, chatList])
 
   // 컴포넌트 마운트시에 소켓 연결 , 채팅방 생성
   useEffect(() => {
@@ -61,9 +59,8 @@ function ChatRoomPage() {
   //   listRef.current.scrollTop = listRef.current.scrollHeight;
   // }, [chatList]);
 
-
   // 웹소켓 연결, 구독
-  function wsConnectSubscribe() { 
+  function wsConnectSubscribe() {
     try {
       ws.connect(
         {
@@ -72,47 +69,50 @@ function ChatRoomPage() {
         () => {
           // 채팅방 만들기(memberId) -> 방 만드는 사람의 아이디(로그인한 사람의 아이디)
           // send랑 똑같은 멤버 아이디
-          let num = 0
+          let num = 0;
           const chatroom = ws.subscribe(
             `/sub/room/founder/${loginMemberId}`,
             function (frame) {
               console.log(frame);
               const data = JSON.parse(frame.body);
-              const roomId = data.roomInfoId
-              num = roomId
-              setRoom(num)
+              const roomId = data.roomInfoId;
+              num = roomId;
+              setRoom(num);
               console.log(num);
-              console.log('채팅방 생성');  
+              console.log("채팅방 생성");
             }
           );
 
           setTimeout(() => {
             chatroom.unsubscribe();
             subscription = ws.subscribe(
-            `/sub/chat/room/${num}`,
-            function (frame) {
-              dispatch(postChat(JSON.parse(frame.body)));
-              console.log(frame)
-            },
-            {
-              token:token
-            },
-            function (payload) {
-              console.log(payload);
-              ws.disconnect();
-            },
-          )
-          return () => {
-            dispatch(clearChat());
-            prevDate.current = null;
-            const headers = { memberId: loginMemberId, room: room };
-            subscription.unsubscribe(headers);
-            ws.current.disconnect();
-          }
-        },500)},[dispatch])
+              `/sub/chat/room/${num}`,
+              function (frame) {
+                dispatch(postChat(JSON.parse(frame.body)));
+                console.log(frame);
+              },
+              {
+                token: token,
+              },
+              function (payload) {
+                console.log(payload);
+                ws.disconnect();
+              }
+            );
+            return () => {
+              dispatch(clearChat());
+              prevDate.current = null;
+              const headers = { memberId: loginMemberId, room: room };
+              subscription.unsubscribe(headers);
+              ws.current.disconnect();
+            };
+          }, 500);
+        },
+        [dispatch]
+      );
     } catch (error) {
       console.log(error);
-    } 
+    }
   }
 
   // 연결해제, 구독해제
@@ -120,7 +120,7 @@ function ChatRoomPage() {
     try {
       ws.disconnect(
         () => {
-          ws.unsubscribe('sub-0');
+          ws.unsubscribe("sub-0");
         },
         { token: token }
       );
@@ -128,7 +128,7 @@ function ChatRoomPage() {
       console.log(error);
     }
   }
-  
+
   // 웹소켓이 연결될 때 까지 실행하는 함수
   function waitForConnection(ws, callback = () => {}) {
     setTimeout(
@@ -144,14 +144,14 @@ function ChatRoomPage() {
       1 // 밀리초 간격으로 실행
     );
   }
-  
+
   // 방 생성하기
   function makeRoom() {
     try {
       // token이 없으면 로그인 페이지로 이동
       if (!token) {
-        alert('토큰이 없습니다. 다시 로그인 해주세요.');
-        navigate('/login');
+        alert("토큰이 없습니다. 다시 로그인 해주세요.");
+        navigate("/login");
       }
       // 데이터 보내기
       waitForConnection(ws, function () {
@@ -161,10 +161,10 @@ function ChatRoomPage() {
         ws.send(
           `/pub/room/founder/${loginMemberId}`,
           JSON.stringify({
-            memberId: localStorage.getItem('itemMemberId'),
-            nickname: localStorage.getItem('itemNickname'),
-            itemId : localStorage.getItem('itemId'),
-            title : localStorage.getItem('title'),
+            memberId: localStorage.getItem("itemMemberId"),
+            nickname: localStorage.getItem("itemNickname"),
+            itemId: localStorage.getItem("itemId"),
+            title: localStorage.getItem("title"),
           }),
           {
             token: token,
@@ -174,156 +174,150 @@ function ChatRoomPage() {
         // ws.send(`/pub/room/15`, {}, { token: token });
         // console.log(ws.ws.readyState);
       });
-      } catch (error) {
-        console.log(error);
-        console.log(ws.ws.readyState);
-      }
+    } catch (error) {
+      console.log(error);
+      console.log(ws.ws.readyState);
+    }
   }
-    useEffect(() => {
-      listRef.current.scrollTop = listRef.current.scrollHeight;
-    }, [chatList]);  
-    
+  useEffect(() => {
+    listRef.current.scrollTop = listRef.current.scrollHeight;
+  }, [chatList]);
+
   return (
-      <>
-        <GlobalHeaderChat />
-        <StChatRoomPage>
-          <StChatListContainer ref={listRef} >
-            {chatList.map((chat) => {
-              const convertToDate = new Date(chat.createdAt);
-              // let options = { weekdy: "long" };
-              // const intl = new Intl.DateTimeFormat("ko-KR", options).format(
-              //   convertToDate
-              // );
-              if (
-                prevDate.current < convertToDate.getDate() ||
-                prevDate.current == null
-              ) {
-                prevDate.current = convertToDate.getDate();
-                return (
-                  // <>
-                  //   <p
-                  //     key={
-                  //       convertToDate.getFullYear() +
-                  //       "년" +
-                  //       convertToDate.getMonth() +
-                  //       "월" +
-                  //       convertToDate.getDate() +
-                  //       "."
-                  //     }
-                  //   >
-                  //     {convertToDate.getFullYear() +
-                  //     "년 " +
-                  //     convertToDate.getMonth() +
-                  //     "월 " +
-                  //     convertToDate.getDate() +
-                  //     "일 " +
-                  //     intl}
-                  //   </p>
-                  <ChatCardWrapper key={chat.chatId} author={chat.author}>
-                    <ChatCard 
-                      author={
-                        chat.memberId === parseInt(loginMemberId)
-                        ?"me"
-                        :"friend"
-                      }
-                      body={chat.content}
-                      createdAt={chat.createdAt}
-                      nickname={chat.nickname}
-                    />
-                    </ChatCardWrapper>
-                );
-              } else {
-                prevDate.current = convertToDate.getDate();
-                return(
-                  <ChatCardWrapper key={chat.chatId} author={chat.author}>
-                  <ChatCard 
+    <>
+      <GlobalHeaderChat />
+      <StChatRoomPage>
+        <StChatListContainer ref={listRef}>
+          {chatList.map((chat) => {
+            const convertToDate = new Date(chat.createdAt);
+            // let options = { weekdy: "long" };
+            // const intl = new Intl.DateTimeFormat("ko-KR", options).format(
+            //   convertToDate
+            // );
+            if (
+              prevDate.current < convertToDate.getDate() ||
+              prevDate.current == null
+            ) {
+              prevDate.current = convertToDate.getDate();
+              return (
+                // <>
+                //   <p
+                //     key={
+                //       convertToDate.getFullYear() +
+                //       "년" +
+                //       convertToDate.getMonth() +
+                //       "월" +
+                //       convertToDate.getDate() +
+                //       "."
+                //     }
+                //   >
+                //     {convertToDate.getFullYear() +
+                //     "년 " +
+                //     convertToDate.getMonth() +
+                //     "월 " +
+                //     convertToDate.getDate() +
+                //     "일 " +
+                //     intl}
+                //   </p>
+                <ChatCardWrapper
+                  key={chat.chatId}
                   author={
-                    chat.memberId === parseInt(loginMemberId)
-                    ? "me"
-                    : "friend"
+                    chat.memberId === parseInt(loginMemberId) ? "me" : "friend"
                   }
-                  body={chat.content}
-                  createdAt={chat.createdAt}
-                  nickname={chat.nickname}
+                >
+                  <ChatCard
+                    author={
+                      chat.memberId === parseInt(loginMemberId)
+                        ? "me"
+                        : "friend"
+                    }
+                    body={chat.content}
+                    createdAt={chat.createdAt}
+                    nickname={chat.nickname}
                   />
-                  </ChatCardWrapper>);
-              }
-            })}
-          </StChatListContainer>
-          <ChatSubmitBox sock={sock} ws={ws} room={room} token={token} memberId={loginMemberId} />
-        </StChatRoomPage>
-      </>
-    );
-  }
-
-
-
-
+                </ChatCardWrapper>
+              );
+            } else {
+              prevDate.current = convertToDate.getDate();
+              return (
+                <ChatCardWrapper
+                  key={chat.chatId}
+                  author={
+                    chat.memberId === parseInt(loginMemberId) ? "me" : "friend"
+                  }
+                >
+                  <ChatCard
+                    author={
+                      chat.memberId === parseInt(loginMemberId)
+                        ? "me"
+                        : "friend"
+                    }
+                    body={chat.content}
+                    createdAt={chat.createdAt}
+                    nickname={chat.nickname}
+                  />
+                </ChatCardWrapper>
+              );
+            }
+          })}
+        </StChatListContainer>
+        <ChatSubmitBox
+          sock={sock}
+          ws={ws}
+          room={room}
+          token={token}
+          memberId={loginMemberId}
+        />
+      </StChatRoomPage>
+    </>
+  );
+}
 
 const StChatRoomPage = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: #afc0cf;
+  background-color: white;
 `;
 
 // display: flex;
 // flex-direction: column-reverse;
 const StChatListContainer = styled.div`
-width: 100vw;
-padding: 0 10px;
-display: flex;
-overflow-y: scroll;
-flex-direction: column;
-height: calc(100vh - 177px);
-justify-content: flex-start;
-align-items: flex-start;
-p {
-  align-self: center;
-  margin-top: 20px;
-  width: 60%;
-  background-color: #ffffff88;
-  border-radius: 15px;
-  font-size: 0.9rem;
-  padding: 2px 0;
-  letter-spacing: 0.2rem;
+  width: 100vw;
+  padding: 0 10px;
   display: flex;
-}
-;`
-const ChatCardWrapper = styled.div`
-display:flex;
-flex-direction : column;
-width:100%;
-
-${({ author }) => {
-  switch (author === 'me') {
-    case true:
-      return css`
-        align-self: flex-end;
-        background-color: #ffeb33;
-        justify-content:flex-end;
-        ::after {
-          display:flex;
-          flex-direction : column;
-          right: -0.3rem;
-          color: #ffeb33;
-          font-size: 1.8rem;
-          transform: rotate(30deg);
-          }
-      `;
-    default:
-      return css`
-        background-color: #fff;
-        justify-content:flex-start;
-        ::before {
-          display:flex;
-          left: 6rem;
-          color: #fff;
-          font-size: 1.8rem;
-          top: 2.5rem;
-          transform: rotate(30deg);
-        }
-      `;
+  overflow-y: scroll;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column-reverse;
+  p {
+    align-self: center;
+    margin-top: 20px;
+    width: 60%;
+    background-color: #ffffff88;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    padding: 2px 0;
+    letter-spacing: 0.2rem;
+    display: flex;
   }
-}}
-`
+`;
+const ChatCardWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  ${({ author }) => {
+    switch (author === "me") {
+      case true:
+        return css`
+          justify-content: flex-end;
+        `;
+      default:
+        return css`
+          justify-content: flex-start;
+        `;
+    }
+  }}
+`;
 export default ChatRoomPage;

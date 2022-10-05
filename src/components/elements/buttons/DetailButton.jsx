@@ -137,36 +137,23 @@ const DetailButton = ({ memberId, nickName, roomId }) => {
 export default DetailButton;
 
 const STbutton = styled.button`
+  width: 100%;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  @media screen and (min-width: 1024px) {
-    /* Desktop */
-    width: 90%;
-  }
-  @media screen and (min-width: 768px) and (max-width: 1023px) {
-    /* Tablet */
-    width: 95%;
-  }
-
-  @media screen and (max-width: 767px) {
-    /* Mobile */
-    width: 98%;
-  }
   margin: 0 auto;
-  background: #b63eff;
+  background: ${(props) =>
+    props.version === 2 ? props.theme.gray : props.theme.mainColor};
   padding: 1rem;
+  border: none;
+  cursor: pointer;
+  z-index: 40;
   span {
     font-weight: 700;
     font-size: 1.6rem;
     line-height: 2.3rem;
     text-align: center;
     color: #ffffff;
-  }
-  border: 1px solid gray;
-
-  .btn:hover {
-    cursor: pointer;
   }
 `;
