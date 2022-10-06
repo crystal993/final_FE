@@ -200,6 +200,7 @@
 #### [⭐ [유저 피드백 5] 검색 기능에서 빈 값을 검색할 때 undefined가 나오는 현상 (3명) ](https://github.com/Hanhae99-final-3team/final_FE/issues/186)
 #### [⭐ [유저 피드백 6] 메인 로고 눌렀을 때 초기화 및 메인 텍스트 변경 (3명) ](https://github.com/Hanhae99-final-3team/final_FE/issues/190)
 #### [[유저 피드백 7] 게시글 정렬이 맞지 않는 에러 (4명) ](https://github.com/Hanhae99-final-3team/final_FE/issues/192) 
+#### [⭐⭐⭐ [유저 피드백 8] 아이템 찜 버튼 api call 성능최적화](https://github.com/Hanhae99-final-3team/final_FE/issues/202)
 <br>
 <hr>
 <br>
