@@ -6,6 +6,8 @@ import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { apis } from "../../../shared/axios";
 import GlobalModal from "../GlobalModal";
 import { useNavigate } from "react-router-dom";
+import { debounce, throttle } from "lodash";
+import useDebounce from "../../../customHook/useDebounce";
 
 const ItemZzimButton = ({ isZzim, isLogin, postId }) => {
   const [isZzimed, setZzimed] = useState(isZzim);
@@ -17,7 +19,7 @@ const ItemZzimButton = ({ isZzim, isLogin, postId }) => {
     setZzimed(isZzim);
   }, [setZzimed, isZzim]);
 
-  const toggleLike = async () => {
+  const toggleLike = debounce(() => {
     if (!isLogin) {
       setIsModal((prev) => !prev);
       setMessage("로그인을 해주세요!");
@@ -25,13 +27,11 @@ const ItemZzimButton = ({ isZzim, isLogin, postId }) => {
     }
 
     if (!isZzimed) {
-      const { data } = await apis.like_post(postId);
-      setZzimed(data.isZzimed);
+      apis.like_post(postId).then(({ data }) => setZzimed(data.isZzimed));
     } else if (isZzimed) {
-      const { data } = await apis.unlike_post(postId);
-      setZzimed(data.isZzimed);
+      apis.unlike_post(postId).then(({ data }) => setZzimed(data.isZzimed));
     }
-  };
+  }, 250);
 
   const moveLogin = () => {
     navigate("/login");
