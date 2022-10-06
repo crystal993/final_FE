@@ -44,6 +44,12 @@ const STchatCardWrapper = styled.div`
     border-radius: 41%;
     margin-right: 1.8rem;
   }
+  span {
+    margin-right: 0.5rem;
+    margin-top: 2.8rem;
+    justify-content: end;
+    color: ${({ theme }) => theme.darkgray};
+  }
   align-items: center;
 `;
 

@@ -11,10 +11,11 @@ import { postChat, clearChat } from "../../redux/modules/chattingSlice";
 import GlobalHeaderChat from "../../components/elements/GlobalHeaderChat";
 import { v4 as uuidv4 } from "uuid";
 import { set } from "react-hook-form";
+import moment from "moment";
 
 function ChatRoomPage() {
   // 소켓 연결
-  const sock = new SockJS("http://3.35.47.137/ws");
+  const sock = new SockJS("https://3.35.47.137/wss");
   let subscription;
   const ws = webstomp.over(sock);
 
@@ -190,52 +191,36 @@ function ChatRoomPage() {
         <StChatListContainer ref={listRef}>
           {chatList.map((chat) => {
             const convertToDate = new Date(chat.createdAt);
-            // let options = { weekdy: "long" };
-            // const intl = new Intl.DateTimeFormat("ko-KR", options).format(
-            //   convertToDate
-            // );
+            console.log(convertToDate);
+            moment.locale("ko");
             if (
               prevDate.current < convertToDate.getDate() ||
               prevDate.current == null
             ) {
               prevDate.current = convertToDate.getDate();
               return (
-                // <>
-                //   <p
-                //     key={
-                //       convertToDate.getFullYear() +
-                //       "년" +
-                //       convertToDate.getMonth() +
-                //       "월" +
-                //       convertToDate.getDate() +
-                //       "."
-                //     }
-                //   >
-                //     {convertToDate.getFullYear() +
-                //     "년 " +
-                //     convertToDate.getMonth() +
-                //     "월 " +
-                //     convertToDate.getDate() +
-                //     "일 " +
-                //     intl}
-                //   </p>
-                <ChatCardWrapper
-                  key={chat.chatId}
-                  author={
-                    chat.memberId === parseInt(loginMemberId) ? "me" : "friend"
-                  }
-                >
-                  <ChatCard
+                <>
+                  {/* <p key={chat.chatId}>{moment(convertToDate).format("LL")}</p> */}
+                  <ChatCardWrapper
+                    key={chat.chatId}
                     author={
                       chat.memberId === parseInt(loginMemberId)
                         ? "me"
                         : "friend"
                     }
-                    body={chat.content}
-                    createdAt={chat.createdAt}
-                    nickname={chat.nickname}
-                  />
-                </ChatCardWrapper>
+                  >
+                    <ChatCard
+                      author={
+                        chat.memberId === parseInt(loginMemberId)
+                          ? "me"
+                          : "friend"
+                      }
+                      body={chat.content}
+                      createdAt={moment(convertToDate).format("LT")}
+                      nickname={chat.nickname}
+                    />
+                  </ChatCardWrapper>
+                </>
               );
             } else {
               prevDate.current = convertToDate.getDate();
@@ -253,7 +238,7 @@ function ChatRoomPage() {
                         : "friend"
                     }
                     body={chat.content}
-                    createdAt={chat.createdAt}
+                    createdAt={moment(convertToDate).format("LT")}
                     nickname={chat.nickname}
                   />
                 </ChatCardWrapper>
@@ -283,7 +268,7 @@ const StChatRoomPage = styled.div`
 // flex-direction: column-reverse;
 const StChatListContainer = styled.div`
   width: 100vw;
-  padding: 0 10px;
+  padding: 6rem 1rem;
   display: flex;
   overflow-y: scroll;
   flex-direction: column;
