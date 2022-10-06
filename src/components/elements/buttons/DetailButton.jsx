@@ -4,15 +4,15 @@ import SockJS from "sockjs-client";
 import webstomp from "webstomp-client";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 
-const DetailButton = ({ memberId, nickName, roomId }) => {
-  const sock = new SockJS("http://3.35.47.137/ws");
+const DetailButton = ({ memberId, nickName, roomId, onClick }) => {
+  const sock = new SockJS("https://3.35.47.137/wss");
   const ws = webstomp.over(sock);
-  const token = localStorage.getItem("access-token");
+  const token = localStorage?.getItem("access-token");
   const navigate = useNavigate();
 
-  const member = localStorage.getItem("user-info");
+  const member = localStorage?.getItem("user-info");
   const obj = JSON.parse(member);
-  const loginMemberId = obj.memberId;
+  const loginMemberId = obj?.memberId;
 
   useEffect(() => {
     waitForConnection(ws, wsConnectSubscribe());
@@ -114,23 +114,31 @@ const DetailButton = ({ memberId, nickName, roomId }) => {
   }
 
   return (
-    <STbutton className="btn">
-      <span
-        onClick={() => {
-          console.log(1);
-          navigate(
-            `/chatroom/${localStorage.getItem("itemId")}/${loginMemberId}`,
-            {
-              memberId: memberId,
-              nickName: nickName,
-            }
-          );
-          // sendMessage();
-        }}
-      >
-        채팅으로 거래하기
-      </span>
-    </STbutton>
+    <>
+      {token && loginMemberId ? (
+        <STbutton className="btn">
+          <span
+            onClick={() => {
+              console.log(1);
+              navigate(
+                `/chatroom/${localStorage.getItem("itemId")}/${loginMemberId}`,
+                {
+                  memberId: memberId,
+                  nickName: nickName,
+                }
+              );
+              // sendMessage();
+            }}
+          >
+            채팅으로 거래하기
+          </span>
+        </STbutton>
+      ) : (
+        <STbutton className="btn">
+          <span onClick={onClick}>채팅으로 거래하기</span>
+        </STbutton>
+      )}
+    </>
   );
 };
 

@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const URI = {
   BASE: process.env.REACT_APP_BASE_URI,
@@ -14,12 +14,12 @@ const initialState = {
 };
 
 export const __getinitialChatList = createAsyncThunk(
-  '/chat/__getinitialChatList',
+  "/chat/__getinitialChatList",
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.get(`http://3.35.47.137/room/${payload}`, {
+      const response = await axios.get(`https://3.35.47.137/room/${payload}`, {
         headers: {
-          Authorization: localStorage.getItem('access-token'),
+          Authorization: localStorage.getItem("access-token"),
         },
       });
       return thunkAPI.fulfillWithValue(response.data);
@@ -30,7 +30,7 @@ export const __getinitialChatList = createAsyncThunk(
 );
 
 const chatSlice = createSlice({
-  name: 'chatSlice',
+  name: "chatSlice",
   initialState,
   reducers: {
     postChat: (state, action) => {
