@@ -170,7 +170,7 @@
 |---|---|
 |![debounce적용전_네트워크 트래픽](https://user-images.githubusercontent.com/72599761/193569214-0ebc9139-0fb2-4ad7-8c3c-8ecf8d0487b8.gif)|![debounce적용후_네트워크 트래픽](https://user-images.githubusercontent.com/72599761/193569257-4cf4a103-64d7-4b26-87e3-1c8cf2765f47.gif)|
 
-### 2. 찜 API call 최소화 
+### 2. 찜 API call 1/3로 최소화 
 
 |구분|설명|
 |---|---|
