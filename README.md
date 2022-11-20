@@ -7,6 +7,31 @@
 
 ### [멍냥마켓 바로가기](https://meongnyang-market.com/)
 2022.10.26 백엔드 서버를 내린 상태라 어떠한 데이터도 보이지 않는 상태입니다. 
+아래의 시연 영상으로 대체하겠습니다. 
+
+<br>
+<hr>
+<br>
+
+## ✨ 시연 영상
+[![image](https://user-images.githubusercontent.com/72599761/202914174-6955d143-ded9-43d8-b19d-8e186a3ec40f.png)](https://youtu.be/bkMf7S97EOU)
+
+
+<br>
+<hr>
+<br>
+
+### ✨ 발표 영상
+
+[![image](https://user-images.githubusercontent.com/72599761/202913620-6105eddf-9b2f-4278-a860-3f5bffcf9e77.png)](http://youtube.com/watch?v=xPWkAXWFHqk) 
+
+
+<br>
+<hr>
+<br>
+
+
+## Github 팀 Repo
 
 ### [Front-End Github](https://github.com/Hanhae99-final-3team/final_FE/) 
 ### [Back-End Github](https://github.com/Hanhae99-final-3team/final-be/) 
@@ -155,6 +180,7 @@
 <br>
 <hr>
 <br>
+
 
 ## 🎯 트러블 슈팅 
 
